@@ -2,6 +2,7 @@ import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} fr
 import {RootLayout} from "@/app/layouts";
 import Login from "@/pages/login";
 import Admin from "@/pages/admin";
+import {AdminUsers} from "@/pages/admin-users";
 
 export const AppRouter = () => {
     const routes = createRoutesFromElements(
@@ -16,7 +17,12 @@ export const AppRouter = () => {
             <Route
                 path="admin"
                 element={<Admin/>}
-            />
+            >
+                <Route
+                    path="users"
+                    element={<AdminUsers />}
+                />
+            </Route>
         </Route>
     )
 
