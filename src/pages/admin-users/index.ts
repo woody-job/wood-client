@@ -1,1 +1,1 @@
-export {AdminUsers} from "./ui/AdminUsers.tsx";
+export { AdminUsers } from './ui/AdminUsers.tsx'

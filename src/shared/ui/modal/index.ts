@@ -1,1 +1,1 @@
-export * from "./ModalContent.tsx";
+export * from './ModalContent.tsx'

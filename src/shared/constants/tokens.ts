@@ -16,14 +16,17 @@ export const tokens = {
     40: '#FFFFFF66',
     20: '#FFFFFF33',
     10: '#FFFFFF00',
-    5: '#FFFFFF00CC',
+    5: '#FFFFFF0D',
   },
   black: {
     100: '#1C1C1C',
     80: '#1C1C1CCC',
     40: '#1C1C1C66',
     20: '#1C1C1C33',
-    10: '##1C1C1C1A',
+    10: '#1C1C1C1A',
     5: '#1C1C1C0D',
+  },
+  background: {
+    main: '#F7F9FB',
   },
 }

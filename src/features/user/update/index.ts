@@ -1,1 +1,1 @@
-export {UpdateUserButton} from "./ui";
+export { UpdateUserButton } from './ui'
