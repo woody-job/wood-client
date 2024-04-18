@@ -1,7 +1,7 @@
-import { Box, Button } from '@mui/material'
+import {Outlet} from "react-router-dom";
 
 export const Admin = () => {
-  return <Box>
-    <Button>Admin</Button>
-  </Box>
+    return (
+        <Outlet/>
+    )
 }
