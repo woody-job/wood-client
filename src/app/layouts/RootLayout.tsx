@@ -32,7 +32,7 @@ export const RootLayout = () => {
                 </List>
             </Box>
 
-            <Box component="main" sx={{p: 4}}>
+            <Box component="main" sx={{p: 4, flexGrow: 1}}>
                 <Outlet/>
             </Box>
         </Box>

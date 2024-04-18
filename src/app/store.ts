@@ -1,15 +1,14 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {baseApi} from "@/shared/api";
-import {useDispatch} from "react-redux";
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { baseApi } from '@/shared/api'
+import { useDispatch } from 'react-redux'
 
 const rootReducer = combineReducers({
-    [baseApi.reducerPath]: baseApi.reducer,
+  [baseApi.reducerPath]: baseApi.reducer,
 })
 
 export const store = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(baseApi.middleware),
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
 })
 
 export type RootState = ReturnType<typeof rootReducer>

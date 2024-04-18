@@ -26,10 +26,7 @@ export const AppRouter = () => {
         </Route>
     )
 
-    const appRouterObject = createBrowserRouter(routes)
+  const appRouterObject = createBrowserRouter(routes)
 
-    return (
-        <RouterProvider router={appRouterObject}/>
-    )
+  return <RouterProvider router={appRouterObject} />
 }
-

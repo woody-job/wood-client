@@ -1,9 +1,5 @@
-import {Box} from "@mui/material";
+import { Box } from '@mui/material'
 
 export const Login = () => {
-    return (
-       <Box>
-           Login
-       </Box>
-    )
- }
+  return <Box>Login</Box>
+}
