@@ -1,5 +1,7 @@
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 
 export const Admin = () => {
-  return <Box>Admin</Box>
+  return <Box>
+    <Button>Admin</Button>
+  </Box>
 }
