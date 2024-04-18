@@ -1,1 +1,1 @@
-export { Login as default } from "./ui/Login.tsx";
+export { Login as default } from './ui/Login.tsx'

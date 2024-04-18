@@ -1,7 +1,7 @@
-import {Providers} from "@/app/providers";
+import { Providers } from '@/app/providers'
 
 const App = () => {
-    return <Providers />
- }
+  return <Providers />
+}
 
- export default App
+export default App
