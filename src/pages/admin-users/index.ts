@@ -1,1 +1,1 @@
-export { AdminUsers } from './ui/AdminUsers.tsx'
+export { AdminUsers as default } from './ui/AdminUsers.tsx'
