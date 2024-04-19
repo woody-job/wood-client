@@ -1,1 +1,1 @@
-export { theme } from './model'
+export { getThemeSettings } from './model'

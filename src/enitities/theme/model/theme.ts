@@ -1,6 +1,6 @@
 import { ThemeOptions } from '@mui/material'
 import { tokens } from '@/shared/constants/tokens'
-import { buttonMUI } from '@/enitities/theme/model/components'
+import { buttonMUI, textFieldMUI } from '@/enitities/theme/model/components'
 import { ThemeModes } from '@/enitities/theme/types'
 import { modeSwitcher } from '@/shared/libs/helpers'
 
@@ -89,7 +89,7 @@ export const getThemeSettings = (mode: ThemeModes): ThemeOptions => {
 
     components: {
       MuiButton: buttonMUI,
-      // MuiTextField: textFieldMUI,
+      MuiTextField: textFieldMUI,
     },
   }
 }

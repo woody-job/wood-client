@@ -13,21 +13,35 @@ export const textFieldMUI: TextFieldMUI = {
   defaultProps: {
     variant: 'outlined',
     fullWidth: true,
-    size: 'small',
+    size: 'medium',
   },
   styleOverrides: {
     root: {
       '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: 'rgba(0, 0, 0, 0.23)',
-        },
-        '&:hover fieldset': {
-          borderColor: 'rgba(0, 0, 0, 0.23)',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: 'rgba(0, 0, 0, 0.23)',
-        },
+        borderRadius: '16px',
+        padding: '0',
       },
+      '& .MuiOutlinedInput-root input': {},
+      '& fieldset': {},
     },
   },
+  variants: [
+    {
+      props: { variant: 'outlined' },
+      style: ({ theme }) => ({
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: theme.black[20],
+          },
+          '&:hover fieldset': {
+            borderColor: theme.black[20],
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: theme.black[20],
+            boxShadow: `0px 0px 0px 4px ${theme.black[5]}`,
+          },
+        },
+      }),
+    },
+  ],
 }
