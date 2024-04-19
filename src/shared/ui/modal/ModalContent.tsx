@@ -14,6 +14,7 @@ export const ModalContent: FC<BoxProps> = props => {
         width: 400,
         bgcolor: 'background.paper',
         boxShadow: 24,
+        borderRadius: 4,
         p: 4,
         ...sx,
       }}

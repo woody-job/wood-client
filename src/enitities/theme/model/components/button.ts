@@ -1,5 +1,4 @@
-import { tokens } from '@/shared/constants/tokens'
-import { ComponentsOverrides, ComponentsProps, Theme, ComponentsVariants } from '@mui/material'
+import { ComponentsOverrides, ComponentsProps, ComponentsVariants, Theme } from '@mui/material'
 
 export interface ButtonMUI {
   defaultProps?: ComponentsProps['MuiButton']
@@ -26,44 +25,44 @@ export const buttonMUI: ButtonMUI = {
   variants: [
     {
       props: { variant: 'contained' },
-      style: {
-        backgroundColor: tokens.primary.brand,
-        color: tokens.white,
+      style: ({ theme }) => ({
+        backgroundColor: theme.primary.brand,
+        color: theme.white['100'],
         '&:hover': {
           opacity: 0.8,
         },
-      },
+      }),
     },
     {
       props: { variant: 'gray' },
-      style: {
-        backgroundColor: tokens.black[10],
-        color: tokens.black[100],
+      style: ({ theme }) => ({
+        backgroundColor: theme.black[10],
+        color: theme.black[100],
         '&:hover': {
-          backgroundColor: tokens.black[20],
+          backgroundColor: theme.black[20],
         },
-      },
+      }),
     },
     {
       props: { variant: 'outlined' },
-      style: {
-        border: `1px solid ${tokens.black[10]}`,
-        backgroundColor: 'trasparent',
-        color: tokens.black[100],
+      style: ({ theme }) => ({
+        border: `1px solid ${theme.black[10]}`,
+        backgroundColor: 'transparent',
+        color: theme.black[100],
         '&:hover': {
-          backgroundColor: tokens.black[5],
-          border: `1px solid ${tokens.black[10]}`,
+          backgroundColor: theme.black[5],
+          border: `1px solid ${theme.black[10]}`,
         },
-      },
+      }),
     },
     {
       props: { variant: 'text' },
-      style: {
-        color: tokens.black[100],
+      style: ({ theme }) => ({
+        color: theme.black[100],
         '&:hover': {
-          backgroundColor: tokens.black[5],
+          backgroundColor: theme.black[5],
         },
-      },
+      }),
     },
 
     {

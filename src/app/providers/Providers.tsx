@@ -2,8 +2,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/app/store'
 import { FC, ReactNode } from 'react'
 import { AppRouter } from '@/app/routers'
-import { ThemeProvider } from '@mui/material'
-import { theme } from '@/app/theme'
+import { CustomThemeProvider } from '@/enitities/theme/libs/providers'
 
 export interface ProviderProps {
   children?: ReactNode
@@ -11,11 +10,11 @@ export interface ProviderProps {
 
 export const Providers: FC<ProviderProps> = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <CustomThemeProvider>
         <AppRouter />
         {children}
-      </Provider>
-    </ThemeProvider>
+      </CustomThemeProvider>
+    </Provider>
   )
 }

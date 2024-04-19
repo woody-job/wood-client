@@ -9,7 +9,6 @@ import {
 } from '@mui/material'
 import { UpdateUserButton } from '@/features/user/update'
 import { DeleteUserButton } from '@/features/user/delete'
-import { tokens } from '@/shared/constants/tokens'
 
 export const UsersTable = () => {
   const data = [
@@ -60,7 +59,7 @@ export const UsersTable = () => {
   return (
     <TableContainer
       sx={{
-        backgroundColor: tokens.background.main,
+        backgroundColor: theme => theme.background.main,
         p: '24px',
         borderRadius: '18px',
         overflow: 'auto',
@@ -80,7 +79,7 @@ export const UsersTable = () => {
         aria-label='simple table'
       >
         <TableHead>
-          <TableRow sx={{ '& th': { color: tokens.black[40] } }}>
+          <TableRow sx={{ '& th': { color: theme => theme.black[40] } }}>
             <TableCell>Id</TableCell>
             <TableCell>Роль</TableCell>
             <TableCell>Логин</TableCell>
@@ -91,7 +90,10 @@ export const UsersTable = () => {
         </TableHead>
         <TableBody sx={{ '& td, & th': { border: 0, width: 'auto', maxWidth: '200px' } }}>
           {data.map(user => (
-            <TableRow key={user.id} sx={{ '&:hover': { backgroundColor: tokens.black[5] } }}>
+            <TableRow
+              key={user.id}
+              sx={{ '&:hover': { backgroundColor: theme => theme.black[5] } }}
+            >
               <TableCell component='th'>{user.id}</TableCell>
               <TableCell>{user.role}</TableCell>
               <TableCell>{user.login}</TableCell>

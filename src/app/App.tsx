@@ -4,10 +4,9 @@ import './fonts.css'
 
 const App = () => {
   return (
-    <>
-      <Providers />
+    <Providers>
       <CssBaseline />
-    </>
+    </Providers>
   )
 }
 

@@ -1,4 +1,3 @@
-import { tokens } from '@/shared/constants/tokens'
 import {
   Button,
   ButtonProps,
