@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { FC, FormEventHandler, forwardRef, useState } from 'react'
+import { FormEventHandler, forwardRef, useState } from 'react'
 import { ModalContent } from '@/shared/ui'
 
 export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
