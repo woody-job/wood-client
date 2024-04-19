@@ -18,6 +18,7 @@ export const Sidebar = () => {
         height: '100%',
         p: '16px',
         borderRight: '1px solid',
+        borderLeft: '1px solid',
         borderColor: theme => theme.black[10],
       }}
     >

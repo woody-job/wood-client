@@ -1,17 +1,30 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
 import { UpdateUserButton } from '@/features/user/update'
 import { DeleteUserButton } from '@/features/user/delete'
+import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 export const UsersTable = () => {
-  const data = [
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'Id', width: 90 },
+    { field: 'role', headerName: 'Роль', width: 120 },
+    { field: 'login', headerName: 'Логин', width: 120 },
+    { field: 'fullname', headerName: 'ФИО', width: 200 },
+    { field: 'password', headerName: 'Пароль', width: 150 },
+    {
+      field: 'actions',
+      headerName: '',
+      width: 300,
+      renderCell: () => (
+        <>
+          <UpdateUserButton sx={{ mr: 1 }}>Редактировать</UpdateUserButton>
+          <DeleteUserButton>Удалить</DeleteUserButton>
+        </>
+      ),
+    },
+  ]
+
+  const rows = [
     {
       id: 1,
       role: 'admin',
@@ -54,59 +67,64 @@ export const UsersTable = () => {
       fullname: 'Ванек Юзер Дмитриевич',
       password: '<PASSWORD>',
     },
-  ] // TODO будет вместо этого - запрос
+  ]
 
   return (
-    <TableContainer
+    <Box
       sx={{
+        height: 400,
         backgroundColor: theme => theme.background.main,
-        p: '24px',
         borderRadius: '18px',
-        overflow: 'auto',
-        boxShadow: 1,
+        px: '24px',
+        py: '15px',
       }}
     >
-      <Typography variant='subtitle1' fontWeight='bold' mb='15px'>
+      <Typography
+        variant='subtitle1'
+        fontWeight='bold'
+        mb='15px'
+        sx={{ paddingLeft: '24px', paddingTop: '24px' }}
+      >
         Пользователи
       </Typography>
-
-      <Table
+      <DataGrid
+        rows={rows}
+        columns={columns}
         sx={{
-          '& td, & th': {
-            p: 1,
+          '& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell': {
+            padding: '8px',
+            border: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+          "& .MuiDataGrid-columnHeaders [role='row']": {
+            backgroundColor: theme =>
+              theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
+          },
+          '& .MuiDataGrid-root': {
+            borderRadius: '18px',
+            overflow: 'auto',
+            boxShadow: 1,
+          },
+          '& .MuiDataGrid-columnHeaderTitle': {
+            fontWeight: 500,
+            fontSize: '14px',
+            color: theme => theme.black[40],
+            backgroundColor: 'transparent',
+          },
+          '& .MuiDataGrid-columnHeaders': {},
+          '.MuiDataGrid-columnSeparator': {
+            display: 'none',
+          },
+          '&.MuiDataGrid-root': {
+            border: 'none',
+          },
+          '& .MuiDataGrid-columnHeaderTitleContainer': {
+            justifyContent: 'center',
           },
         }}
-        aria-label='simple table'
-      >
-        <TableHead>
-          <TableRow sx={{ '& th': { color: theme => theme.black[40] } }}>
-            <TableCell>Id</TableCell>
-            <TableCell>Роль</TableCell>
-            <TableCell>Логин</TableCell>
-            <TableCell>ФИО</TableCell>
-            <TableCell>Пароль</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody sx={{ '& td, & th': { border: 0, width: 'auto', maxWidth: '200px' } }}>
-          {data.map(user => (
-            <TableRow
-              key={user.id}
-              sx={{ '&:hover': { backgroundColor: theme => theme.black[5] } }}
-            >
-              <TableCell component='th'>{user.id}</TableCell>
-              <TableCell>{user.role}</TableCell>
-              <TableCell>{user.login}</TableCell>
-              <TableCell>{user.fullname}</TableCell>
-              <TableCell>{user.password}</TableCell>
-              <TableCell align='right'>
-                <UpdateUserButton sx={{ mr: 1 }}>Редактировать</UpdateUserButton>
-                <DeleteUserButton>Удалить</DeleteUserButton>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+      />
+    </Box>
   )
 }

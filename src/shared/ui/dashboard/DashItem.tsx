@@ -16,9 +16,6 @@ export const DashItem: FC<DashItemProps> = props => {
     pl: '40px',
     justifyContent: 'start',
     fontSize: '14px',
-    '&.active': {
-      backgroundColor: theme => theme.black[5],
-    },
   }
 
   const defaultStyles: SxProps<Theme> = {
@@ -27,13 +24,10 @@ export const DashItem: FC<DashItemProps> = props => {
     px: '15px',
     justifyContent: 'start',
     fontSize: '16px',
-    '&.active': {
-      backgroundColor: theme => theme.black[5],
-    },
   }
 
   const activeStyles: SxProps<Theme> = {
-    backgroundColor: theme => theme.black[5],
+    backgroundColor: theme => theme.black[10],
   }
 
   return (

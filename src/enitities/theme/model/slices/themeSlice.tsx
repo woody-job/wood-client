@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ThemeModes, ThemeStore } from '@/enitities/theme/types'
+import { createSlice } from '@reduxjs/toolkit'
+import { ThemeStore } from '@/enitities/theme/types'
 
 export const themeSlice = createSlice({
   name: 'theme',
@@ -7,8 +7,8 @@ export const themeSlice = createSlice({
     mode: 'light',
   } as ThemeStore,
   reducers: {
-    switchTheme: (state, action: PayloadAction<ThemeModes>) => {
-      state.mode = action.payload
+    switchTheme: state => {
+      state.mode = state.mode === 'light' ? 'dark' : 'light'
     },
   },
 })
