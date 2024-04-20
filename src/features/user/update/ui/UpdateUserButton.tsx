@@ -49,7 +49,8 @@ export const UpdateUserButton: FC<ButtonProps> = props => {
             <TextField id='name' label='Имя' variant='outlined' size='small' />
             <TextField id='name' label='Отчество' variant='outlined' size='small' />
 
-            <Select size='small'>
+            <Select size='small' defaultValue='default'>
+              <MenuItem value='default'>--Роль--</MenuItem>
               <MenuItem value='admin'>Администратор</MenuItem>
               <MenuItem value='super-admin'>Супер Администратор</MenuItem>
               <MenuItem value='user'>Пользователь</MenuItem>

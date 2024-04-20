@@ -1,6 +1,6 @@
 import { ThemeOptions } from '@mui/material'
 import { tokens } from '@/shared/constants/tokens'
-import { buttonMUI, textFieldMUI, selectMUI } from '@/enitities/theme/model/components'
+import { buttonMUI, selectMUI, textFieldMUI } from '@/enitities/theme/model/components'
 import { ThemeModes } from '@/enitities/theme/types'
 import { modeSwitcher } from '@/shared/libs/helpers'
 
@@ -88,6 +88,24 @@ export const getThemeSettings = (mode: ThemeModes): ThemeOptions => {
     },
 
     components: {
+      MuiCssBaseline: {
+        styleOverrides: theme => ({
+          body: {
+            '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+              width: '0.4em',
+              height: '0.6em',
+              backgroundColor: theme.white['80'],
+            },
+            '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+              backgroundColor: theme.black[80],
+              borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+              backgroundColor: theme.white['100'],
+            },
+          },
+        }),
+      },
       MuiButton: buttonMUI,
       MuiTextField: textFieldMUI,
       MuiSelect: selectMUI,
