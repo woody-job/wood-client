@@ -1,0 +1,1 @@
+export { getThemeSettings } from './model'
