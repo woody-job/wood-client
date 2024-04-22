@@ -1,3 +1,3 @@
 export const appSearchParams = {
-  currentTab: 'current-tab',
+  currentTab: 'tab',
 } as const

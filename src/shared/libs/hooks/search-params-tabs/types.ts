@@ -1,6 +1,6 @@
 import { SyntheticEvent } from 'react'
 
-export interface UseSearchParamsTabsReturn {
-  currentTab: number
-  handleChangeTab: (event: SyntheticEvent, newValue: number) => void
+export interface UseSearchParamsTabsReturn<TTab> {
+  currentTab: TTab
+  handleChangeTab: (event: SyntheticEvent, newValue: string) => void
 }

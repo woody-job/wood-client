@@ -2,21 +2,25 @@ import { UseSearchParamsTabsReturn } from '@/shared/libs/hooks/search-params-tab
 import { SyntheticEvent, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-export const useSearchParamsTabs = (
+export const useSearchParamsTabs = <TTab>(
   tabName: string,
-  tabs: Record<string, number>
-): UseSearchParamsTabsReturn => {
+  tabs: TTab[],
+  tabKeySelector: (tab: TTab) => string,
+  defaultTab: TTab
+): UseSearchParamsTabsReturn<TTab> => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const currentTab = useMemo(() => {
     const currentTab = searchParams.get(tabName)
-    if (!Object.values(tabs).includes(Number(currentTab))) return 0
 
-    return Number(currentTab)
-  }, [searchParams, tabName, tabs])
+    const findTab = tabs.find(tab => tabKeySelector(tab) === currentTab)
+    if (!findTab) return defaultTab
 
-  const handleChangeTab = (_event: SyntheticEvent, newValue: number) => {
-    setSearchParams({ [tabName]: newValue.toString() })
+    return findTab
+  }, [defaultTab, searchParams, tabKeySelector, tabName, tabs])
+
+  const handleChangeTab = (_event: SyntheticEvent, newValue: string) => {
+    setSearchParams({ [tabName]: newValue })
   }
 
   return {

@@ -66,7 +66,7 @@ export const Sidebar = () => {
       <Box display='flex' flexDirection='column' gap='2px' mb={5} mt={2}>
         {settingsPaths.map(({ path, name }) => (
           <NavLink to={path} key={name}>
-            <DashItem isActive={location.pathname === path}>{name}</DashItem>
+            <DashItem isActive={location.pathname.startsWith(path)}>{name}</DashItem>
           </NavLink>
         ))}
       </Box>

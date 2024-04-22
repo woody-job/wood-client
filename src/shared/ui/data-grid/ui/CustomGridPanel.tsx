@@ -7,7 +7,9 @@ export const CustomGridPanel = (props: GridPanelProps) => {
     requestAnimationFrame(() => {
       const element = document?.querySelector('.MuiDataGrid-columnsManagementFooter')
       const button = element?.children[1]
-      button!.innerHTML = 'Сбросить'
+      if (!button) return
+
+      button.innerHTML = 'Сбросить'
     })
   }, [props.open])
   return (

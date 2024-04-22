@@ -1,40 +1,39 @@
-import { appSearchParams, systemSettingsTabs } from '@/shared/constants'
-import { tabIndexProps } from '@/shared/libs/helpers'
-import { useSearchParamsTabs } from '@/shared/libs/hooks'
-import { CustomTabPanel } from '@/shared/ui'
-import { TimberMarkingsTable } from '@/widgets/timberMarkingsTable'
+import { urls } from '@/shared/constants'
 import { Box, Tab, Tabs } from '@mui/material'
-import { DryersTable } from '@/widgets/dryersTable'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 export const SystemSettings = () => {
-  const { currentTab, handleChangeTab } = useSearchParamsTabs(
-    appSearchParams.currentTab,
-    systemSettingsTabs
-  )
+  const location = useLocation()
+  const lastNestedPath = location.pathname.split('/').pop()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (lastNestedPath !== urls.systemSettings) return
+    navigate(urls.workshops)
+  }, [])
 
   return (
     <Box>
-      <Tabs value={currentTab} onChange={handleChangeTab}>
-        <Tab label='Параметры цехов' {...tabIndexProps(systemSettingsTabs.WORKSHOP_PARAMETERS)} />
-        <Tab label='Обозначения леса' {...tabIndexProps(systemSettingsTabs.TIMBER_MARKINGS)} />
-        <Tab label='Справочник' {...tabIndexProps(systemSettingsTabs.REFERENCE_BOOK)} />
-        <Tab label='Сушилки' {...tabIndexProps(systemSettingsTabs.DRYERS)} />
+      <Tabs value={lastNestedPath}>
+        <Tab
+          component={NavLink}
+          to={urls.workshops}
+          value={urls.workshops}
+          label='Параметры цехов'
+        />
+        <Tab component={NavLink} to={urls.timbers} label='Обозначения леса' value={urls.timbers} />
+        <Tab
+          component={NavLink}
+          to={urls.referenceBook}
+          label='Справочник'
+          value={urls.referenceBook}
+        />
+        <Tab component={NavLink} to={urls.dryers} label='Сушилки' value={urls.dryers} />
       </Tabs>
 
-      <CustomTabPanel
-        value={currentTab}
-        index={systemSettingsTabs.WORKSHOP_PARAMETERS}
-      ></CustomTabPanel>
-
-      <CustomTabPanel value={currentTab} index={systemSettingsTabs.TIMBER_MARKINGS}>
-        <TimberMarkingsTable />
-      </CustomTabPanel>
-
-      <CustomTabPanel value={currentTab} index={systemSettingsTabs.REFERENCE_BOOK}></CustomTabPanel>
-
-      <CustomTabPanel value={currentTab} index={systemSettingsTabs.DRYERS}>
-        <DryersTable />
-      </CustomTabPanel>
+      <Outlet />
     </Box>
   )
 }
