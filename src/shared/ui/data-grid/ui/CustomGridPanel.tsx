@@ -1,6 +1,6 @@
-import { Box } from "@mui/material"
-import { GridPanel, GridPanelProps } from "@mui/x-data-grid"
-import { useEffect } from "react"
+import { Box } from '@mui/material'
+import { GridPanel, GridPanelProps } from '@mui/x-data-grid'
+import { useEffect } from 'react'
 
 export const CustomGridPanel = (props: GridPanelProps) => {
   useEffect(() => {

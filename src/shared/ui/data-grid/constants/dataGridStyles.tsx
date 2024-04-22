@@ -6,9 +6,9 @@ export const dataGridStyles: SxProps<Theme> = {
     border: 0,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  '& .MuiDataGrid-columnHeaders [role=\'row\']': {
+  "& .MuiDataGrid-columnHeaders [role='row']": {
     backgroundColor: theme =>
       theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
   },
@@ -39,5 +39,5 @@ export const dataGridStyles: SxProps<Theme> = {
   "& [data-field='actions']": {
     position: 'absolute',
     right: 0,
-  }
+  },
 }

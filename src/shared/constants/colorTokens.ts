@@ -1,4 +1,4 @@
-export const tokens = {
+export const colorTokens = {
   primary: {
     brand: '#1C1C1C',
     blue: '#E3F5FF',

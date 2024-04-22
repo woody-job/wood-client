@@ -46,7 +46,7 @@ export const settingsPaths = [
     name: 'Пользователи',
   },
   {
-    path: '/admin/settings',
+    path: '/admin/system-settings',
     name: 'Найстройки системы',
   },
 ]

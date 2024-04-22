@@ -1,10 +1,9 @@
 import { DeleteUserButton } from '@/features/user/delete'
 import { UpdateUserButton } from '@/features/user/update'
 import { dataGridStyles } from '@/shared/ui'
-import { CustomGridPanel } from '@/shared/ui/data-grid'
-import { Box, Typography } from '@mui/material'
+import { CustomGridPanel, DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
+import { Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { ruRU } from '@mui/x-data-grid/locales'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 export const UsersTable = () => {
@@ -75,15 +74,7 @@ export const UsersTable = () => {
   ]
 
   return (
-    <Box
-      sx={{
-        height: 600,
-        backgroundColor: theme => theme.background.main,
-        borderRadius: '18px',
-        px: '24px',
-        py: '15px',
-      }}
-    >
+    <DataGridContainer>
       <Typography
         variant='subtitle1'
         fontWeight='bold'
@@ -97,18 +88,11 @@ export const UsersTable = () => {
         columns={columns}
         disableRowSelectionOnClick
         disableMultipleRowSelection
-        localeText={{
-          ...ruRU.components.MuiDataGrid.defaultProps.localeText,
-          columnsManagementSearchTitle: 'Найти',
-          columnMenuManageColumns: 'Изменить',
-          columnsManagementShowHideAllText: 'Показать все',
-          actionsCellMore: 'Другие',
-          pinToRight: 'Пинать вправо',
-        }}
+        localeText={dataGridLocaleText}
         sx={dataGridStyles}
         hideFooter
         slots={{ panel: CustomGridPanel }}
       />
-    </Box>
+    </DataGridContainer>
   )
 }
