@@ -109,6 +109,7 @@ export const getThemeSettings = (mode: ThemeModes): ThemeOptions => {
       MuiButton: buttonMUI,
       MuiTextField: textFieldMUI,
       MuiSelect: selectMUI,
+      
     },
   }
 }

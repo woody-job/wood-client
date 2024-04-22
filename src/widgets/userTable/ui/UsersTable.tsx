@@ -1,10 +1,11 @@
+import { DeleteUserButton } from '@/features/user/delete'
+import { UpdateUserButton } from '@/features/user/update'
+import { dataGridStyles } from '@/shared/ui'
+import { CustomGridPanel } from '@/shared/ui/data-grid'
 import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { UpdateUserButton } from '@/features/user/update'
-import { DeleteUserButton } from '@/features/user/delete'
-import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 import { ruRU } from '@mui/x-data-grid/locales'
-import { dataGridStyles } from '@/shared/ui'
+import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 export const UsersTable = () => {
   const columns: GridColDef[] = [
@@ -16,6 +17,8 @@ export const UsersTable = () => {
     {
       field: 'actions',
       headerName: '',
+      disableColumnMenu: true,
+      sortable: false,
       width: 300,
       renderCell: () => (
         <>
@@ -94,9 +97,17 @@ export const UsersTable = () => {
         columns={columns}
         disableRowSelectionOnClick
         disableMultipleRowSelection
-        localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+        localeText={{
+          ...ruRU.components.MuiDataGrid.defaultProps.localeText,
+          columnsManagementSearchTitle: 'Найти',
+          columnMenuManageColumns: 'Изменить',
+          columnsManagementShowHideAllText: 'Показать все',
+          actionsCellMore: 'Другие',
+          pinToRight: 'Пинать вправо',
+        }}
         sx={dataGridStyles}
-        autoPageSize
+        hideFooter
+        slots={{ panel: CustomGridPanel }}
       />
     </Box>
   )

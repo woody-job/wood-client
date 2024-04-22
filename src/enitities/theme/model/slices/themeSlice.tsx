@@ -4,7 +4,7 @@ import { ThemeStore } from '@/enitities/theme/types'
 export const themeSlice = createSlice({
   name: 'theme',
   initialState: {
-    mode: 'light',
+    mode: 'dark',
   } as ThemeStore,
   reducers: {
     switchTheme: state => {

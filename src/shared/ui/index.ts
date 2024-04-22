@@ -1,3 +1,3 @@
 export { ModalContent } from './modal'
 export { DashItem } from './dashboard'
-export { dataGridStyles } from './data-grid'
+export { dataGridStyles, CustomGridPanel } from './data-grid'
