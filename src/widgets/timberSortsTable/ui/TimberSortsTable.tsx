@@ -4,8 +4,11 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { Box, Button } from '@mui/material'
+import { Box } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { ButtonWithConfirm } from '@/shared/ui'
+import { UpdateSectionParamsButton } from '@/features/section/update-params'
+import { CreateSectionButton } from '../../../features/section/create'
 
 export const TimberSortsTable = () => {
   const columns: GridColDef[] = [
@@ -21,12 +24,16 @@ export const TimberSortsTable = () => {
       width: 300,
       renderCell: () => (
         <>
-          <Button size='small' variant='gray' sx={{ mr: 1 }}>
-            Редактировать
-          </Button>
-          <Button size='small' variant='contained'>
+          <UpdateSectionParamsButton sx={{ mr: 1 }}>Редактировать</UpdateSectionParamsButton>
+          <ButtonWithConfirm
+            header='Удалить сечение?'
+            description='Вы точно хотите удалить это сечение?'
+            onConfirm={() => {
+              console.log('Удалить сечение')
+            }}
+          >
             Удалить
-          </Button>
+          </ButtonWithConfirm>
         </>
       ),
     },
@@ -40,9 +47,7 @@ export const TimberSortsTable = () => {
 
   return (
     <Box display={'flex'} flexDirection='column'>
-      <Button variant='gray' sx={{ my: 4, alignSelf: 'end' }}>
-        Добавить
-      </Button>
+      <CreateSectionButton sx={{ my: 4, alignSelf: 'end' }}>Добавить</CreateSectionButton>
 
       <DataGridContainer>
         <DataGrid

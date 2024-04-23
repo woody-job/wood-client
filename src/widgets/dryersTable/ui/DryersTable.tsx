@@ -4,8 +4,11 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { Box, Button } from '@mui/material'
+import { Box } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { ButtonWithConfirm } from '@/shared/ui'
+import { UpdateDryerButton } from '@/features/dryer/update'
+import { CreateDryerButton } from '@/features/dryer/create'
 
 export const DryersTable = () => {
   const columns: GridColDef[] = [
@@ -18,12 +21,16 @@ export const DryersTable = () => {
       width: 300,
       renderCell: () => (
         <>
-          <Button size='small' variant='gray' sx={{ mr: 1 }}>
-            Редактировать
-          </Button>
-          <Button size='small' variant='contained'>
+          <UpdateDryerButton sx={{ mr: 1 }}>Редактировать</UpdateDryerButton>
+          <ButtonWithConfirm
+            header={'Удалить сушильную камеру'}
+            description={'Вы точно хотите удалить эту сушильнуюд камеру?'}
+            onConfirm={() => {
+              console.log('Удалить сушильную камеру')
+            }}
+          >
             Удалить
-          </Button>
+          </ButtonWithConfirm>
         </>
       ),
     },
@@ -40,9 +47,7 @@ export const DryersTable = () => {
 
   return (
     <Box display={'flex'} flexDirection='column'>
-      <Button variant='gray' sx={{ my: 4, alignSelf: 'end' }}>
-        Добавить
-      </Button>
+      <CreateDryerButton sx={{ my: 4, alignSelf: 'end' }}>Добавить</CreateDryerButton>
 
       <DataGridContainer>
         <DataGrid

@@ -4,9 +4,10 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { Box, Button } from '@mui/material'
+import { Box } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { FC } from 'react'
+import { UpdateSectionPriceButton } from '@/features/section/update-price'
 
 export interface WorkshopTableProps {
   workshopsId: number
@@ -23,13 +24,7 @@ export const WorkshopTable: FC<WorkshopTableProps> = () => {
       disableColumnMenu: true,
       sortable: false,
       width: 300,
-      renderCell: () => (
-        <>
-          <Button size='small' variant='gray' sx={{ mr: 1 }}>
-            Редактировать
-          </Button>
-        </>
-      ),
+      renderCell: () => <UpdateSectionPriceButton>Редактировать</UpdateSectionPriceButton>,
     },
   ]
 
@@ -41,11 +36,7 @@ export const WorkshopTable: FC<WorkshopTableProps> = () => {
 
   return (
     <Box display={'flex'} flexDirection='column'>
-      <Button variant='gray' sx={{ my: 4, alignSelf: 'end' }}>
-        Добавить
-      </Button>
-
-      <DataGridContainer>
+      <DataGridContainer mt={4}>
         <DataGrid
           rows={rows}
           columns={columns}
