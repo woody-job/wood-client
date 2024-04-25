@@ -8,4 +8,5 @@ export const urls = {
   referenceBook: 'reference-book',
   dryers: 'dryers',
   dryer: 'dryer',
+  dashboard: 'dashboard',
 }

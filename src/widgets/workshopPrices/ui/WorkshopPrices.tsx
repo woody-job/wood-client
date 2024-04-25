@@ -20,19 +20,17 @@ export const WorkshopPrices: FC<WorkshopPricesProps> = () => {
       <EditingForm onSubmit={handleNewMaterialPrice}>
         <Typography>Сырье</Typography>
 
-        <EditingField
-          renderEditingField={ref => <TextField fullWidth={false} inputRef={ref} />}
-          value={'10 000 рублей'}
-        />
+        <EditingField value={'10 000 рублей'}>
+          <TextField fullWidth={false} autoFocus />
+        </EditingField>
       </EditingForm>
 
       <EditingForm onSubmit={handleNewSalary}>
         <Typography>Распиловка</Typography>
 
-        <EditingField
-          renderEditingField={ref => <TextField fullWidth={false} inputRef={ref} />}
-          value={'100 000 рублей'}
-        />
+        <EditingField value={'100 000 рублей'}>
+          <TextField fullWidth={false} autoFocus />
+        </EditingField>
       </EditingForm>
     </Box>
   )

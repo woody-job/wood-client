@@ -1,1 +1,0 @@
-export { UpdateSectionPriceButton } from './ui'

@@ -1,5 +1,5 @@
 export { ModalContent } from './modal'
-export { DashItem } from './dashboard'
+export { MenuSidebarItem } from './menu'
 export { dataGridStyles, CustomGridPanel } from './data-grid'
 export { CustomTabPanel } from './tabs'
 export { EditingField, EditingForm } from './editing-field'

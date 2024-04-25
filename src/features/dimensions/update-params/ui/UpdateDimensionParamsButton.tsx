@@ -2,7 +2,7 @@ import { Button, ButtonProps, MenuItem, Modal, Select, TextField, Typography } f
 import { FormEventHandler, forwardRef, useState } from 'react'
 import { ModalContent } from '@/shared/ui'
 
-export const UpdateSectionParamsButton = forwardRef<HTMLButtonElement, ButtonProps>(
+export const UpdateDimensionParamsButton = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const [isOpen, setIsOpen] = useState(false)
 
@@ -12,7 +12,7 @@ export const UpdateSectionParamsButton = forwardRef<HTMLButtonElement, ButtonPro
     const handleUpdateSection: FormEventHandler = e => {
       e.preventDefault()
 
-      console.log('update-params section')
+      console.log('update-params dimensions')
       handleClose()
     }
 
@@ -30,10 +30,10 @@ export const UpdateSectionParamsButton = forwardRef<HTMLButtonElement, ButtonPro
           >
             <Typography>Редактировать сечение</Typography>
 
-            <TextField label='Ширина (мм)' />
-            <TextField label='Толщина (мм)' />
-            <TextField label='Длина (м)' />
-            <Select value='default'>
+            <TextField label='Ширина (мм)' size='small' />
+            <TextField label='Толщина (мм)' size='small' />
+            <TextField label='Длина (м)' size='small' />
+            <Select value='default' size='small'>
               <MenuItem value='default'>--Сорт--</MenuItem>
               <MenuItem value='sort1'>Первый сорт</MenuItem>
               <MenuItem value='sort2'>Второй сорт</MenuItem>

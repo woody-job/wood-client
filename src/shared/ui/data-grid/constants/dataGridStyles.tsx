@@ -11,6 +11,8 @@ export const dataGridStyles: SxProps<Theme> = {
   "& .MuiDataGrid-columnHeaders [role='row']": {
     backgroundColor: theme =>
       theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
+    borderTopLeftRadius: '18px',
+    borderTopRightRadius: '18px',
   },
   '& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus': {
     outline: 'none !important',

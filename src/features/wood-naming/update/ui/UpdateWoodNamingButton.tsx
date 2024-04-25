@@ -1,20 +1,20 @@
 import { Button, ButtonProps, Modal, TextField, Typography } from '@mui/material'
-import { FormEventHandler, forwardRef, useState } from 'react'
+import { FC, FormEventHandler, useState } from 'react'
 import { ModalContent } from '@/shared/ui'
 
-export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+export const UpdateWoodNamingButton: FC<ButtonProps> = props => {
   const [isOpenModal, setIsOpenModal] = useState(false)
 
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
 
-  const handleCreateUser: FormEventHandler = e => {
+  const handleUpdateUser: FormEventHandler = e => {
     e.preventDefault()
   }
 
   return (
     <>
-      <Button ref={ref} variant='gray' size='medium' onClick={handleOpenModal} {...props} />
+      <Button variant='gray' size='small' onClick={handleOpenModal} {...props} />
 
       <Modal
         open={isOpenModal}
@@ -25,20 +25,18 @@ export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((pro
           component='form'
           display='flex'
           flexDirection='column'
-          onSubmit={handleCreateUser}
           gap={5}
+          onSubmit={handleUpdateUser}
         >
-          <Typography id='create-user-modal-title' textAlign='center'>
-            Добавить сушильную камеру
-          </Typography>
+          <Typography id='create-user-modal-title'>Редактировать обозначение</Typography>
 
           <TextField id='name' label='Название' variant='outlined' size='small' />
 
           <Button type='submit' variant='contained' color='primary'>
-            Создать
+            Редактировать
           </Button>
         </ModalContent>
       </Modal>
     </>
   )
-})
+}

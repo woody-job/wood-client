@@ -4,10 +4,10 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { FC } from 'react'
-import { UpdateSectionPriceButton } from '@/features/section/update-price'
+import { UpdateDimensionPriceButton } from '@/features/dimensions/update-price'
 
 export interface WorkshopTableProps {
   workshopsId: number
@@ -24,7 +24,7 @@ export const WorkshopTable: FC<WorkshopTableProps> = () => {
       disableColumnMenu: true,
       sortable: false,
       width: 300,
-      renderCell: () => <UpdateSectionPriceButton>Редактировать</UpdateSectionPriceButton>,
+      renderCell: () => <UpdateDimensionPriceButton>Редактировать</UpdateDimensionPriceButton>,
     },
   ]
 
@@ -37,6 +37,15 @@ export const WorkshopTable: FC<WorkshopTableProps> = () => {
   return (
     <Box display={'flex'} flexDirection='column'>
       <DataGridContainer mt={4}>
+        <Typography
+          variant='subtitle1'
+          fontWeight='bold'
+          mb='15px'
+          sx={{ paddingLeft: '24px', paddingTop: '24px' }}
+        >
+          Цены
+        </Typography>
+
         <DataGrid
           rows={rows}
           columns={columns}

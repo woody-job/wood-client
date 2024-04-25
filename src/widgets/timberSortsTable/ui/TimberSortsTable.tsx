@@ -7,8 +7,8 @@ import {
 import { Box } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { ButtonWithConfirm } from '@/shared/ui'
-import { UpdateSectionParamsButton } from '@/features/section/update-params'
-import { CreateSectionButton } from '../../../features/section/create'
+import { UpdateDimensionParamsButton } from '@/features/dimensions/update-params'
+import { CreateDimensionButton } from '@/features/dimensions/create'
 
 export const TimberSortsTable = () => {
   const columns: GridColDef[] = [
@@ -24,7 +24,7 @@ export const TimberSortsTable = () => {
       width: 300,
       renderCell: () => (
         <>
-          <UpdateSectionParamsButton sx={{ mr: 1 }}>Редактировать</UpdateSectionParamsButton>
+          <UpdateDimensionParamsButton sx={{ mr: 1 }}>Редактировать</UpdateDimensionParamsButton>
           <ButtonWithConfirm
             header='Удалить сечение?'
             description='Вы точно хотите удалить это сечение?'
@@ -47,7 +47,7 @@ export const TimberSortsTable = () => {
 
   return (
     <Box display={'flex'} flexDirection='column'>
-      <CreateSectionButton sx={{ my: 4, alignSelf: 'end' }}>Добавить</CreateSectionButton>
+      <CreateDimensionButton sx={{ my: 4, alignSelf: 'end' }}>Добавить</CreateDimensionButton>
 
       <DataGridContainer>
         <DataGrid

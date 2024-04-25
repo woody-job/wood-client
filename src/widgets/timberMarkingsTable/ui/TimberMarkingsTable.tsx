@@ -6,8 +6,8 @@ import {
 } from '@/shared/ui/data-grid'
 import { Box } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { CreateTimberMarkingButton } from '@/features/timber-marking/create'
-import { UpdateTimberMarkingButton } from '@/features/timber-marking/update'
+import { CreateWoodNamingButton } from '@/features/wood-naming/create'
+import { UpdateWoodNamingButton } from '@/features/wood-naming/update'
 import { ButtonWithConfirm } from '@/shared/ui'
 
 export const TimberMarkingsTable = () => {
@@ -21,7 +21,7 @@ export const TimberMarkingsTable = () => {
       width: 300,
       renderCell: () => (
         <>
-          <UpdateTimberMarkingButton sx={{ mr: 1 }}>Редактировать</UpdateTimberMarkingButton>
+          <UpdateWoodNamingButton sx={{ mr: 1 }}>Редактировать</UpdateWoodNamingButton>
           <ButtonWithConfirm
             header='Редактировать обозначение'
             description='Вы точно хотите удалить это обозначение?'
@@ -61,9 +61,7 @@ export const TimberMarkingsTable = () => {
 
   return (
     <Box display={'flex'} flexDirection='column'>
-      <CreateTimberMarkingButton sx={{ my: 4, alignSelf: 'end' }}>
-        Добавить
-      </CreateTimberMarkingButton>
+      <CreateWoodNamingButton sx={{ my: 4, alignSelf: 'end' }}>Добавить</CreateWoodNamingButton>
 
       <DataGridContainer>
         <DataGrid

@@ -1,20 +1,20 @@
 import { Button, ButtonProps, Modal, TextField, Typography } from '@mui/material'
-import { FC, FormEventHandler, useState } from 'react'
+import { FormEventHandler, forwardRef, useState } from 'react'
 import { ModalContent } from '@/shared/ui'
 
-export const UpdateTimberMarkingButton: FC<ButtonProps> = props => {
+export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
 
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
 
-  const handleUpdateUser: FormEventHandler = e => {
+  const handleCreateUser: FormEventHandler = e => {
     e.preventDefault()
   }
 
   return (
     <>
-      <Button variant='gray' size='small' onClick={handleOpenModal} {...props} />
+      <Button ref={ref} variant='gray' size='medium' onClick={handleOpenModal} {...props} />
 
       <Modal
         open={isOpenModal}
@@ -25,25 +25,18 @@ export const UpdateTimberMarkingButton: FC<ButtonProps> = props => {
           component='form'
           display='flex'
           flexDirection='column'
-          gap={3}
-          onSubmit={handleUpdateUser}
+          onSubmit={handleCreateUser}
+          gap={5}
         >
-          <Typography
-            id='create-user-modal-title'
-            variant='h5'
-            component='h2'
-            sx={{ textAlign: 'center', mb: 5 }}
-          >
-            Редактировать обозначение
-          </Typography>
+          <Typography id='create-user-modal-title'>Создать обозначение</Typography>
 
           <TextField id='name' label='Название' variant='outlined' size='small' />
 
-          <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
-            Редактировать
+          <Button type='submit' variant='contained' color='primary'>
+            Создать
           </Button>
         </ModalContent>
       </Modal>
     </>
   )
-}
+})

@@ -25,21 +25,16 @@ export const UpdateDryerButton: FC<ButtonProps> = props => {
           component='form'
           display='flex'
           flexDirection='column'
-          gap={3}
+          gap={5}
           onSubmit={handleUpdateUser}
         >
-          <Typography
-            id='create-user-modal-title'
-            variant='h5'
-            component='h2'
-            sx={{ textAlign: 'center', mb: 5 }}
-          >
+          <Typography id='create-user-modal-title' textAlign='center'>
             Редактировать сушильную камеру
           </Typography>
 
           <TextField id='name' label='Название' variant='outlined' size='small' />
 
-          <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
+          <Button type='submit' variant='contained' color='primary'>
             Редактировать
           </Button>
         </ModalContent>
