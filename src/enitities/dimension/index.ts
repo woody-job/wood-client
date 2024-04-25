@@ -1,0 +1,1 @@
+export { UpdateDimensionPriceModal } from './ui'

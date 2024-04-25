@@ -1,12 +1,13 @@
-import { DeleteUserButton } from '@/features/user/delete'
 import { UpdateUserButton } from '@/features/user/update'
-import { dataGridStyles } from '@/shared/ui'
+import { ButtonWithConfirm, dataGridStyles } from '@/shared/ui'
 import { CustomGridPanel, DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 import { Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 export const UsersTable = () => {
+  const handleDeleteUser = () => {}
+
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'Id', width: 90 },
     { field: 'role', headerName: 'Роль', width: 120 },
@@ -22,7 +23,13 @@ export const UsersTable = () => {
       renderCell: () => (
         <>
           <UpdateUserButton sx={{ mr: 1 }}>Редактировать</UpdateUserButton>
-          <DeleteUserButton>Удалить</DeleteUserButton>
+          <ButtonWithConfirm
+            header='Удалить пользователя'
+            description='Вы уверены, что хотите удалить пользователя?'
+            onConfirm={handleDeleteUser}
+          >
+            Удалить
+          </ButtonWithConfirm>
         </>
       ),
     },
