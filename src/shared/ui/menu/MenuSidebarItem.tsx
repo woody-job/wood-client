@@ -7,7 +7,7 @@ export interface DashItemProps {
   children: ReactNode
 }
 
-export const DashItem: FC<DashItemProps> = props => {
+export const MenuSidebarItem: FC<DashItemProps> = props => {
   const { itemVariant = 'default', children, isActive } = props
 
   const subitemStyles: SxProps<Theme> = {

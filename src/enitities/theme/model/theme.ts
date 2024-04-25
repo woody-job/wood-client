@@ -1,5 +1,5 @@
 import { ThemeOptions } from '@mui/material'
-import { tokens } from '@/shared/constants/tokens'
+import { colorTokens } from '@/shared/constants'
 import { buttonMUI, selectMUI, textFieldMUI } from '@/enitities/theme/model/components'
 import { ThemeModes } from '@/enitities/theme/types'
 import { modeSwitcher } from '@/shared/libs/helpers'
@@ -43,42 +43,42 @@ export const getThemeSettings = (mode: ThemeModes): ThemeOptions => {
   return {
     primary: modeSwitcher(
       {
-        ...tokens.primary,
-        background: tokens.white['100'],
+        ...colorTokens.primary,
+        background: colorTokens.white['100'],
       },
       {
-        ...tokens.primary,
-        brand: tokens.primary.purple,
-        purpleOpacity: tokens.white['5'],
-        background: tokens.black['100'],
+        ...colorTokens.primary,
+        brand: colorTokens.primary.purple,
+        purpleOpacity: colorTokens.white['5'],
+        background: colorTokens.black['100'],
       }
     )(mode),
     secondary: {
-      ...tokens.secondary,
+      ...colorTokens.secondary,
     },
-    white: modeSwitcher(tokens.white, tokens.black)(mode),
-    black: modeSwitcher(tokens.black, tokens.white)(mode),
+    white: modeSwitcher(colorTokens.white, colorTokens.black)(mode),
+    black: modeSwitcher(colorTokens.black, colorTokens.white)(mode),
     background: {
-      main: modeSwitcher(tokens.background.main, tokens.white['5'])(mode),
+      main: modeSwitcher(colorTokens.background.main, colorTokens.white['5'])(mode),
     },
 
     palette: {
       mode: mode,
       primary: modeSwitcher(
         {
-          main: tokens.primary.brand,
-          contrastText: tokens.white['100'],
+          main: colorTokens.primary.brand,
+          contrastText: colorTokens.white['100'],
         },
         {
-          main: tokens.primary.purple,
-          contrastText: tokens.white['100'],
+          main: colorTokens.primary.purple,
+          contrastText: colorTokens.white['100'],
         }
       )(mode),
       secondary: {
-        main: tokens.secondary.indigo,
+        main: colorTokens.secondary.indigo,
       },
       background: {
-        default: modeSwitcher(tokens.white['100'], tokens.black['100'])(mode),
+        default: modeSwitcher(colorTokens.white['100'], colorTokens.black['100'])(mode),
       },
     },
 
@@ -109,7 +109,6 @@ export const getThemeSettings = (mode: ThemeModes): ThemeOptions => {
       MuiButton: buttonMUI,
       MuiTextField: textFieldMUI,
       MuiSelect: selectMUI,
-      
     },
   }
 }

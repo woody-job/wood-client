@@ -1,0 +1,1 @@
+export { UpdateDimensionPriceButton } from './ui'

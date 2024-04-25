@@ -1,8 +1,9 @@
 import { Box, Typography } from '@mui/material'
 import { NavLink, useLocation } from 'react-router-dom'
 import { Fragment } from 'react'
-import { DashItem } from '@/shared/ui'
+import { MenuSidebarItem } from '@/shared/ui'
 import { paths, settingsPaths } from './Sidebar.constants.ts'
+import { urls } from '@/shared/constants'
 
 export const Sidebar = () => {
   const location = useLocation()
@@ -39,22 +40,33 @@ export const Sidebar = () => {
         flexGrow='1'
         justifyContent='center'
       >
+        <Box component={NavLink} to={urls.dashboard} mb={3}>
+          <MenuSidebarItem isActive={location.pathname === urls.dashboard}>
+            Статистика
+          </MenuSidebarItem>
+        </Box>
+
         {paths.map(path => (
           <Fragment key={path.name}>
             {'children' in path ? (
               <>
-                <DashItem>{path.name}</DashItem>
+                <MenuSidebarItem>{path.name}</MenuSidebarItem>
                 {path.children?.map(child => (
                   <NavLink key={child.name} to={child.path}>
-                    <DashItem itemVariant='subitem' isActive={location.pathname === child.path}>
+                    <MenuSidebarItem
+                      itemVariant='subitem'
+                      isActive={location.pathname === child.path}
+                    >
                       {child.name}
-                    </DashItem>
+                    </MenuSidebarItem>
                   </NavLink>
                 ))}
               </>
             ) : (
               <NavLink to={path.path}>
-                <DashItem isActive={location.pathname === path.path}>{path.name}</DashItem>
+                <MenuSidebarItem isActive={location.pathname === path.path}>
+                  {path.name}
+                </MenuSidebarItem>
               </NavLink>
             )}
           </Fragment>
@@ -66,7 +78,7 @@ export const Sidebar = () => {
       <Box display='flex' flexDirection='column' gap='2px' mb={5} mt={2}>
         {settingsPaths.map(({ path, name }) => (
           <NavLink to={path} key={name}>
-            <DashItem isActive={location.pathname === path}>{name}</DashItem>
+            <MenuSidebarItem isActive={location.pathname.startsWith(path)}>{name}</MenuSidebarItem>
           </NavLink>
         ))}
       </Box>
