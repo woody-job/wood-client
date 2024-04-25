@@ -18,7 +18,7 @@ export const WorkshopPrices: FC<WorkshopPricesProps> = () => {
   return (
     <Box display='flex' flexDirection='column' gap={2}>
       <EditingForm onSubmit={handleNewMaterialPrice}>
-        <Typography>Сырье</Typography>
+        <Typography mr={5}>Сырье</Typography>
 
         <EditingField value={'10 000 рублей'}>
           <TextField fullWidth={false} autoFocus />

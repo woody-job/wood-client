@@ -18,11 +18,13 @@ import Workshops from '@/pages/system-settings/workshops'
 import Timbers from '@/pages/system-settings/timbers'
 import ReferenceBook from '@/pages/system-settings/reference-book'
 import SettingsDryers from '@/pages/system-settings/settings-dryers'
+import Dashboard from '@/pages/dashboard'
 import { urls } from '@/shared/constants'
 
 export const AppRouter = () => {
   const routes = createRoutesFromElements(
     <Route path='/' errorElement={<RouteError />} element={<RootLayout />}>
+      <Route path={urls.dashboard} element={<Dashboard />} />
       <Route path={urls.login} element={<Login />} />
       <Route path={urls.admin} element={<Admin />}>
         <Route path={urls.adminUsers} element={<AdminUsers />} />

@@ -41,7 +41,7 @@ export const Sidebar = () => {
         justifyContent='center'
       >
         <Box component={NavLink} to={urls.dashboard} mb={3}>
-          <MenuSidebarItem isActive={location.pathname === urls.dashboard}>
+          <MenuSidebarItem isActive={location.pathname === `/${urls.dashboard}`}>
             Статистика
           </MenuSidebarItem>
         </Box>
