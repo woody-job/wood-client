@@ -13,7 +13,7 @@ export const textFieldMUI: TextFieldMUI = {
   defaultProps: {
     variant: 'outlined',
     fullWidth: true,
-    size: 'medium',
+    size: 'small',
   },
   styleOverrides: {
     root: {

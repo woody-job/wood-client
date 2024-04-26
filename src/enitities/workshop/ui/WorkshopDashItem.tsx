@@ -14,10 +14,8 @@ export const WorkshopDashItem = () => {
       justifyContent='center'
       alignItems='start'
       flexDirection='column'
-      minWidth='400px'
-      width='400px'
-      gap={2}
-      p={2}
+      flex='45% 0 0'
+      gap={1}
     >
       <Typography>Цех 1</Typography>
 

@@ -8,9 +8,8 @@ export const DashItem: FC<DashItemProps> = props => {
     <Box
       px={3}
       py={3}
-      bgcolor={theme => theme.black['5']}
       borderRadius='18px'
-      boxShadow={1}
+      border={theme => `1px solid ${theme.black['40']}`}
       {...props}
     />
   )

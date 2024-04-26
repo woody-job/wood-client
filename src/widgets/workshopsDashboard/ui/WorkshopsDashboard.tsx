@@ -6,7 +6,7 @@ export const WorkshopsDashboard = () => {
   return (
     <Box>
       <DashboardTitle>Цеха сейчас</DashboardTitle>
-      <Box display='flex' gap={3} sx={{ overflowX: 'scroll' }} pb={2}>
+      <Box display='flex' gap={2} flexWrap='wrap' justifyContent='center'>
         {/* Либо скролл, либо flex-wrap: wrap */}
         <WorkshopDashItem />
         <WorkshopDashItem />
