@@ -7,10 +7,10 @@ export const themeSlice = createSlice({
     mode: 'dark',
   } as ThemeStore,
   reducers: {
-    switchTheme: state => {
+    switchMode: state => {
       state.mode = state.mode === 'light' ? 'dark' : 'light'
     },
   },
 })
 
-export const { switchTheme } = themeSlice.actions
+export const { switchMode } = themeSlice.actions

@@ -1,4 +1,4 @@
-import { DashItem } from '@/shared/ui/dashboard/DashItem'
+import { DashItem } from '@/shared/ui'
 import { Box, Button, Typography, useTheme } from '@mui/material'
 import { ResponsiveBar } from '@nivo/bar'
 
@@ -7,18 +7,18 @@ export const WorkshopDashItem = () => {
   const data = [
     {
       day: '1 апр',
-      sort1: 10,
-      sort2: 1,
+      'Крутая древесина': 10,
+      'Хз древесина': 20,
     },
     {
       day: '2 апр',
-      sort1: 20,
-      sort2: 5,
+      'Крутая древесина': 5,
+      'Хз древесина': 1,
     },
     {
       day: '3 апр',
-      sort1: 5,
-      sort2: 1,
+      'Крутая древесина': 20,
+      'Хз древесина': 60,
     },
   ]
 
@@ -28,8 +28,8 @@ export const WorkshopDashItem = () => {
       justifyContent='center'
       alignItems='start'
       flexDirection='column'
-      maxWidth='600px'
-      width='100%'
+      minWidth='570px'
+      width='570px'
       gap={3}
     >
       <Typography>Цех 1</Typography>
@@ -37,15 +37,46 @@ export const WorkshopDashItem = () => {
       <Box height='350px' width='100%' borderRadius={4}>
         <ResponsiveBar
           data={data}
-          keys={['sort1', 'sort2']}
+          keys={['Крутая древесина', 'Хз древесина']}
           indexBy='day'
           margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
           padding={0.3}
           valueScale={{ type: 'linear' }}
           indexScale={{ type: 'band', round: true }}
-          colors={{ scheme: 'nivo' }}
+          colors={{ scheme: 'paired' }}
           axisTop={null}
           axisRight={null}
+          theme={{
+            tooltip: {
+              container: {
+                background: theme.white['100'],
+              },
+            },
+            axis: {
+              ticks: {
+                line: {
+                  stroke: theme.palette.text.primary,
+                  strokeWidth: 2,
+                  strokeLinecap: 'square',
+                },
+                text: {
+                  fill: theme.black['100'],
+                },
+              },
+              legend: {
+                text: {
+                  fill: theme.black['100'],
+                },
+              },
+              domain: {
+                line: {
+                  stroke: theme.palette.text.primary,
+                  strokeWidth: 2,
+                  strokeLinecap: 'square',
+                },
+              },
+            },
+          }}
           axisBottom={{
             tickSize: 5,
             tickPadding: 5,
