@@ -1,5 +1,6 @@
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { SortsDashItem } from '@/enitities/sort'
+import { DashboardTitle } from '@/shared/ui'
 
 export const DryersDashboard = () => {
   const sorts = [
@@ -9,10 +10,8 @@ export const DryersDashboard = () => {
 
   return (
     <Box>
-      <Typography variant='h5' mb={2}>
-        Сушилки
-      </Typography>
-      <Box display='flex' gap={1}>
+      <DashboardTitle>Сушилки</DashboardTitle>
+      <Box display='flex' gap={1} flexWrap='wrap'>
         <SortsDashItem sorts={sorts} name={'Камера 1'} />
         <SortsDashItem sorts={sorts} name={'Камера 1'} />
       </Box>

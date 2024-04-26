@@ -1,1 +1,1 @@
-export { WorkshopDashItem } from './ui'
+export { WorkshopDashItem, WorkshopWoodsBar } from './ui'

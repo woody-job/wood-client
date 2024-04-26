@@ -1,11 +1,12 @@
 import { WorkshopDashItem } from '@/enitities/workshop/ui'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
+import { DashboardTitle } from '@/shared/ui'
 
 export const WorkshopsDashboard = () => {
   return (
     <Box>
-      <Typography variant='h5'>Цеха сейчас</Typography>
-      <Box display='flex' gap={3} sx={{ overflowX: 'scroll' }} py={2}>
+      <DashboardTitle>Цеха сейчас</DashboardTitle>
+      <Box display='flex' gap={3} sx={{ overflowX: 'scroll' }} pb={2}>
         {/* Либо скролл, либо flex-wrap: wrap */}
         <WorkshopDashItem />
         <WorkshopDashItem />

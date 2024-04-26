@@ -21,6 +21,7 @@ export const Sidebar = () => {
         p: '16px',
         borderRight: '1px solid',
         borderLeft: '1px solid',
+        overflow: 'auto',
         borderColor: theme => theme.black[10],
       }}
     >
