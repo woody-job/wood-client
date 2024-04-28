@@ -1,1 +1,0 @@
-export { UpdateDryerModal } from './ui/'

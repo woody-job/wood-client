@@ -1,6 +1,6 @@
 import { DashItem } from '@/shared/ui'
 import { Box, Button, Typography } from '@mui/material'
-import { WorkshopWoodsBar } from '@/enitities/workshop'
+import { WorkshopWoodsBar } from '@/entities/workshop'
 
 export const WorkshopDashItem = () => {
   const stats = [
@@ -16,6 +16,7 @@ export const WorkshopDashItem = () => {
       flexDirection='column'
       flex='45% 0 0'
       gap={1}
+      backgroundColor={theme => theme.primary.purpleOpacity}
     >
       <Typography>Цех 1</Typography>
 

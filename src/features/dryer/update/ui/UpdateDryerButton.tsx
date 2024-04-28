@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@mui/material'
 import { FC, useState } from 'react'
-import { UpdateDryerModal } from '@/enitities/dryer'
+import { UpdateDryerModal } from '@/entities/dryer'
 
 export const UpdateDryerButton: FC<ButtonProps> = props => {
   const [isOpenModal, setIsOpenModal] = useState(false)

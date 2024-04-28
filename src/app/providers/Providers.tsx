@@ -2,7 +2,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/app/store'
 import { FC, ReactNode } from 'react'
 import { AppRouter } from '@/app/routers'
-import { CustomThemeProvider } from '@/enitities/theme/libs/providers'
+import { CustomThemeProvider } from '@/entities/theme/libs/providers'
 
 export interface ProviderProps {
   children?: ReactNode

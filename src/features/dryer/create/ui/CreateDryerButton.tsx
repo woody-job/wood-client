@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@mui/material'
 import { forwardRef, useState } from 'react'
-import { UpdateDryerModal } from '@/enitities/dryer'
+import { UpdateDryerModal } from '@/entities/dryer'
 
 export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpenModal, setIsOpenModal] = useState(false)

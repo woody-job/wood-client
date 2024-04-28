@@ -11,6 +11,8 @@ export const DataGridContainer = (props: DataGridContainerProps) => {
         borderRadius: '18px',
         px: '24px',
         py: '15px',
+        border: '1px solid',
+        borderColor: theme => theme.black[10],
       }}
       {...props}
     />

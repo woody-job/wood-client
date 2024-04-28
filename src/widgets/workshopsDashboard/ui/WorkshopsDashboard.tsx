@@ -1,4 +1,4 @@
-import { WorkshopDashItem } from '@/enitities/workshop/ui'
+import { WorkshopDashItem } from '@/entities/workshop/ui'
 import { Box } from '@mui/material'
 import { DashboardTitle } from '@/shared/ui'
 

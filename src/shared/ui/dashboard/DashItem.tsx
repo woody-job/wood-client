@@ -9,7 +9,7 @@ export const DashItem: FC<DashItemProps> = props => {
       px={3}
       py={3}
       borderRadius='18px'
-      border={theme => `1px solid ${theme.black['40']}`}
+      border={theme => `1px solid ${theme.black['10']}`}
       {...props}
     />
   )

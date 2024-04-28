@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from '@mui/material'
 import { FC } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/store.ts'
-import { switchMode } from '@/enitities/theme'
+import { switchMode } from '@/entities/theme'
 
 export interface ModeSwitchButtonProps extends ButtonProps {}
 

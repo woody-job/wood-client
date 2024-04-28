@@ -10,7 +10,7 @@ export interface DryerDashItemProps {
   }[]
 }
 
-export const SortsDashItem: FC<DryerDashItemProps> = ({ sorts, name }) => {
+export const WoodClassDashItem: FC<DryerDashItemProps> = ({ sorts, name }) => {
   const sum = useMemo(() => sorts.reduce((a, b) => a + b.value, 0), [sorts])
 
   return (
@@ -20,6 +20,14 @@ export const SortsDashItem: FC<DryerDashItemProps> = ({ sorts, name }) => {
       alignItems='start'
       flexDirection='column'
       width='300px'
+      sx={{
+        '&:nth-child(2n)': {
+          backgroundColor: theme => theme.primary.purpleOpacity,
+        },
+        '&:nth-child(2n+1)': {
+          backgroundColor: theme => theme.primary.blue,
+        },
+      }}
     >
       <Typography fontWeight='bold' variant='subtitle1'>
         {name}

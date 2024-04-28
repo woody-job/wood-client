@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@mui/material'
 import { FC, useState } from 'react'
-import { UpdateWoodNamingModal } from '@/enitities/wood-naming'
+import { UpdateWoodNamingModal } from '@/entities/wood-naming'
 
 export const UpdateWoodNamingButton: FC<ButtonProps> = props => {
   const [isOpenModal, setIsOpenModal] = useState(false)

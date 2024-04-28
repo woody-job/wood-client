@@ -9,12 +9,12 @@ export const Dashboard = () => {
       <Typography component='h1' variant='h5' mb={3}>
         Общая информация
       </Typography>
-      <WorkshopsDashboard />
 
-      <Box display='flex' mt={5} gap={3} flexWrap='wrap'>
+      <Box display='flex' mb={5} gap={1} flexWrap='wrap'>
         <InfoDashboard />
         <DryersDashboard />
       </Box>
+      <WorkshopsDashboard />
     </Box>
   )
 }

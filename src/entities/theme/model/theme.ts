@@ -1,7 +1,7 @@
 import { ThemeOptions } from '@mui/material'
 import { colorTokens } from '@/shared/constants'
-import { buttonMUI, selectMUI, textFieldMUI } from '@/enitities/theme/model/components'
-import { ThemeModes } from '@/enitities/theme/types'
+import { buttonMUI, selectMUI, textFieldMUI } from '@/entities/theme/model/components'
+import { ThemeModes } from '@/entities/theme/types'
 import { modeSwitcher } from '@/shared/libs/helpers'
 
 interface ColorWithOpacity {
@@ -49,6 +49,7 @@ export const getThemeSettings = (mode: ThemeModes): ThemeOptions => {
       {
         ...colorTokens.primary,
         brand: colorTokens.primary.purple,
+        blue: colorTokens.white['15'],
         purpleOpacity: colorTokens.white['5'],
         background: colorTokens.black['100'],
       }

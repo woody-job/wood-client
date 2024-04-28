@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { SortsDashItem } from '@/enitities/sort'
+import { WoodClassDashItem } from '@/entities/wood-class'
 import { DashboardTitle } from '@/shared/ui'
 
 export const InfoDashboard = () => {
@@ -11,9 +11,9 @@ export const InfoDashboard = () => {
   return (
     <Box>
       <DashboardTitle>Общие данные по складу</DashboardTitle>
-      <Box display='flex' gap={1} flexWrap='wrap'>
-        <SortsDashItem sorts={sorts} name='Сырая доска:' />
-        <SortsDashItem sorts={sorts} name='Сухая доска:' />
+      <Box display='flex' gap={2} flexWrap='wrap'>
+        <WoodClassDashItem sorts={sorts} name='Сырая доска:' />
+        <WoodClassDashItem sorts={sorts} name='Сухая доска:' />
       </Box>
     </Box>
   )

@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@mui/material'
 import { forwardRef, useState } from 'react'
-import { UpdateUserModal } from '@/enitities/user'
+import { UpdateUserModal } from '@/entities/user'
 
 export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpenModal, setIsOpenModal] = useState(false)

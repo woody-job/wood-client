@@ -28,7 +28,7 @@ export const paths: SidebarPath[] = [
   },
   {
     path: '/dryer',
-    name: 'Сушилка',
+    name: 'Сушилки',
   },
   {
     path: '',

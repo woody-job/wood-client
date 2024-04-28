@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@mui/material'
 import { forwardRef, useState } from 'react'
-import { UpdateDimensionPriceModal } from '@/enitities/dimension'
+import { UpdateDimensionPriceModal } from '@/entities/dimension'
 
 export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpen, setIsOpen] = useState(false)

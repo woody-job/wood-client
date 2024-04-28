@@ -10,7 +10,7 @@ import { ButtonWithConfirm } from '@/shared/ui'
 import { UpdateDimensionParamsButton } from '@/features/dimensions/update-params'
 import { CreateDimensionButton } from '@/features/dimensions/create'
 
-export const TimberSortsTable = () => {
+export const WoodClassTable = () => {
   const columns: GridColDef[] = [
     { field: 'width', headerName: 'Ширина (мм)', width: 200 },
     { field: 'thickness', headerName: 'Толщина (мм)', width: 200 },

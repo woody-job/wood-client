@@ -1,8 +1,8 @@
-import { createTheme, GlobalStyles, ThemeProvider } from '@mui/material'
 import { useAppSelector } from '@/app/store.ts'
-import { getThemeSettings } from '@/enitities/theme'
-import { FC, ReactNode, useMemo } from 'react'
+import { getThemeSettings } from '@/entities/theme'
+import { createTheme, GlobalStyles, ThemeProvider } from '@mui/material'
 import { bgBG } from '@mui/x-data-grid/locales'
+import { FC, ReactNode, useMemo } from 'react'
 
 export interface CustomThemeProviderProps {
   children?: ReactNode
