@@ -1,1 +1,1 @@
-export { Timbers as default } from './ui/Timbers.tsx'
+export { Woods as default } from './ui/Timbers.tsx'

@@ -1,1 +1,1 @@
-export { UpdateDimensionPriceModal } from './ui'
+export { UpdateDimensionPriceModal, DimensionsSunburst } from './ui'

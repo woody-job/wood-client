@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { TimberMarkingsTable } from '../../../../widgets/woodNamingTable'
 
-export const Timbers = () => {
+export const Woods = () => {
   return (
     <Box>
       <TimberMarkingsTable />

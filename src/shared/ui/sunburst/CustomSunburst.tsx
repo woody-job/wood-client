@@ -2,6 +2,7 @@ import { ResponsiveSunburst, SunburstSvgProps } from '@nivo/sunburst'
 import { FC, ReactNode } from 'react'
 import { Box, BoxProps, useTheme } from '@mui/material'
 import { useNivoTheme } from '@/shared/libs/hooks'
+import { colorTokens } from '@/shared/constants'
 
 export type CustomSunburstProps<T = unknown> = Partial<SunburstSvgProps<T>> & {
   data: T
@@ -35,10 +36,10 @@ export const CustomSunburst: FC<CustomSunburstProps> = ({
           data={data}
           margin={{ top: 40, right: 20, bottom: 20, left: 20 }}
           colors={{ scheme: 'paired' }}
-          borderColor={theme.black[40]}
+          borderColor={colorTokens.black[40]}
           arcLabelsSkipAngle={10}
           arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-          childColor={{ from: 'color', modifiers: [['brighter', 0.6]] }}
+          childColor={{ from: 'color', modifiers: [['brighter', 0.7]] }}
           borderWidth={1}
           theme={nivoTheme}
           enableArcLabels
