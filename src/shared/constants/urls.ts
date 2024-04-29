@@ -10,4 +10,6 @@ export const urls = {
   dryer: 'dryer',
   dashboard: 'dashboard',
   warehouse: 'warehouse',
+  arrival: 'arrival',
+  shipment: 'shipment',
 }

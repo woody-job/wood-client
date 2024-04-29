@@ -11,8 +11,12 @@ export const paths: SidebarPath[] = [
     name: 'Свод сырой',
   },
   {
-    path: '',
+    path: '/' + urls.arrival,
     name: 'Поступления',
+  },
+  {
+    path: '/' + urls.shipment,
+    name: 'Отгрузки',
   },
   {
     name: 'Цеха',

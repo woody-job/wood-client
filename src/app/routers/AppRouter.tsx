@@ -20,15 +20,20 @@ import SettingsReferenceBook from '@/pages/system-settings/reference-book'
 import ReferenceBook from '@/pages/reference-book'
 import SettingsDryers from '@/pages/system-settings/settings-dryers'
 import Dashboard from '@/pages/dashboard'
+import Arrival from '@/pages/arrival'
+import Shipment from '@/pages/shipment'
 import { urls } from '@/shared/constants'
 import { Warehouse } from '@/pages/warehouse/ui/Warehouse'
 
 export const AppRouter = () => {
   const routes = createRoutesFromElements(
     <Route path='/' errorElement={<RouteError />} element={<RootLayout />}>
+      <Route path={urls.arrival} element={<Arrival />} />
+      <Route path={urls.shipment} element={<Shipment />} />
       <Route path={urls.warehouse} element={<Warehouse />} />
       <Route path={urls.dashboard} element={<Dashboard />} />
       <Route path={urls.login} element={<Login />} />
+
       <Route path={urls.admin} element={<Admin />}>
         <Route path={urls.adminUsers} element={<AdminUsers />} />
 
@@ -39,6 +44,7 @@ export const AppRouter = () => {
           <Route path={urls.dryers} element={<SettingsDryers />} />
         </Route>
       </Route>
+
       <Route path={urls.referenceBook} element={<ReferenceBook />} />
       <Route path={urls.dryer} element={<Dryer />} />
 
