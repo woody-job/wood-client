@@ -1,48 +1,63 @@
 import { Box } from '@mui/material'
 import { ResponsiveBar } from '@nivo/bar'
 import { useNivoTheme } from '@/shared/libs/hooks'
+import { mapDataToWoodsBar } from '@/entities/workshop/libs'
+import { useMemo } from 'react'
 
 export const WorkshopWoodsBar = () => {
   const nivoTheme = useNivoTheme()
-
-  const data = [
+  const mockData = [
     {
       day: '1 апр',
-      'Крутая древесина': 10,
-      'Хз древесина': 20,
+      woods: [
+        { name: 'Крутая древесина', count: 10 },
+        { name: 'Хз древесина', count: 20 },
+      ],
     },
     {
       day: '2 апр',
-      'Крутая древесина': 5,
-      'Хз древесина': 1,
+      woods: [
+        { name: 'Крутая древесина', count: 5 },
+        { name: 'Хз древесина', count: 1 },
+      ],
     },
     {
       day: '3 апр',
-      'Крутая древесина': 20,
-      'Хз древесина': 60,
+      woods: [
+        { name: 'Крутая древесина', count: 20 },
+        { name: 'Хз древесина', count: 60 },
+      ],
     },
     {
       day: '4 апр',
-      'Крутая древесина': 10,
-      'Хз древесина': 20,
+      woods: [
+        { name: 'Крутая древесина', count: 10 },
+        { name: 'Хз древесина', count: 20 },
+      ],
     },
     {
       day: '5 апр',
-      'Крутая древесина': 5,
-      'Хз древесина': 1,
+      woods: [
+        { name: 'Крутая древесина', count: 5 },
+        { name: 'Хз древесина', count: 1 },
+      ],
     },
     {
       day: '6 апр',
-      'Крутая древесина': 20,
-      'Хз древесина': 60,
+      woods: [
+        { name: 'Крутая древесина', count: 20 },
+        { name: 'Хз древесина', count: 60 },
+      ],
     },
   ]
+
+  const { items, keys } = useMemo(() => mapDataToWoodsBar(mockData), [mockData])
 
   return (
     <Box height='300px' width='100%' borderRadius={4}>
       <ResponsiveBar
-        data={data}
-        keys={['Крутая древесина', 'Хз древесина']}
+        data={items}
+        keys={keys}
         indexBy='day'
         margin={{ top: 10, right: 10, bottom: 50, left: 50 }}
         padding={0.3}

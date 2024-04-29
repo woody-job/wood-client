@@ -16,7 +16,9 @@ export const WorkshopDashItem = () => {
       flexDirection='column'
       flex='45% 0 0'
       gap={1}
-      backgroundColor={theme => theme.primary.purpleOpacity}
+      sx={{
+        background: theme => theme.primary.purpleOpacity,
+      }}
     >
       <Typography>Цех 1</Typography>
 

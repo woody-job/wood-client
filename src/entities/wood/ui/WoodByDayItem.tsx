@@ -17,9 +17,9 @@ export interface WoodByDayItemProps {
 
 export const WoodByDayItem: FC<WoodByDayItemProps> = ({ action, title }) => {
   const columns: GridColDef[] = [
-    { field: 'dimension', headerName: 'Сечение', width: 170 },
-    { field: 'woodClass', headerName: 'Сорт', width: 170 },
-    { field: 'amount', headerName: 'Кол-во', width: 170 },
+    { field: 'dimension', headerName: 'Сечение', width: 150 },
+    { field: 'woodClass', headerName: 'Сорт', width: 100 },
+    { field: 'amount', headerName: 'Кол-во', width: 100 },
   ]
 
   const rows = [
@@ -45,7 +45,7 @@ export const WoodByDayItem: FC<WoodByDayItemProps> = ({ action, title }) => {
   }
 
   return (
-    <Box>
+    <Box overflow='hidden'>
       <Box display='flex' justifyContent='space-between' mb={3}>
         <Typography>{title}</Typography>
 
@@ -65,7 +65,7 @@ export const WoodByDayItem: FC<WoodByDayItemProps> = ({ action, title }) => {
         />
       </DataGridContainer>
 
-      <Box display='flex' justifyContent='center' width='100%' px={3}>
+      <Box display='flex' justifyContent='center' width='100%' px={5}>
         <CustomSunburst data={data} id='sort' value='amount'>
           <Typography variant='h6' textAlign='center'>
             Всего из:

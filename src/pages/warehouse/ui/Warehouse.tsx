@@ -34,6 +34,8 @@ export const Warehouse = () => {
         ))}
       </Tabs>
 
+      {/* <DimensionsSunburst data={data} /> */}
+      {/* Тут либо только data менять, либо доля каждого таба отдельные компоненты */}
       <CustomTabPanel tabPanelValue={currentTab.id} value={tabIds.dryWood}>
         <DimensionsSunburst data={data} />
       </CustomTabPanel>
