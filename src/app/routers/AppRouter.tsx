@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Outlet,
   Route,
   RouterProvider,
 } from 'react-router-dom'
@@ -22,6 +23,8 @@ import SettingsDryers from '@/pages/system-settings/settings-dryers'
 import Dashboard from '@/pages/dashboard'
 import Arrival from '@/pages/arrival'
 import Shipment from '@/pages/shipment'
+import DryWoodVault from '@/pages/vault/dry-wood'
+import WetWoodVault from '@/pages/vault/wet-wood'
 import { urls } from '@/shared/constants'
 import { Warehouse } from '@/pages/warehouse/ui/Warehouse'
 
@@ -47,6 +50,11 @@ export const AppRouter = () => {
 
       <Route path={urls.referenceBook} element={<ReferenceBook />} />
       <Route path={urls.dryer} element={<Dryer />} />
+
+      <Route path={urls.vault} element={<Outlet />}>
+        <Route path={urls.dryWoodVault} element={<DryWoodVault />} />
+        <Route path={urls.wetWoodVault} element={<WetWoodVault />} />
+      </Route>
 
       <Route path='*' element={<NotFound />} />
     </Route>

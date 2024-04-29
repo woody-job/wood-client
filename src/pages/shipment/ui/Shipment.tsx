@@ -1,14 +1,15 @@
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
+import { TimeRangeInputs } from '@/shared/ui/time-range'
 import { WoodsDayAmount } from '@/widgets/woodsDayAmount'
 import { WoodsRangeAmount } from '@/widgets/woodsRangeAmount'
-import { Box, Input, Tab, Tabs, Typography } from '@mui/material'
+import { Input, Tab, Tabs, Typography } from '@mui/material'
 
 export const Shipment = () => {
   const tabs = [
     { id: 'day', name: 'За день' },
-    { id: 'some-days', name: 'За несколько дней' },
+    { id: 'few-days', name: 'За несколько дней' },
   ]
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
@@ -37,15 +38,8 @@ export const Shipment = () => {
         <WoodsDayAmount />
       </CustomTabPanel>
 
-      <CustomTabPanel tabPanelValue={currentTab.id} value={'some-days'}>
-        <Typography variant='subtitle1' mt={4}>
-          Временной диапазон
-        </Typography>
-
-        <Box display='flex' gap={2} mb={3}>
-          <Input type='date' />
-          <Input type='date' />
-        </Box>
+      <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>
+        <TimeRangeInputs />
 
         <WoodsRangeAmount />
       </CustomTabPanel>

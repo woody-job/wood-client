@@ -12,4 +12,7 @@ export const urls = {
   warehouse: 'warehouse',
   arrival: 'arrival',
   shipment: 'shipment',
-}
+  vault: 'vault',
+  dryWoodVault: 'dry-wood',
+  wetWoodVault: 'wet-wood',
+} as const

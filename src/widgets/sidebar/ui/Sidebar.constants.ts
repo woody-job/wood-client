@@ -3,11 +3,11 @@ import { SidebarPath } from './Sidebar.types.ts'
 
 export const paths: SidebarPath[] = [
   {
-    path: '',
+    path: `/${urls.vault}/${urls.dryWoodVault}`,
     name: 'Свод сухой',
   },
   {
-    path: '',
+    path: `/${urls.vault}/${urls.wetWoodVault}`,
     name: 'Свод сырой',
   },
   {
