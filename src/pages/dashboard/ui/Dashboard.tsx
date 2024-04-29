@@ -10,7 +10,7 @@ export const Dashboard = () => {
         Общая информация
       </Typography>
 
-      <Box display='flex' mb={5} gap={1} flexWrap='wrap'>
+      <Box display='grid' mb={5} gridTemplateColumns='repeat(2, 1fr)'>
         <InfoDashboard />
         <DryersDashboard />
       </Box>

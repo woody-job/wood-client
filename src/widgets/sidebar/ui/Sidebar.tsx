@@ -4,7 +4,6 @@ import { Fragment } from 'react'
 import { MenuSidebarItem } from '@/shared/ui'
 import { paths, settingsPaths } from './Sidebar.constants.ts'
 import { urls } from '@/shared/constants'
-import { ModeSwitchButton } from '@/features/mode-switch'
 
 export const Sidebar = () => {
   const location = useLocation()
@@ -83,7 +82,6 @@ export const Sidebar = () => {
             <MenuSidebarItem isActive={location.pathname.startsWith(path)}>{name}</MenuSidebarItem>
           </NavLink>
         ))}
-        <ModeSwitchButton variant='outlined' size='small' sx={{ mt: 5, alignSelf: 'flex-end' }} />
       </Box>
     </Box>
   )

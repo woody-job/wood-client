@@ -3,7 +3,7 @@ import { Box } from '@mui/material'
 
 export const WoodsRangeAmount = () => {
   return (
-    <Box display='flex' justifyContent='space-between'>
+    <Box display='flex' gap={5}>
       <WoodAmountRangeItem />
       <WoodAmountRangeItem />
     </Box>
