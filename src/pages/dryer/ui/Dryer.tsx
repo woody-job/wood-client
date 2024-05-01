@@ -1,5 +1,7 @@
 import { DryerConditionItem } from '@/entities/dryer'
 import { Box, Typography } from '@mui/material'
+import { InsertWoodButton } from '@/features/dryer/insert-wood'
+import { RemoveWoodButton } from '@/features/dryer/remove-wood'
 
 export const Dryer = () => {
   return (
@@ -9,8 +11,16 @@ export const Dryer = () => {
       </Typography>
 
       <Box display='flex' gap='10px' width='100%' justifyContent='center' flexWrap='wrap'>
-        <DryerConditionItem />
-        <DryerConditionItem />
+        {Array.from({ length: 2 }).map(() => (
+          <DryerConditionItem
+            actions={
+              <>
+                <InsertWoodButton>Внести</InsertWoodButton>
+                <RemoveWoodButton />
+              </>
+            }
+          />
+        ))}
       </Box>
     </Box>
   )

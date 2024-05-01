@@ -2,7 +2,7 @@ import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
-import { WoodsDayAmount } from '@/widgets/woodsDayAmount'
+import { WoodsDayAmountShipment } from '../../../widgets/woodsDayAmountShipment'
 import { WoodsRangeAmount } from '@/widgets/woodsRangeAmount'
 import { Input, Tab, Tabs, Typography } from '@mui/material'
 
@@ -35,7 +35,7 @@ export const Shipment = () => {
       <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
         <Input type='date' value={today} />
 
-        <WoodsDayAmount />
+        <WoodsDayAmountShipment />
       </CustomTabPanel>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>
