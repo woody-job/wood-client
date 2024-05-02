@@ -22,11 +22,11 @@ export const paths: SidebarPath[] = [
     name: 'Цеха',
     children: [
       {
-        path: '',
+        path: `/${urls.workshop}/1`,
         name: 'Цех 1',
       },
       {
-        path: '',
+        path: `/${urls.workshop}/2`,
         name: 'Цех 2',
       },
     ],

@@ -51,6 +51,7 @@ export const getThemeSettings = (mode: ThemeModes): ThemeOptions => {
         brand: colorTokens.primary.purple,
         blue: colorTokens.white['15'],
         purpleOpacity: colorTokens.white['5'],
+        purple: colorTokens.white['10'],
         background: colorTokens.black['100'],
       }
     )(mode),

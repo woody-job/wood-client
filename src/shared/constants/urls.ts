@@ -15,4 +15,5 @@ export const urls = {
   vault: 'vault',
   dryWoodVault: 'dry-wood',
   wetWoodVault: 'wet-wood',
+  workshop: 'workshop',
 } as const

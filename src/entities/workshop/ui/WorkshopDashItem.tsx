@@ -1,6 +1,8 @@
 import { DashItem } from '@/shared/ui'
 import { Box, Button, Typography } from '@mui/material'
 import { WorkshopWoodsBar } from '@/entities/workshop'
+import { NavLink } from 'react-router-dom'
+import { urls } from '@/shared/constants'
 
 export const WorkshopDashItem = () => {
   const stats = [
@@ -36,7 +38,9 @@ export const WorkshopDashItem = () => {
           ))}
         </Box>
 
-        <Button size='small'>Подробнее</Button>
+        <Button component={NavLink} to={`/${urls.workshop}/1`} replace size='small'>
+          Подробнее
+        </Button>
       </Box>
     </DashItem>
   )

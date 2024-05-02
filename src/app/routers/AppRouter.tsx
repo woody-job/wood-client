@@ -27,6 +27,7 @@ import DryWoodVault from '@/pages/vault/dry-wood'
 import WetWoodVault from '@/pages/vault/wet-wood'
 import { urls } from '@/shared/constants'
 import { Warehouse } from '@/pages/warehouse/ui/Warehouse'
+import WorkshopItem from '@/pages/workshop-item'
 
 export const AppRouter = () => {
   const routes = createRoutesFromElements(
@@ -55,6 +56,8 @@ export const AppRouter = () => {
         <Route path={urls.dryWoodVault} element={<DryWoodVault />} />
         <Route path={urls.wetWoodVault} element={<WetWoodVault />} />
       </Route>
+
+      <Route path={urls.workshop + '/:workshopId'} element={<WorkshopItem />} />
 
       <Route path='*' element={<NotFound />} />
     </Route>
