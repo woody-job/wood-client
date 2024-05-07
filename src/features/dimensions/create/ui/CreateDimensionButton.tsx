@@ -11,9 +11,9 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
   const handleOpen = () => setIsOpen(true)
 
   const handleUpdateDimension = () => {
-      console.log('update-params dimensions')
-      handleClose() // TODO update dimension
-    }
+    console.log('update-params dimensions')
+    handleClose() // TODO update dimension
+  }
 
   return (
     <>

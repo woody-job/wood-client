@@ -60,7 +60,7 @@ export const WorkshopWoodsBar = () => {
   const { items, keys } = useMemo(() => mapDataToWoodsBar(mockData), [mockData])
 
   return (
-    <Box height='300px' width='100%' borderRadius={4}>
+    <Box height='280px' width='100%' borderRadius={4}>
       <ResponsiveBar
         data={items}
         keys={keys}

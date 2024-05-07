@@ -11,8 +11,8 @@ export const UpdateDryerButton: FC<ButtonProps> = props => {
   const handleCloseModal = () => setIsOpenModal(false)
 
   const handleCreateDryer = () => {
-      handleCloseModal()
-    }
+    handleCloseModal()
+  }
 
   return (
     <>
