@@ -1,10 +1,10 @@
 import { Box } from '@mui/material'
-import { TimberSortsTable } from '@/widgets/timberSortsTable'
+import { WoodClassTable } from '@/widgets/woodClassTable'
 
 export const ReferenceBook = () => {
   return (
     <Box>
-      <TimberSortsTable />
+      <WoodClassTable />
     </Box>
   )
 }

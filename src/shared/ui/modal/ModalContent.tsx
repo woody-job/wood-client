@@ -19,6 +19,6 @@ export const ModalContent: FC<BoxProps> = props => {
         ...sx,
       }}
       {...restProps}
-    ></Box>
+    />
   )
 }

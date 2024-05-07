@@ -1,7 +1,7 @@
 export const colorTokens = {
   primary: {
     brand: '#1C1C1C',
-    blue: '#E3F5FF',
+    blue: '#ebf8ff',
     purple: '#E5ECF6',
     purpleOpacity: '#E5ECF680',
   },
@@ -21,6 +21,7 @@ export const colorTokens = {
     80: '#FFFFFFCC',
     40: '#FFFFFF66',
     20: '#FFFFFF33',
+    15: '#FFFFFF15',
     10: '#FFFFFF0a',
     5: '#FFFFFF0D',
   },

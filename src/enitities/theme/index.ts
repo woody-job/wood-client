@@ -1,1 +1,0 @@
-export { getThemeSettings } from './model'

@@ -20,6 +20,7 @@ export const Sidebar = () => {
         p: '16px',
         borderRight: '1px solid',
         borderLeft: '1px solid',
+        overflow: 'auto',
         borderColor: theme => theme.black[10],
       }}
     >
@@ -41,7 +42,7 @@ export const Sidebar = () => {
         justifyContent='center'
       >
         <Box component={NavLink} to={urls.dashboard} mb={3}>
-          <MenuSidebarItem isActive={location.pathname === urls.dashboard}>
+          <MenuSidebarItem isActive={location.pathname === `/${urls.dashboard}`}>
             Статистика
           </MenuSidebarItem>
         </Box>
@@ -75,7 +76,7 @@ export const Sidebar = () => {
 
       <Typography color={theme => theme.black[40]}>Настройки</Typography>
 
-      <Box display='flex' flexDirection='column' gap='2px' mb={5} mt={2}>
+      <Box display='flex' flexDirection='column' gap='2px' mb={2} mt={2}>
         {settingsPaths.map(({ path, name }) => (
           <NavLink to={path} key={name}>
             <MenuSidebarItem isActive={location.pathname.startsWith(path)}>{name}</MenuSidebarItem>

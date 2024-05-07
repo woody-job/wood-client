@@ -1,7 +1,8 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { modeStorageMiddlware } from '@/entities/theme/libs/helpers'
+import { themeSlice } from '@/entities/theme/model/slices'
 import { baseApi } from '@/shared/api'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { themeSlice } from '@/enitities/theme/model/slices'
 
 const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(baseApi.middleware, modeStorageMiddlware.middleware),
 })
 
 export type RootState = ReturnType<typeof rootReducer>

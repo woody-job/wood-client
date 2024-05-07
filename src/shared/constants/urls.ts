@@ -4,9 +4,16 @@ export const urls = {
   adminUsers: 'users',
   systemSettings: 'system-settings',
   workshops: 'workshops',
-  timbers: 'timbers',
+  woods: 'timbers',
   referenceBook: 'reference-book',
   dryers: 'dryers',
   dryer: 'dryer',
   dashboard: 'dashboard',
-}
+  warehouse: 'warehouse',
+  arrival: 'arrival',
+  shipment: 'shipment',
+  vault: 'vault',
+  dryWoodVault: 'dry-wood',
+  wetWoodVault: 'wet-wood',
+  workshop: 'workshop',
+} as const
