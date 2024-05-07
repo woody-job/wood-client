@@ -1,5 +1,7 @@
-import { Button, ButtonProps } from '@mui/material'
 import { FC } from 'react'
+
+import { Button, ButtonProps } from '@mui/material'
+
 import { useAppDispatch, useAppSelector } from '@/app/store.ts'
 import { switchMode } from '@/entities/theme'
 

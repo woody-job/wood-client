@@ -1,5 +1,7 @@
-import { Button, ButtonProps } from '@mui/material'
 import { FC, useState } from 'react'
+
+import { Button, ButtonProps } from '@mui/material'
+
 import { UpdateUserModal } from '@/entities/user'
 
 export const UpdateUserButton: FC<ButtonProps> = props => {

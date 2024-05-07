@@ -1,6 +1,7 @@
-import { TimeRangeInputs } from '@/shared/ui/time-range'
-import { DryWoodVaultStats } from '@/widgets/dryWoodVaultStats'
 import { Box, Typography } from '@mui/material'
+
+import { DryWoodVaultStats } from '@/widgets/dryWoodVaultStats'
+import { TimeRangeInputs } from '@/shared/ui/time-range'
 
 export const DryWoodVault = () => {
   return (

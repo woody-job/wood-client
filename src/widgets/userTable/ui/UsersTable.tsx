@@ -1,9 +1,10 @@
-import { UpdateUserButton } from '@/features/user/update'
-import { ButtonWithConfirm, dataGridStyles } from '@/shared/ui'
-import { CustomGridPanel, DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 import { Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
+
+import { UpdateUserButton } from '@/features/user/update'
+import { ButtonWithConfirm, dataGridStyles } from '@/shared/ui'
+import { CustomGridPanel, DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 
 export const UsersTable = () => {
   const handleDeleteUser = () => {}

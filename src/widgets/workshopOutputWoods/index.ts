@@ -1,1 +1,1 @@
-export {WorkshopOutputWoods} from "./ui/WorkshopOutputWoods";
+export { WorkshopOutputWoods } from './ui/WorkshopOutputWoods'

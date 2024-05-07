@@ -1,9 +1,11 @@
+import { Box, Tab, Tabs, Typography } from '@mui/material'
+
 import { DimensionsSunburst } from '@/entities/dimension'
-import { data } from './Warehouse.constants'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
-import { Box, Tab, Tabs, Typography } from '@mui/material'
+
+import { data } from './Warehouse.constants'
 
 export const Warehouse = () => {
   const tabIds = {

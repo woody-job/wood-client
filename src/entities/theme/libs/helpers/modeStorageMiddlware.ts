@@ -1,6 +1,8 @@
+import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit'
+
 import { RootState } from '@/app/store'
 import { storageKeys } from '@/shared/constants'
-import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit'
+
 import { setMode, switchMode } from '../../model'
 
 export const modeStorageMiddlware = createListenerMiddleware()

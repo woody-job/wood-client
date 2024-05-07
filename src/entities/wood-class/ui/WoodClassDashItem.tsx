@@ -1,6 +1,8 @@
-import { DashItem } from '@/shared/ui'
-import { Typography } from '@mui/material'
 import { FC, useMemo } from 'react'
+
+import { Typography } from '@mui/material'
+
+import { DashItem } from '@/shared/ui'
 
 export interface DryerDashItemProps {
   name: string

@@ -1,11 +1,12 @@
+import { Box, Typography } from '@mui/material'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+
 import {
   CustomGridPanel,
   DataGridContainer,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { Box, Typography } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 export const ReferenceBook = () => {
   const columns: GridColDef[] = [

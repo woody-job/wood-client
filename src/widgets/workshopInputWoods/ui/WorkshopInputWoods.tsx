@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
+
 import { CustomGridPanel, dataGridStyles } from '@/shared/ui'
 import { DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 

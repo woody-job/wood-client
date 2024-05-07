@@ -1,7 +1,10 @@
-import { urls } from '@/shared/constants'
-import { Box, Tab, Tabs } from '@mui/material'
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+
+import { Box, Tab, Tabs } from '@mui/material'
+
+import { urls } from '@/shared/constants'
 
 export const SystemSettings = () => {
   const location = useLocation()

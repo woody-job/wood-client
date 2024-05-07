@@ -1,5 +1,6 @@
-import { VaultItem } from '@/entities/vault'
 import { Box } from '@mui/material'
+
+import { VaultItem } from '@/entities/vault'
 
 export const DryWoodVaultStats = () => {
   return (

@@ -1,8 +1,10 @@
-import { useAppSelector } from '@/app/store.ts'
-import { getThemeSettings } from '@/entities/theme'
+import { FC, ReactNode, useMemo } from 'react'
+
 import { createTheme, GlobalStyles, ThemeProvider } from '@mui/material'
 import { bgBG } from '@mui/x-data-grid/locales'
-import { FC, ReactNode, useMemo } from 'react'
+
+import { useAppSelector } from '@/app/store.ts'
+import { getThemeSettings } from '@/entities/theme'
 
 export interface CustomThemeProviderProps {
   children?: ReactNode

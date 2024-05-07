@@ -1,14 +1,15 @@
+import { Box } from '@mui/material'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+
+import { CreateDimensionButton } from '@/features/dimensions/create'
+import { UpdateDimensionParamsButton } from '@/features/dimensions/update-params'
+import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { Box } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { ButtonWithConfirm } from '@/shared/ui'
-import { UpdateDimensionParamsButton } from '@/features/dimensions/update-params'
-import { CreateDimensionButton } from '@/features/dimensions/create'
 
 export const WoodClassTable = () => {
   const columns: GridColDef[] = [

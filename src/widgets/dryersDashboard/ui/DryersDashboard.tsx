@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+
 import { WoodClassDashItem } from '@/entities/wood-class'
 import { DashboardTitle } from '@/shared/ui'
 

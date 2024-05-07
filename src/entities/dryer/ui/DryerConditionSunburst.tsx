@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material'
+
 import { CustomSunburst } from '@/shared/ui'
 
 export const DryerConditionSunburst = () => {

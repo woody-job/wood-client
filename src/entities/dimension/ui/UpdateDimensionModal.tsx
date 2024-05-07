@@ -1,6 +1,8 @@
-import { Button, MenuItem, Modal, ModalProps, Select, TextField, Typography } from '@mui/material'
-import { ModalContent } from '@/shared/ui'
 import { FC, FormEventHandler } from 'react'
+
+import { Button, MenuItem, Modal, ModalProps, Select, TextField, Typography } from '@mui/material'
+
+import { ModalContent } from '@/shared/ui'
 
 export interface UpdateDimensionModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -18,7 +20,7 @@ export const UpdateDimensionPriceModal: FC<UpdateDimensionModalProps> = ({
 }) => {
   const handleUpdateDimension: FormEventHandler = e => {
     e.preventDefault()
-    onUpdate({}) // TODO add update new dimension
+    onUpdate(dimension) // TODO add update new dimension
   }
 
   return (

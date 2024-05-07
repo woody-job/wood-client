@@ -1,6 +1,8 @@
-import { CustomSunburst } from '@/shared/ui'
-import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
+
+import { Box, Typography } from '@mui/material'
+
+import { CustomSunburst } from '@/shared/ui'
 
 export interface VaultItemProps {
   title?: string

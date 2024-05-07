@@ -1,8 +1,9 @@
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+
 import { modeStorageMiddlware } from '@/entities/theme/libs/helpers'
 import { themeSlice } from '@/entities/theme/model/slices'
 import { baseApi } from '@/shared/api'
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,

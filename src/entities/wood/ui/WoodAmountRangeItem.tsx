@@ -1,6 +1,8 @@
-import { WoodAmountSunburst } from '@/entities/wood'
-import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
+
+import { Box, Typography } from '@mui/material'
+
+import { WoodAmountSunburst } from '@/entities/wood'
 
 export interface WoodAmountRangeItemProps {
   title?: string

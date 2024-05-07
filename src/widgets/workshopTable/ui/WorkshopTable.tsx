@@ -1,13 +1,15 @@
+import { FC } from 'react'
+
+import { Box, Typography } from '@mui/material'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+
+import { UpdateDimensionPriceButton } from '@/features/dimensions/update-price'
 import {
   CustomGridPanel,
   DataGridContainer,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { Box, Typography } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { FC } from 'react'
-import { UpdateDimensionPriceButton } from '@/features/dimensions/update-price'
 
 export interface WorkshopTableProps {
   workshopsId: number

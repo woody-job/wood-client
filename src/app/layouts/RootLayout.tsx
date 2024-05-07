@@ -1,8 +1,9 @@
-import { ModeSwitchButton } from '@/features/mode-switch'
+import { Outlet } from 'react-router-dom'
+
+import { Box, Container } from '@mui/material'
+
 import { Header } from '@/widgets/header'
 import { Sidebar } from '@/widgets/sidebar'
-import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material'
-import { Outlet } from 'react-router-dom'
 
 export const RootLayout = () => {
   return (
