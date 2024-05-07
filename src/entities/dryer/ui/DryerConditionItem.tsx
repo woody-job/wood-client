@@ -1,7 +1,9 @@
+import { FC, ReactNode } from 'react'
+
 import { Box, Typography } from '@mui/material'
+
 import { DryerConditionSunburst } from '@/entities/dryer'
 import { DashItem } from '@/shared/ui'
-import { FC, ReactNode } from 'react'
 
 export interface DryerConditionItemProps {
   actions?: ReactNode

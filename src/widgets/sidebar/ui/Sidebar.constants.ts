@@ -1,4 +1,5 @@
 import { urls } from '@/shared/constants/urls.ts'
+
 import { SidebarPath } from './Sidebar.types.ts'
 
 export const paths: SidebarPath[] = [

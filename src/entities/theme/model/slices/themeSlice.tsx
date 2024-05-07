@@ -1,4 +1,5 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
 import { ThemeModes, ThemeStore } from '@/entities/theme/types'
 import { storageKeys } from '@/shared/constants'
 

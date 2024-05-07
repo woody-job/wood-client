@@ -1,5 +1,7 @@
 import { FC } from 'react'
+
 import { Box, TextField, Typography } from '@mui/material'
+
 import { EditingField, EditingForm } from '@/shared/ui'
 
 export interface WorkshopPricesProps {

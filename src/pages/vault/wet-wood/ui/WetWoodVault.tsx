@@ -1,6 +1,7 @@
-import { TimeRangeInputs } from '@/shared/ui/time-range'
-import { WetWoodVaultStats } from '@/widgets/wetWoodVaultStats'
 import { Box, Typography } from '@mui/material'
+
+import { WetWoodVaultStats } from '@/widgets/wetWoodVaultStats'
+import { TimeRangeInputs } from '@/shared/ui/time-range'
 
 export const WetWoodVault = () => {
   return (

@@ -1,1 +1,1 @@
-export {WorkshopCharts} from "./ui/WorkshopCharts.tsx";
+export { WorkshopCharts } from './ui/WorkshopCharts.tsx'

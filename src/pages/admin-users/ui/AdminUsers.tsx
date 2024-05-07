@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material'
+
 import { UsersTable } from '@/widgets/userTable'
 import { CreateUserButton } from '@/features/user/create'
 

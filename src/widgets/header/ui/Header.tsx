@@ -1,5 +1,6 @@
-import { ModeSwitchButton } from '@/features/mode-switch'
 import { Box } from '@mui/material'
+
+import { ModeSwitchButton } from '@/features/mode-switch'
 
 export const Header = () => {
   return (

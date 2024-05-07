@@ -1,6 +1,8 @@
-import { Button, Modal, ModalProps, TextField, Typography } from '@mui/material'
-import { ModalContent } from '@/shared/ui'
 import { FC, FormEventHandler } from 'react'
+
+import { Button, Modal, ModalProps, TextField, Typography } from '@mui/material'
+
+import { ModalContent } from '@/shared/ui'
 
 export interface UpdateDryerModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -18,7 +20,7 @@ export const UpdateDryerModal: FC<UpdateDryerModalProps> = ({
 }) => {
   const handleUpdateDryer: FormEventHandler = e => {
     e.preventDefault()
-    onUpdate({}) // TODO: add dryer
+    onUpdate(dryer) // TODO: add dryer
   }
 
   return (

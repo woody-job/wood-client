@@ -1,6 +1,8 @@
-import { Button, Modal, TextField, Typography } from '@mui/material'
-import { ModalContent } from '@/shared/ui'
 import { FC, FormEventHandler, useState } from 'react'
+
+import { Button, Modal, TextField, Typography } from '@mui/material'
+
+import { ModalContent } from '@/shared/ui'
 
 export interface AddWoodsArrivalShipmentProps {
   title: string

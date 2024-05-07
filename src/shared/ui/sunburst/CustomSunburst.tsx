@@ -1,8 +1,11 @@
-import { ResponsiveSunburst, SunburstSvgProps } from '@nivo/sunburst'
 import { FC, ReactNode } from 'react'
-import { Box, BoxProps, useTheme } from '@mui/material'
-import { useNivoTheme } from '@/shared/libs/hooks'
+
+import { ResponsiveSunburst, SunburstSvgProps } from '@nivo/sunburst'
+
+import { Box, BoxProps } from '@mui/material'
+
 import { colorTokens } from '@/shared/constants'
+import { useNivoTheme } from '@/shared/libs/hooks'
 
 export type CustomSunburstProps<T = unknown> = Partial<SunburstSvgProps<T>> & {
   data: T
@@ -16,7 +19,6 @@ export const CustomSunburst: FC<CustomSunburstProps> = ({
   children,
   ...restProps
 }) => {
-  const theme = useTheme()
   const nivoTheme = useNivoTheme()
 
   return (

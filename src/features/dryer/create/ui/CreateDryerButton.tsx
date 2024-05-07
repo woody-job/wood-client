@@ -1,5 +1,7 @@
-import { Button, ButtonProps } from '@mui/material'
 import { forwardRef, useState } from 'react'
+
+import { Button, ButtonProps } from '@mui/material'
+
 import { UpdateDryerModal } from '@/entities/dryer'
 
 export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
@@ -8,9 +10,9 @@ export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((pro
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
 
-  const handleCreateDryer = (dryer: unknown) => {
-    handleCloseModal()
-  }
+  const handleCreateDryer = () => {
+      handleCloseModal()
+    }
 
   return (
     <>

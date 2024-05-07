@@ -1,7 +1,8 @@
-import { WorkshopsDashboard } from '@/widgets/workshopsDashboard'
 import { Box, Typography } from '@mui/material'
+
 import { DryersDashboard } from '@/widgets/dryersDashboard'
 import { InfoDashboard } from '@/widgets/infoDashboard'
+import { WorkshopsDashboard } from '@/widgets/workshopsDashboard'
 
 export const Dashboard = () => {
   return (

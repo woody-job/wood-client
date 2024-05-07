@@ -1,8 +1,10 @@
-import { DashItem } from '@/shared/ui'
-import { Box, Button, Typography } from '@mui/material'
-import { WorkshopWoodsBar } from '@/entities/workshop'
 import { NavLink } from 'react-router-dom'
+
+import { Box, Button, Typography } from '@mui/material'
+
+import { WorkshopWoodsBar } from '@/entities/workshop'
 import { urls } from '@/shared/constants'
+import { DashItem } from '@/shared/ui'
 
 export const WorkshopDashItem = () => {
   const stats = [

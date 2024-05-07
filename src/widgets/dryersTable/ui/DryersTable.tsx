@@ -1,14 +1,15 @@
+import { Box } from '@mui/material'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+
+import { CreateDryerButton } from '@/features/dryer/create'
+import { UpdateDryerButton } from '@/features/dryer/update'
+import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { Box } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { ButtonWithConfirm } from '@/shared/ui'
-import { UpdateDryerButton } from '@/features/dryer/update'
-import { CreateDryerButton } from '@/features/dryer/create'
 
 export const DryersTable = () => {
   const columns: GridColDef[] = [

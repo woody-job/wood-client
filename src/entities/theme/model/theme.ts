@@ -1,7 +1,8 @@
 import { ThemeOptions } from '@mui/material'
-import { colorTokens } from '@/shared/constants'
+
 import { buttonMUI, selectMUI, textFieldMUI } from '@/entities/theme/model/components'
 import { ThemeModes } from '@/entities/theme/types'
+import { colorTokens } from '@/shared/constants'
 import { modeSwitcher } from '@/shared/libs/helpers'
 
 interface ColorWithOpacity {

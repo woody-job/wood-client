@@ -1,5 +1,7 @@
-import { Button, ButtonProps } from '@mui/material'
 import { forwardRef, useState } from 'react'
+
+import { Button, ButtonProps } from '@mui/material'
+
 import { UpdateUserModal } from '@/entities/user'
 
 export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
@@ -9,7 +11,7 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
   const handleCloseModal = () => setIsOpenModal(false)
 
   // TODO user modal
-  const handleCreateUser = (updatedUser: unknown) => {}
+  const handleCreateUser = () => {}
 
   return (
     <>

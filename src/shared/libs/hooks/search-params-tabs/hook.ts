@@ -1,6 +1,8 @@
-import { UseSearchParamsTabsReturn } from '@/shared/libs/hooks/search-params-tabs'
 import { SyntheticEvent, useMemo } from 'react'
+
 import { useSearchParams } from 'react-router-dom'
+
+import { UseSearchParamsTabsReturn } from '@/shared/libs/hooks/search-params-tabs'
 
 export const useSearchParamsTabs = <TTab>(
   tabName: string,

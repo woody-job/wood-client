@@ -1,10 +1,11 @@
+import { Input, Tab, Tabs, Typography } from '@mui/material'
+
+import { WoodsDayAmountArrival } from '@/widgets/woodsDayAmountArrival'
+import { WoodsRangeAmount } from '@/widgets/woodsRangeAmount'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
-import { WoodsRangeAmount } from '@/widgets/woodsRangeAmount'
-import { Input, Tab, Tabs, Typography } from '@mui/material'
-import { WoodsDayAmountArrival } from '@/widgets/woodsDayAmountArrival'
 
 export const Arrival = () => {
   const tabs = [

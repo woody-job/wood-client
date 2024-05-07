@@ -1,7 +1,8 @@
-import { DryerConditionItem } from '@/entities/dryer'
 import { Box, Typography } from '@mui/material'
+
 import { InsertWoodButton } from '@/features/dryer/insert-wood'
 import { RemoveWoodButton } from '@/features/dryer/remove-wood'
+import { DryerConditionItem } from '@/entities/dryer'
 
 export const Dryer = () => {
   return (

@@ -1,3 +1,5 @@
+import { FC, FormEventHandler } from 'react'
+
 import {
   Box,
   Button,
@@ -8,7 +10,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { FC, FormEventHandler } from 'react'
+
 import { ModalContent } from '@/shared/ui'
 
 export interface UpdateUserModalProps extends Omit<ModalProps, 'children'> {
@@ -20,7 +22,6 @@ export interface UpdateUserModalProps extends Omit<ModalProps, 'children'> {
 }
 
 export const UpdateUserModal: FC<UpdateUserModalProps> = ({
-  user,
   title,
   action,
   onUpdate,

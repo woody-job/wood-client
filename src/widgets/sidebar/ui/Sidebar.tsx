@@ -1,9 +1,13 @@
-import { Box, Typography } from '@mui/material'
-import { NavLink, useLocation } from 'react-router-dom'
 import { Fragment } from 'react'
-import { MenuSidebarItem } from '@/shared/ui'
-import { paths, settingsPaths } from './Sidebar.constants.ts'
+
+import { NavLink, useLocation } from 'react-router-dom'
+
+import { Box, Typography } from '@mui/material'
+
 import { urls } from '@/shared/constants'
+import { MenuSidebarItem } from '@/shared/ui'
+
+import { paths, settingsPaths } from './Sidebar.constants.ts'
 
 export const Sidebar = () => {
   const location = useLocation()

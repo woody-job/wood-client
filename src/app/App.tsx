@@ -1,5 +1,7 @@
-import { Providers } from '@/app/providers'
 import { CssBaseline } from '@mui/material'
+
+import { Providers } from '@/app/providers'
+
 import './fonts.css'
 
 const App = () => {

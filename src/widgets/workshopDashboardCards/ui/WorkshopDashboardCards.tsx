@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material'
+
 import { DashItem } from '@/shared/ui'
 
 export const WorkshopDashboardCards = () => {

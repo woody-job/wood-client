@@ -1,6 +1,8 @@
-import { CustomSunburst } from '@/shared/ui'
-import { Typography } from '@mui/material'
 import { FC } from 'react'
+
+import { Typography } from '@mui/material'
+
+import { CustomSunburst } from '@/shared/ui'
 
 export interface DimensionProps {
   data: unknown

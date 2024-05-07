@@ -1,6 +1,8 @@
-import { Button, Modal, ModalProps, TextField, Typography } from '@mui/material'
-import { ModalContent } from '@/shared/ui'
 import { FC, FormEventHandler } from 'react'
+
+import { Button, Modal, ModalProps, TextField, Typography } from '@mui/material'
+
+import { ModalContent } from '@/shared/ui'
 
 export interface UpdateWoodNamingModalProps extends Omit<ModalProps, 'children'> {
   onUpdate: (woodName: string) => void
@@ -13,7 +15,6 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = ({
   onUpdate,
   action,
   title,
-  woodName,
   ...modalProps
 }) => {
   const handleCreateUser: FormEventHandler = e => {

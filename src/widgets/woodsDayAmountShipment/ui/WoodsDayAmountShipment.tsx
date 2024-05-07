@@ -1,5 +1,6 @@
-import { AddWoodsArrivalShipment, WoodByDayItem } from '@/entities/wood'
 import { Box } from '@mui/material'
+
+import { AddWoodsArrivalShipment, WoodByDayItem } from '@/entities/wood'
 
 export const WoodsDayAmountShipment = () => {
   return (

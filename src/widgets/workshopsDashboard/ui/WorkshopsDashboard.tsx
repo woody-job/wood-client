@@ -1,5 +1,6 @@
-import { WorkshopDashItem } from '@/entities/workshop/ui'
 import { Box } from '@mui/material'
+
+import { WorkshopDashItem } from '@/entities/workshop/ui'
 import { DashboardTitle } from '@/shared/ui'
 
 export const WorkshopsDashboard = () => {

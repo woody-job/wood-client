@@ -1,5 +1,4 @@
-
 export const shortRuDateFormater = new Intl.DateTimeFormat('ru-RU', {
-    month: 'short',
-    day: 'numeric',
-});
+  month: 'short',
+  day: 'numeric',
+})

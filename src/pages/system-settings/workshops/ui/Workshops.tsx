@@ -1,9 +1,10 @@
 import { Box, Tab, Tabs } from '@mui/material'
-import { useSearchParamsTabs } from '@/shared/libs/hooks'
-import { appSearchParams } from '@/shared/constants'
-import { CustomTabPanel } from '@/shared/ui'
+
 import { WorkshopPrices } from '@/widgets/workshopPrices'
 import { WorkshopTable } from '@/widgets/workshopTable'
+import { appSearchParams } from '@/shared/constants'
+import { useSearchParamsTabs } from '@/shared/libs/hooks'
+import { CustomTabPanel } from '@/shared/ui'
 
 const getTabValue = (id: number) => 'workshop' + id
 

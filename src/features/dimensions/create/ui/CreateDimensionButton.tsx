@@ -1,5 +1,7 @@
-import { Button, ButtonProps } from '@mui/material'
 import { forwardRef, useState } from 'react'
+
+import { Button, ButtonProps } from '@mui/material'
+
 import { UpdateDimensionPriceModal } from '@/entities/dimension'
 
 export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
@@ -8,10 +10,10 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
 
-  const handleUpdateDimension = (dimension: unknown) => {
-    console.log('update-params dimensions')
-    handleClose() // TODO update dimension
-  }
+  const handleUpdateDimension = () => {
+      console.log('update-params dimensions')
+      handleClose() // TODO update dimension
+    }
 
   return (
     <>
