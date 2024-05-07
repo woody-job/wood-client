@@ -11,9 +11,9 @@ export const UpdateDimensionParamsButton = forwardRef<HTMLButtonElement, ButtonP
     const handleClose = () => setIsOpen(false)
     const handleOpen = () => setIsOpen(true)
 
-    const handleUpdateDimension = (dimension: unknown) => {
-      handleClose()
-    }
+    const handleUpdateDimension = () => {
+        handleClose()
+      }
 
     return (
       <>

@@ -10,7 +10,7 @@ export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
 
-  const handleCreateWoodNaming = (woodName: string) => {}
+  const handleCreateWoodNaming = () => {}
 
   return (
     <>

@@ -10,10 +10,10 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
 
-  const handleUpdateDimension = (dimension: unknown) => {
-    console.log('update-params dimensions')
-    handleClose() // TODO update dimension
-  }
+  const handleUpdateDimension = () => {
+      console.log('update-params dimensions')
+      handleClose() // TODO update dimension
+    }
 
   return (
     <>

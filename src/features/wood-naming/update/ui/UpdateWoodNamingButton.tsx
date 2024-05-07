@@ -10,9 +10,9 @@ export const UpdateWoodNamingButton: FC<ButtonProps> = props => {
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
 
-  const handleUpdateWoodName = (woodName: string) => {
-    handleCloseModal()
-  }
+  const handleUpdateWoodName = () => {
+      handleCloseModal()
+    }
 
   return (
     <>

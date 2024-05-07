@@ -11,7 +11,7 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
   const handleCloseModal = () => setIsOpenModal(false)
 
   // TODO user modal
-  const handleCreateUser = (updatedUser: unknown) => {}
+  const handleCreateUser = () => {}
 
   return (
     <>
