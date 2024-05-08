@@ -11,8 +11,8 @@ export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((pro
   const handleCloseModal = () => setIsOpenModal(false)
 
   const handleCreateDryer = () => {
-      handleCloseModal()
-    }
+    handleCloseModal()
+  }
 
   return (
     <>

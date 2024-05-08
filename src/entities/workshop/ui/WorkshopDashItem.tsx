@@ -18,7 +18,7 @@ export const WorkshopDashItem = () => {
       justifyContent='center'
       alignItems='start'
       flexDirection='column'
-      flex='45% 0 0'
+      width='500px'
       gap={1}
       sx={{
         background: theme => theme.primary.purpleOpacity,

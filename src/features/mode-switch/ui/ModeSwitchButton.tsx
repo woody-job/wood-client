@@ -1,9 +1,10 @@
 import { FC } from 'react'
 
-import { Button, ButtonProps } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from '@/app/store.ts'
 import { switchMode } from '@/entities/theme'
+import { MoonIcon, SunIcon } from '@/shared/ui'
 
 export interface ModeSwitchButtonProps extends ButtonProps {}
 
@@ -16,8 +17,8 @@ export const ModeSwitchButton: FC<ModeSwitchButtonProps> = props => {
   }
 
   return (
-    <Button onClick={handleSwitchMode} {...props}>
-      {mode === 'light' ? 'светлая' : 'темная'}
-    </Button>
+    <IconButton onClick={handleSwitchMode} aria-label={'сменить тему'} {...props}>
+      {mode === 'dark' ? <SunIcon /> : <MoonIcon />}
+    </IconButton>
   )
 }
