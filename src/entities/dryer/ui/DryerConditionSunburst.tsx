@@ -61,7 +61,13 @@ export const DryerConditionSunburst = () => {
   }
 
   return (
-    <CustomSunburst value='size' id='name' data={data}>
+    <CustomSunburst
+      value='size'
+      id='name'
+      data={data}
+      arcLabel={({ formattedValue }) => `${formattedValue}`}
+      valueFormat={value => value.toFixed(2) + ' м3'}
+    >
       <Typography textAlign='center'>Всего</Typography>
       <Typography textAlign='center'>80.784 м3</Typography>
     </CustomSunburst>

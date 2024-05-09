@@ -4,7 +4,7 @@ import { VaultItem } from '@/entities/vault'
 
 export const WetWoodVaultStats = () => {
   return (
-    <Box display='flex' gap={3} mt={5} flexWrap='wrap'>
+    <Box display='flex' gap={3} mt={5} flexWrap='wrap' justifyContent='space-evenly'>
       <VaultItem title='Производители' />
       <VaultItem title='Поступило' />
       <VaultItem title='Отгрузили' />
