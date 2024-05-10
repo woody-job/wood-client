@@ -5,7 +5,6 @@ export const RemoveWoodButton = () => {
     <ButtonWithConfirm
       size='medium'
       variant='gray'
-      sx={{ ml: 1 }}
       header={'Убрать доски'}
       description={'Вы точно хотите убрать доски?'}
       onConfirm={() => {}}
