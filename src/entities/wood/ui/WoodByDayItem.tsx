@@ -72,8 +72,12 @@ export const WoodByDayItem: FC<WoodByDayItemProps> = ({ action, title }) => {
           data={data}
           id='sort'
           value='amount'
-          arcLabel={({ formattedValue }) => `${formattedValue}`}
+          arcLabel={({ id }) => `${id}`}
           valueFormat={value => value.toFixed(2) + ' м3'}
+          containerProps={{
+            width: '500px',
+            height: '500px',
+          }}
         >
           <Typography variant='h6' textAlign='center'>
             Всего из:

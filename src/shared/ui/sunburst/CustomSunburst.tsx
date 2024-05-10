@@ -1,10 +1,13 @@
 import { ReactNode } from 'react'
 
+import { ColorModifier } from '@nivo/colors/dist/types/inheritedColor'
 import { ResponsiveSunburst, SunburstSvgProps } from '@nivo/sunburst'
 
 import { Box, BoxProps, Typography } from '@mui/material'
 
+import { useAppSelector } from '@/app/store.ts'
 import { chartColors, colorTokens } from '@/shared/constants'
+import { modeSwitcher } from '@/shared/libs/helpers'
 import { useNivoTheme } from '@/shared/libs/hooks'
 import { ColorItem, CustomTooltip } from '@/shared/ui'
 
@@ -21,6 +24,7 @@ export const CustomSunburst = <T,>({
   ...restProps
 }: CustomSunburstProps<T>) => {
   const nivoTheme = useNivoTheme()
+  const currentMode = useAppSelector(state => state.theme.mode)
 
   return (
     <Box
@@ -41,7 +45,10 @@ export const CustomSunburst = <T,>({
           colors={chartColors}
           borderColor={colorTokens.black[40]}
           arcLabelsSkipAngle={10}
-          arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+          arcLabelsTextColor={{
+            from: 'color',
+            modifiers: [modeSwitcher<ColorModifier>(['darker', 2], ['brighter', 5])(currentMode)],
+          }}
           childColor={{ from: 'color', modifiers: [['opacity', 0.75]] }}
           borderWidth={1}
           theme={nivoTheme}

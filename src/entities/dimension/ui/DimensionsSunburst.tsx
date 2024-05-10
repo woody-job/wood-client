@@ -15,11 +15,12 @@ export const DimensionsSunburst: FC<DimensionProps> = ({ data }) => {
       id='name'
       value='size'
       containerProps={{
-        width: '100%',
-        height: '750px',
+        width: '800px',
+        height: '800px',
       }}
-      arcLabel={({ formattedValue }) => `${formattedValue}`}
+      arcLabel={({ id }) => `${id}`}
       valueFormat={value => value.toFixed(2) + ' м3'}
+      arcLabelsSkipAngle={6}
     >
       <Typography>Всего м3</Typography>
       <Typography>1225.34</Typography>

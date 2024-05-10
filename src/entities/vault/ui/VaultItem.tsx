@@ -58,10 +58,10 @@ export const VaultItem: FC<VaultItemProps> = ({ title }) => {
         id='name'
         value='value'
         containerProps={{
-          width: '500px',
-          height: '500px',
+          width: '650px',
+          height: '650px',
         }}
-        arcLabel={({ formattedValue }) => `${formattedValue}`}
+        arcLabel={({ id }) => `${id}`}
         valueFormat={value => value.toFixed(2) + ' м3'}
       >
         <Typography variant='subtitle1'>Всего м3</Typography>

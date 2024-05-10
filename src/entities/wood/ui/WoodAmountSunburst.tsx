@@ -10,15 +10,15 @@ export const WoodAmountSunburst = () => {
         name: '1 сорт',
         children: [
           {
-            name: '10x10',
+            name: '100x100x10',
             amount: 10,
           },
           {
-            name: '15x15',
+            name: '100x100x10',
             amount: 15,
           },
           {
-            name: '20x20',
+            name: '100x100x10',
             amount: 20,
           },
         ],
@@ -27,15 +27,15 @@ export const WoodAmountSunburst = () => {
         name: '2 сорт',
         children: [
           {
-            name: '10x10',
+            name: '100x100x10',
             amount: 10,
           },
           {
-            name: '15x15',
+            name: '100x100x10',
             amount: 15,
           },
           {
-            name: '20x20',
+            name: '100x100x10',
             amount: 20,
           },
         ],
@@ -44,15 +44,15 @@ export const WoodAmountSunburst = () => {
         name: 'Береза',
         children: [
           {
-            name: '10x10',
+            name: '100x100x10',
             amount: 10,
           },
           {
-            name: '15x15',
+            name: '100x100x10',
             amount: 15,
           },
           {
-            name: '20x20',
+            name: '100x100x10',
             amount: 20,
           },
         ],
@@ -61,7 +61,16 @@ export const WoodAmountSunburst = () => {
   }
 
   return (
-    <CustomSunburst data={data} id='name' value='amount'>
+    <CustomSunburst
+      data={data}
+      id='name'
+      value='amount'
+      arcLabel={({ id }) => `${id}`}
+      containerProps={{
+        width: '600px',
+        height: '600px',
+      }}
+    >
       <Typography variant='h6' textAlign='center'>
         Всего м3:
       </Typography>

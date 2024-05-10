@@ -13,6 +13,8 @@ export const WorkshopWoodsBar = () => {
         woods: [
           { name: 'Крутая древесина', count: 10 },
           { name: 'Хз древесина', count: 20 },
+          { name: 'Сосновая древесина', count: 15 },
+          { name: 'Дубовая древесина', count: 25 },
         ],
       },
       {
@@ -20,6 +22,8 @@ export const WorkshopWoodsBar = () => {
         woods: [
           { name: 'Крутая древесина', count: 5 },
           { name: 'Хз древесина', count: 1 },
+          { name: 'Сосновая древесина', count: 8 },
+          { name: 'Дубовая древесина', count: 12 },
         ],
       },
       {
@@ -27,6 +31,8 @@ export const WorkshopWoodsBar = () => {
         woods: [
           { name: 'Крутая древесина', count: 20 },
           { name: 'Хз древесина', count: 60 },
+          { name: 'Сосновая древесина', count: 30 },
+          { name: 'Дубовая древесина', count: 40 },
         ],
       },
       {
@@ -34,6 +40,8 @@ export const WorkshopWoodsBar = () => {
         woods: [
           { name: 'Крутая древесина', count: 10 },
           { name: 'Хз древесина', count: 20 },
+          { name: 'Сосновая древесина', count: 15 },
+          { name: 'Дубовая древесина', count: 25 },
         ],
       },
       {
@@ -41,6 +49,8 @@ export const WorkshopWoodsBar = () => {
         woods: [
           { name: 'Крутая древесина', count: 5 },
           { name: 'Хз древесина', count: 1 },
+          { name: 'Сосновая древесина', count: 8 },
+          { name: 'Дубовая древесина', count: 12 },
         ],
       },
       {
@@ -48,6 +58,8 @@ export const WorkshopWoodsBar = () => {
         woods: [
           { name: 'Крутая древесина', count: 20 },
           { name: 'Хз древесина', count: 60 },
+          { name: 'Сосновая древесина', count: 30 },
+          { name: 'Дубовая древесина', count: 40 },
         ],
       },
     ],
@@ -69,7 +81,7 @@ export const WorkshopWoodsBar = () => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'Количество',
+          legend: 'Процент от выхода',
           legendPosition: 'middle',
           legendOffset: -40,
           truncateTickAt: 0,

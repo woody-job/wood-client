@@ -6,6 +6,11 @@ export const useNivoTheme = (): Theme => {
   const theme = useTheme()
 
   return {
+    labels: {
+      text: {
+        fontWeight: 'bold',
+      },
+    },
     tooltip: {
       container: {
         background: theme.white['100'],
@@ -19,6 +24,7 @@ export const useNivoTheme = (): Theme => {
         },
         text: {
           fill: theme.black['100'],
+          fontSize: 12,
         },
       },
       legend: {
