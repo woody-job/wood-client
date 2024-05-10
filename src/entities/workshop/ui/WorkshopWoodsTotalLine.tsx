@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 
-import { ResponsiveLine, Serie } from '@nivo/line'
+import { Serie } from '@nivo/line'
 
 import { Box } from '@mui/material'
 
 import { shortRuDateFormater } from '@/shared/constants'
-import { useNivoTheme } from '@/shared/libs/hooks'
+import { CustomLine } from '@/shared/ui'
 
 const data = [
   { date: '2024-04-01', price: 30 },
@@ -16,9 +16,6 @@ const data = [
 ]
 
 export const WorkshopWoodsTotalLine = () => {
-  const nivoTheme = useNivoTheme()
-
-  const min = useMemo(() => Math.min(...data.map(item => item.price)), [data])
   const max = useMemo(() => Math.min(...data.map(item => item.price)), [data])
 
   const series: Serie[] = useMemo(
@@ -36,20 +33,18 @@ export const WorkshopWoodsTotalLine = () => {
 
   return (
     <Box height={300} width={'100%'}>
-      <ResponsiveLine
+      <CustomLine
         data={series}
-        theme={nivoTheme}
         margin={{ top: 10, right: 20, bottom: 50, left: 60 }}
+        tooltipFormat={value => `${value} р.`}
         yScale={{
           type: 'linear',
-          min: min - 40,
+          min: 0,
           max: max + 40,
           stacked: true,
           reverse: false,
         }}
-        yFormat=' >-.2f'
-        axisTop={null}
-        axisRight={null}
+        yFormat={value => Number(value).toFixed(2) + ' р.'}
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
@@ -68,16 +63,6 @@ export const WorkshopWoodsTotalLine = () => {
           truncateTickAt: 0,
           format: string => string + 'р.',
         }}
-        pointSize={10}
-        pointColor={{ theme: 'background' }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: 'serieColor' }}
-        pointLabel='data.yFormatted'
-        pointLabelYOffset={-12}
-        enableTouchCrosshair={true}
-        useMesh={true}
-        enablePoints={false}
-        colors={{ scheme: 'paired' }}
       />
     </Box>
   )

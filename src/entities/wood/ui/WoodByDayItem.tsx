@@ -33,7 +33,7 @@ export const WoodByDayItem: FC<WoodByDayItemProps> = ({ action, title }) => {
   ]
 
   const data = {
-    name: 'root',
+    sort: 'root',
     children: [
       {
         sort: '2 сорт',
@@ -68,7 +68,17 @@ export const WoodByDayItem: FC<WoodByDayItemProps> = ({ action, title }) => {
       </DataGridContainer>
 
       <Box display='flex' justifyContent='center' width='100%' px={5}>
-        <CustomSunburst data={data} id='sort' value='amount'>
+        <CustomSunburst
+          data={data}
+          id='sort'
+          value='amount'
+          arcLabel={({ id }) => `${id}`}
+          valueFormat={value => value.toFixed(2) + ' м3'}
+          containerProps={{
+            width: '500px',
+            height: '500px',
+          }}
+        >
           <Typography variant='h6' textAlign='center'>
             Всего из:
           </Typography>

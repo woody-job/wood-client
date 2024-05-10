@@ -40,7 +40,7 @@ export const InsertWoodButton: FC<ButtonProps> = props => {
           <TextField label='Сорт' variant='outlined' />
           <TextField label='Сечение' variant='outlined' />
           <TextField label='Порода' variant='outlined' />
-          <TextField type='Количество' label='Пароль' variant='outlined' />
+          <TextField label='Количество' variant='outlined' />
           <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
             Внести
           </Button>

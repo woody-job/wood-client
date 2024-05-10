@@ -8,15 +8,15 @@ export const data = {
           name: 'Сорт 1',
           children: [
             {
-              name: '10x10',
+              name: '100x100x10',
               size: 10,
             },
             {
-              name: '15x15',
+              name: '100x100x10',
               size: 15,
             },
             {
-              name: '20x20',
+              name: '100x100x10',
               size: 20,
             },
           ],
@@ -25,15 +25,15 @@ export const data = {
           name: 'Сорт 2',
           children: [
             {
-              name: '10x10',
+              name: '100x100x10',
               size: 10,
             },
             {
-              name: '15x15',
+              name: '100x100x10',
               size: 15,
             },
             {
-              name: '20x20',
+              name: '100x100x10',
               size: 20,
             },
           ],
@@ -47,15 +47,15 @@ export const data = {
           name: 'Сорт 1',
           children: [
             {
-              name: '10x10',
+              name: '100x100x10',
               size: 10,
             },
             {
-              name: '15x15',
+              name: '100x100x10',
               size: 15,
             },
             {
-              name: '20x20',
+              name: '100x100x10',
               size: 20,
             },
           ],
@@ -64,15 +64,15 @@ export const data = {
           name: 'Сорт 2',
           children: [
             {
-              name: '10x10',
+              name: '100x100x10',
               size: 10,
             },
             {
-              name: '15x15',
+              name: '100x100x10',
               size: 15,
             },
             {
-              name: '20x20',
+              name: '100x100x10',
               size: 20,
             },
           ],
@@ -86,15 +86,15 @@ export const data = {
           name: 'Сорт 1',
           children: [
             {
-              name: '10x10',
+              name: '100x100x10',
               size: 10,
             },
             {
-              name: '15x15',
+              name: '100x100x10',
               size: 15,
             },
             {
-              name: '20x20',
+              name: '100x100x10',
               size: 20,
             },
           ],
@@ -103,15 +103,15 @@ export const data = {
           name: 'Сорт 2',
           children: [
             {
-              name: '10x10',
+              name: '100x100x10',
               size: 10,
             },
             {
-              name: '15x15',
+              name: '100x100x10',
               size: 15,
             },
             {
-              name: '20x20',
+              name: '100x100x10',
               size: 20,
             },
           ],

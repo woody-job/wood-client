@@ -10,7 +10,7 @@ export const colorTokens = {
     purple: '#C6C7F8',
     cyan: '#A8C5DA',
     blue: '#B1E3FF',
-    green: '#A1E3CB`',
+    green: '#A1E3CB',
     mint: '#BAEDBD',
     yellow: '#FFE999',
     orange: '#FFCB83',

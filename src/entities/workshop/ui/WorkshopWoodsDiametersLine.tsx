@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 
-import { ResponsiveLine, Serie } from '@nivo/line'
+import { Serie } from '@nivo/line'
 
 import { Box } from '@mui/material'
 
 import { shortRuDateFormater } from '@/shared/constants'
-import { useNivoTheme } from '@/shared/libs/hooks'
+import { CustomLine } from '@/shared/ui'
 
 const data = [
   { date: '2024-04-01', volume: 30 },
@@ -16,8 +16,6 @@ const data = [
 ]
 
 export const WorkshopWoodsDiametersLine = () => {
-  const nivoTheme = useNivoTheme()
-
   const min = Math.min(...data.map(item => item.volume))
   const max = Math.min(...data.map(item => item.volume))
 
@@ -36,9 +34,8 @@ export const WorkshopWoodsDiametersLine = () => {
 
   return (
     <Box height={300} width={'100%'}>
-      <ResponsiveLine
+      <CustomLine
         data={series}
-        theme={nivoTheme}
         margin={{ top: 10, right: 20, bottom: 50, left: 60 }}
         yScale={{
           type: 'linear',
@@ -47,9 +44,7 @@ export const WorkshopWoodsDiametersLine = () => {
           stacked: true,
           reverse: false,
         }}
-        yFormat=' >-.2f'
-        axisTop={null}
-        axisRight={null}
+        yFormat={value => (value as number).toFixed(2) + ' м3'}
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
@@ -67,16 +62,6 @@ export const WorkshopWoodsDiametersLine = () => {
           legendPosition: 'middle',
           truncateTickAt: 0,
         }}
-        pointSize={10}
-        pointColor={{ theme: 'background' }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: 'serieColor' }}
-        pointLabel='data.yFormatted'
-        pointLabelYOffset={-12}
-        enableTouchCrosshair={true}
-        useMesh={true}
-        enablePoints={false}
-        colors={{ scheme: 'paired' }}
       />
     </Box>
   )

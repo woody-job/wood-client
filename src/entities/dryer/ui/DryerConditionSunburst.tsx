@@ -10,15 +10,15 @@ export const DryerConditionSunburst = () => {
         name: 'Дуб',
         children: [
           {
-            name: '10x10',
+            name: '100x100x10',
             size: 10,
           },
           {
-            name: '15x15',
+            name: '100x100x10',
             size: 15,
           },
           {
-            name: '20x20',
+            name: '100x100x10',
             size: 20,
           },
         ],
@@ -27,15 +27,15 @@ export const DryerConditionSunburst = () => {
         name: 'Сосна',
         children: [
           {
-            name: '10x10',
+            name: '100x100x10',
             size: 10,
           },
           {
-            name: '15x15',
+            name: '100x100x10',
             size: 15,
           },
           {
-            name: '20x20',
+            name: '100x100x10',
             size: 20,
           },
         ],
@@ -44,15 +44,15 @@ export const DryerConditionSunburst = () => {
         name: 'Береза',
         children: [
           {
-            name: '10x10',
+            name: '100x100x10',
             size: 10,
           },
           {
-            name: '15x15',
+            name: '100x100x10',
             size: 15,
           },
           {
-            name: '20x20',
+            name: '100x100x10',
             size: 20,
           },
         ],
@@ -61,7 +61,17 @@ export const DryerConditionSunburst = () => {
   }
 
   return (
-    <CustomSunburst value='size' id='name' data={data}>
+    <CustomSunburst
+      value='size'
+      id='name'
+      data={data}
+      containerProps={{
+        width: '500px',
+        height: '500px',
+      }}
+      arcLabel={({ id }) => `${id}`}
+      valueFormat={value => value.toFixed(2) + ' м3'}
+    >
       <Typography textAlign='center'>Всего</Typography>
       <Typography textAlign='center'>80.784 м3</Typography>
     </CustomSunburst>
