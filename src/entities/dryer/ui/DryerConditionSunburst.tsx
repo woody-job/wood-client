@@ -66,8 +66,8 @@ export const DryerConditionSunburst = () => {
       id='name'
       data={data}
       containerProps={{
-        width: '500px',
-        height: '500px',
+        width: '650px',
+        height: '650px',
       }}
       arcLabel={({ id }) => `${id}`}
       valueFormat={value => value.toFixed(2) + ' м3'}
