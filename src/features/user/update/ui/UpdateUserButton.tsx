@@ -1,8 +1,9 @@
 import { FC, useState } from 'react'
 
-import { Button, ButtonProps } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
 import { UpdateUserModal } from '@/entities/user'
+import { EditIcon } from '@/shared/ui'
 
 export const UpdateUserButton: FC<ButtonProps> = props => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -15,7 +16,9 @@ export const UpdateUserButton: FC<ButtonProps> = props => {
 
   return (
     <>
-      <Button variant='gray' size='small' onClick={handleOpenModal} {...props} />
+      <IconButton onClick={handleOpenModal} {...props}>
+        <EditIcon />
+      </IconButton>
 
       <UpdateUserModal
         open={isOpenModal}

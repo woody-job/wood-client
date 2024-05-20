@@ -1,8 +1,9 @@
 import { FC, useState } from 'react'
 
-import { Button, ButtonProps } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
 import { UpdateWoodNamingModal } from '@/entities/wood-naming'
+import { EditIcon } from '@/shared/ui'
 
 export const UpdateWoodNamingButton: FC<ButtonProps> = props => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -16,7 +17,9 @@ export const UpdateWoodNamingButton: FC<ButtonProps> = props => {
 
   return (
     <>
-      <Button variant='gray' size='small' onClick={handleOpenModal} {...props} />
+      <IconButton onClick={handleOpenModal} {...props}>
+        <EditIcon />
+      </IconButton>
 
       <UpdateWoodNamingModal
         onUpdate={handleUpdateWoodName}

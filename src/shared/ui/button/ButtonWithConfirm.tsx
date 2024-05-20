@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, ReactNode, useState } from 'react'
 
 import {
   Button,
@@ -8,7 +8,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
 } from '@mui/material'
+
+import { TrashIcon } from '@/shared/ui'
 
 export interface ButtonWithConfirmProps extends ButtonProps {
   header: string
@@ -16,10 +19,12 @@ export interface ButtonWithConfirmProps extends ButtonProps {
   submitText?: string
   cancelText?: string
   onConfirm: () => void
+  renderButton?: (props: { onClick: () => void }) => ReactNode
 }
 
 export const ButtonWithConfirm: FC<ButtonWithConfirmProps> = props => {
-  const { onConfirm, header, description, submitText, cancelText, ...buttonProps } = props
+  const { onConfirm, header, description, submitText, cancelText, renderButton, ...buttonProps } =
+    props
 
   const [isOpenAlert, setIsOpenAlert] = useState(false)
 
@@ -33,7 +38,13 @@ export const ButtonWithConfirm: FC<ButtonWithConfirmProps> = props => {
 
   return (
     <>
-      <Button variant='contained' size='small' onClick={handleOpenAlert} {...buttonProps} />
+      {renderButton ? (
+        renderButton({ onClick: handleOpenAlert })
+      ) : (
+        <IconButton onClick={handleOpenAlert} {...buttonProps}>
+          <TrashIcon />
+        </IconButton>
+      )}
 
       <Dialog
         open={isOpenAlert}

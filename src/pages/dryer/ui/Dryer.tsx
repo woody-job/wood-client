@@ -3,8 +3,8 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { InsertWoodButton } from '@/features/dryer/insert-wood'
 import { RemoveWoodButton } from '@/features/dryer/remove-wood'
 import { DryerConditionItem } from '@/entities/dryer'
-import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { appSearchParams } from '@/shared/constants'
+import { useSearchParamsTabs } from '@/shared/libs/hooks'
 
 export const Dryer = () => {
   const tabs = [
@@ -21,27 +21,22 @@ export const Dryer = () => {
     appSearchParams.currentTab,
     tabs,
     tab => tab.id.toString(),
-    tabs[0],
+    tabs[0]
   )
 
   return (
-    <Box display="flex" flexDirection="column" width="100%">
-      <Typography variant="h5" component="h1" mb={3}>
+    <Box display='flex' flexDirection='column' width='100%'>
+      <Typography variant='h5' component='h1' mb={3}>
         Состояние сушильных камер
       </Typography>
 
       <Tabs onChange={handleChangeTab} value={currentTab.id}>
         {tabs.map(tab => (
-            <Tab
-              key={tab.id}
-              label={tab.name}
-              value={tab.id}
-            />
-          ),
-        )}
+          <Tab key={tab.id} label={tab.name} value={tab.id} />
+        ))}
       </Tabs>
 
-      <Box alignSelf="center" mt={4}>
+      <Box alignSelf='center' mt={4}>
         <DryerConditionItem
           dryerName={currentTab.name}
           actions={

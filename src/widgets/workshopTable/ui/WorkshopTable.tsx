@@ -25,8 +25,12 @@ export const WorkshopTable: FC<WorkshopTableProps> = () => {
       headerName: '',
       disableColumnMenu: true,
       sortable: false,
-      width: 300,
-      renderCell: () => <UpdateDimensionPriceButton>Редактировать</UpdateDimensionPriceButton>,
+      width: 100,
+      renderCell: () => (
+        <Box sx={{ ml: 'auto' }}>
+          <UpdateDimensionPriceButton />
+        </Box>
+      ),
     },
   ]
 

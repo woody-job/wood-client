@@ -1,8 +1,9 @@
 import { FC, useState } from 'react'
 
-import { Button, ButtonProps } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
 import { UpdateDryerModal } from '@/entities/dryer'
+import { EditIcon } from '@/shared/ui'
 
 export const UpdateDryerButton: FC<ButtonProps> = props => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -16,7 +17,9 @@ export const UpdateDryerButton: FC<ButtonProps> = props => {
 
   return (
     <>
-      <Button variant='gray' size='small' onClick={handleOpenModal} {...props} />
+      <IconButton onClick={handleOpenModal} {...props}>
+        <EditIcon />
+      </IconButton>
 
       <UpdateDryerModal
         title={'Редактировать сушильную камеру'}

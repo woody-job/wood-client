@@ -19,20 +19,18 @@ export const DryersTable = () => {
       headerName: '',
       disableColumnMenu: true,
       sortable: false,
-      width: 300,
+      width: 100,
       renderCell: () => (
-        <>
-          <UpdateDryerButton sx={{ mr: 1 }}>Редактировать</UpdateDryerButton>
+        <Box sx={{ ml: 'auto' }}>
+          <UpdateDryerButton sx={{ mr: 1 }} />
           <ButtonWithConfirm
             header={'Удалить сушильную камеру'}
             description={'Вы точно хотите удалить эту сушильнуюд камеру?'}
             onConfirm={() => {
               console.log('Удалить сушильную камеру')
             }}
-          >
-            Удалить
-          </ButtonWithConfirm>
-        </>
+          />
+        </Box>
       ),
     },
   ]

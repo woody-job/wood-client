@@ -1,8 +1,8 @@
 import { FormEventHandler, forwardRef, useState } from 'react'
 
-import { Button, ButtonProps, Modal, TextField, Typography } from '@mui/material'
+import { Button, ButtonProps, IconButton, Modal, TextField, Typography } from '@mui/material'
 
-import { ModalContent } from '@/shared/ui'
+import { EditIcon, ModalContent } from '@/shared/ui'
 
 export const UpdateDimensionPriceButton = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
@@ -20,7 +20,9 @@ export const UpdateDimensionPriceButton = forwardRef<HTMLButtonElement, ButtonPr
 
     return (
       <>
-        <Button size='small' variant='gray' ref={ref} onClick={handleOpen} {...props} />
+        <IconButton ref={ref} onClick={handleOpen} {...props}>
+          <EditIcon />
+        </IconButton>
 
         <Modal open={isOpen} onClose={handleClose}>
           <ModalContent
