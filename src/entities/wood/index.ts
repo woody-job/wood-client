@@ -3,4 +3,6 @@ export {
   WoodAmountSunburst,
   WoodAmountRangeItem,
   AddWoodsArrivalShipment,
+  UpdateInputWoodModal,
+  UpdateOutputWoodModal,
 } from './ui'

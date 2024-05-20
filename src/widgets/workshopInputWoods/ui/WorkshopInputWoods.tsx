@@ -1,15 +1,38 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
-import { CustomGridPanel, dataGridStyles } from '@/shared/ui'
+import { AddInputWoodButton } from '@/features/wood-input-woods/add'
+import { UpdateInputWoodButton } from '@/features/wood-input-woods/update'
+import { ButtonWithConfirm, CustomGridPanel, dataGridStyles } from '@/shared/ui'
 import { DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 
 export const WorkshopInputWoods = () => {
   const columns: GridColDef[] = [
-    { field: 'diameter', headerName: 'Диаметр', width: 120 },
-    { field: 'amount', headerName: 'Кол-во', width: 120 },
-    { field: 'volume', headerName: 'Объем', width: 120 },
+    { field: 'diameter', headerName: 'Диаметр', width: 70 },
+    { field: 'amount', headerName: 'Кол-во', width: 70 },
+    { field: 'volume', headerName: 'Объем', width: 70 },
+    {
+      field: 'actions',
+      headerName: '',
+      disableColumnMenu: true,
+      sortable: false,
+      width: 300,
+      renderCell: () => (
+        <>
+          <UpdateInputWoodButton sx={{ mr: 1 }}>Редактировать</UpdateInputWoodButton>
+          <ButtonWithConfirm
+            header='Удалить лес на вход'
+            description='Вы точно уверены, что хотите удалить лес?'
+            onConfirm={() => {
+              console.log('delete input wood')
+            }}
+          >
+            Удалить
+          </ButtonWithConfirm>
+        </>
+      ),
+    },
   ]
 
   const rows = [
@@ -29,11 +52,9 @@ export const WorkshopInputWoods = () => {
 
   return (
     <Box>
-      <Box display='flex' mb={1}>
+      <Box display='flex' mb={1} pt={5}>
         <Typography>Вход</Typography>
-        <Button size='small' sx={{ ml: 'auto' }}>
-          Добавить
-        </Button>
+        <AddInputWoodButton sx={{ ml: 'auto' }}>Добавить</AddInputWoodButton>
       </Box>
       <DataGridContainer height={400}>
         <DataGrid

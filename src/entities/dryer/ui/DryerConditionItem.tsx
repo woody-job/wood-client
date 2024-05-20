@@ -6,8 +6,8 @@ import { DryerConditionSunburst } from '@/entities/dryer'
 import { DashItem } from '@/shared/ui'
 
 export interface DryerConditionItemProps {
-  actions?: ReactNode,
-  dryerName: string,
+  actions?: ReactNode
+  dryerName: string
 }
 
 export const DryerConditionItem: FC<DryerConditionItemProps> = ({ actions, dryerName }) => {
@@ -23,19 +23,19 @@ export const DryerConditionItem: FC<DryerConditionItemProps> = ({ actions, dryer
       }}
     >
       <DashItem
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        className="dryer-condition-item"
+        display='flex'
+        flexDirection='column'
+        justifyContent='center'
+        alignItems='center'
+        className='dryer-condition-item'
       >
-        <Typography variant="h6">{dryerName}</Typography>
-        <Typography variant="subtitle1">Цикл 501</Typography>
+        <Typography variant='h6'>{dryerName}</Typography>
+        <Typography variant='subtitle1'>Цикл 501</Typography>
 
         <DryerConditionSunburst />
       </DashItem>
 
-      <Box width="100" display="flex" justifyContent="space-evenly" mt={1}>
+      <Box width='100' display='flex' justifyContent='space-evenly' mt={1}>
         {actions}
       </Box>
     </Box>
