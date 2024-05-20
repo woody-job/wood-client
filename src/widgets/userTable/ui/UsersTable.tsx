@@ -1,85 +1,71 @@
-import { Typography } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
-import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
+import { FC, useMemo } from 'react'
+
+import { Box, CircularProgress, Typography } from '@mui/material'
+import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { UpdateUserButton } from '@/features/user/update'
+import { useDeleteUserMutation,User } from '@/entities/user'
 import { ButtonWithConfirm, dataGridStyles } from '@/shared/ui'
 import { CustomGridPanel, DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 
-export const UsersTable = () => {
-  const handleDeleteUser = () => {}
+import { USER_TABLE_COLUMNS } from '../constants'
+import { UserTableRow } from '../types'
 
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Id', width: 90 },
-    { field: 'role', headerName: 'Роль', width: 120 },
-    { field: 'login', headerName: 'Логин', width: 120 },
-    { field: 'fullname', headerName: 'ФИО', width: 200 },
-    { field: 'password', headerName: 'Пароль', width: 150 },
-    {
-      field: 'actions',
-      headerName: '',
-      disableColumnMenu: true,
-      sortable: false,
-      width: 300,
-      renderCell: () => (
-        <>
-          <UpdateUserButton sx={{ mr: 1 }}>Редактировать</UpdateUserButton>
-          <ButtonWithConfirm
-            header='Удалить пользователя'
-            description='Вы уверены, что хотите удалить пользователя?'
-            onConfirm={handleDeleteUser}
-          >
-            Удалить
-          </ButtonWithConfirm>
-        </>
-      ),
-    },
-  ]
+type UsersTableProps = {
+  users: User[] | undefined
+  isLoadingUsers: boolean
+}
 
-  const rows = [
-    {
-      id: 1,
-      role: 'admin',
-      login: 'admin',
-      fullname: 'Админ Админ Админкин',
-      password: '<PASSWORD>',
-    },
-    {
-      id: 2,
-      role: 'user',
-      login: 'user',
-      fullname: 'Ванек Юзер Дмитриевич',
-      password: '<PASSWORD>',
-    },
-    {
-      id: 3,
-      role: 'admin',
-      login: 'admin',
-      fullname: 'Админ Админ Админкин',
-      password: '<PASSWORD>',
-    },
-    {
-      id: 4,
-      role: 'user',
-      login: 'user',
-      fullname: 'Ванек Юзер Дмитриевич',
-      password: '<PASSWORD>',
-    },
-    {
-      id: 5,
-      role: 'admin',
-      login: 'admin',
-      fullname: 'Админ Админ Админкин',
-      password: '<PASSWORD>',
-    },
-    {
-      id: 6,
-      role: 'user',
-      login: 'user',
-      fullname: 'Ванек Юзер Дмитриевич',
-      password: '<PASSWORD>',
-    },
-  ]
+export const UsersTable: FC<UsersTableProps> = ({ users, isLoadingUsers }) => {
+  const [deleteUserMutation] = useDeleteUserMutation()
+
+  const handleDeleteUser = (userId: number) => {
+    deleteUserMutation({ userId })
+  }
+
+  const columns = useMemo(() => {
+    return [
+      ...USER_TABLE_COLUMNS,
+      {
+        field: 'actions',
+        headerName: '',
+        disableColumnMenu: true,
+        sortable: false,
+        width: 300,
+        renderCell: (params: GridRenderCellParams) => {
+          return (
+            <>
+              <UpdateUserButton user={params.row} sx={{ mr: 1 }}>
+                Редактировать
+              </UpdateUserButton>
+              <ButtonWithConfirm
+                header='Удалить пользователя'
+                description='Вы уверены, что хотите удалить пользователя?'
+                onConfirm={() => {
+                  handleDeleteUser(params.row.id)
+                }}
+              >
+                Удалить
+              </ButtonWithConfirm>
+            </>
+          )
+        },
+      },
+    ]
+  }, [users])
+
+  const rows: UserTableRow[] = useMemo(() => {
+    return users
+      ? users?.map(user => {
+          return {
+            id: user.id,
+            role: user.role.name,
+            login: user.login,
+            fullName: user.fullName,
+          }
+        })
+      : []
+  }, [users])
 
   return (
     <DataGridContainer>
@@ -91,16 +77,23 @@ export const UsersTable = () => {
       >
         Пользователи
       </Typography>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        disableRowSelectionOnClick
-        disableMultipleRowSelection
-        localeText={dataGridLocaleText}
-        sx={dataGridStyles}
-        hideFooter
-        slots={{ panel: CustomGridPanel }}
-      />
+      {isLoadingUsers && (
+        <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+          <CircularProgress size={100} />
+        </Box>
+      )}
+      {users && (
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          disableRowSelectionOnClick
+          disableMultipleRowSelection
+          localeText={dataGridLocaleText}
+          sx={dataGridStyles}
+          hideFooter
+          slots={{ panel: CustomGridPanel }}
+        />
+      )}
     </DataGridContainer>
   )
 }
