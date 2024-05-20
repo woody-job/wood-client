@@ -9,18 +9,18 @@ import { DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 
 export const WorkshopInputWoods = () => {
   const columns: GridColDef[] = [
-    { field: 'diameter', headerName: 'Диаметр', width: 70 },
-    { field: 'amount', headerName: 'Кол-во', width: 70 },
-    { field: 'volume', headerName: 'Объем', width: 70 },
+    { field: 'diameter', headerName: 'Диаметр', width: 100 },
+    { field: 'amount', headerName: 'Кол-во', width: 100 },
+    { field: 'volume', headerName: 'Объем', width: 100 },
     {
       field: 'actions',
       headerName: '',
       disableColumnMenu: true,
       sortable: false,
-      width: 300,
+      width: 100,
       renderCell: () => (
-        <>
-          <UpdateInputWoodButton sx={{ mr: 1 }}>Редактировать</UpdateInputWoodButton>
+        <Box sx={{ ml: 'auto' }}>
+          <UpdateInputWoodButton sx={{ mr: 1 }} />
           <ButtonWithConfirm
             header='Удалить лес на вход'
             description='Вы точно уверены, что хотите удалить лес?'
@@ -30,7 +30,7 @@ export const WorkshopInputWoods = () => {
           >
             Удалить
           </ButtonWithConfirm>
-        </>
+        </Box>
       ),
     },
   ]

@@ -1,8 +1,9 @@
 import { FC, useState } from 'react'
 
-import { Button, ButtonProps } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
 import { UpdateInputWoodModal } from '@/entities/wood'
+import { EditIcon } from '@/shared/ui'
 
 export const UpdateInputWoodButton: FC<ButtonProps> = props => {
   const [isOpen, setIsOpen] = useState(false)
@@ -14,7 +15,9 @@ export const UpdateInputWoodButton: FC<ButtonProps> = props => {
 
   return (
     <>
-      <Button size='small' variant='gray' onClick={handleOpen} {...props} />
+      <IconButton onClick={handleOpen} {...props}>
+        <EditIcon />
+      </IconButton>
 
       <UpdateInputWoodModal
         title={'Изменить доску на вход'}

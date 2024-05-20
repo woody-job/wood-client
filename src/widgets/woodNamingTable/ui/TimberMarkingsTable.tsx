@@ -22,16 +22,14 @@ export const TimberMarkingsTable = () => {
       width: 300,
       renderCell: () => (
         <>
-          <UpdateWoodNamingButton sx={{ mr: 1 }}>Редактировать</UpdateWoodNamingButton>
+          <UpdateWoodNamingButton sx={{ mr: 1 }} />
           <ButtonWithConfirm
             header='Редактировать обозначение'
             description='Вы точно хотите удалить это обозначение?'
             onConfirm={() => {
               console.log('delete timber marking')
             }}
-          >
-            Удалить
-          </ButtonWithConfirm>
+          />
         </>
       ),
     },

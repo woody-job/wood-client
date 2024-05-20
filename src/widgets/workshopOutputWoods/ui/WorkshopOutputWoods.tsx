@@ -17,26 +17,24 @@ export const WorkshopOutputWoods = () => {
     { field: 'dimension', headerName: 'Сечение', width: 75 },
     { field: 'woodClass', headerName: 'Сорт', width: 50 },
     { field: 'woodType', headerName: 'Порода', width: 100 },
-    { field: 'amount', headerName: 'Кол-во', width: 50 },
+    { field: 'amount', headerName: 'Кол-во', width: 70 },
     {
       field: 'actions',
       headerName: '',
       disableColumnMenu: true,
       sortable: false,
-      width: 300,
+      width: 100,
       renderCell: () => (
-        <>
-          <UpdateOutputWoodButton sx={{ mr: 1 }}>Редактировать</UpdateOutputWoodButton>
+        <Box sx={{ ml: 'auto' }}>
+          <UpdateOutputWoodButton sx={{ mr: 1 }} />
           <ButtonWithConfirm
             header='Удалить лес на выход'
             description='Вы точно уверены, что хотите удалить лес?'
             onConfirm={() => {
               console.log('delete output wood')
             }}
-          >
-            Удалить
-          </ButtonWithConfirm>
-        </>
+          />
+        </Box>
       ),
     },
   ]

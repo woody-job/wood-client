@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
@@ -20,18 +20,16 @@ export const UsersTable = () => {
       headerName: '',
       disableColumnMenu: true,
       sortable: false,
-      width: 300,
+      width: 100,
       renderCell: () => (
-        <>
-          <UpdateUserButton sx={{ mr: 1 }}>Редактировать</UpdateUserButton>
+        <Box sx={{ ml: 'auto' }}>
+          <UpdateUserButton sx={{ mr: 1 }} />
           <ButtonWithConfirm
             header='Удалить пользователя'
             description='Вы уверены, что хотите удалить пользователя?'
             onConfirm={handleDeleteUser}
-          >
-            Удалить
-          </ButtonWithConfirm>
-        </>
+          />
+        </Box>
       ),
     },
   ]
