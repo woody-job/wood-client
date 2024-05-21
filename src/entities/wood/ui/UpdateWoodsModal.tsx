@@ -27,7 +27,9 @@ export const UpdateWoodsModal: FC<UpdateWoodsModalProps> = props => {
         flexDirection='column'
         gap={1}
       >
-        <Typography sx={{ mb: 2 }}>{title}</Typography>
+        <Typography variant='h5' component='h2' sx={{ mb: 3 }}>
+          {title}
+        </Typography>
         <TextField label='Сечение' />
         <TextField label='Сорт' />
         <TextField label='Количество' />
