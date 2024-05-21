@@ -22,20 +22,18 @@ export const WoodClassTable = () => {
       headerName: '',
       disableColumnMenu: true,
       sortable: false,
-      width: 300,
+      width: 100,
       renderCell: () => (
-        <>
-          <UpdateDimensionParamsButton sx={{ mr: 1 }}>Редактировать</UpdateDimensionParamsButton>
+        <Box sx={{ ml: 'auto' }}>
+          <UpdateDimensionParamsButton sx={{ mr: 1 }} />
           <ButtonWithConfirm
             header='Удалить сечение?'
             description='Вы точно хотите удалить это сечение?'
             onConfirm={() => {
               console.log('Удалить сечение')
             }}
-          >
-            Удалить
-          </ButtonWithConfirm>
-        </>
+          />
+        </Box>
       ),
     },
   ]

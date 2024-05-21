@@ -4,7 +4,7 @@ import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { UpdateUserButton } from '@/features/user/update'
-import { useDeleteUserMutation,User } from '@/entities/user'
+import { useDeleteUserMutation, User } from '@/entities/user'
 import { ButtonWithConfirm, dataGridStyles } from '@/shared/ui'
 import { CustomGridPanel, DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 

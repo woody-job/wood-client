@@ -1,7 +1,10 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
+import { AddOutputWoodButton } from '@/features/wood-output-woods/add'
+import { UpdateOutputWoodButton } from '@/features/wood-output-woods/update'
+import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -11,10 +14,29 @@ import {
 
 export const WorkshopOutputWoods = () => {
   const columns: GridColDef[] = [
-    { field: 'dimension', headerName: 'Сечение', width: 100 },
-    { field: 'woodClass', headerName: 'Сорт', width: 100 },
+    { field: 'dimension', headerName: 'Сечение', width: 75 },
+    { field: 'woodClass', headerName: 'Сорт', width: 50 },
     { field: 'woodType', headerName: 'Порода', width: 100 },
-    { field: 'amount', headerName: 'Кол-во', width: 100 },
+    { field: 'amount', headerName: 'Кол-во', width: 70 },
+    {
+      field: 'actions',
+      headerName: '',
+      disableColumnMenu: true,
+      sortable: false,
+      width: 100,
+      renderCell: () => (
+        <Box sx={{ ml: 'auto' }}>
+          <UpdateOutputWoodButton sx={{ mr: 1 }} />
+          <ButtonWithConfirm
+            header='Удалить лес на выход'
+            description='Вы точно уверены, что хотите удалить лес?'
+            onConfirm={() => {
+              console.log('delete output wood')
+            }}
+          />
+        </Box>
+      ),
+    },
   ]
 
   const rows = [
@@ -36,11 +58,9 @@ export const WorkshopOutputWoods = () => {
 
   return (
     <Box>
-      <Box display='flex' mb={1}>
+      <Box display='flex' mb={1} pt={5}>
         <Typography>Выход</Typography>
-        <Button size='small' sx={{ ml: 'auto' }}>
-          Добавить
-        </Button>
+        <AddOutputWoodButton sx={{ ml: 'auto' }}>Добавить</AddOutputWoodButton>
       </Box>
       <DataGridContainer height={400}>
         <DataGrid

@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonProps } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
 import { UserTableRow } from '@/widgets/userTable/types'
 import {
@@ -12,6 +12,7 @@ import {
   useUpdateUserMutation,
 } from '@/entities/user'
 import { USER_ROLE } from '@/entities/user/contansts'
+import { EditIcon } from '@/shared/ui'
 
 import { getDefaultValues } from '../lib/helpers'
 
@@ -75,7 +76,9 @@ export const UpdateUserButton: FC<UpdateUserButtonProps> = ({ user, ...props }) 
 
   return (
     <>
-      <Button variant='gray' size='small' onClick={handleOpenModal} {...props} />
+      <IconButton onClick={handleOpenModal} {...props}>
+        <EditIcon />
+      </IconButton>
 
       <UpdateUserModal
         open={isOpenModal}

@@ -1,17 +1,19 @@
+import { useParams } from 'react-router-dom'
+
 import { Box, Grid, Input, Tab, Tabs, Typography } from '@mui/material'
 
 import { WorkshopCharts } from '@/widgets/workshopCharts'
 import { WorkshopDashboardCards } from '@/widgets/workshopDashboardCards'
 import { WorkshopInputWoods } from '@/widgets/workshopInputWoods'
 import { WorkshopOutputWoods } from '@/widgets/workshopOutputWoods'
-import { WorkshopTotalTable } from '@/entities/workshop'
+import { WorkshopTotalTable, WorkshopTrashStatsSunburst } from '@/entities/workshop'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
 
 export const WorkshopItem = () => {
-  // const {workshopId} = useParams()
+  const { workshopId } = useParams()
   const tabs = [
     { id: 'day', name: 'За день' },
     { id: 'few-days', name: 'За несколько дней' },
@@ -39,20 +41,24 @@ export const WorkshopItem = () => {
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
         <Grid container spacing={4}>
-          <Grid item xs={12} xl={4}>
+          <Grid item xs={12} xl={3}>
             <Input type='date' value={today} sx={{ my: 3 }} />
 
             <WorkshopDashboardCards />
           </Grid>
 
-          <Grid item md={12} lg={6} xl={4}>
-            <WorkshopInputWoods />
-          </Grid>
+          {Number(workshopId) !== 2 && (
+            <Grid item md={12} lg={6} xl={4.5}>
+              <WorkshopInputWoods />
+            </Grid>
+          )}
 
-          <Grid item md={12} lg={6} xl={4}>
+          <Grid item md={12} lg={6} xl={4.5}>
             <WorkshopOutputWoods />
           </Grid>
         </Grid>
+
+        <WorkshopTrashStatsSunburst />
       </CustomTabPanel>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>

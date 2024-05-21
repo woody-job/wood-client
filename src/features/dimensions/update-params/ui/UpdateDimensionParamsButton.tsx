@@ -1,8 +1,9 @@
 import { forwardRef, useState } from 'react'
 
-import { Button, ButtonProps } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
 import { UpdateDimensionPriceModal } from '@/entities/dimension'
+import { EditIcon } from '@/shared/ui'
 
 export const UpdateDimensionParamsButton = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
@@ -17,7 +18,9 @@ export const UpdateDimensionParamsButton = forwardRef<HTMLButtonElement, ButtonP
 
     return (
       <>
-        <Button size='small' variant='gray' ref={ref} onClick={handleOpen} {...props} />
+        <IconButton ref={ref} onClick={handleOpen} {...props}>
+          <EditIcon />
+        </IconButton>
 
         <UpdateDimensionPriceModal
           title={'Редактировать сечение'}
