@@ -6,13 +6,13 @@ export const WoodsDayAmountArrival = () => {
   return (
     <Box display='flex' gap={10} mt={5} flexWrap='wrap'>
       <WoodByDayItem
-        action={
+        addComponent={
           <AddWoodsArrivalShipment title='Добавить доски на поступление' onSubmit={() => {}} />
         }
         title='Сырая доска'
       />
       <WoodByDayItem
-        action={
+        addComponent={
           <AddWoodsArrivalShipment title='Добавить доски на поступление' onSubmit={() => {}} />
         }
         title='Сырая доска'

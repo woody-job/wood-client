@@ -1,9 +1,10 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useState } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { Box, IconButton, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
-import { CustomSunburst } from '@/shared/ui'
+import { UpdateWoodsModal } from '@/entities/wood/ui/UpdateWoodsModal.tsx'
+import { ButtonWithConfirm, CustomSunburst, EditIcon } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -13,15 +14,53 @@ import {
 
 export interface WoodByDayItemProps {
   title?: string
-  action?: ReactNode
-  data?: unknown
+  addComponent?: ReactNode
+  onUpdate?: (id: number) => void
+  onDelete?: (id: number) => void
 }
 
-export const WoodByDayItem: FC<WoodByDayItemProps> = ({ action, title }) => {
+export const WoodByDayItem: FC<WoodByDayItemProps> = ({
+  addComponent,
+  title,
+  onDelete,
+  onUpdate,
+}) => {
+  const [openEditId, setOpenEditId] = useState<number>()
+
+  const handleOpenModal = (id: number) => setOpenEditId(id)
+  const handleCloseModal = () => setOpenEditId(undefined)
+
   const columns: GridColDef[] = [
     { field: 'dimension', headerName: 'Сечение', width: 150 },
     { field: 'woodClass', headerName: 'Сорт', width: 100 },
     { field: 'amount', headerName: 'Кол-во', width: 100 },
+    {
+      field: 'actions',
+      headerName: '',
+      disableColumnMenu: true,
+      sortable: false,
+      width: 100,
+      renderCell: ({ id }) => (
+        <Box sx={{ ml: 'auto' }}>
+          <IconButton onClick={() => handleOpenModal(id as number)}>
+            <EditIcon />
+          </IconButton>
+
+          <UpdateWoodsModal
+            title={'Редактировать'}
+            actionTitle={'Редактировать'}
+            onSubmit={() => onUpdate?.(id as number)}
+            open={openEditId === id}
+            onClose={handleCloseModal}
+          />
+          <ButtonWithConfirm
+            header={'Удаление досок'}
+            description={'Вы точно хотите удалить?'}
+            onConfirm={() => onDelete?.(id as number)}
+          />
+        </Box>
+      ),
+    },
   ]
 
   const rows = [
@@ -51,7 +90,7 @@ export const WoodByDayItem: FC<WoodByDayItemProps> = ({ action, title }) => {
       <Box display='flex' justifyContent='space-between' mb={3}>
         <Typography>{title}</Typography>
 
-        {action}
+        {addComponent}
       </Box>
 
       <DataGridContainer height='400px'>
