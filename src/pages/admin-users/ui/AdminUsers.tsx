@@ -2,8 +2,11 @@ import { Box, Typography } from '@mui/material'
 
 import { UsersTable } from '@/widgets/userTable'
 import { CreateUserButton } from '@/features/user/create'
+import { useFetchAllUsersQuery } from '@/entities/user'
 
 export const AdminUsers = () => {
+  const { data: users, isLoading: isLoadingUsers } = useFetchAllUsersQuery()
+
   return (
     <Box
       sx={{
@@ -17,7 +20,7 @@ export const AdminUsers = () => {
 
       <CreateUserButton sx={{ alignSelf: 'flex-end', mb: 2 }}>Новый пользователь</CreateUserButton>
 
-      <UsersTable />
+      <UsersTable users={users} isLoadingUsers={isLoadingUsers} />
     </Box>
   )
 }
