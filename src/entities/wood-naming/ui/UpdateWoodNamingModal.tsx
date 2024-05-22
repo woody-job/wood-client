@@ -22,6 +22,8 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = props => {
     handleSubmit,
   } = methods
 
+  console.log(errors)
+
   return (
     <Modal {...modalProps} aria-labelledby='create-user-modal-title'>
       <ModalContent
