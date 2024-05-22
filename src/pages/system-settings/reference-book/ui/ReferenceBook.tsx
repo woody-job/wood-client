@@ -1,11 +1,14 @@
 import { Box } from '@mui/material'
 
-import { WoodClassTable } from '@/widgets/woodClassTable'
+import { DimensionsSettingsTable } from '@/widgets/dimensionsSettingsTable'
+import { useFetchAllDimensionsQuery } from '@/entities/dimension'
 
 export const ReferenceBook = () => {
+  const { data: dimensions, isLoading: isLoadingDimensions } = useFetchAllDimensionsQuery()
+
   return (
     <Box>
-      <WoodClassTable />
+      <DimensionsSettingsTable dimensions={dimensions} isLoadingDimensions={isLoadingDimensions} />
     </Box>
   )
 }
