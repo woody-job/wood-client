@@ -1,1 +1,1 @@
-export { TimberMarkingsTable } from './ui/TimberMarkingsTable'
+export { WoodNamingsTable } from './ui/WoodNamingsTable.tsx'
