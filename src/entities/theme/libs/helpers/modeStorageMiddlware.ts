@@ -11,7 +11,6 @@ modeStorageMiddlware.startListening({
   matcher: isAnyOf(switchMode, setMode),
   effect: (_, listenerApi) => {
     const state = listenerApi.getState() as RootState
-    console.log(state)
     localStorage.setItem(storageKeys.mode, state.theme.mode)
   },
 })

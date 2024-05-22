@@ -25,16 +25,15 @@ export const UpdateDryerButton: FC<UpdateDryerButtonProps> = props => {
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
 
-  const handleCreateDryer: SubmitHandler<DryerFormType> = (values) => {
+  const handleCreateDryer: SubmitHandler<DryerFormType> = values => {
     const { name } = values
 
     updateDryerMutation({ name, id: dryer.id })
       .unwrap()
       .then(() => {
         handleCloseModal()
-        reset()
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
       })
   }

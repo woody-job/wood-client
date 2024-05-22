@@ -25,7 +25,6 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
   const methods = useForm<WoodNamingFormType>({
     defaultValues: woodNaming,
   })
-  const { reset } = methods
 
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
@@ -38,7 +37,6 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
       .unwrap()
       .then(() => {
         handleCloseModal()
-        reset()
       })
       .catch(e => {
         console.error(e)

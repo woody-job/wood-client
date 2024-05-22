@@ -6,7 +6,6 @@ export const dryerApi = baseApi.injectEndpoints({
     fetchAllDryers: build.query<Dryer[], void>({
       query: () => ({
         url: 'dryer-chamber/list',
-        method: 'GET',
       }),
       providesTags: ['Dryers'],
     }),
