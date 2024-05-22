@@ -20,7 +20,7 @@ import Shipment from '@/pages/shipment'
 import SystemSettings from '@/pages/system-settings'
 import SettingsReferenceBook from '@/pages/system-settings/reference-book'
 import SettingsDryers from '@/pages/system-settings/settings-dryers'
-import Woods from '@/pages/system-settings/timbers'
+import WoodNamings from '@/pages/system-settings/wood-namings'
 import Workshops from '@/pages/system-settings/workshops'
 import DryWoodVault from '@/pages/vault/dry-wood'
 import WetWoodVault from '@/pages/vault/wet-wood'
@@ -42,7 +42,7 @@ export const AppRouter = () => {
 
         <Route path={urls.systemSettings} element={<SystemSettings />}>
           <Route path={urls.workshops} element={<Workshops />} />
-          <Route path={urls.woods} element={<Woods />} />
+          <Route path={urls.woodNamings} element={<WoodNamings />} />
           <Route path={urls.referenceBook} element={<SettingsReferenceBook />} />
           <Route path={urls.dryers} element={<SettingsDryers />} />
         </Route>

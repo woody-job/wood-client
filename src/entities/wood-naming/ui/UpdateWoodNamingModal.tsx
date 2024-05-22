@@ -1,26 +1,26 @@
-import { FC, FormEventHandler } from 'react'
+import { FC } from 'react'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import { Button, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
+import { WoodNamingFormType } from '@/entities/wood-naming'
 import { ModalContent } from '@/shared/ui'
 
 export interface UpdateWoodNamingModalProps extends Omit<ModalProps, 'children'> {
-  onUpdate: (woodName: string) => void
+  onUpdate: SubmitHandler<WoodNamingFormType>
   action: string
   title: string
-  woodName?: string
+  methods: UseFormReturn<WoodNamingFormType>
 }
 
-export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = ({
-  onUpdate,
-  action,
-  title,
-  ...modalProps
-}) => {
-  const handleCreateUser: FormEventHandler = e => {
-    e.preventDefault()
-    onUpdate('') // TODO create wood naming
-  }
+export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = props => {
+  const { onUpdate, action, title, methods, ...modalProps } = props
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = methods
 
   return (
     <Modal {...modalProps} aria-labelledby='create-user-modal-title'>
@@ -28,14 +28,27 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = ({
         component='form'
         display='flex'
         flexDirection='column'
-        onSubmit={handleCreateUser}
-        gap={5}
+        onSubmit={handleSubmit(onUpdate)}
+        gap={1}
       >
-        <Typography id='create-user-modal-title'>{title}</Typography>
+        <Typography id='create-user-modal-title' variant='h6' sx={{ mb: 2 }}>
+          {title}
+        </Typography>
 
-        <TextField id='name' label='Название' variant='outlined' size='small' />
+        <TextField
+          inputProps={{ ...register('name', { required: true }) }}
+          id='name'
+          label='Название'
+          variant='outlined'
+          size='small'
+        />
+        {errors.name?.type === 'required' && (
+          <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
+            Название обозначения обязательно
+          </Typography>
+        )}
 
-        <Button type='submit' variant='contained' color='primary'>
+        <Button type='submit' variant='contained' color='primary' sx={{ mt: 2 }}>
           {action}
         </Button>
       </ModalContent>

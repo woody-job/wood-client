@@ -26,7 +26,12 @@ export const SystemSettings = () => {
           value={urls.workshops}
           label='Параметры цехов'
         />
-        <Tab component={NavLink} to={urls.woods} label='Обозначения леса' value={urls.woods} />
+        <Tab
+          component={NavLink}
+          to={urls.woodNamings}
+          label='Обозначения леса'
+          value={urls.woodNamings}
+        />
         <Tab
           component={NavLink}
           to={urls.referenceBook}
