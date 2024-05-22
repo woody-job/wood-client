@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const tagTypes = ['AllUsers', 'Roles']
+export const tagTypes = [
+  'AllUsers',
+  'Roles',
+  'AllDimensions',
+  'DimensionsByWoodClass',
+  'AllWoodClasses',
+]
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({

@@ -1,7 +1,16 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Box, Button, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  MenuItem,
+  Modal,
+  ModalProps,
+  TextField,
+  Typography,
+} from '@mui/material'
 
 import { USER_ROLE } from '@/entities/user/contansts'
 import { ModalContent } from '@/shared/ui'
@@ -65,6 +74,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             label='Фамилия'
             variant='outlined'
             size='small'
+            error={Boolean(errors.secondName)}
           />
           {errors.secondName?.type === 'minLength' && (
             <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
@@ -83,6 +93,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             label='Имя'
             variant='outlined'
             size='small'
+            error={Boolean(errors.firstName)}
           />
           {errors.firstName?.type === 'minLength' && (
             <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
@@ -101,6 +112,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             label='Отчество'
             variant='outlined'
             size='small'
+            error={Boolean(errors.fatherName)}
           />
           {errors.fatherName?.type === 'minLength' && (
             <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
@@ -119,6 +131,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             label='Логин'
             variant='outlined'
             size='small'
+            error={Boolean(errors.login)}
           />
           {errors.login?.type === 'minLength' && (
             <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
@@ -132,9 +145,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
           )}
 
           {isUserRolesLoading ? (
-            <Box>
-              <p>loading</p>
-            </Box>
+            <CircularProgress size={15} />
           ) : (
             <Box
               sx={{
@@ -160,8 +171,9 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
                 placeholder='Роль'
                 defaultValue={watchRole}
                 sx={{ width: '100%' }}
-                {...register('role', { required: true })}
+                inputProps={{ ...register('role', { required: true }) }}
                 size='small'
+                error={Boolean(errors.role)}
               >
                 {roleOptions?.map(roleOption => {
                   return <MenuItem value={roleOption.name}>{roleOption.name}</MenuItem>
@@ -192,6 +204,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             label='Пароль'
             variant='outlined'
             size='small'
+            error={Boolean(errors.password)}
           />
           {errors.password?.type === 'minLength' && (
             <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
@@ -221,6 +234,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             label='Повторите Пароль'
             variant='outlined'
             size='small'
+            error={Boolean(errors.repeatPassword)}
           />
           {errors.repeatPassword?.type === 'minLength' && (
             <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
