@@ -4,7 +4,7 @@ export const urls = {
   adminUsers: 'users',
   systemSettings: 'system-settings',
   workshops: 'workshops',
-  woods: 'timbers',
+  woodNamings: 'wood-namings',
   referenceBook: 'reference-book',
   dryers: 'dryers',
   dryer: 'dryer',

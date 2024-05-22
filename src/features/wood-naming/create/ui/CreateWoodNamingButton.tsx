@@ -1,16 +1,38 @@
 import { forwardRef, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonProps } from '@mui/material'
 
-import { UpdateWoodNamingModal } from '@/entities/wood-naming'
+import {
+  UpdateWoodNamingModal,
+  useCreateWoodNamingMutation,
+  WoodNamingFormType,
+} from '@/entities/wood-naming'
 
 export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
 
+  const [createWoodNamingMutation] = useCreateWoodNamingMutation()
+
+  const methods = useForm<WoodNamingFormType>()
+  const { reset } = methods
+
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
 
-  const handleCreateWoodNaming = () => {}
+  const handleCreateWoodNaming: SubmitHandler<WoodNamingFormType> = values => {
+    const { name } = values
+
+    createWoodNamingMutation({ name })
+      .unwrap()
+      .then(() => {
+        handleCloseModal()
+        reset()
+      })
+      .catch(e => {
+        console.error(e)
+      })
+  }
 
   return (
     <>
@@ -18,6 +40,7 @@ export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>
 
       <UpdateWoodNamingModal
         onUpdate={handleCreateWoodNaming}
+        methods={methods}
         action={'Создать'}
         title={'Создать обозначение'}
         open={isOpenModal}
