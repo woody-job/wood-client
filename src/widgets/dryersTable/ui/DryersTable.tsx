@@ -1,20 +1,31 @@
-import { Box, CircularProgress } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { UpdateDryerButton } from '@/features/dryer/update'
-import { ButtonWithConfirm } from '@/shared/ui'
-import { CustomGridPanel, DataGridContainer, dataGridLocaleText, dataGridStyles } from '@/shared/ui/data-grid'
-import { Dryer, useDeleteDryerMutation } from '@/entities/dryer'
 import { FC } from 'react'
 
+import { Box, CircularProgress } from '@mui/material'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+
+import { UpdateDryerButton } from '@/features/dryer/update'
+import { Dryer, useDeleteDryerMutation } from '@/entities/dryer'
+import { CommonErrorType } from '@/shared/types'
+import { ButtonWithConfirm } from '@/shared/ui'
+import {
+  CustomGridPanel,
+  DataGridContainer,
+  dataGridLocaleText,
+  dataGridStyles,
+} from '@/shared/ui/data-grid'
+
+import { useSnackbar } from 'notistack'
+
 export type DryersTableProps = {
-  dryers: Dryer[] | undefined,
+  dryers: Dryer[] | undefined
   isLoadingDryers: boolean
 }
 
-export const DryersTable: FC<DryersTableProps> = (props) => {
+export const DryersTable: FC<DryersTableProps> = props => {
   const { dryers, isLoadingDryers } = props
 
   const [deleteDryerMutation] = useDeleteDryerMutation()
+  const { enqueueSnackbar } = useSnackbar()
 
   const columns: GridColDef[] = [
     { field: 'name', headerName: 'Название', width: 200 },
@@ -29,13 +40,15 @@ export const DryersTable: FC<DryersTableProps> = (props) => {
           <UpdateDryerButton dryer={row} sx={{ mr: 1 }} />
           <ButtonWithConfirm
             header={'Удалить сушильную камеру'}
-            description={'Вы точно хотите удалить эту сушильнуюд камеру?'}
+            description={'Вы точно хотите удалить эту сушильную камеру?'}
             onConfirm={() => {
               deleteDryerMutation(row.id)
                 .unwrap()
                 .then(() => {
+                  enqueueSnackbar('Сушильная камера успешно удалена', { variant: 'success' })
                 })
-                .catch(() => {
+                .catch((error: CommonErrorType) => {
+                  enqueueSnackbar(error.data.message, { variant: 'error' })
                 })
             }}
           />

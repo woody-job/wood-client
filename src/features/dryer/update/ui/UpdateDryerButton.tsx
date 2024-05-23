@@ -1,10 +1,13 @@
 import { FC, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { ButtonProps, IconButton } from '@mui/material'
 
 import { Dryer, DryerFormType, UpdateDryerModal, useUpdateDryerMutation } from '@/entities/dryer'
+import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
-import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { useSnackbar } from 'notistack'
 
 export type UpdateDryerButtonProps = ButtonProps & {
   dryer: Dryer
@@ -20,7 +23,8 @@ export const UpdateDryerButton: FC<UpdateDryerButtonProps> = props => {
       ...dryer,
     },
   })
-  const { reset } = methods
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
@@ -31,10 +35,11 @@ export const UpdateDryerButton: FC<UpdateDryerButtonProps> = props => {
     updateDryerMutation({ name, id: dryer.id })
       .unwrap()
       .then(() => {
+        enqueueSnackbar('Сушильная камера успешно обновлена', { variant: 'success' })
         handleCloseModal()
       })
-      .catch(e => {
-        console.log(e)
+      .catch((error: CommonErrorType) => {
+        enqueueSnackbar(error.data.message, { variant: 'error' })
       })
   }
 

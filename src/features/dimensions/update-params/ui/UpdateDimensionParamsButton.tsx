@@ -1,18 +1,21 @@
 import { forwardRef, useMemo, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonProps, IconButton } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
+import { DimensionsTableRow } from '@/widgets/dimensionsSettingsTable/types'
 import {
   DimensionFormType,
   UpdateDimensionModal,
   UpdateDimensionParams,
   useUpdateDimensionMutation,
 } from '@/entities/dimension'
-import { DimensionsTableRow } from '@/widgets/dimensionsSettingsTable/types'
-import { getDefaultValues } from '../libs/helpers'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
+
+import { getDefaultValues } from '../libs/helpers'
+import { enqueueSnackbar } from 'notistack'
 
 type UpdateDimensionParamsButtonProps = {
   dimension: DimensionsTableRow
@@ -70,12 +73,11 @@ export const UpdateDimensionParamsButton = forwardRef<
     updateDimensionMutation(body)
       .unwrap()
       .then(() => {
-        console.log('Уведомление об успешном создании')
-
+        enqueueSnackbar('Сечение успешно обновлено', { variant: 'success' })
         handleClose()
       })
-      .catch(error => {
-        console.log('Уведомление об ошибке', error)
+      .catch((error: CommonErrorType) => {
+        enqueueSnackbar(error.data.message, { variant: 'error' })
       })
   }
   return (
