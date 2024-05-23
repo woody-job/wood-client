@@ -9,7 +9,11 @@ import {
   WoodNaming,
   WoodNamingFormType,
 } from '@/entities/wood-naming'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
+
+import { useSnackbar } from 'notistack'
 
 export interface UpdateWoodNamingButtonProps extends ButtonProps {
   woodNaming: WoodNaming
@@ -25,7 +29,7 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
   const methods = useForm<WoodNamingFormType>({
     defaultValues: woodNaming,
   })
-  const { reset } = methods
+  const { enqueueSnackbar } = useSnackbar()
 
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
@@ -37,11 +41,11 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
     })
       .unwrap()
       .then(() => {
+        enqueueSnackbar('Обозначение успешно обновлено', { variant: 'success' })
         handleCloseModal()
-        reset()
       })
-      .catch(e => {
-        console.error(e)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 
@@ -55,7 +59,7 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
         onUpdate={handleUpdateWoodName}
         methods={methods}
         action={'Редактировать'}
-        title={'Редактирвать обозначение'}
+        title={'Редактировать обозначение'}
         open={isOpenModal}
         onClose={handleCloseModal}
       />

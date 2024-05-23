@@ -12,7 +12,11 @@ import {
   useFetchWorkshopWoodPricesQuery,
   useUpdateWorkshopWoodPriceMutation,
 } from '@/entities/workshop-wood-price'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
 import { EditIcon, ModalContent } from '@/shared/ui'
+
+import { enqueueSnackbar } from 'notistack'
 
 type UpdateDimensionPriceButtonProps = {
   workshopWoodPrice: WorkshopWoodPricesTableRow
@@ -76,11 +80,10 @@ export const UpdateDimensionPriceButton = forwardRef<
       createWorkshopWoodPriceMutation(body)
         .unwrap()
         .then(() => {
-          alert('CREATE SUCCESSFUL')
-          // TODO Добавить уведомления
+          enqueueSnackbar('Цена сечения успешно задана', { variant: 'success' })
         })
-        .catch(() => {
-          // TODO Добавить уведомления
+        .catch((error: CommonErrorType) => {
+          defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
         })
     }
 
@@ -93,11 +96,10 @@ export const UpdateDimensionPriceButton = forwardRef<
       updateWorkshopWoodPriceMutation(body)
         .unwrap()
         .then(() => {
-          alert('UPDATE SUCCESSFUL')
-          // TODO Добавить уведомления
+          enqueueSnackbar('Цена сечения успешно изменена', { variant: 'success' })
         })
-        .catch(() => {
-          // TODO Добавить уведомления
+        .catch((error: CommonErrorType) => {
+          defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
         })
     }
 

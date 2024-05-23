@@ -11,6 +11,10 @@ import {
   USER_ROLE,
   UserFormType,
 } from '@/entities/user'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
+
+import { useSnackbar } from 'notistack'
 
 export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -23,6 +27,8 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
   const { data: userRoles, isLoading: isUserRolesLoading } = useFetchAllRolesQuery(undefined, {
     skip: !isOpenModal,
   })
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const roleOptions = useMemo(() => {
     return userRoles?.map(userRole => ({
@@ -55,12 +61,11 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
     createUserMutation(body)
       .unwrap()
       .then(() => {
-        console.log('Уведомление об успешном создании')
-
+        enqueueSnackbar('Пользователь успешно создан', { variant: 'success' })
         handleCloseModal()
       })
-      .catch(error => {
-        console.log('Уведомление об ошибке', error)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 

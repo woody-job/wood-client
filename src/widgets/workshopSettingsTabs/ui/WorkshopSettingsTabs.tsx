@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Box, CircularProgress,Tab, Tabs } from '@mui/material'
+import { Box, CircularProgress, Tab, Tabs } from '@mui/material'
 
 import { useFetchAllWorkshopsQuery } from '@/entities/workshop/api'
 import { appSearchParams } from '@/shared/constants'

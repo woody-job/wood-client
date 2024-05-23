@@ -5,6 +5,9 @@ import { Box } from '@mui/material'
 import { useUpdateWorkshopMutation } from '@/entities/workshop/api'
 import { Workshop } from '@/entities/workshop/model'
 import { EditWorkshopMaterialsPrice, EditWorkshopSawingPrice } from '@/shared/ui'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
+import { enqueueSnackbar } from 'notistack'
 
 export interface WorkshopPricesProps {
   workshop: Workshop
@@ -28,10 +31,10 @@ export const WorkshopPrices: FC<WorkshopPricesProps> = ({ workshop }) => {
     updateWorkshopMutation(body)
       .unwrap()
       .then(() => {
-        console.log('Уведомление об успешном изменении')
+        enqueueSnackbar('Цена сырья успешно изменена', { variant: 'success' })
       })
-      .catch(error => {
-        console.log('Уведомление об ошибке', error)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 
@@ -48,10 +51,10 @@ export const WorkshopPrices: FC<WorkshopPricesProps> = ({ workshop }) => {
     updateWorkshopMutation(body)
       .unwrap()
       .then(() => {
-        console.log('Уведомление об успешном изменении')
+        enqueueSnackbar('Цена распиловки успешно изменена', { variant: 'success' })
       })
-      .catch(error => {
-        console.log('Уведомление об ошибке', error)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 

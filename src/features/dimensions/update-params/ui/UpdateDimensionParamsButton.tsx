@@ -11,9 +11,12 @@ import {
   useUpdateDimensionMutation,
 } from '@/entities/dimension'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
 
 import { getDefaultValues } from '../libs/helpers'
+import { enqueueSnackbar } from 'notistack'
 
 type UpdateDimensionParamsButtonProps = {
   dimension: DimensionsTableRow
@@ -71,12 +74,11 @@ export const UpdateDimensionParamsButton = forwardRef<
     updateDimensionMutation(body)
       .unwrap()
       .then(() => {
-        console.log('Уведомление об успешном создании')
-
+        enqueueSnackbar('Сечение успешно обновлено', { variant: 'success' })
         handleClose()
       })
-      .catch(error => {
-        console.log('Уведомление об ошибке', error)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
   return (

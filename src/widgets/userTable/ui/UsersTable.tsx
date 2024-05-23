@@ -5,11 +5,14 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { UpdateUserButton } from '@/features/user/update'
 import { useDeleteUserMutation, User } from '@/entities/user'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm, dataGridStyles } from '@/shared/ui'
 import { CustomGridPanel, DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 
 import { USER_TABLE_COLUMNS } from '../constants'
 import { UserTableRow } from '../types'
+import { useSnackbar } from 'notistack'
 
 type UsersTableProps = {
   users: User[] | undefined
@@ -19,8 +22,17 @@ type UsersTableProps = {
 export const UsersTable: FC<UsersTableProps> = ({ users, isLoadingUsers }) => {
   const [deleteUserMutation] = useDeleteUserMutation()
 
+  const { enqueueSnackbar } = useSnackbar()
+
   const handleDeleteUser = (userId: number) => {
     deleteUserMutation({ userId })
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar('Пользователь успешно удален', { variant: 'info' })
+      })
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
+      })
   }
 
   const columns: GridColDef[] = [

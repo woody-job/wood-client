@@ -8,11 +8,16 @@ import {
   useCreateWoodNamingMutation,
   WoodNamingFormType,
 } from '@/entities/wood-naming'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
+
+import { useSnackbar } from 'notistack'
 
 export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
 
   const [createWoodNamingMutation] = useCreateWoodNamingMutation()
+  const { enqueueSnackbar } = useSnackbar()
 
   const methods = useForm<WoodNamingFormType>()
   const { reset } = methods
@@ -26,11 +31,12 @@ export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>
     createWoodNamingMutation({ name })
       .unwrap()
       .then(() => {
+        enqueueSnackbar('Обозначение успешно создано', { variant: 'success' })
         handleCloseModal()
         reset()
       })
-      .catch(e => {
-        console.error(e)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 

@@ -23,7 +23,7 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = props => {
   } = methods
 
   return (
-    <Modal {...modalProps} aria-labelledby='create-user-modal-title'>
+    <Modal {...modalProps}>
       <ModalContent
         component='form'
         display='flex'
@@ -31,7 +31,7 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = props => {
         onSubmit={handleSubmit(onUpdate)}
         gap={1}
       >
-        <Typography id='create-user-modal-title' variant='h6' sx={{ mb: 2 }}>
+        <Typography textAlign='center' sx={{ mb: 3 }} variant='h6'>
           {title}
         </Typography>
 

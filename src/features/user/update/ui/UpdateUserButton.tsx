@@ -12,9 +12,12 @@ import {
   useUpdateUserMutation,
 } from '@/entities/user'
 import { USER_ROLE } from '@/entities/user/contansts'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
 
 import { getDefaultValues } from '../lib/helpers'
+import { useSnackbar } from 'notistack'
 
 type UpdateUserButtonProps = { user: UserTableRow } & ButtonProps
 
@@ -29,6 +32,7 @@ export const UpdateUserButton: FC<UpdateUserButtonProps> = ({ user, ...props }) 
   const { data: userRoles, isLoading: isUserRolesLoading } = useFetchAllRolesQuery(undefined, {
     skip: !isOpenModal,
   })
+  const { enqueueSnackbar } = useSnackbar()
 
   const roleOptions = useMemo(() => {
     return userRoles?.map(userRole => ({
@@ -64,13 +68,12 @@ export const UpdateUserButton: FC<UpdateUserButtonProps> = ({ user, ...props }) 
     updateUserMutation(body)
       .unwrap()
       .then(() => {
-        console.log('Уведомление об успешном создании')
-
+        enqueueSnackbar('Пользователь успешно обновлён', { variant: 'success' })
         handleCloseModal()
         reset()
       })
-      .catch(error => {
-        console.log('Уведомление об ошибке', error)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 
@@ -87,7 +90,7 @@ export const UpdateUserButton: FC<UpdateUserButtonProps> = ({ user, ...props }) 
         isUserRolesLoading={isUserRolesLoading}
         onClose={handleCloseModal}
         onUpdate={handleSave}
-        title='Редактирвать пользователя'
+        title='Редактировать пользователя'
         action='Редактировать'
       />
     </>

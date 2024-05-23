@@ -66,7 +66,7 @@ export const EditWorkshopSawingPrice: FC<EditWorkshopSawingPriceProps> = ({
   return (
     <Box display='flex' alignItems='center' gap={1}>
       <Box ref={editInputWrapperRef} display='inline-flex' gap={1} alignItems='center'>
-        <Typography mr={2}>Распиловка (₽)</Typography>
+        <Typography mr={2}>Распиловка (₽/м3)</Typography>
 
         {isEdit && (
           <Box sx={{ position: 'relative' }}>
