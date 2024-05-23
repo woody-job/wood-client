@@ -1,8 +1,13 @@
+import { FC, useMemo } from 'react'
+
 import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { CreateDimensionButton } from '@/features/dimensions/create'
 import { UpdateDimensionParamsButton } from '@/features/dimensions/update-params'
+import { Dimension, useDeleteDimensionMutation } from '@/entities/dimension'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
@@ -10,10 +15,10 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+
 import { DIMENSIONS_TABLE_COLUMNS } from '../constants'
-import { FC, useMemo } from 'react'
-import { Dimension, useDeleteDimensionMutation } from '@/entities/dimension'
 import { DimensionsTableRow } from '../types'
+import { useSnackbar } from 'notistack'
 
 type DimensionsSettingsTableProps = {
   dimensions: Dimension[] | undefined
@@ -26,8 +31,17 @@ export const DimensionsSettingsTable: FC<DimensionsSettingsTableProps> = ({
 }) => {
   const [deleteDimensionMutation] = useDeleteDimensionMutation()
 
+  const { enqueueSnackbar } = useSnackbar()
+
   const handleDeleteDimension = (dimensionId: number) => {
     deleteDimensionMutation({ dimensionId })
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar('Сечение успешно удалено', { variant: 'info' })
+      })
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
+      })
   }
 
   const columns: GridColDef[] = [

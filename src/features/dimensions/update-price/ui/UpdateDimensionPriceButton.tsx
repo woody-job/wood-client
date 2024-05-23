@@ -32,9 +32,8 @@ export const UpdateDimensionPriceButton = forwardRef<HTMLButtonElement, ButtonPr
             flexDirection='column'
             gap={3}
           >
-            <Typography>
-              Редатировать сечение 150x38x6 <br />
-              для цеха 1
+            <Typography variant='h6' textAlign='center'>
+              Редактировать сечение <br /> 150x38x6 для цеха 1
             </Typography>
 
             <TextField label='Цена' size='small' />

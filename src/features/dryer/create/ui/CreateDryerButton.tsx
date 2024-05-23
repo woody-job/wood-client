@@ -1,9 +1,13 @@
 import { forwardRef, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonProps } from '@mui/material'
 
 import { DryerFormType, UpdateDryerModal, useCreateDryerMutation } from '@/entities/dryer'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
+
+import { useSnackbar } from 'notistack'
 
 export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -12,27 +16,29 @@ export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((pro
   const { reset } = methods
 
   const [createDryerMutation] = useCreateDryerMutation()
+  const { enqueueSnackbar } = useSnackbar()
 
   const handleOpenModal = () => setIsOpenModal(true)
   const handleCloseModal = () => setIsOpenModal(false)
 
-  const handleCreateDryer: SubmitHandler<DryerFormType> = (values) => {
+  const handleCreateDryer: SubmitHandler<DryerFormType> = values => {
     const { name } = values
 
     createDryerMutation({ name })
       .unwrap()
       .then(() => {
+        enqueueSnackbar('Сушильная успешно камера создана', { variant: 'success' })
         handleCloseModal()
         reset()
       })
-      .catch((e) => {
-        console.log(e)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 
   return (
     <>
-      <Button ref={ref} variant="gray" size="medium" onClick={handleOpenModal} {...props} />
+      <Button ref={ref} variant='gray' size='medium' onClick={handleOpenModal} {...props} />
 
       <UpdateDryerModal
         title={'Создать сушильную камеру'}

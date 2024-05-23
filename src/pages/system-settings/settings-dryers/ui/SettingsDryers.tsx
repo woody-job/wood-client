@@ -5,7 +5,7 @@ import { CreateDryerButton } from '@/features/dryer/create'
 import { useFetchAllDryersQuery } from '@/entities/dryer'
 
 export const SettingsDryers = () => {
-  const { data: dryers, isLoading} = useFetchAllDryersQuery()
+  const { data: dryers, isLoading } = useFetchAllDryersQuery()
 
   return (
     <Box>

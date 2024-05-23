@@ -1,4 +1,5 @@
 import { baseApi } from '@/shared/api'
+
 import { WoodClass } from '../model'
 
 export const woodClassApi = baseApi.injectEndpoints({

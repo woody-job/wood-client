@@ -1,4 +1,5 @@
-import { FC, FormEventHandler } from 'react'
+import { FC } from 'react'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import {
   Box,
@@ -7,14 +8,13 @@ import {
   MenuItem,
   Modal,
   ModalProps,
-  Select,
   TextField,
   Typography,
 } from '@mui/material'
 
 import { ModalContent } from '@/shared/ui'
+
 import { DimensionFormType } from '../model'
-import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 export interface UpdateDimensionModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -57,7 +57,7 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
         flexDirection='column'
         gap={3}
       >
-        <Typography variant='h5' sx={{ textAlign: 'center', mb: 1 }}>
+        <Typography variant='h6' sx={{ textAlign: 'center', mb: 1 }}>
           {title}
         </Typography>
 

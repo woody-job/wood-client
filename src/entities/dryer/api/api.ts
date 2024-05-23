@@ -1,8 +1,8 @@
-import { baseApi } from '@/shared/api'
 import { Dryer, DryerWithoutId } from '@/entities/dryer'
+import { baseApi } from '@/shared/api'
 
 export const dryerApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: build => ({
     fetchAllDryers: build.query<Dryer[], void>({
       query: () => ({
         url: 'dryer-chamber/list',
@@ -10,7 +10,7 @@ export const dryerApi = baseApi.injectEndpoints({
       providesTags: ['Dryers'],
     }),
     createDryer: build.mutation<Dryer, DryerWithoutId>({
-      query: (dryer) => ({
+      query: dryer => ({
         url: 'dryer-chamber',
         method: 'POST',
         body: dryer,
@@ -26,7 +26,7 @@ export const dryerApi = baseApi.injectEndpoints({
       invalidatesTags: ['Dryers'],
     }),
     deleteDryer: build.mutation<void, number>({
-      query: (id) => ({
+      query: id => ({
         url: `dryer-chamber/${id}`,
         method: 'DELETE',
       }),

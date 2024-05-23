@@ -1,4 +1,5 @@
 import { forwardRef, useMemo, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonProps } from '@mui/material'
 
@@ -8,8 +9,11 @@ import {
   UpdateDimensionModal,
   useCreateDimensionMutation,
 } from '@/entities/dimension'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
+
+import { useSnackbar } from 'notistack'
 
 export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,6 +27,8 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
     undefined,
     { skip: !isOpen }
   )
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const woodClassesOptions = useMemo(() => {
     return woodClasses?.map(woodClass => ({
@@ -55,12 +61,11 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
     createDimensionMutation(body)
       .unwrap()
       .then(() => {
-        console.log('Уведомление об успешном создании')
-
+        enqueueSnackbar('Сечение успешно создано', { variant: 'success' })
         handleClose()
       })
-      .catch(error => {
-        console.log('Уведомление об ошибке', error)
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
   return (
