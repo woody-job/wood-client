@@ -1,0 +1,1 @@
+export { WorkshopSettingsTabs } from './ui'

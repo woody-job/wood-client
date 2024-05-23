@@ -7,6 +7,8 @@ export const tagTypes = [
   'AllDimensions',
   'DimensionsByWoodClass',
   'AllWoodClasses',
+  'AllWorkshops',
+  'WorkshopWoodPrices',
   'Dryers',
 ]
 export const baseApi = createApi({

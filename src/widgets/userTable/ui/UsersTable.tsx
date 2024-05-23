@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import { Box, CircularProgress, Typography } from '@mui/material'
-import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { UpdateUserButton } from '@/features/user/update'
 import { useDeleteUserMutation, User } from '@/entities/user'
@@ -35,36 +35,34 @@ export const UsersTable: FC<UsersTableProps> = ({ users, isLoadingUsers }) => {
       })
   }
 
-  const columns = useMemo(() => {
-    return [
-      ...USER_TABLE_COLUMNS,
-      {
-        field: 'actions',
-        headerName: '',
-        disableColumnMenu: true,
-        sortable: false,
-        width: 300,
-        renderCell: (params: GridRenderCellParams) => {
-          return (
-            <>
-              <UpdateUserButton user={params.row} sx={{ mr: 1 }}>
-                Редактировать
-              </UpdateUserButton>
-              <ButtonWithConfirm
-                header='Удалить пользователя'
-                description='Вы уверены, что хотите удалить пользователя?'
-                onConfirm={() => {
-                  handleDeleteUser(params.row.id)
-                }}
-              >
-                Удалить
-              </ButtonWithConfirm>
-            </>
-          )
-        },
+  const columns: GridColDef[] = [
+    ...USER_TABLE_COLUMNS,
+    {
+      field: 'actions',
+      headerName: '',
+      disableColumnMenu: true,
+      sortable: false,
+      width: 300,
+      renderCell: (params: GridRenderCellParams) => {
+        return (
+          <>
+            <UpdateUserButton user={params.row} sx={{ mr: 1 }}>
+              Редактировать
+            </UpdateUserButton>
+            <ButtonWithConfirm
+              header='Удалить пользователя'
+              description='Вы уверены, что хотите удалить пользователя?'
+              onConfirm={() => {
+                handleDeleteUser(params.row.id)
+              }}
+            >
+              Удалить
+            </ButtonWithConfirm>
+          </>
+        )
       },
-    ]
-  }, [users])
+    },
+  ]
 
   const rows: UserTableRow[] = useMemo(() => {
     return users
