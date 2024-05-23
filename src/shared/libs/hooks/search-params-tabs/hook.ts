@@ -6,7 +6,7 @@ import { UseSearchParamsTabsReturn } from '@/shared/libs/hooks/search-params-tab
 
 export const useSearchParamsTabs = <TTab>(
   tabName: string,
-  tabs: TTab[],
+  tabs: TTab[] | undefined,
   tabKeySelector: (tab: TTab) => string,
   defaultTab: TTab
 ): UseSearchParamsTabsReturn<TTab> => {
@@ -15,7 +15,7 @@ export const useSearchParamsTabs = <TTab>(
   const currentTab = useMemo(() => {
     const currentTab = searchParams.get(tabName)
 
-    const findTab = tabs.find(tab => tabKeySelector(tab) === currentTab)
+    const findTab = tabs?.find(tab => tabKeySelector(tab) === currentTab)
     if (!findTab) return defaultTab
 
     return findTab

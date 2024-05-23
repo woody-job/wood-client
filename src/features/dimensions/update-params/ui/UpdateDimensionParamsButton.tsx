@@ -1,18 +1,19 @@
 import { forwardRef, useMemo, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonProps, IconButton } from '@mui/material'
+import { ButtonProps, IconButton } from '@mui/material'
 
+import { DimensionsTableRow } from '@/widgets/dimensionsSettingsTable/types'
 import {
   DimensionFormType,
   UpdateDimensionModal,
   UpdateDimensionParams,
   useUpdateDimensionMutation,
 } from '@/entities/dimension'
-import { DimensionsTableRow } from '@/widgets/dimensionsSettingsTable/types'
-import { getDefaultValues } from '../libs/helpers'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
-import { useForm, SubmitHandler } from 'react-hook-form'
 import { EditIcon } from '@/shared/ui'
+
+import { getDefaultValues } from '../libs/helpers'
 
 type UpdateDimensionParamsButtonProps = {
   dimension: DimensionsTableRow

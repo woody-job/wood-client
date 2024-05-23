@@ -1,8 +1,11 @@
+import { FC, useMemo } from 'react'
+
 import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { CreateDimensionButton } from '@/features/dimensions/create'
 import { UpdateDimensionParamsButton } from '@/features/dimensions/update-params'
+import { Dimension, useDeleteDimensionMutation } from '@/entities/dimension'
 import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
@@ -10,9 +13,8 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+
 import { DIMENSIONS_TABLE_COLUMNS } from '../constants'
-import { FC, useMemo } from 'react'
-import { Dimension, useDeleteDimensionMutation } from '@/entities/dimension'
 import { DimensionsTableRow } from '../types'
 
 type DimensionsSettingsTableProps = {

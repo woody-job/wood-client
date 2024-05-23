@@ -7,6 +7,8 @@ export const tagTypes = [
   'AllDimensions',
   'DimensionsByWoodClass',
   'AllWoodClasses',
+  'AllWorkshops',
+  'WorkshopWoodPrices',
 ]
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
