@@ -11,6 +11,7 @@ import {
   USER_ROLE,
   UserFormType,
 } from '@/entities/user'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
 import { useSnackbar } from 'notistack'
@@ -64,13 +65,13 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
         handleCloseModal()
       })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 
   return (
     <>
-      <Button ref={ref} variant='gray' size='medium' onClick={handleOpenModal} {...props} />
+      <Button ref={ref} variant="gray" size="medium" onClick={handleOpenModal} {...props} />
 
       <UpdateUserModal
         open={isOpenModal}
@@ -79,7 +80,7 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
         isUserRolesLoading={isUserRolesLoading}
         onClose={handleCloseModal}
         onUpdate={handleSave}
-        action='Создать'
+        action="Создать"
         title={`Создать пользователя`}
       />
     </>

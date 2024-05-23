@@ -5,6 +5,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 import { UpdateWoodNamingButton } from '@/features/wood-naming/update'
 import { useDeleteWoodNamingMutation, WoodNaming } from '@/entities/wood-naming'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm } from '@/shared/ui'
 import {
@@ -30,9 +31,11 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
   const handleDeleteWoodNaming = (woodNamingId: number) => {
     deleteWoodNamingMutation(woodNamingId)
       .unwrap()
-      .then(() => {})
+      .then(() => {
+        enqueueSnackbar('Обозначение успешно удалено', { variant: 'info' })
+      })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 

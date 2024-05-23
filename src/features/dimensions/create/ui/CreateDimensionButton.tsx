@@ -10,6 +10,7 @@ import {
   useCreateDimensionMutation,
 } from '@/entities/dimension'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
 import { useSnackbar } from 'notistack'
@@ -64,7 +65,7 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
         handleClose()
       })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
   return (

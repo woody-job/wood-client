@@ -8,6 +8,7 @@ import {
   useCreateWoodNamingMutation,
   WoodNamingFormType,
 } from '@/entities/wood-naming'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
 import { useSnackbar } from 'notistack'
@@ -35,7 +36,7 @@ export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>
         reset()
       })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 

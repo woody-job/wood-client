@@ -1,7 +1,9 @@
-export type CommonErrorType = {
+export type CommonErrorType<ErrorData = unknown> = {
   status: number
-  data: {
-    message: string
-    statusCode: number
-  }
+  data: ErrorData
+}
+
+export type DefaultErrorData = {
+  message: string
+  statusCode: number
 }

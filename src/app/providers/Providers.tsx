@@ -16,7 +16,11 @@ export const Providers: FC<ProviderProps> = ({ children }) => {
   return (
     <Provider store={store}>
       <CustomThemeProvider>
-        <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <SnackbarProvider
+          maxSnack={10}
+          autoHideDuration={2000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
           <AppRouter />
           {children}
         </SnackbarProvider>

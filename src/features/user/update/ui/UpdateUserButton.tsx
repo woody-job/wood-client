@@ -12,6 +12,7 @@ import {
   useUpdateUserMutation,
 } from '@/entities/user'
 import { USER_ROLE } from '@/entities/user/contansts'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
 
@@ -72,7 +73,7 @@ export const UpdateUserButton: FC<UpdateUserButtonProps> = ({ user, ...props }) 
         reset()
       })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 

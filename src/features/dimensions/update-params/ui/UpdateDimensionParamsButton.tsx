@@ -11,6 +11,7 @@ import {
   useUpdateDimensionMutation,
 } from '@/entities/dimension'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
 
@@ -77,7 +78,7 @@ export const UpdateDimensionParamsButton = forwardRef<
         handleClose()
       })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
   return (

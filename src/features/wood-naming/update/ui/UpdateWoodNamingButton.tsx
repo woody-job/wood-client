@@ -9,6 +9,7 @@ import {
   WoodNaming,
   WoodNamingFormType,
 } from '@/entities/wood-naming'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
 
@@ -44,7 +45,7 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
         handleCloseModal()
       })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 

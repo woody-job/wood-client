@@ -5,6 +5,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 import { UpdateDryerButton } from '@/features/dryer/update'
 import { Dryer, useDeleteDryerMutation } from '@/entities/dryer'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm } from '@/shared/ui'
 import {
@@ -45,10 +46,10 @@ export const DryersTable: FC<DryersTableProps> = props => {
               deleteDryerMutation(row.id)
                 .unwrap()
                 .then(() => {
-                  enqueueSnackbar('Сушильная камера успешно удалена', { variant: 'success' })
+                  enqueueSnackbar('Сушильная камера успешно удалена', { variant: 'info' })
                 })
                 .catch((error: CommonErrorType) => {
-                  enqueueSnackbar(error.data.message, { variant: 'error' })
+                  defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
                 })
             }}
           />

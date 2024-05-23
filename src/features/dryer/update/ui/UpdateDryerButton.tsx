@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { ButtonProps, IconButton } from '@mui/material'
 
 import { Dryer, DryerFormType, UpdateDryerModal, useUpdateDryerMutation } from '@/entities/dryer'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { EditIcon } from '@/shared/ui'
 
@@ -39,7 +40,7 @@ export const UpdateDryerButton: FC<UpdateDryerButtonProps> = props => {
         handleCloseModal()
       })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 

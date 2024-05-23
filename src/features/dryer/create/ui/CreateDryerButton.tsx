@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Button, ButtonProps } from '@mui/material'
 
 import { DryerFormType, UpdateDryerModal, useCreateDryerMutation } from '@/entities/dryer'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
 import { useSnackbar } from 'notistack'
@@ -31,7 +32,7 @@ export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((pro
         reset()
       })
       .catch((error: CommonErrorType) => {
-        enqueueSnackbar(error.data.message, { variant: 'error' })
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
 
