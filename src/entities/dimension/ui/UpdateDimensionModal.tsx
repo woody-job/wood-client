@@ -57,7 +57,7 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
         flexDirection='column'
         gap={3}
       >
-        <Typography variant='h5' sx={{ textAlign: 'center', mb: 1 }}>
+        <Typography variant='h6' sx={{ textAlign: 'center', mb: 1 }}>
           {title}
         </Typography>
 

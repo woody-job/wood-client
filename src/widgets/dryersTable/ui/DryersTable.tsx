@@ -49,7 +49,9 @@ export const DryersTable: FC<DryersTableProps> = props => {
                   enqueueSnackbar('Сушильная камера успешно удалена', { variant: 'info' })
                 })
                 .catch((error: CommonErrorType) => {
-                  defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
+                  defaultErrorHandler(error, message =>
+                    enqueueSnackbar(message, { variant: 'error' })
+                  )
                 })
             }}
           />

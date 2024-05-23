@@ -51,7 +51,7 @@ export const UpdateDryerButton: FC<UpdateDryerButtonProps> = props => {
       </IconButton>
 
       <UpdateDryerModal
-        title={'Редактировать сушильную камеру'}
+        title={'Редактировать название сушильной камеры'}
         action={'Редактировать'}
         methods={methods}
         onUpdate={handleCreateDryer}

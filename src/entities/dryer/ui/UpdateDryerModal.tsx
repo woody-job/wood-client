@@ -22,31 +22,31 @@ export const UpdateDryerModal: FC<UpdateDryerModalProps> = props => {
   } = methods
 
   return (
-    <Modal {...modalProps} aria-labelledby="create-user-modal-title">
+    <Modal {...modalProps} aria-labelledby='create-user-modal-title'>
       <ModalContent
-        component="form"
-        display="flex"
-        flexDirection="column"
+        component='form'
+        display='flex'
+        flexDirection='column'
         onSubmit={handleSubmit(onUpdate)}
         gap={1}
       >
-        <Typography textAlign="center" sx={{ mb: 3 }}>
+        <Typography textAlign='center' sx={{ mb: 3 }} variant='h6'>
           {title}
         </Typography>
 
         <TextField
           inputProps={{ ...register('name', { required: true }) }}
-          label="Название"
-          variant="outlined"
-          size="small"
+          label='Название'
+          variant='outlined'
+          size='small'
         />
         {errors.name?.type === 'required' && (
-          <Typography variant="caption" sx={{ color: theme => theme.palette.error.main }}>
+          <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
             Название сушилки обязательно
           </Typography>
         )}
 
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+        <Button type='submit' variant='contained' color='primary' sx={{ mt: 2 }}>
           {action}
         </Button>
       </ModalContent>

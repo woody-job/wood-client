@@ -71,7 +71,7 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
 
   return (
     <>
-      <Button ref={ref} variant="gray" size="medium" onClick={handleOpenModal} {...props} />
+      <Button ref={ref} variant='gray' size='medium' onClick={handleOpenModal} {...props} />
 
       <UpdateUserModal
         open={isOpenModal}
@@ -80,7 +80,7 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
         isUserRolesLoading={isUserRolesLoading}
         onClose={handleCloseModal}
         onUpdate={handleSave}
-        action="Создать"
+        action='Создать'
         title={`Создать пользователя`}
       />
     </>
