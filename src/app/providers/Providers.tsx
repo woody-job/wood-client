@@ -18,7 +18,7 @@ export const Providers: FC<ProviderProps> = ({ children }) => {
       <CustomThemeProvider>
         <SnackbarProvider
           maxSnack={10}
-          autoHideDuration={2000}
+          autoHideDuration={5000}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         >
           <AppRouter />

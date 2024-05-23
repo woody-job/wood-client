@@ -23,32 +23,32 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = props => {
   } = methods
 
   return (
-    <Modal {...modalProps} aria-labelledby='create-user-modal-title'>
+    <Modal {...modalProps} >
       <ModalContent
-        component='form'
-        display='flex'
-        flexDirection='column'
+        component="form"
+        display="flex"
+        flexDirection="column"
         onSubmit={handleSubmit(onUpdate)}
         gap={1}
       >
-        <Typography id='create-user-modal-title' variant='h6' sx={{ mb: 2 }}>
+        <Typography textAlign="center" sx={{ mb: 3 }}>
           {title}
         </Typography>
 
         <TextField
           inputProps={{ ...register('name', { required: true }) }}
-          id='name'
-          label='Название'
-          variant='outlined'
-          size='small'
+          id="name"
+          label="Название"
+          variant="outlined"
+          size="small"
         />
         {errors.name?.type === 'required' && (
-          <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
+          <Typography variant="caption" sx={{ color: theme => theme.palette.error.main }}>
             Название обозначения обязательно
           </Typography>
         )}
 
-        <Button type='submit' variant='contained' color='primary' sx={{ mt: 2 }}>
+        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
           {action}
         </Button>
       </ModalContent>

@@ -59,7 +59,7 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
         onUpdate={handleUpdateWoodName}
         methods={methods}
         action={'Редактировать'}
-        title={'Редактирвать обозначение'}
+        title={'Редактировать обозначение'}
         open={isOpenModal}
         onClose={handleCloseModal}
       />
