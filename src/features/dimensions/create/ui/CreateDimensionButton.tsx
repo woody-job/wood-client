@@ -1,27 +1,79 @@
-import { forwardRef, useState } from 'react'
+import { forwardRef, useMemo, useState } from 'react'
 
 import { Button, ButtonProps } from '@mui/material'
 
-import { UpdateDimensionPriceModal } from '@/entities/dimension'
+import {
+  CreateDimensionParams,
+  DimensionFormType,
+  UpdateDimensionModal,
+  useCreateDimensionMutation,
+} from '@/entities/dimension'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 
 export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleClose = () => setIsOpen(false)
-  const handleOpen = () => setIsOpen(true)
+  const methods = useForm<DimensionFormType>()
+  const { reset } = methods
 
-  const handleUpdateDimension = () => {
-    handleClose() // TODO update dimension
+  const [createDimensionMutation] = useCreateDimensionMutation()
+
+  const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery(
+    undefined,
+    { skip: !isOpen }
+  )
+
+  const woodClassesOptions = useMemo(() => {
+    return woodClasses?.map(woodClass => ({
+      id: woodClass.id,
+      name: woodClass.name,
+    }))
+  }, [woodClasses])
+
+  const handleOpen = () => {
+    setIsOpen(true)
   }
 
+  const handleClose = () => {
+    setIsOpen(false)
+    reset()
+  }
+
+  const handleSave: SubmitHandler<DimensionFormType> = data => {
+    const { width, thickness, length, woodClass } = data
+
+    const woodClassId = woodClasses?.find(woodClassObj => woodClassObj.name === woodClass)?.id ?? -1
+
+    const body: CreateDimensionParams = {
+      width: Number(width),
+      thickness: Number(thickness),
+      length: Number(length),
+      woodClassId,
+    }
+
+    createDimensionMutation(body)
+      .unwrap()
+      .then(() => {
+        console.log('Уведомление об успешном создании')
+
+        handleClose()
+      })
+      .catch(error => {
+        console.log('Уведомление об ошибке', error)
+      })
+  }
   return (
     <>
       <Button variant='gray' ref={ref} onClick={handleOpen} {...props} />
 
-      <UpdateDimensionPriceModal
+      <UpdateDimensionModal
+        methods={methods}
         title={'Создать сечение'}
+        woodClassesOptions={woodClassesOptions}
+        isWoodClassesLoading={isWoodClassesLoading}
         action={'Создать'}
-        onUpdate={handleUpdateDimension}
+        onUpdate={handleSave}
         open={isOpen}
         onClose={handleClose}
       />

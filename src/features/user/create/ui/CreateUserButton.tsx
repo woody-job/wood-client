@@ -58,7 +58,6 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
         console.log('Уведомление об успешном создании')
 
         handleCloseModal()
-        reset()
       })
       .catch(error => {
         console.log('Уведомление об ошибке', error)
