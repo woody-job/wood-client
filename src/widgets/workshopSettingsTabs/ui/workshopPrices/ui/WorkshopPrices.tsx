@@ -4,9 +4,10 @@ import { Box } from '@mui/material'
 
 import { useUpdateWorkshopMutation } from '@/entities/workshop/api'
 import { Workshop } from '@/entities/workshop/model'
-import { EditWorkshopMaterialsPrice, EditWorkshopSawingPrice } from '@/shared/ui'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
+import { EditWorkshopMaterialsPrice, EditWorkshopSawingPrice } from '@/shared/ui'
+
 import { enqueueSnackbar } from 'notistack'
 
 export interface WorkshopPricesProps {

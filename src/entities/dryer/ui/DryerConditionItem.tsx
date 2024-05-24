@@ -1,16 +1,20 @@
 import { FC, ReactNode } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 
-import { DryerConditionSunburst } from '@/entities/dryer'
+import { DryerConditionSunburst, DryerDataResponse } from '@/entities/dryer'
 import { DashItem } from '@/shared/ui'
 
 export interface DryerConditionItemProps {
   actions?: ReactNode
   dryerName: string
+  dryerData: DryerDataResponse | undefined
+  isLoadingDryerData: boolean
 }
 
-export const DryerConditionItem: FC<DryerConditionItemProps> = ({ actions, dryerName }) => {
+export const DryerConditionItem: FC<DryerConditionItemProps> = props => {
+  const { actions, dryerName, dryerData, isLoadingDryerData } = props
+
   return (
     <Box
       sx={{
@@ -25,14 +29,39 @@ export const DryerConditionItem: FC<DryerConditionItemProps> = ({ actions, dryer
       <DashItem
         display='flex'
         flexDirection='column'
-        justifyContent='center'
         alignItems='center'
         className='dryer-condition-item'
+        minWidth='650px'
+        minHeight='650px'
       >
         <Typography variant='h6'>{dryerName}</Typography>
         <Typography variant='subtitle1'>Цикл 501</Typography>
 
-        <DryerConditionSunburst />
+        {isLoadingDryerData ? (
+          <Box
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            minWidth='650px'
+            minHeight='650px'
+          >
+            <CircularProgress size={100} />
+          </Box>
+        ) : dryerData ? (
+          <DryerConditionSunburst dryerData={dryerData} />
+        ) : (
+          <Box
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            minWidth='650px'
+            minHeight='650px'
+          >
+            <Typography variant='h6' fontWeight='regular'>
+              Нет данных о сушилке
+            </Typography>
+          </Box>
+        )}
       </DashItem>
 
       <Box width='100' display='flex' justifyContent='space-evenly' mt={1}>
