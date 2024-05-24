@@ -1,51 +1,90 @@
-import { FC, FormEventHandler, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonProps, Modal, TextField, Typography } from '@mui/material'
+import { skipToken } from '@reduxjs/toolkit/query'
 
-import { ModalContent } from '@/shared/ui'
+import { Button, ButtonProps } from '@mui/material'
 
-export const InsertWoodButton: FC<ButtonProps> = props => {
+import { InsertWoodModal } from '@/features/dryer/insert-wood'
+import { useFetchDimensionsByWoodClassQuery } from '@/entities/dimension'
+import { DryerBringInFormType, useBringInMutation } from '@/entities/dryer'
+import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
+import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
+
+import { useSnackbar } from 'notistack'
+
+export type InsertWoodButtonProps = ButtonProps & {
+  dryerId: number
+}
+
+export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
+  const { dryerId, ...buttonProps } = props
   const [isOpenInsert, setIsOpenInsert] = useState(false)
+
+  const methods = useForm<DryerBringInFormType>()
+  const { watch, reset } = methods
+
+  const { enqueueSnackbar } = useSnackbar()
+
+  const watchWoodClassId = watch('woodClassId')
+
+  const [bringInMutation] = useBringInMutation()
+  const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery(
+    undefined,
+    { skip: !isOpenInsert }
+  )
+
+  const { data: dimensions, isLoading: isDimensionsLoading } = useFetchDimensionsByWoodClassQuery(
+    watchWoodClassId ?? skipToken,
+    { skip: !isOpenInsert }
+  )
+
+  const { data: woodTypes, isLoading: isWoodTypesLoading } = useFetchAllWoodTypesQuery(undefined, {
+    skip: !isOpenInsert,
+  })
+
+  useEffect(() => {
+    if (!isOpenInsert) reset()
+  }, [isOpenInsert, reset])
 
   const handleCloseInsert = () => setIsOpenInsert(false)
 
-  const handleSubmitInsert: FormEventHandler = e => {
-    e.preventDefault()
+  const handleSubmitInsert: SubmitHandler<DryerBringInFormType> = values => {
+    bringInMutation({
+      ...values,
+      dryerChamberId: dryerId,
+      date: new Date().toISOString(),
+    })
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar('Доски успешно внесены', { variant: 'success' })
+        handleCloseInsert()
+      })
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
+      })
   }
 
   const handleOpenInsert = () => setIsOpenInsert(true)
 
   return (
     <>
-      <Button variant='outlined' onClick={handleOpenInsert} {...props} />
+      <Button variant='outlined' onClick={handleOpenInsert} {...buttonProps} />
 
-      <Modal
+      <InsertWoodModal
         open={isOpenInsert}
         onClose={handleCloseInsert}
-        aria-labelledby='create-user-modal-title'
-      >
-        <ModalContent
-          component='form'
-          sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-          onSubmit={handleSubmitInsert}
-        >
-          <Typography
-            id='create-user-modal-title'
-            variant='h5'
-            component='h2'
-            sx={{ textAlign: 'center', mb: 5 }}
-          >
-            Внести доски
-          </Typography>
-          <TextField label='Сорт' variant='outlined' />
-          <TextField label='Сечение' variant='outlined' />
-          <TextField label='Порода' variant='outlined' />
-          <TextField label='Количество' variant='outlined' />
-          <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
-            Внести
-          </Button>
-        </ModalContent>
-      </Modal>
+        onSubmitForm={handleSubmitInsert}
+        methods={methods}
+        woodClasses={woodClasses}
+        isWoodClassesLoading={isWoodClassesLoading}
+        dimensions={dimensions}
+        isDimensionsLoading={isDimensionsLoading}
+        woodTypes={woodTypes}
+        isWoodTypesLoading={isWoodTypesLoading}
+      />
     </>
   )
 }

@@ -1,1 +1,1 @@
-export { InsertWoodButton } from './ui'
+export { InsertWoodButton, InsertWoodModal } from './ui'

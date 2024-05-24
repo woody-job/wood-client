@@ -7,7 +7,7 @@ import { UseSearchParamsTabsReturn } from '@/shared/libs/hooks/search-params-tab
 export const useSearchParamsTabs = <TTab>(
   tabName: string,
   tabs: TTab[] | undefined,
-  tabKeySelector: (tab: TTab) => string,
+  tabKeySelector: (tab: TTab) => string | undefined,
   defaultTab: TTab
 ): UseSearchParamsTabsReturn<TTab> => {
   const [searchParams, setSearchParams] = useSearchParams()

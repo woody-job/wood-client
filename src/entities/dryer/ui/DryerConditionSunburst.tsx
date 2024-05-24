@@ -1,63 +1,17 @@
+import { FC } from 'react'
+
 import { Typography } from '@mui/material'
 
+import { DryerDataResponse } from '@/entities/dryer'
 import { CustomSunburst } from '@/shared/ui'
 
-export const DryerConditionSunburst = () => {
+export type DryerConditionSunburstProps = {
+  dryerData: DryerDataResponse
+}
+
+export const DryerConditionSunburst: FC<DryerConditionSunburstProps> = ({ dryerData }) => {
   const data = {
-    name: 'root',
-    children: [
-      {
-        name: 'Дуб',
-        children: [
-          {
-            name: '100x100x10',
-            size: 10,
-          },
-          {
-            name: '100x100x10',
-            size: 15,
-          },
-          {
-            name: '100x100x10',
-            size: 20,
-          },
-        ],
-      },
-      {
-        name: 'Сосна',
-        children: [
-          {
-            name: '100x100x10',
-            size: 10,
-          },
-          {
-            name: '100x100x10',
-            size: 15,
-          },
-          {
-            name: '100x100x10',
-            size: 20,
-          },
-        ],
-      },
-      {
-        name: 'Береза',
-        children: [
-          {
-            name: '100x100x10',
-            size: 10,
-          },
-          {
-            name: '100x100x10',
-            size: 15,
-          },
-          {
-            name: '100x100x10',
-            size: 20,
-          },
-        ],
-      },
-    ],
+    children: dryerData.data,
   }
 
   return (
@@ -73,7 +27,7 @@ export const DryerConditionSunburst = () => {
       valueFormat={value => value.toFixed(2) + ' м3'}
     >
       <Typography textAlign='center'>Всего</Typography>
-      <Typography textAlign='center'>80.784 м3</Typography>
+      <Typography textAlign='center'>{dryerData.total.toFixed(2) + 'м3'}</Typography>
     </CustomSunburst>
   )
 }
