@@ -26,8 +26,6 @@ export const Dryer = () => {
     currentTab?.id ?? skipToken
   )
 
-  console.log(JSON.stringify(dryerData, null, 2))
-
   return (
     <Box display='flex' flexDirection='column' width='100%'>
       <Typography variant='h5' component='h1' mb={3}>

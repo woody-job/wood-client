@@ -27,7 +27,7 @@ export const DryerConditionSunburst: FC<DryerConditionSunburstProps> = ({ dryerD
       valueFormat={value => value.toFixed(2) + ' м3'}
     >
       <Typography textAlign='center'>Всего</Typography>
-      <Typography textAlign='center'>{dryerData.total.toFixed(2) + 'м3'}</Typography>
+      <Typography textAlign='center'>{dryerData.total.toFixed(2) + ' м3'}</Typography>
     </CustomSunburst>
   )
 }
