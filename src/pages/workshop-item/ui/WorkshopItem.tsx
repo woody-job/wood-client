@@ -11,6 +11,9 @@ import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
+import { useFetchAllWorkshopsQuery } from '@/entities/workshop/api'
+import { Workshop } from '@/entities/workshop/model'
+import { useMemo } from 'react'
 
 export const WorkshopItem = () => {
   const { workshopId } = useParams()
@@ -18,6 +21,8 @@ export const WorkshopItem = () => {
     { id: 'day', name: 'За день' },
     { id: 'few-days', name: 'За несколько дней' },
   ]
+
+  const { data: workshops } = useFetchAllWorkshopsQuery()
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
     appSearchParams.currentTab,
@@ -28,10 +33,15 @@ export const WorkshopItem = () => {
 
   const today = new Date().toISOString().split('T')[0]
 
+  const currentWorkshop = useMemo(
+    () => workshops?.find(workshop => `${workshop.id}` === workshopId),
+    [workshops]
+  )
+
   return (
     <>
       <Typography variant='h5' sx={{ mb: 5 }}>
-        Цех 1
+        {currentWorkshop?.name}
       </Typography>
       <Tabs value={currentTab.id} onChange={handleChangeTab} sx={{ mt: 5 }}>
         {tabs.map(tab => (

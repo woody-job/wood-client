@@ -10,6 +10,7 @@ export const tagTypes = [
   'AllWorkshops',
   'WorkshopWoodPrices',
   'Dryers',
+  'AllBeamInForWorkshop',
 ]
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({

@@ -93,16 +93,18 @@ export const DimensionsSettingsTable: FC<DimensionsSettingsTableProps> = ({
             <CircularProgress size={100} />
           </Box>
         )}
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          disableRowSelectionOnClick
-          disableMultipleRowSelection
-          localeText={dataGridLocaleText}
-          sx={dataGridStyles}
-          hideFooter
-          slots={{ panel: CustomGridPanel }}
-        />
+        {dimensions && (
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            disableRowSelectionOnClick
+            disableMultipleRowSelection
+            localeText={dataGridLocaleText}
+            sx={dataGridStyles}
+            hideFooter
+            slots={{ panel: CustomGridPanel }}
+          />
+        )}
       </DataGridContainer>
     </Box>
   )

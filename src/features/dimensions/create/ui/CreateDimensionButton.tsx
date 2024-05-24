@@ -49,7 +49,11 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
   const handleSave: SubmitHandler<DimensionFormType> = data => {
     const { width, thickness, length, woodClass } = data
 
-    const woodClassId = woodClasses?.find(woodClassObj => woodClassObj.name === woodClass)?.id ?? -1
+    const woodClassId = woodClasses?.find(woodClassObj => woodClassObj.name === woodClass)?.id
+
+    if (!woodClassId) {
+      return
+    }
 
     const body: CreateDimensionParams = {
       width: Number(width),
