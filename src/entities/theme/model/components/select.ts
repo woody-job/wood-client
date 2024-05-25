@@ -20,4 +20,7 @@ export const selectMUI: SelectMUI = {
       },
     }),
   },
+  defaultProps: {
+    size: 'small',
+  },
 }

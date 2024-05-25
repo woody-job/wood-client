@@ -1,27 +1,29 @@
+import { skipToken } from '@reduxjs/toolkit/query'
+
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 
 import { InsertWoodButton } from '@/features/dryer/insert-wood'
 import { RemoveWoodButton } from '@/features/dryer/remove-wood'
-import { DryerConditionItem } from '@/entities/dryer'
+import {
+  DryerConditionItem,
+  useFetchAllDryersQuery,
+  useFetchDryerDataByIdQuery,
+} from '@/entities/dryer'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 
 export const Dryer = () => {
-  const tabs = [
-    { id: 1, name: 'Камера 1' },
-    { id: 2, name: 'Камера 2' },
-    { id: 3, name: 'Камера 3' },
-    { id: 4, name: 'Камера 4' },
-    { id: 5, name: 'Камера 5' },
-    { id: 6, name: 'Камера 6' },
-    { id: 7, name: 'Камера 7' },
-  ]
+  const { data: dryers, isLoading: isLoadingAllDryers } = useFetchAllDryersQuery()
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
     appSearchParams.currentTab,
-    tabs,
-    tab => tab.id.toString(),
-    tabs[0]
+    dryers,
+    tab => tab?.id.toString(),
+    dryers?.[0]
+  )
+
+  const { data: dryerData, isLoading: isDryerDataLoading } = useFetchDryerDataByIdQuery(
+    currentTab?.id ?? skipToken
   )
 
   return (
@@ -30,23 +32,27 @@ export const Dryer = () => {
         Состояние сушильных камер
       </Typography>
 
-      <Tabs onChange={handleChangeTab} value={currentTab.id}>
-        {tabs.map(tab => (
-          <Tab key={tab.id} label={tab.name} value={tab.id} />
-        ))}
+      <Tabs onChange={handleChangeTab} value={currentTab?.id}>
+        {isLoadingAllDryers && <Tab label='Загрузка...' disabled />}
+        {dryers && dryers?.map(tab => <Tab key={tab.id} label={tab.name} value={tab.id} />)}
       </Tabs>
 
-      <Box alignSelf='center' mt={4}>
-        <DryerConditionItem
-          dryerName={currentTab.name}
-          actions={
-            <>
-              <InsertWoodButton>Внести</InsertWoodButton>
-              <RemoveWoodButton />
-            </>
-          }
-        />
-      </Box>
+      {currentTab && (
+        <Box alignSelf='center' mt={4}>
+          <DryerConditionItem
+            key={currentTab.id}
+            isLoadingDryerData={isDryerDataLoading}
+            dryerData={dryerData}
+            dryerName={currentTab.name}
+            actions={
+              <>
+                <InsertWoodButton dryerId={currentTab.id}>Внести</InsertWoodButton>
+                <RemoveWoodButton dryerId={currentTab.id} />
+              </>
+            }
+          />
+        </Box>
+      )}
     </Box>
   )
 }
