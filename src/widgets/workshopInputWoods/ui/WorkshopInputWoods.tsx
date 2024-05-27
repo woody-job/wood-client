@@ -12,19 +12,23 @@ import {
   useDeleteBeamInForWorkshopMutation,
   useFetchAllBeamInForWorkshopQuery,
 } from '@/entities/beam-in/api'
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { WorkshopBeamInTableRow } from '../types/types'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { enqueueSnackbar } from 'notistack'
 
-export const WorkshopInputWoods = () => {
+type WorkshopInputWoodsProps = {
+  now: string
+}
+
+export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
   const { workshopId } = useParams()
 
   const [deleteBeamInMutation] = useDeleteBeamInForWorkshopMutation()
 
   const { data: beamIn, isLoading: isBeamInLoading } = useFetchAllBeamInForWorkshopQuery(
-    { workshopId: workshopId ? Number(workshopId) : -1 },
+    { workshopId: workshopId ? Number(workshopId) : -1, startDate: now, endDate: now },
     { skip: !workshopId }
   )
 
@@ -56,7 +60,7 @@ export const WorkshopInputWoods = () => {
             <UpdateInputWoodButton beamIn={params.row} sx={{ mr: 1 }} />
             <ButtonWithConfirm
               header='Удалить лес на вход'
-              description='Вы точно уверены, что хотите удалить лес?'
+              description='Вы точно хотите удалить вход леса?'
               onConfirm={() => {
                 handleDeleteBeamIn(params.row.id)
               }}

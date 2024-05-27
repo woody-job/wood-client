@@ -29,6 +29,8 @@ import WorkshopItem from '@/pages/workshop-item'
 import { urls } from '@/shared/constants'
 
 export const AppRouter = () => {
+  const now = new Date().toISOString()
+
   const routes = createRoutesFromElements(
     <Route path='/' errorElement={<RouteError />} element={<RootLayout />}>
       <Route path={urls.arrival} element={<Arrival />} />
@@ -56,7 +58,7 @@ export const AppRouter = () => {
         <Route path={urls.wetWoodVault} element={<WetWoodVault />} />
       </Route>
 
-      <Route path={urls.workshop + '/:workshopId'} element={<WorkshopItem />} />
+      <Route path={urls.workshop + '/:workshopId'} element={<WorkshopItem now={now} />} />
 
       <Route path='*' element={<NotFound />} />
     </Route>

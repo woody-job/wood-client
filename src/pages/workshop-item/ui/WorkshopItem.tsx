@@ -6,16 +6,23 @@ import { WorkshopCharts } from '@/widgets/workshopCharts'
 import { WorkshopDashboardCards } from '@/widgets/workshopDashboardCards'
 import { WorkshopInputWoods } from '@/widgets/workshopInputWoods'
 import { WorkshopOutputWoods } from '@/widgets/workshopOutputWoods'
-import { WorkshopTotalTable, WorkshopTrashStatsSunburst } from '@/entities/workshop'
+import {
+  WorkshopTotalTable,
+  WorkshopTrashStatsSunburst,
+  useFetchAllWorkshopsQuery,
+} from '@/entities/workshop'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
-import { useFetchAllWorkshopsQuery } from '@/entities/workshop/api'
-import { Workshop } from '@/entities/workshop/model'
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
+import { useFetchWorkshopOutForDateQuery } from '@/entities/workshop-out'
 
-export const WorkshopItem = () => {
+type WorkshopItemProps = {
+  now: string
+}
+
+export const WorkshopItem: FC<WorkshopItemProps> = ({ now }) => {
   const { workshopId } = useParams()
   const tabs = [
     { id: 'day', name: 'За день' },
@@ -31,12 +38,21 @@ export const WorkshopItem = () => {
     tabs[0]
   )
 
-  const today = new Date().toISOString().split('T')[0]
-
   const currentWorkshop = useMemo(
     () => workshops?.find(workshop => `${workshop.id}` === workshopId),
-    [workshops]
+    [workshops, workshopId]
   )
+
+  const { data: workshopOut, isLoading: isWorkshopOutLoading } = useFetchWorkshopOutForDateQuery(
+    { workshopId: workshopId ? Number(workshopId) : -1, date: now },
+    { skip: !workshopId }
+  )
+
+  const workshopOutData = workshopOut ? workshopOut.data : []
+  const workshopOutSunburstData = workshopOut ? workshopOut.sunburstData : []
+  const totalWorkshopOutVolume = workshopOut?.totalWorkshopOutVolume
+    ? workshopOut.totalWorkshopOutVolume
+    : 0
 
   return (
     <>
@@ -52,23 +68,30 @@ export const WorkshopItem = () => {
       <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
         <Grid container spacing={4}>
           <Grid item xs={12} xl={3}>
-            <Input type='date' value={today} sx={{ my: 3 }} />
+            <Input type='date' value={now} sx={{ my: 3 }} />
 
             <WorkshopDashboardCards />
           </Grid>
 
           {Number(workshopId) !== 2 && (
             <Grid item md={12} lg={6} xl={4.5}>
-              <WorkshopInputWoods />
+              <WorkshopInputWoods now={now} />
             </Grid>
           )}
 
           <Grid item md={12} lg={6} xl={4.5}>
-            <WorkshopOutputWoods />
+            <WorkshopOutputWoods
+              workshopOutData={workshopOutData}
+              isWorkshopOutLoading={isWorkshopOutLoading}
+            />
           </Grid>
         </Grid>
 
-        <WorkshopTrashStatsSunburst />
+        <WorkshopTrashStatsSunburst
+          workshopOutSunburstData={workshopOutSunburstData}
+          totalWorkshopOutVolume={totalWorkshopOutVolume}
+          isWorkshopOutLoading={isWorkshopOutLoading}
+        />
       </CustomTabPanel>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>

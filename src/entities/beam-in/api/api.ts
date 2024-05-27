@@ -1,6 +1,5 @@
 import { baseApi } from '@/shared/api'
 import {
-  BeamIn,
   BeamSize,
   CreateBeamInForWorkshopParams,
   DeleteBeamInForWorkshopParams,
@@ -31,7 +30,7 @@ export const beamInApi = baseApi.injectEndpoints({
         method: 'POST',
         body: createBeamInForWorkshopParams,
       }),
-      invalidatesTags: ['AllBeamInForWorkshop'],
+      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay'],
     }),
 
     updateBeamInForWorkshop: build.mutation<void, UpdateBeamInForWorkshopParams>({
@@ -40,7 +39,7 @@ export const beamInApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: beamInData,
       }),
-      invalidatesTags: ['AllBeamInForWorkshop'],
+      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay'],
     }),
 
     deleteBeamInForWorkshop: build.mutation<void, DeleteBeamInForWorkshopParams>({
@@ -48,7 +47,7 @@ export const beamInApi = baseApi.injectEndpoints({
         url: `beam-in/${beamInId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['AllBeamInForWorkshop'],
+      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay'],
     }),
   }),
 })
