@@ -11,6 +11,8 @@ export const tagTypes = [
   'WorkshopWoodPrices',
   'Dryers',
   'DryersDataById',
+  'Arrival',
+  'Shipment',
 ]
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({

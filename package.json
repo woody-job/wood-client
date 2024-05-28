@@ -21,6 +21,7 @@
     "@nivo/line": "^0.86.0",
     "@nivo/sunburst": "^0.85.1",
     "@reduxjs/toolkit": "^2.2.3",
+    "dayjs": "^1.11.11",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "notistack": "^3.0.1",

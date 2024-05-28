@@ -1,11 +1,13 @@
+import { ChangeEventHandler, useState } from 'react'
+
 import { Input, Tab, Tabs, Typography } from '@mui/material'
 
 import { WoodsDayAmountShipment } from '@/widgets/woodsDayAmountShipment'
-import { WoodsRangeAmount } from '@/widgets/woodsRangeAmount'
+import { WoodsRangeAmountShipment } from '@/widgets/woodsRangeAmountShipment'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
-import { TimeRangeInputs } from '@/shared/ui/time-range'
+import { TimeRangeInputs, TimeRangeState } from '@/shared/ui/time-range'
 
 export const Shipment = () => {
   const tabs = [
@@ -22,6 +24,13 @@ export const Shipment = () => {
 
   const today = new Date().toISOString().split('T')[0]
 
+  const [selectedDate, setSelectedDate] = useState(today)
+  const [timeRange, setTimeRange] = useState<TimeRangeState>({ startDate: today, endDate: today })
+
+  const handleDateChange: ChangeEventHandler<HTMLInputElement> = e => {
+    setSelectedDate(e.target.value)
+  }
+
   return (
     <>
       <Typography variant='h5' sx={{ mb: 5 }}>
@@ -34,15 +43,15 @@ export const Shipment = () => {
       </Tabs>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
-        <Input type='date' value={today} />
+        <Input type='date' value={selectedDate} onChange={handleDateChange} />
 
-        <WoodsDayAmountShipment />
+        <WoodsDayAmountShipment selectedDate={selectedDate} />
       </CustomTabPanel>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>
-        <TimeRangeInputs />
+        <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
 
-        <WoodsRangeAmount />
+        <WoodsRangeAmountShipment endDate={timeRange.endDate} startDate={timeRange.startDate} />
       </CustomTabPanel>
     </>
   )

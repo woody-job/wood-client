@@ -133,7 +133,7 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
         )}
         {errors.woodTypeId?.type === 'required' && (
           <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-            Фамилия обязательна
+            Порода обязательна
           </Typography>
         )}
 

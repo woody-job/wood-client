@@ -3,25 +3,25 @@ import { FC } from 'react'
 import { Box } from '@mui/material'
 
 import { useFetchAllWoodConditionsQuery } from '@/entities/wood-condition'
+import { TimeRangeState } from '@/shared/ui/time-range'
 
-import { WoodShipmentByDay } from './WoodShipmentByDay.tsx'
+import { WoodArrivalRangeItem } from './WoodArrivalRangeItem.tsx'
 
-export type WoodsDayAmountShipmentProps = {
-  selectedDate: string
-}
+export type WoodsRangeAmountProps = TimeRangeState
 
-export const WoodsDayAmountShipment: FC<WoodsDayAmountShipmentProps> = ({ selectedDate }) => {
+export const WoodsRangeAmountArrival: FC<WoodsRangeAmountProps> = props => {
+  const { endDate, startDate } = props
   const { data: woodConditions } = useFetchAllWoodConditionsQuery()
 
   return (
-    <Box display='flex' gap={10} mt={5} flexWrap='wrap'>
+    <Box display='flex' gap={5}>
       {woodConditions &&
         woodConditions.map(woodCondition => (
-          <WoodShipmentByDay
+          <WoodArrivalRangeItem
             key={woodCondition.id}
             woodConditionId={woodCondition.id}
-            selectedDate={selectedDate}
-            title={woodCondition.name}
+            endDate={endDate}
+            startDate={startDate}
           />
         ))}
     </Box>
