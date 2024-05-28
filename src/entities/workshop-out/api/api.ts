@@ -27,7 +27,7 @@ export const workshopOutApi = baseApi.injectEndpoints({
         method: 'POST',
         body: createWorkshopOutParams,
       }),
-      invalidatesTags: ['WorkshopOutForDay'],
+      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData'],
     }),
 
     updateWorkshopOut: build.mutation<void, UpdateWorkshopOutParams>({
@@ -36,7 +36,7 @@ export const workshopOutApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: workshopOutData,
       }),
-      invalidatesTags: ['WorkshopOutForDay'],
+      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData'],
     }),
 
     deleteWorkshopOut: build.mutation<void, DeleteWorkshopOutParams>({
@@ -44,7 +44,7 @@ export const workshopOutApi = baseApi.injectEndpoints({
         url: `workshop-out/${workshopOutId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['WorkshopOutForDay'],
+      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData'],
     }),
   }),
 })

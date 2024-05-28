@@ -1,4 +1,4 @@
-import { Skeleton, Typography } from '@mui/material'
+import { Box, Skeleton, Typography } from '@mui/material'
 
 import { CustomSunburst } from '@/shared/ui'
 import { FC } from 'react'
@@ -21,10 +21,20 @@ export const WorkshopTrashStatsSunburst: FC<WorkshopTrashStatsSunburstProps> = (
   }
 
   if (isWorkshopOutLoading) {
-    return <Skeleton variant='circular' sx={{ width: 600, height: 600, ml: 'auto' }} />
+    return (
+      <Box
+        sx={{
+          display: 'grid',
+          placeContent: 'center',
+          width: '100%',
+          height: '100%',
+          marginTop: 3,
+        }}
+      >
+        <Skeleton variant='circular' sx={{ width: '400px', height: '400px', ml: 'auto' }} />
+      </Box>
+    )
   }
-
-  console.log('data', data)
 
   return (
     <CustomSunburst
@@ -38,13 +48,12 @@ export const WorkshopTrashStatsSunburst: FC<WorkshopTrashStatsSunburstProps> = (
           : `${path[0]}: ${percentage.toFixed(2)}%`
       }}
       containerProps={{
-        width: 600,
-        height: 600,
+        width: '100%',
         ml: 'auto',
       }}
     >
-      <Typography variant='h6'>Всего на выходе м3:</Typography>
-      <Typography variant='h6'>{totalWorkshopOutVolume}</Typography>
+      <Typography>Всего на выходе м3:</Typography>
+      <Typography variant='h6'>{totalWorkshopOutVolume.toFixed(2)}</Typography>
     </CustomSunburst>
   )
 }

@@ -6,9 +6,10 @@ import { useUpdateWorkshopMutation } from '@/entities/workshop/api'
 import { Workshop } from '@/entities/workshop/model'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
-import { EditWorkshopMaterialsPrice, EditWorkshopSawingPrice } from '@/shared/ui'
 
 import { enqueueSnackbar } from 'notistack'
+import { EditWorkshopMaterialsPrice } from '@/features/workshop-wood-price/edit-materials-price'
+import { EditWorkshopSawingPrice } from '@/features/workshop-wood-price/edit-sawing-price'
 
 export interface WorkshopPricesProps {
   workshop: Workshop

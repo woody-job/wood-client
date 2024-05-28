@@ -88,8 +88,8 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
 
   return (
     <Box>
-      <Box display='flex' mb={1} pt={5}>
-        <Typography>Вход</Typography>
+      <Box display='flex' mb={1}>
+        <Typography variant='h6'>Вход</Typography>
         <AddInputWoodButton sx={{ ml: 'auto' }}>Добавить</AddInputWoodButton>
       </Box>
       <DataGridContainer height={400}>
@@ -111,7 +111,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
           />
         )}
       </DataGridContainer>
-      <Typography sx={{ mt: 3 }}>Всего м3: {totalVolume}</Typography>
+      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {totalVolume}</Typography>
     </Box>
   )
 }

@@ -13,6 +13,7 @@ export const tagTypes = [
   'AllBeamInForWorkshop',
   'DryersDataById',
   'WorkshopOutForDay',
+  'WorkshopDailyData',
 ]
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({

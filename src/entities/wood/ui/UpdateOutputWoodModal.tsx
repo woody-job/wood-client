@@ -48,7 +48,6 @@ export const UpdateOutputWoodModal: FC<UpdateOutputWoodModalProps> = ({
     handleSubmit,
     watch,
     register,
-    setValue,
     formState: { errors },
   } = methods
 

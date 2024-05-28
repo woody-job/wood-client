@@ -30,7 +30,7 @@ export const beamInApi = baseApi.injectEndpoints({
         method: 'POST',
         body: createBeamInForWorkshopParams,
       }),
-      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay'],
+      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay', 'WorkshopDailyData'],
     }),
 
     updateBeamInForWorkshop: build.mutation<void, UpdateBeamInForWorkshopParams>({
@@ -39,7 +39,7 @@ export const beamInApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: beamInData,
       }),
-      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay'],
+      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay', 'WorkshopDailyData'],
     }),
 
     deleteBeamInForWorkshop: build.mutation<void, DeleteBeamInForWorkshopParams>({
@@ -47,7 +47,7 @@ export const beamInApi = baseApi.injectEndpoints({
         url: `beam-in/${beamInId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay'],
+      invalidatesTags: ['AllBeamInForWorkshop', 'WorkshopOutForDay', 'WorkshopDailyData'],
     }),
   }),
 })

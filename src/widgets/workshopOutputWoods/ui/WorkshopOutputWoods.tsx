@@ -88,8 +88,8 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
 
   return (
     <Box>
-      <Box display='flex' mb={1} pt={5}>
-        <Typography>Выход</Typography>
+      <Box display='flex' mb={1}>
+        <Typography variant='h6'>Выход</Typography>
         <AddOutputWoodButton sx={{ ml: 'auto' }}>Добавить</AddOutputWoodButton>
       </Box>
       <DataGridContainer height={400}>
