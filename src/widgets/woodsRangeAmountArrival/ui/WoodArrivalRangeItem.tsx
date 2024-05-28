@@ -5,12 +5,13 @@ import { skipToken } from '@reduxjs/toolkit/query'
 import { Box, Skeleton, Typography } from '@mui/material'
 
 import { WoodAmountSunburst } from '@/entities/wood'
-import { useFetchWoodArrivalQuery } from '@/entities/wood-arrival'
-import { TimeRangeState } from '@/shared/ui/time-range'
+import { useFetchWoodArrivalByRangeQuery } from '@/entities/wood-arrival'
 
-export interface WoodArrivalRangeItemProps extends TimeRangeState {
+export interface WoodArrivalRangeItemProps {
   title?: string
   woodConditionId: number
+  endDate: string
+  startDate: string
 }
 
 export const WoodArrivalRangeItem: FC<WoodArrivalRangeItemProps> = ({
@@ -19,7 +20,7 @@ export const WoodArrivalRangeItem: FC<WoodArrivalRangeItemProps> = ({
   endDate,
   startDate,
 }) => {
-  const { data: woodArrival, isLoading: isLoadingWoodArrival } = useFetchWoodArrivalQuery(
+  const { data: woodArrival, isLoading: isLoadingWoodArrival } = useFetchWoodArrivalByRangeQuery(
     startDate && endDate
       ? {
           woodConditionId,

@@ -11,6 +11,7 @@ export type ShipmentParams = ShipmentFormType & {
 }
 
 export type ShipmentTableData = {
+  id: number
   dimension: string
   woodClass: string
   amount: number
@@ -26,8 +27,13 @@ export type ShipmentSunburstChild = {
   size: number
 }
 
-export type ShipmentStatsResponse = {
-  tableData?: ShipmentTableData[]
+export type ShipmentByDayResponse = {
+  tableData: ShipmentTableData[]
+  sunburstData: ShipmentSunburstChild[]
+  totalVolume: number
+}
+
+export type ShipmentByRangeResponse = {
   sunburstData: ShipmentSunburstData[]
   totalVolume: number
 }
@@ -38,8 +44,20 @@ export type ShipmentFetchParams = {
   woodConditionId: number
 }
 
-export type ShipmentFetchStatsParams = {
+export type ShipmentFetchByRangeParams = {
   startDate: string
   endDate: string
   woodConditionId: number
+}
+
+export type ShipmentFetchByDayParams = {
+  date: string
+  woodConditionId: number
+}
+
+export type UpdateShipmentParams = {
+  amount: number
+  woodClassId: number
+  dimensionId: number
+  shipmentId: number
 }

@@ -1,13 +1,16 @@
-import { ChangeEventHandler, useState } from 'react'
+import { useState } from 'react'
 
-import { Input, Tab, Tabs, Typography } from '@mui/material'
+import { Tab, Tabs, Typography } from '@mui/material'
 
 import { WoodsDayAmountShipment } from '@/widgets/woodsDayAmountShipment'
 import { WoodsRangeAmountShipment } from '@/widgets/woodsRangeAmountShipment'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
-import { TimeRangeInputs, TimeRangeState } from '@/shared/ui/time-range'
+import { DatePicker } from '@/shared/ui/date-picker'
+import { TimeRangeInputs } from '@/shared/ui/time-range'
+
+import dayjs, { Dayjs } from 'dayjs'
 
 export const Shipment = () => {
   const tabs = [
@@ -22,13 +25,11 @@ export const Shipment = () => {
     tabs[0]
   )
 
-  const today = new Date().toISOString().split('T')[0]
+  const [selectedDate, setSelectedDate] = useState(() => dayjs())
+  const [timeRange, setTimeRange] = useState({ startDate: dayjs(), endDate: dayjs() })
 
-  const [selectedDate, setSelectedDate] = useState(today)
-  const [timeRange, setTimeRange] = useState<TimeRangeState>({ startDate: today, endDate: today })
-
-  const handleDateChange: ChangeEventHandler<HTMLInputElement> = e => {
-    setSelectedDate(e.target.value)
+  const handleAccept = (value: Dayjs | null) => {
+    value && setSelectedDate(value)
   }
 
   return (
@@ -43,15 +44,18 @@ export const Shipment = () => {
       </Tabs>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
-        <Input type='date' value={selectedDate} onChange={handleDateChange} />
+        <DatePicker value={selectedDate} onAccept={handleAccept} sx={{ maxWidth: 'fit-content' }} />
 
-        <WoodsDayAmountShipment selectedDate={selectedDate} />
+        <WoodsDayAmountShipment selectedDate={selectedDate.toISOString()} />
       </CustomTabPanel>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>
         <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
 
-        <WoodsRangeAmountShipment endDate={timeRange.endDate} startDate={timeRange.startDate} />
+        <WoodsRangeAmountShipment
+          endDate={timeRange.endDate.toISOString()}
+          startDate={timeRange.startDate.toISOString()}
+        />
       </CustomTabPanel>
     </>
   )

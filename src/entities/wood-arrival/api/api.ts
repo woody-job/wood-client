@@ -1,15 +1,26 @@
 import {
-  ArrivalFetchStatsParams,
+  ArrivalByDayResponse,
+  ArrivalByRangeResponse,
+  ArrivalFetchDayParams,
+  ArrivalFetchRangeParams,
   ArrivalParams,
-  ArrivalStatsResponse,
+  UpdateArrivalParams,
 } from '@/entities/wood-arrival'
 import { baseApi } from '@/shared/api'
 
 export const woodArrivalApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    fetchWoodArrival: build.query<ArrivalStatsResponse, ArrivalFetchStatsParams>({
+    fetchWoodArrivalByDay: build.query<ArrivalByDayResponse, ArrivalFetchDayParams>({
       query: ({ woodConditionId, ...params }) => ({
-        url: `wood-arrival/get/stats/${woodConditionId}`,
+        url: `wood-arrival/get/day-data-stats/${woodConditionId}`,
+        params: params,
+      }),
+      providesTags: ['Arrival'],
+    }),
+
+    fetchWoodArrivalByRange: build.query<ArrivalByRangeResponse, ArrivalFetchRangeParams>({
+      query: ({ woodConditionId, ...params }) => ({
+        url: `wood-arrival/get/day-range-stats/${woodConditionId}`,
         params: params,
       }),
       providesTags: ['Arrival'],
@@ -24,11 +35,11 @@ export const woodArrivalApi = baseApi.injectEndpoints({
       invalidatesTags: ['Arrival'],
     }),
 
-    updateWoodArrival: build.mutation<ArrivalParams, ArrivalParams>({
-      query: arrival => ({
-        url: 'wood-arrival',
+    updateWoodArrival: build.mutation<ArrivalParams, UpdateArrivalParams>({
+      query: ({ arrivalId, ...params }) => ({
+        url: `wood-arrival/${arrivalId}`,
         method: 'PUT',
-        body: arrival,
+        body: params,
       }),
       invalidatesTags: ['Arrival'],
     }),
@@ -44,7 +55,8 @@ export const woodArrivalApi = baseApi.injectEndpoints({
 })
 
 export const {
-  useFetchWoodArrivalQuery,
+  useFetchWoodArrivalByDayQuery,
+  useFetchWoodArrivalByRangeQuery,
   useAddWoodArrivalMutation,
   useUpdateWoodArrivalMutation,
   useDeleteWoodArrivalMutation,

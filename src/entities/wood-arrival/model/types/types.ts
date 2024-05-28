@@ -11,35 +11,42 @@ export type ArrivalParams = ArrivalFormType & {
 }
 
 export type ArrivalTableData = {
+  id: number
   dimension: string
   woodClass: string
   amount: number
 }
 
-export type ArrivalSunburstData = {
-  name: string
-  children: ArrivalSunburstChild[]
-}
-
-export type ArrivalSunburstChild = {
+export type ArrivalSunburstItem = {
   name: string
   size: number
 }
 
-export type ArrivalStatsResponse = {
+export type ArrivalByDayResponse = {
   tableData?: ArrivalTableData[]
-  sunburstData: ArrivalSunburstData[]
+  sunburstData: ArrivalSunburstItem[]
   totalVolume: number
 }
 
-export type ArrivalFetchParams = {
+export type ArrivalByRangeResponse = {
+  sunburstData: { name: string; children: ArrivalSunburstItem[] }[]
+  totalVolume: number
+}
+
+export type ArrivalFetchRangeParams = {
   startDate: string
   endDate: string
   woodConditionId: number
 }
 
-export type ArrivalFetchStatsParams = {
-  startDate: string
-  endDate: string
+export type ArrivalFetchDayParams = {
+  date: string
   woodConditionId: number
+}
+
+export type UpdateArrivalParams = {
+  amount: number
+  woodClassId: number
+  dimensionId: number
+  arrivalId: number
 }

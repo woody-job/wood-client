@@ -3,11 +3,13 @@ import { FC } from 'react'
 import { Box } from '@mui/material'
 
 import { useFetchAllWoodConditionsQuery } from '@/entities/wood-condition'
-import { TimeRangeState } from '@/shared/ui/time-range'
 
 import { WoodShipmentRangeItem } from './WoodShipmentRangeItem.tsx'
 
-export type WoodsRangeAmountProps = TimeRangeState
+export type WoodsRangeAmountProps = {
+  endDate: string
+  startDate: string
+}
 
 export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = props => {
   const { endDate, startDate } = props

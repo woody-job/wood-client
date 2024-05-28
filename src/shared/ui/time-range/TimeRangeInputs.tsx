@@ -1,37 +1,49 @@
-import { ChangeEventHandler, Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 
-import { Box, Input, Typography } from '@mui/material'
+import { Box, BoxProps, Typography } from '@mui/material'
 
-import { TimeRangeState } from '@/shared/ui/time-range/TimeRangeInputs.types.ts'
+import { DatePicker } from '@/shared/ui/date-picker'
 
-export type TimeRangeInputsProps = {
-  range: TimeRangeState
-  setRange: Dispatch<SetStateAction<TimeRangeState>>
+import { Dayjs } from 'dayjs'
+
+export type TimeRangeInputsProps = BoxProps & {
+  range: { startDate: Dayjs; endDate: Dayjs }
+  setRange: Dispatch<SetStateAction<{ startDate: Dayjs; endDate: Dayjs }>>
 }
 
 export const TimeRangeInputs: FC<TimeRangeInputsProps> = props => {
-  const { range, setRange } = props
+  const { range, setRange, ...boxProps } = props
 
-  const handleChangeStartDate: ChangeEventHandler<HTMLInputElement> = e => {
-    setRange(prev => ({
-      ...prev,
-      startDate: e.target.value,
-    }))
+  const handleChangeStartDate = (value: Dayjs | null) => {
+    value &&
+      setRange(prev => ({
+        ...prev,
+        startDate: value,
+      }))
   }
-  const handleChangeEndDate: ChangeEventHandler<HTMLInputElement> = e => {
-    setRange(prev => ({
-      ...prev,
-      endDate: e.target.value,
-    }))
+  const handleChangeEndDate = (value: Dayjs | null) => {
+    value &&
+      setRange(prev => ({
+        ...prev,
+        endDate: value,
+      }))
   }
 
   return (
-    <Box>
+    <Box {...boxProps}>
       <Typography variant='subtitle1'>Временной диапазон</Typography>
 
-      <Box display='flex' gap={2} mb={3}>
-        <Input type='date' value={range.startDate} onChange={handleChangeStartDate} />
-        <Input type='date' value={range.endDate} onChange={handleChangeEndDate} />
+      <Box display='flex' gap={2} mb={3} mt={2}>
+        <DatePicker
+          value={range.startDate}
+          onAccept={handleChangeStartDate}
+          sx={{ maxWidth: 'fit-content' }}
+        />
+        <DatePicker
+          value={range.endDate}
+          onAccept={handleChangeEndDate}
+          sx={{ maxWidth: 'fit-content' }}
+        />
       </Box>
     </Box>
   )

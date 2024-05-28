@@ -5,11 +5,12 @@ import { skipToken } from '@reduxjs/toolkit/query'
 import { Box, Skeleton, Typography } from '@mui/material'
 
 import { WoodAmountSunburst } from '@/entities/wood'
-import { useFetchWoodShipmentQuery } from '@/entities/wood-shipment'
-import { TimeRangeState } from '@/shared/ui/time-range'
+import { useFetchWoodShipmentByRangeQuery } from '@/entities/wood-shipment'
 
-export interface WoodShipmentRangeItemProps extends TimeRangeState {
+export interface WoodShipmentRangeItemProps {
   title?: string
+  startDate: string
+  endDate: string
   woodConditionId: number
 }
 
@@ -19,7 +20,7 @@ export const WoodShipmentRangeItem: FC<WoodShipmentRangeItemProps> = ({
   endDate,
   startDate,
 }) => {
-  const { data: woodShipment, isLoading: isLoadingWoodShipment } = useFetchWoodShipmentQuery(
+  const { data: woodShipment, isLoading: isLoadingWoodShipment } = useFetchWoodShipmentByRangeQuery(
     startDate && endDate
       ? {
           woodConditionId,

@@ -1,12 +1,13 @@
 import { FC, useState } from 'react'
 
-import { Box, CircularProgress, IconButton, Skeleton, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 import { AddWoodsArrival } from '@/features/arrival/add'
-import { UpdateWoodsModal } from '@/entities/wood/ui/UpdateWoodsModal.tsx'
-import { useFetchWoodArrivalQuery } from '@/entities/wood-arrival'
-import { ButtonWithConfirm, CustomSunburst, EditIcon } from '@/shared/ui'
+import { DeleteArrivalButton } from '@/features/arrival/delete'
+import { UpdateArrivalButton } from '@/features/arrival/update'
+import { WoodAmountByDaySunburst } from '@/entities/wood'
+import { useFetchWoodArrivalByDayQuery } from '@/entities/wood-arrival'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -16,25 +17,20 @@ import {
 
 export interface WoodArrivalByDayProps {
   title?: string
-  onUpdate?: (id: number) => void
-  onDelete?: (id: number) => void
   selectedDate: string
   woodConditionId: number
 }
 
 export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
   title,
-  onDelete,
-  onUpdate,
   selectedDate,
   woodConditionId,
 }) => {
   const [openEditId, setOpenEditId] = useState<number>()
 
-  const { data: woodArrival, isLoading: isLoadingWoodArrival } = useFetchWoodArrivalQuery({
+  const { data: woodArrival, isLoading: isLoadingWoodArrival } = useFetchWoodArrivalByDayQuery({
     woodConditionId,
-    endDate: selectedDate,
-    startDate: selectedDate,
+    date: selectedDate,
   })
 
   const handleOpenModal = (id: number) => setOpenEditId(id)
@@ -50,24 +46,18 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
       disableColumnMenu: true,
       sortable: false,
       width: 100,
-      renderCell: ({ id }) => (
+      renderCell: ({ id, row }) => (
         <Box sx={{ ml: 'auto' }}>
-          <IconButton onClick={() => handleOpenModal(id as number)}>
-            <EditIcon />
-          </IconButton>
-
-          <UpdateWoodsModal
-            title={'Редактировать'}
-            actionTitle={'Редактировать'}
-            onSubmit={() => onUpdate?.(id as number)}
-            open={openEditId === id}
+          <UpdateArrivalButton
+            onClick={() => handleOpenModal(id as number)}
+            isOpen={openEditId === id}
             onClose={handleCloseModal}
+            arrivalId={id as number}
+            dimension={row.dimension}
+            woodClass={row.woodClass}
+            amount={row.amount}
           />
-          <ButtonWithConfirm
-            header={'Удаление досок'}
-            description={'Вы точно хотите удалить?'}
-            onConfirm={() => onDelete?.(id as number)}
-          />
+          <DeleteArrivalButton id={id as number} onClose={handleCloseModal} />
         </Box>
       ),
     },
@@ -101,34 +91,17 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
             sx={dataGridStyles}
             hideFooter
             slots={{ panel: CustomGridPanel }}
-            getRowId={row => row.woodClass + row.dimension}
           />
         )}
       </DataGridContainer>
 
-      <Box display='flex' justifyContent='center' width='100%' px={5} mt={1}>
-        {isLoadingWoodArrival && <Skeleton variant='circular' width='500px' height='500px' />}
-        {woodArrival && (
-          <CustomSunburst
-            data={{ children: woodArrival.sunburstData }}
-            id='name'
-            value='size'
-            arcLabel={({ id }) => `${id}`}
-            valueFormat={value => value.toFixed(2) + ' м3'}
-            containerProps={{
-              width: '500px',
-              height: '500px',
-            }}
-          >
-            <Typography variant='h6' textAlign='center'>
-              Всего из:
-            </Typography>
-            <Typography variant='h6' textAlign='center'>
-              4.300 м3
-            </Typography>
-          </CustomSunburst>
-        )}
-      </Box>
+      {woodArrival && (
+        <WoodAmountByDaySunburst
+          isLoading={isLoadingWoodArrival}
+          data={woodArrival.sunburstData}
+          total={woodArrival.totalVolume}
+        />
+      )}
     </Box>
   )
 }

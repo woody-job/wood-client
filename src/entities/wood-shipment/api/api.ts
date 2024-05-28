@@ -1,15 +1,26 @@
 import {
-  ShipmentFetchStatsParams,
+  ShipmentByDayResponse,
+  ShipmentByRangeResponse,
+  ShipmentFetchByDayParams,
+  ShipmentFetchByRangeParams,
   ShipmentParams,
-  ShipmentStatsResponse,
+  UpdateShipmentParams,
 } from '@/entities/wood-shipment'
 import { baseApi } from '@/shared/api'
 
 export const woodShipmentApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    fetchWoodShipment: build.query<ShipmentStatsResponse, ShipmentFetchStatsParams>({
+    fetchWoodShipmentByDay: build.query<ShipmentByDayResponse, ShipmentFetchByDayParams>({
       query: ({ woodConditionId, ...params }) => ({
-        url: `wood-shipment/get/stats/${woodConditionId}`,
+        url: `wood-shipment/get/day-data-stats/${woodConditionId}`,
+        params: params,
+      }),
+      providesTags: ['Shipment'],
+    }),
+
+    fetchWoodShipmentByRange: build.query<ShipmentByRangeResponse, ShipmentFetchByRangeParams>({
+      query: ({ woodConditionId, ...params }) => ({
+        url: `wood-shipment/get/day-range-stats/${woodConditionId}`,
         params: params,
       }),
       providesTags: ['Shipment'],
@@ -24,18 +35,18 @@ export const woodShipmentApi = baseApi.injectEndpoints({
       invalidatesTags: ['Shipment'],
     }),
 
-    updateWoodShipment: build.mutation<ShipmentParams, ShipmentParams>({
-      query: arrival => ({
-        url: 'wood-shipment',
+    updateWoodShipment: build.mutation<ShipmentParams, UpdateShipmentParams>({
+      query: ({ shipmentId, ...params }) => ({
+        url: `wood-shipment/${shipmentId}`,
         method: 'PUT',
-        body: arrival,
+        body: params,
       }),
       invalidatesTags: ['Shipment'],
     }),
 
     deleteWoodShipment: build.mutation<ShipmentParams, number>({
-      query: arrivalId => ({
-        url: `wood-shipment/${arrivalId}`,
+      query: shipmentId => ({
+        url: `wood-shipment/${shipmentId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Shipment'],
@@ -44,7 +55,8 @@ export const woodShipmentApi = baseApi.injectEndpoints({
 })
 
 export const {
-  useFetchWoodShipmentQuery,
+  useFetchWoodShipmentByDayQuery,
+  useFetchWoodShipmentByRangeQuery,
   useAddWoodShipmentMutation,
   useUpdateWoodShipmentMutation,
   useDeleteWoodShipmentMutation,
