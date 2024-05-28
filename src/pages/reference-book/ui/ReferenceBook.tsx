@@ -1,6 +1,9 @@
-import { Box, Typography } from '@mui/material'
+import { useMemo } from 'react'
+
+import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
+import { useFetchAllDimensionsQuery } from '@/entities/dimension'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -12,22 +15,25 @@ export const ReferenceBook = () => {
   const columns: GridColDef[] = [
     { field: 'width', headerName: 'Ширина (мм)', width: 200 },
     { field: 'thickness', headerName: 'Толщина (мм)', width: 200 },
-    { field: 'height', headerName: 'Длина (м)', width: 200 },
+    { field: 'length', headerName: 'Длина (м)', width: 200 },
     { field: 'volume', headerName: 'Объем (м3)', width: 200 },
-    { field: 'sort', headerName: 'Сорт', width: 200 },
+    { field: 'woodClassName', headerName: 'Сорт', width: 200 },
   ]
 
-  const rows = [
-    { id: 1, width: 10, thickness: 10, height: 10, sort: 'Первый', volume: 0.0068 },
-    { id: 2, width: 20, thickness: 20, height: 20, sort: 'Второй', volume: 0.0068 },
-    { id: 3, width: 30, thickness: 30, height: 30, sort: 'Третий', volume: 0.0068 },
-    { id: 4, width: 10, thickness: 10, height: 10, sort: 'Первый', volume: 0.0068 },
-    { id: 5, width: 20, thickness: 20, height: 20, sort: 'Второй', volume: 0.0068 },
-    { id: 6, width: 30, thickness: 30, height: 30, sort: 'Третий', volume: 0.0068 },
-    { id: 7, width: 10, thickness: 10, height: 10, sort: 'Первый', volume: 0.0068 },
-    { id: 8, width: 20, thickness: 20, height: 20, sort: 'Второй', volume: 0.0068 },
-    { id: 9, width: 30, thickness: 30, height: 30, sort: 'Третий', volume: 0.0068 },
-  ]
+  const { data: dimensions, isLoading: isLoadingDimensions } = useFetchAllDimensionsQuery()
+
+  const rows = useMemo(
+    () =>
+      dimensions?.map(dimension => ({
+        id: dimension.id,
+        width: dimension.width,
+        thickness: dimension.thickness,
+        length: dimension.length,
+        volume: dimension.volume,
+        woodClassName: dimension.woodClass.name,
+      })),
+    [dimensions]
+  )
 
   return (
     <Box>
@@ -35,16 +41,23 @@ export const ReferenceBook = () => {
 
       <Box display={'flex'} flexDirection='column' mt={10}>
         <DataGridContainer>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={dataGridStyles}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
+          {isLoadingDimensions && (
+            <Box sx={{ width: '100%', height: '100%', display: 'grid', placeContent: 'center' }}>
+              <CircularProgress size={100} />
+            </Box>
+          )}
+          {rows && (
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              disableRowSelectionOnClick
+              disableMultipleRowSelection
+              localeText={dataGridLocaleText}
+              sx={dataGridStyles}
+              hideFooter
+              slots={{ panel: CustomGridPanel }}
+            />
+          )}
         </DataGridContainer>
       </Box>
     </Box>
