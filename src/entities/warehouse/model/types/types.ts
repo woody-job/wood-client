@@ -5,7 +5,7 @@ import { WoodType } from '@/entities/wood-type'
 
 export type WarehouseSunburstItem = {
   name: string
-  children?: WarehouseSunburstItem[]
+  size: number
 }
 
 export type WarehouseSunburstData = {

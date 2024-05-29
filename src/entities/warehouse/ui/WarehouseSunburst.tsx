@@ -10,7 +10,7 @@ export interface DimensionProps {
   total: number
 }
 
-export const WarehouseSunburst: FC<DimensionProps> = ({ data }) => {
+export const WarehouseSunburst: FC<DimensionProps> = ({ data, total }) => {
   return (
     <CustomSunburst
       data={{ children: data }}
@@ -25,7 +25,7 @@ export const WarehouseSunburst: FC<DimensionProps> = ({ data }) => {
       arcLabelsSkipAngle={6}
     >
       <Typography>Всего м3</Typography>
-      <Typography>1225.34</Typography>
+      <Typography>{total}</Typography>
     </CustomSunburst>
   )
 }

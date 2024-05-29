@@ -13,6 +13,21 @@ export type DryerDataResponse = {
   total: number
 }
 
+export type DryerDataList = {
+  sunburstData: DryerDataListSunburstDataItem[]
+  totalVolume: number
+}
+
+type DryerDataListSunburstItem = {
+  name: string
+  children: { name: string; size: number }[]
+}
+
+type DryerDataListSunburstDataItem = {
+  name: string
+  children: DryerDataListSunburstItem[]
+}
+
 export type DryerDataParams = {
   woodClassId: number
   dimensionId: number
