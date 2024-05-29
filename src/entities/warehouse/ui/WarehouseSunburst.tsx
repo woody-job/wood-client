@@ -2,21 +2,23 @@ import { FC } from 'react'
 
 import { Typography } from '@mui/material'
 
+import { WarehouseSunburstData } from '@/entities/warehouse'
 import { CustomSunburst } from '@/shared/ui'
 
 export interface DimensionProps {
-  data: unknown
+  data: WarehouseSunburstData[]
+  total: number
 }
 
-export const DimensionsSunburst: FC<DimensionProps> = ({ data }) => {
+export const WarehouseSunburst: FC<DimensionProps> = ({ data }) => {
   return (
     <CustomSunburst
-      data={data}
+      data={{ children: data }}
       id='name'
       value='size'
       containerProps={{
-        width: '800px',
-        height: '800px',
+        width: '750px',
+        height: '750px',
       }}
       arcLabel={({ id }) => `${id}`}
       valueFormat={value => value.toFixed(2) + ' м3'}

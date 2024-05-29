@@ -1,54 +1,35 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Skeleton, Tab, Tabs, Typography } from '@mui/material'
 
-import { DimensionsSunburst } from '@/entities/dimension'
+import { WarehouseItem } from '@/widgets/warehouseItem'
+import { useFetchAllWoodConditionsQuery } from '@/entities/wood-condition'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
-import { CustomTabPanel } from '@/shared/ui'
-
-import { data } from './Warehouse.constants'
 
 export const Warehouse = () => {
-  const tabIds = {
-    dryWood: 'dry-wood',
-    wetWood: 'wet-wood',
-    dryer: 'dryer',
-  }
-
-  const tabs = [
-    { id: tabIds.dryWood, name: 'Сухая доска' },
-    { id: tabIds.wetWood, name: 'Сырая доска' },
-    { id: tabIds.dryer, name: 'Сушилка' },
-  ]
+  const { data: woodConditions, isLoading: isLoadingWoodConditions } =
+    useFetchAllWoodConditionsQuery()
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
     appSearchParams.currentTab,
-    tabs,
-    tab => tab.id,
-    tabs[0]
+    woodConditions,
+    tab => tab?.id.toString(),
+    woodConditions?.[0]
   )
 
   return (
     <Box>
       <Typography variant='h5'>Склад</Typography>
-      <Tabs value={currentTab.id} onChange={handleChangeTab} sx={{ mt: 5 }}>
-        {tabs.map(tab => (
-          <Tab key={tab.name} label={tab.name} value={tab.id} />
-        ))}
+      <Tabs value={currentTab?.id} onChange={handleChangeTab} sx={{ mt: 5 }}>
+        {isLoadingWoodConditions && <Skeleton width='100px' />}
+        {woodConditions &&
+          woodConditions.map(tab => <Tab key={tab.name} label={tab.name} value={tab.id} />)}
       </Tabs>
 
-      {/* <DimensionsSunburst data={data} /> */}
-      {/* Тут либо только data менять, либо доля каждого таба отдельные компоненты */}
-      <CustomTabPanel tabPanelValue={currentTab.id} value={tabIds.dryWood}>
-        <DimensionsSunburst data={data} />
-      </CustomTabPanel>
-
-      <CustomTabPanel tabPanelValue={currentTab.id} value={tabIds.wetWood}>
-        <DimensionsSunburst data={data} />
-      </CustomTabPanel>
-
-      <CustomTabPanel tabPanelValue={currentTab.id} value={tabIds.dryer}>
-        <DimensionsSunburst data={data} />
-      </CustomTabPanel>
+      <Box display='flex' flexWrap='wrap'>
+        {woodConditions &&
+          currentTab &&
+          woodConditions.map(tab => <WarehouseItem woodConditionId={tab.id} />)}
+      </Box>
     </Box>
   )
 }
