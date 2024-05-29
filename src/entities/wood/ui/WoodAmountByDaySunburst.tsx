@@ -38,7 +38,7 @@ export const WoodAmountByDaySunburst: FC<WoodAmountByDaySunburstProps> = ({
           Всего из:
         </Typography>
         <Typography variant='h6' textAlign='center'>
-          {total}
+          {total} м3
         </Typography>
       </CustomSunburst>
     </Box>

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { skipToken } from '@reduxjs/toolkit/query'
@@ -31,7 +31,14 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
 
-  const methods = useForm<ArrivalFormType>()
+  const methods = useForm<ArrivalFormType>({
+    defaultValues: {
+      amount: undefined,
+      woodClassId: undefined,
+      woodTypeId: undefined,
+      dimensionId: undefined,
+    },
+  })
   const {
     register,
     handleSubmit,
@@ -55,7 +62,7 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
     addWoodArrivalMutation({
       ...values,
       woodConditionId,
-      date: new Date(selectedDate).toISOString(),
+      date: selectedDate,
     })
       .unwrap()
       .then(() => {
@@ -67,6 +74,10 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
+
+  useEffect(() => {
+    if (!isOpen) reset()
+  }, [isOpen])
 
   return (
     <>

@@ -25,8 +25,11 @@ export const Arrival = () => {
     tabs[0]
   )
 
-  const [selectedDate, setSelectedDate] = useState(() => dayjs())
-  const [timeRange, setTimeRange] = useState({ startDate: dayjs(), endDate: dayjs() })
+  const [selectedDate, setSelectedDate] = useState(() => dayjs().subtract(1, 'day'))
+  const [timeRange, setTimeRange] = useState({
+    startDate: dayjs().subtract(2, 'day'),
+    endDate: dayjs().subtract(1, 'day'),
+  })
 
   const handleAccept = (value: Dayjs | null) => {
     value && setSelectedDate(value)

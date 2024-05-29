@@ -26,6 +26,7 @@ export const WoodAmountSunburst: FC<WoodAmountSunburstProps> = props => {
       id='name'
       value='size'
       arcLabel={({ id }) => `${id}`}
+      valueFormat={value => value.toFixed(2) + ' м3'}
       containerProps={{
         width: '600px',
         height: '600px',

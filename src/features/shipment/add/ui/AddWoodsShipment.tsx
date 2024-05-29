@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { skipToken } from '@reduxjs/toolkit/query'
@@ -69,6 +69,10 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
+
+  useEffect(() => {
+    if (!isOpen) reset()
+  }, [isOpen])
 
   return (
     <>
