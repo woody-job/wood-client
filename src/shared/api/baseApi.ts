@@ -18,6 +18,8 @@ export const tagTypes = [
   'WorkshopOutStats',
   'WorkshopProfitStats',
   'WorkshopReportStats',
+  'Arrival',
+  'Shipment',
 ]
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({

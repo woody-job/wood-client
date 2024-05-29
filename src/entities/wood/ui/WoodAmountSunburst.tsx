@@ -1,71 +1,32 @@
+import { FC } from 'react'
+
 import { Typography } from '@mui/material'
 
 import { CustomSunburst } from '@/shared/ui'
 
-export const WoodAmountSunburst = () => {
-  const data = {
-    name: 'root',
-    children: [
-      {
-        name: '1 сорт',
-        children: [
-          {
-            name: '100x100x10',
-            amount: 10,
-          },
-          {
-            name: '100x100x10',
-            amount: 15,
-          },
-          {
-            name: '100x100x10',
-            amount: 20,
-          },
-        ],
-      },
-      {
-        name: '2 сорт',
-        children: [
-          {
-            name: '100x100x10',
-            amount: 10,
-          },
-          {
-            name: '100x100x10',
-            amount: 15,
-          },
-          {
-            name: '100x100x10',
-            amount: 20,
-          },
-        ],
-      },
-      {
-        name: 'Береза',
-        children: [
-          {
-            name: '100x100x10',
-            amount: 10,
-          },
-          {
-            name: '100x100x10',
-            amount: 15,
-          },
-          {
-            name: '100x100x10',
-            amount: 20,
-          },
-        ],
-      },
-    ],
-  }
+export type WoodAmountSunburstChild = {
+  name: string
+  size: number
+}
+
+export type WoodAmountSunburstProps = {
+  data: {
+    name: string
+    children?: WoodAmountSunburstChild[]
+  }[]
+  total: number
+}
+
+export const WoodAmountSunburst: FC<WoodAmountSunburstProps> = props => {
+  const { data, total } = props
 
   return (
     <CustomSunburst
-      data={data}
+      data={{ children: data }}
       id='name'
-      value='amount'
+      value='size'
       arcLabel={({ id }) => `${id}`}
+      valueFormat={value => value.toFixed(2) + ' м3'}
       containerProps={{
         width: '600px',
         height: '600px',
@@ -75,7 +36,7 @@ export const WoodAmountSunburst = () => {
         Всего м3:
       </Typography>
       <Typography variant='h6' textAlign='center'>
-        123
+        {total}
       </Typography>
     </CustomSunburst>
   )

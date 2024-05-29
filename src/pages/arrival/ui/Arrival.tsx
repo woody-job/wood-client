@@ -1,11 +1,16 @@
-import { Input, Tab, Tabs, Typography } from '@mui/material'
+import { useState } from 'react'
+
+import { Tab, Tabs, Typography } from '@mui/material'
 
 import { WoodsDayAmountArrival } from '@/widgets/woodsDayAmountArrival'
-import { WoodsRangeAmount } from '@/widgets/woodsRangeAmount'
+import { WoodsRangeAmountArrival } from '@/widgets/woodsRangeAmountArrival'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel } from '@/shared/ui'
+import { DatePicker } from '@/shared/ui/date-picker'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
+
+import dayjs, { Dayjs } from 'dayjs'
 
 export const Arrival = () => {
   const tabs = [
@@ -20,7 +25,15 @@ export const Arrival = () => {
     tabs[0]
   )
 
-  const today = new Date().toISOString().split('T')[0]
+  const [selectedDate, setSelectedDate] = useState(() => dayjs().subtract(1, 'day'))
+  const [timeRange, setTimeRange] = useState({
+    startDate: dayjs().subtract(2, 'day'),
+    endDate: dayjs().subtract(1, 'day'),
+  })
+
+  const handleAccept = (value: Dayjs | null) => {
+    value && setSelectedDate(value)
+  }
 
   return (
     <>
@@ -34,15 +47,18 @@ export const Arrival = () => {
       </Tabs>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
-        <Input type='date' value={today} />
+        <DatePicker value={selectedDate} onAccept={handleAccept} sx={{ maxWidth: 'fit-content' }} />
 
-        <WoodsDayAmountArrival />
+        <WoodsDayAmountArrival selectedDate={selectedDate.toISOString()} />
       </CustomTabPanel>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>
-        <TimeRangeInputs />
+        <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
 
-        <WoodsRangeAmount />
+        <WoodsRangeAmountArrival
+          endDate={timeRange.endDate.toISOString()}
+          startDate={timeRange.startDate.toISOString()}
+        />
       </CustomTabPanel>
     </>
   )
