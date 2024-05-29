@@ -14,8 +14,6 @@ export const DryerConditionSunburst: FC<DryerConditionSunburstProps> = ({ dryerD
     children: dryerData.data,
   }
 
-  console.log(data)
-
   return (
     <CustomSunburst
       value='size'

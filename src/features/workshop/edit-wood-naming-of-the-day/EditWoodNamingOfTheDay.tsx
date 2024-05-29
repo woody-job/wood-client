@@ -1,17 +1,18 @@
-import { FC, KeyboardEventHandler, useEffect, useMemo, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Box, Button, Grid, MenuItem, Select, TextField } from '@mui/material'
+import { Box, Button, Grid, MenuItem, Select } from '@mui/material'
 
-import { defaultErrorHandler } from '@/shared/libs/helpers'
-import { CommonErrorType } from '@/shared/types'
-import { enqueueSnackbar } from 'notistack'
+import { useFetchAllWoodNamingsQuery } from '@/entities/wood-naming'
 import {
   UpdateWorkshopDailyWoodNamingParams,
   useUpdateWorkshopDailyWoodNamingMutation,
 } from '@/entities/workshop'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
-import { useFetchAllWoodNamingsQuery } from '@/entities/wood-naming'
+import { CommonErrorType } from '@/shared/types'
+
+import { enqueueSnackbar } from 'notistack'
 
 export interface EditWoodNamingOfTheDayProps {
   workshopId: number
@@ -118,26 +119,43 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
               control={control}
               render={({ field: { onChange, value } }) => {
                 return (
-                  <TextField
-                    select
-                    SelectProps={{
-                      MenuProps: {
-                        disablePortal: true,
-                      },
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      ...(!watchWoodNaming
+                        ? {
+                            '&::before': {
+                              position: 'absolute',
+                              content: '"Условное обозначение"',
+                              top: 7,
+                              left: 15,
+                              color: theme =>
+                                theme.palette.mode === 'light'
+                                  ? theme.palette.grey['700']
+                                  : theme.palette.grey['400'],
+                            },
+                          }
+                        : {}),
                     }}
-                    defaultValue={watchWoodNaming}
-                    disabled={!isEdit}
-                    label='Условное обозначение'
-                    error={Boolean(errors.woodNaming)}
-                    value={value}
-                    onChange={onChange}
                   >
-                    {woodNamingsOptions?.map(option => (
-                      <MenuItem key={option.id} value={option.name}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                    <Select
+                      MenuProps={{
+                        disablePortal: true,
+                      }}
+                      sx={{ width: '100%' }}
+                      defaultValue={watchWoodNaming}
+                      disabled={!isEdit}
+                      error={Boolean(errors.woodNaming)}
+                      value={value}
+                      onChange={onChange}
+                    >
+                      {woodNamingsOptions?.map(option => (
+                        <MenuItem key={option.id} value={option.name}>
+                          {option.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Box>
                 )
               }}
             />

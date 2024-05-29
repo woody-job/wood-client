@@ -1,3 +1,5 @@
+import { FC, useMemo, useState } from 'react'
+
 import { useParams } from 'react-router-dom'
 
 import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material'
@@ -7,16 +9,17 @@ import { WorkshopDashboardCards } from '@/widgets/workshopDashboardCards'
 import { WorkshopInputWoods } from '@/widgets/workshopInputWoods'
 import { WorkshopOutputWoods } from '@/widgets/workshopOutputWoods'
 import {
+  useFetchAllWorkshopsQuery,
   WorkshopTotalTable,
   WorkshopTrashStatsSunburst,
-  useFetchAllWorkshopsQuery,
 } from '@/entities/workshop'
+import { useFetchWorkshopOutForDateQuery } from '@/entities/workshop-out'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
+import { TimeRange } from '@/shared/types'
 import { CustomTabPanel, DatePicker } from '@/shared/ui'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
-import { FC, useMemo, useState } from 'react'
-import { useFetchWorkshopOutForDateQuery } from '@/entities/workshop-out'
+
 import dayjs from 'dayjs'
 
 export const WorkshopItem: FC = () => {
@@ -39,7 +42,10 @@ export const WorkshopItem: FC = () => {
   const [date, setDate] = useState(dayjs().subtract(1, 'days'))
 
   // По дефолту открывается позавчера/вчера
-  const [timeRange, setTimeRange] = useState({ startDate: dayjs(), endDate: dayjs() })
+  const [timeRange, setTimeRange] = useState<TimeRange>({
+    startDate: dayjs().subtract(2, 'days'),
+    endDate: dayjs().subtract(1, 'days'),
+  })
 
   const currentWorkshop = useMemo(
     () => workshops?.find(workshop => `${workshop.id}` === workshopId),
@@ -90,6 +96,7 @@ export const WorkshopItem: FC = () => {
               <Divider sx={{ my: 3 }} />
 
               <WorkshopOutputWoods
+                now={date.toISOString()}
                 workshopOutData={workshopOutData}
                 isWorkshopOutLoading={isWorkshopOutLoading}
               />
@@ -112,11 +119,11 @@ export const WorkshopItem: FC = () => {
         <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
 
         <Box mt={3}>
-          <WorkshopCharts />
+          <WorkshopCharts timeRange={timeRange} />
         </Box>
 
         <Box mt={3}>
-          <WorkshopTotalTable />
+          <WorkshopTotalTable timeRange={timeRange} />
         </Box>
       </CustomTabPanel>
     </>

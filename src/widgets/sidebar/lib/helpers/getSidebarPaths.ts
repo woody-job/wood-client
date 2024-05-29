@@ -1,5 +1,6 @@
 import { Workshop } from '@/entities/workshop/model'
 import { urls } from '@/shared/constants'
+
 import { SidebarPath } from '../../ui/Sidebar.types'
 
 export const getSidebarPaths = (workshops: Workshop[] | undefined): SidebarPath[] => {

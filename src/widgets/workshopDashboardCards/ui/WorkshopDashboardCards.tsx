@@ -1,11 +1,13 @@
+import { FC } from 'react'
+
+import { useParams } from 'react-router-dom'
+
 import { Box, Grid, Skeleton, Typography } from '@mui/material'
 
-import { DashItem } from '@/shared/ui'
-import { FC } from 'react'
-import { useFetchWorkshopDailyStatsQuery } from '@/entities/workshop'
-import { useParams } from 'react-router-dom'
 import { EditWorkshopDimensionOfTheDay } from '@/features/workshop/edit-dimension-of-the-day'
 import { EditWoodNamingOfTheDay } from '@/features/workshop/edit-wood-naming-of-the-day'
+import { useFetchWorkshopDailyStatsQuery } from '@/entities/workshop'
+import { DashItem } from '@/shared/ui'
 
 type WorkshopDashboardCardsProps = {
   now: string

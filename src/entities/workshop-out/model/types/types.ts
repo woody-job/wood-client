@@ -62,10 +62,17 @@ export type WorkshopOutFormType = {
 }
 
 // TODO: Привести типы к единому виду (то же касается и beam in)
-export type GetWorkshopOutStatsResponse = {
+export type WorkshopOutStatWood = {
+  name: string
+  percentage: number
+}
+
+export type WorkshopOutStat = {
   date: string
-  woods: { name: string; percentage: 37.05 }[]
-}[]
+  woods: WorkshopOutStatWood[]
+}
+
+export type GetWorkshopOutStatsResponse = WorkshopOutStat[]
 
 export type GetWorkshopOutStatsParams = {
   workshopId: number
@@ -90,7 +97,7 @@ export type WorkshopReportItem = {
   woodNaming: null | string
   dimension: null | string
   totalBeamInVolume: number
-  totalWorkshopOutVolume: number
+  totalWorkshopOutPercentage: number
   totalWoodPrice: number
   priceOfRawMaterials: number
   sawingPrice: number

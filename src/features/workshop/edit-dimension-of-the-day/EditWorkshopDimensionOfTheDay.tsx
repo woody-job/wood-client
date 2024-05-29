@@ -1,17 +1,18 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Box, Button, Grid, MenuItem, TextField } from '@mui/material'
+import { Box, Button, Grid, MenuItem, Select } from '@mui/material'
 
 import { getDimensionString, useFetchAllDimensionsQuery } from '@/entities/dimension'
-import { defaultErrorHandler } from '@/shared/libs/helpers'
-import { CommonErrorType } from '@/shared/types'
-import { enqueueSnackbar } from 'notistack'
 import {
   UpdateWorkshopDailyDimensionParams,
   useUpdateWorkshopDailyDimensionMutation,
 } from '@/entities/workshop'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
+import { CommonErrorType } from '@/shared/types'
+
+import { enqueueSnackbar } from 'notistack'
 
 export interface EditWorkshopDimensionOfTheDayProps {
   workshopId: number
@@ -52,7 +53,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
       return []
     }
 
-    let uniqueDimensionNamesOptions: {
+    const uniqueDimensionNamesOptions: {
       id: number
       name: string
     }[] = []
@@ -135,26 +136,43 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
               control={control}
               render={({ field: { onChange, value } }) => {
                 return (
-                  <TextField
-                    select
-                    SelectProps={{
-                      MenuProps: {
-                        disablePortal: true,
-                      },
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      ...(!watchDimension
+                        ? {
+                            '&::before': {
+                              position: 'absolute',
+                              content: '"Сечение"',
+                              top: 7,
+                              left: 15,
+                              color: theme =>
+                                theme.palette.mode === 'light'
+                                  ? theme.palette.grey['700']
+                                  : theme.palette.grey['400'],
+                            },
+                          }
+                        : {}),
                     }}
-                    defaultValue={watchDimension}
-                    disabled={!isEdit}
-                    label='Сечение'
-                    error={Boolean(errors.dimension)}
-                    value={value}
-                    onChange={onChange}
                   >
-                    {dimensionsOptions?.map(option => (
-                      <MenuItem key={option.id} value={option.name}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                    <Select
+                      MenuProps={{
+                        disablePortal: true,
+                      }}
+                      sx={{ width: '100%' }}
+                      defaultValue={watchDimension}
+                      disabled={!isEdit}
+                      error={Boolean(errors.dimension)}
+                      value={value}
+                      onChange={onChange}
+                    >
+                      {dimensionsOptions?.map(option => (
+                        <MenuItem key={option.id} value={option.name}>
+                          {option.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Box>
                 )
               }}
             />

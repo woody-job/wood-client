@@ -11,6 +11,7 @@ import { store } from '@/app/store'
 import { CustomThemeProvider } from '@/entities/theme/libs/providers'
 
 import 'dayjs/locale/ru'
+import { SnackbarProvider } from 'notistack'
 
 export interface ProviderProps {
   children?: ReactNode

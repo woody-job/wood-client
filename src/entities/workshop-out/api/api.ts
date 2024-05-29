@@ -1,17 +1,17 @@
 import { baseApi } from '@/shared/api'
 
 import {
-  GetWorkshopOutForDateResponse,
-  GetWorkshopOutForDateParams,
   CreateWorkshopOutParams,
-  UpdateWorkshopOutParams,
   DeleteWorkshopOutParams,
+  GetProfitStatsForWorkshopParams,
+  GetProfitStatsForWorkshopResponse,
+  GetWorkshopOutForDateParams,
+  GetWorkshopOutForDateResponse,
   GetWorkshopOutStatsParams,
   GetWorkshopOutStatsResponse,
-  GetProfitStatsForWorkshopResponse,
-  GetProfitStatsForWorkshopParams,
   GetWorkshopReportParams,
   GetWorkshopReportResponse,
+  UpdateWorkshopOutParams,
 } from '../model'
 
 export const workshopOutApi = baseApi.injectEndpoints({

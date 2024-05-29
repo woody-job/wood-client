@@ -1,72 +1,39 @@
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
+
+import { Box, Skeleton, Typography } from '@mui/material'
 
 import { mapDataToWoodsBar } from '@/entities/workshop/libs'
+import { useFetchWorkshopOutStatsForWorkshopQuery } from '@/entities/workshop-out'
+import { TimeRange } from '@/shared/types'
 import { ColorItem, CustomBar, CustomTooltip } from '@/shared/ui'
 
-export const WorkshopWoodsBar = () => {
-  const mockData = useMemo(
-    () => [
-      {
-        day: '1 апр',
-        woods: [
-          { name: 'Крутая древесина', count: 10 },
-          { name: 'Хз древесина', count: 20 },
-          { name: 'Сосновая древесина', count: 15 },
-          { name: 'Дубовая древесина', count: 25 },
-        ],
-      },
-      {
-        day: '2 апр',
-        woods: [
-          { name: 'Крутая древесина', count: 5 },
-          { name: 'Хз древесина', count: 1 },
-          { name: 'Сосновая древесина', count: 8 },
-          { name: 'Дубовая древесина', count: 12 },
-        ],
-      },
-      {
-        day: '3 апр',
-        woods: [
-          { name: 'Крутая древесина', count: 20 },
-          { name: 'Хз древесина', count: 60 },
-          { name: 'Сосновая древесина', count: 30 },
-          { name: 'Дубовая древесина', count: 40 },
-        ],
-      },
-      {
-        day: '4 апр',
-        woods: [
-          { name: 'Крутая древесина', count: 10 },
-          { name: 'Хз древесина', count: 20 },
-          { name: 'Сосновая древесина', count: 15 },
-          { name: 'Дубовая древесина', count: 25 },
-        ],
-      },
-      {
-        day: '5 апр',
-        woods: [
-          { name: 'Крутая древесина', count: 5 },
-          { name: 'Хз древесина', count: 1 },
-          { name: 'Сосновая древесина', count: 8 },
-          { name: 'Дубовая древесина', count: 12 },
-        ],
-      },
-      {
-        day: '6 апр',
-        woods: [
-          { name: 'Крутая древесина', count: 20 },
-          { name: 'Хз древесина', count: 60 },
-          { name: 'Сосновая древесина', count: 30 },
-          { name: 'Дубовая древесина', count: 40 },
-        ],
-      },
-    ],
-    []
-  )
+type WorkshopWoodsBarProps = {
+  timeRange: TimeRange
+}
 
-  const { items, keys } = useMemo(() => mapDataToWoodsBar(mockData), [mockData])
+export const WorkshopWoodsBar: FC<WorkshopWoodsBarProps> = ({ timeRange }) => {
+  const { workshopId } = useParams()
+
+  const { data: workshopOutStats, isLoading: isLoadingWorkshopOutStats } =
+    useFetchWorkshopOutStatsForWorkshopQuery({
+      workshopId: workshopId ? Number(workshopId) : -1,
+      startDate: timeRange.startDate.toISOString(),
+      endDate: timeRange.endDate.toISOString(),
+    })
+
+  const { items, keys } = useMemo(() => {
+    if (!workshopOutStats) {
+      return { items: [], keys: [] }
+    }
+
+    return mapDataToWoodsBar(workshopOutStats)
+  }, [workshopOutStats])
+
+  if (isLoadingWorkshopOutStats) {
+    return <Skeleton variant='rounded' sx={{ height: 240, width: 410, mx: 'auto' }} />
+  }
 
   return (
     <Box height='280px' width='100%' borderRadius={4}>
@@ -74,6 +41,7 @@ export const WorkshopWoodsBar = () => {
         data={items}
         keys={keys}
         indexBy='day'
+        label={data => `${data.id}`}
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
         margin={{ top: 10, right: 10, bottom: 25, left: 50 }}
@@ -93,7 +61,7 @@ export const WorkshopWoodsBar = () => {
             <ColorItem bgcolor={color} />
 
             <Typography>
-              {id} - {formattedValue}
+              {id} - {formattedValue}%
             </Typography>
           </CustomTooltip>
         )}

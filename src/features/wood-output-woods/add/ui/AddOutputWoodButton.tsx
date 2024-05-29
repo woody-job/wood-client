@@ -1,21 +1,28 @@
 import { FC, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { useParams } from 'react-router-dom'
+
+import { skipToken } from '@reduxjs/toolkit/query'
 
 import { Button, ButtonProps } from '@mui/material'
 
-import { UpdateOutputWoodModal } from '@/entities/wood'
-import { useParams } from 'react-router-dom'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { useFetchDimensionsByWoodClassQuery } from '@/entities/dimension'
+import { UpdateOutputWoodModal } from '@/entities/wood'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
-import { WorkshopOutFormType } from '@/entities/workshop-out/model'
-import { skipToken } from '@reduxjs/toolkit/query'
 import { useCreateWorkshopOutMutation } from '@/entities/workshop-out/api'
-import { useSnackbar } from 'notistack'
+import { WorkshopOutFormType } from '@/entities/workshop-out/model'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
-export const AddOutputWoodButton: FC<ButtonProps> = props => {
+import { useSnackbar } from 'notistack'
+
+type AddOutputWoodButtonProps = {
+  now: string
+} & ButtonProps
+
+export const AddOutputWoodButton: FC<AddOutputWoodButtonProps> = ({ now, ...props }) => {
   const { workshopId } = useParams()
 
   const [isOpen, setIsOpen] = useState(false)
@@ -55,7 +62,7 @@ export const AddOutputWoodButton: FC<ButtonProps> = props => {
     createWorkshopOutMutation({
       ...data,
       workshopId: Number(workshopId),
-      date: new Date().toISOString(),
+      date: now,
     })
       .unwrap()
       .then(() => {

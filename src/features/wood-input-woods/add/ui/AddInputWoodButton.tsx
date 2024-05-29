@@ -1,22 +1,26 @@
 import { FC, useMemo, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { useParams } from 'react-router-dom'
 
 import { Button, ButtonProps } from '@mui/material'
 
-import { UpdateInputWoodModal } from '@/entities/wood'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { BeamInFormType, CreateBeamInForWorkshopParams } from '@/entities/beam-in/model'
 import {
   useCreateBeamInForWorkshopMutation,
   useFetchAllBeamSizesQuery,
 } from '@/entities/beam-in/api'
-import { useSnackbar } from 'notistack'
-import { useParams } from 'react-router-dom'
-
-import moment from 'moment'
+import { BeamInFormType, CreateBeamInForWorkshopParams } from '@/entities/beam-in/model'
+import { UpdateInputWoodModal } from '@/entities/wood'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
-export const AddInputWoodButton: FC<ButtonProps> = props => {
+import { useSnackbar } from 'notistack'
+
+type AddInputWoodButtonProps = {
+  now: string
+} & ButtonProps
+
+export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({ now, ...props }) => {
   const { workshopId } = useParams()
 
   const [isOpen, setIsOpen] = useState(false)
@@ -63,7 +67,7 @@ export const AddInputWoodButton: FC<ButtonProps> = props => {
       workshopId: Number(workshopId),
       beamSizeId,
       amount: Number(amount),
-      date: moment().toISOString(),
+      date: now,
     }
 
     createBeamInMutation(body)

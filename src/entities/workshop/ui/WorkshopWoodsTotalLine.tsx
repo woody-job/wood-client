@@ -1,35 +1,59 @@
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
+
+import { useParams } from 'react-router-dom'
 
 import { Serie } from '@nivo/line'
 
-import { Box } from '@mui/material'
+import { Box, Skeleton } from '@mui/material'
 
-import { shortRuDateFormater } from '@/shared/constants'
+import { useFetchProfitStatsForWorkshopQuery } from '@/entities/workshop-out'
+import { getRussianDayAndMonth } from '@/shared/libs/helpers'
+import { TimeRange } from '@/shared/types'
 import { CustomLine } from '@/shared/ui'
 
-const data = [
-  { date: '2024-04-01', price: 30 },
-  { date: '2024-04-02', price: 20 },
-  { date: '2024-04-03', price: 30 },
-  { date: '2024-04-04', price: 40 },
-  { date: '2024-04-05', price: 30 },
-]
+type WorkshopWoodsTotalLineProps = {
+  timeRange: TimeRange
+  unitSelection: string
+}
+export const WorkshopWoodsTotalLine: FC<WorkshopWoodsTotalLineProps> = ({
+  timeRange,
+  unitSelection,
+}) => {
+  const { workshopId } = useParams()
 
-export const WorkshopWoodsTotalLine = () => {
-  const max = useMemo(() => Math.min(...data.map(item => item.price)), [data])
+  const { data: workshopProfitStats, isLoading: isLoadingWorkshopProfitStats } =
+    useFetchProfitStatsForWorkshopQuery(
+      {
+        workshopId: workshopId ? Number(workshopId) : -1,
+        startDate: timeRange.startDate.toISOString(),
+        endDate: timeRange.endDate.toISOString(),
+        perUnit: unitSelection === 'perUnit',
+      },
+      { refetchOnMountOrArgChange: true }
+    )
 
-  const series: Serie[] = useMemo(
-    () => [
+  const series: Serie[] = useMemo(() => {
+    if (!workshopProfitStats) {
+      return []
+    }
+
+    return [
       {
         id: 'WorkshopWoodsDiametersLine',
-        data: data.map(datum => ({
-          x: shortRuDateFormater.format(new Date(datum.date)),
-          y: datum.price,
+        data: workshopProfitStats.map(profitStat => ({
+          x: getRussianDayAndMonth(profitStat.x),
+          y: profitStat.y,
         })),
       },
-    ],
-    [data]
-  )
+    ]
+  }, [workshopProfitStats])
+
+  const max = workshopProfitStats ? Math.max(...workshopProfitStats.map(item => item.y)) : 0
+  const min = workshopProfitStats ? Math.min(...workshopProfitStats.map(item => item.y)) : 0
+
+  if (isLoadingWorkshopProfitStats) {
+    return <Skeleton variant='rounded' sx={{ height: 240, width: 410, mx: 'auto' }} />
+  }
 
   return (
     <Box height={300} width={'100%'}>
@@ -39,7 +63,7 @@ export const WorkshopWoodsTotalLine = () => {
         tooltipFormat={value => `${value} р.`}
         yScale={{
           type: 'linear',
-          min: 0,
+          min: min - 40,
           max: max + 40,
           stacked: true,
           reverse: false,

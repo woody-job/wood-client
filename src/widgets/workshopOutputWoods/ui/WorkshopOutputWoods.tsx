@@ -1,9 +1,15 @@
+import { FC, useMemo } from 'react'
+
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { AddOutputWoodButton } from '@/features/wood-output-woods/add'
 import { UpdateOutputWoodButton } from '@/features/wood-output-woods/update'
+import { useDeleteWorkshopOutMutation } from '@/entities/workshop-out/api'
+import { WorkshopOut } from '@/entities/workshop-out/model'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
@@ -11,23 +17,20 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { WORKSHOP_OUT_TABLE_COLUMNS } from '../constants'
-import { useDeleteWorkshopOutMutation } from '@/entities/workshop-out/api'
 
-import { FC, useMemo } from 'react'
-import { defaultErrorHandler } from '@/shared/libs/helpers'
-import { CommonErrorType } from '@/shared/types'
+import { WORKSHOP_OUT_TABLE_COLUMNS } from '../constants'
 import { enqueueSnackbar } from 'notistack'
-import { WorkshopOut } from '@/entities/workshop-out/model'
 
 export type WorkshopOutWoodsProps = {
   workshopOutData: WorkshopOut[] | undefined
   isWorkshopOutLoading: boolean
+  now: string
 }
 
 export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
   workshopOutData,
   isWorkshopOutLoading,
+  now,
 }) => {
   const [deleteWorkshopOutMutation] = useDeleteWorkshopOutMutation()
 
@@ -90,7 +93,9 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
     <Box>
       <Box display='flex' mb={1}>
         <Typography variant='h6'>Выход</Typography>
-        <AddOutputWoodButton sx={{ ml: 'auto' }}>Добавить</AddOutputWoodButton>
+        <AddOutputWoodButton now={now} sx={{ ml: 'auto' }}>
+          Добавить
+        </AddOutputWoodButton>
       </Box>
       <DataGridContainer height={400}>
         {isWorkshopOutLoading && (

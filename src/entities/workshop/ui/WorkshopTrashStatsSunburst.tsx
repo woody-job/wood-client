@@ -1,8 +1,9 @@
+import { FC } from 'react'
+
 import { Box, Skeleton, Typography } from '@mui/material'
 
-import { CustomSunburst } from '@/shared/ui'
-import { FC } from 'react'
 import { SunburstData } from '@/entities/workshop-out'
+import { CustomSunburst } from '@/shared/ui'
 
 type WorkshopTrashStatsSunburstProps = {
   workshopOutSunburstData: SunburstData

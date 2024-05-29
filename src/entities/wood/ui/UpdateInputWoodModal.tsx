@@ -1,4 +1,5 @@
-import { FC, FormEventHandler } from 'react'
+import { FC } from 'react'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import {
   Box,
@@ -11,9 +12,8 @@ import {
   Typography,
 } from '@mui/material'
 
-import { ModalContent } from '@/shared/ui'
 import { BeamInFormType } from '@/entities/beam-in/model'
-import { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { ModalContent } from '@/shared/ui'
 
 export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -47,6 +47,52 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
 
   const watchDiameter = watch('diameter')
 
+  const diameterSelect = (
+    <>
+      {isLoadingBeamSizes ? (
+        <CircularProgress size={15} />
+      ) : (
+        <Box
+          sx={{
+            position: 'relative',
+            ...(!watchDiameter
+              ? {
+                  '&::before': {
+                    position: 'absolute',
+                    content: '"Диаметр"',
+                    top: 7,
+                    left: 15,
+                    color: theme =>
+                      theme.palette.mode === 'light'
+                        ? theme.palette.grey['700']
+                        : theme.palette.grey['400'],
+                  },
+                }
+              : {}),
+          }}
+        >
+          <TextField
+            inputProps={{ ...register('diameter', { required: true }) }}
+            select
+            defaultValue={watchDiameter}
+            sx={{ width: '100%' }}
+            size='small'
+            error={Boolean(errors.diameter)}
+          >
+            {beamSizesOptions?.map(beamSizeOption => {
+              return <MenuItem value={beamSizeOption.name}>{beamSizeOption.name}</MenuItem>
+            })}
+          </TextField>
+        </Box>
+      )}
+      {errors.diameter?.type === 'required' && (
+        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
+          Диаметр обязателен
+        </Typography>
+      )}
+    </>
+  )
+
   return (
     <Modal {...modalProps}>
       <ModalContent
@@ -58,47 +104,7 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
           {title}
         </Typography>
 
-        {isLoadingBeamSizes ? (
-          <CircularProgress size={15} />
-        ) : (
-          <Box
-            sx={{
-              position: 'relative',
-              ...(!watchDiameter
-                ? {
-                    '&::before': {
-                      position: 'absolute',
-                      content: '"Диаметр"',
-                      top: 7,
-                      left: 15,
-                      color: theme =>
-                        theme.palette.mode === 'light'
-                          ? theme.palette.grey['700']
-                          : theme.palette.grey['400'],
-                    },
-                  }
-                : {}),
-            }}
-          >
-            <TextField
-              inputProps={{ ...register('diameter', { required: true }) }}
-              select
-              defaultValue={watchDiameter}
-              sx={{ width: '100%' }}
-              size='small'
-              error={Boolean(errors.diameter)}
-            >
-              {beamSizesOptions?.map(beamSizeOption => {
-                return <MenuItem value={beamSizeOption.name}>{beamSizeOption.name}</MenuItem>
-              })}
-            </TextField>
-          </Box>
-        )}
-        {errors.diameter?.type === 'required' && (
-          <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-            Диаметр обязателен
-          </Typography>
-        )}
+        {action !== 'Изменить' && diameterSelect}
 
         <TextField
           label='Количество'

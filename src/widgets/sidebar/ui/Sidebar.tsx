@@ -2,14 +2,14 @@ import { Fragment, useMemo } from 'react'
 
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { Box, Grid, Skeleton, Typography } from '@mui/material'
+import { Box, Skeleton, Typography } from '@mui/material'
 
+import { useFetchAllWorkshopsQuery } from '@/entities/workshop/api/api.ts'
 import { urls } from '@/shared/constants'
 import { MenuSidebarItem } from '@/shared/ui'
 
-import { settingsPaths } from './Sidebar.constants.ts'
-import { useFetchAllWorkshopsQuery } from '@/entities/workshop/api/api.ts'
 import { getSidebarPaths } from '../lib/helpers'
+import { settingsPaths } from './Sidebar.constants.ts'
 
 export const Sidebar = () => {
   const location = useLocation()

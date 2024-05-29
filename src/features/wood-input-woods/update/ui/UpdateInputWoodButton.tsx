@@ -1,21 +1,23 @@
 import { FC, useMemo, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { useParams } from 'react-router-dom'
 
 import { ButtonProps, IconButton } from '@mui/material'
 
-import { UpdateInputWoodModal } from '@/entities/wood'
-import { EditIcon } from '@/shared/ui'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { BeamInFormType, UpdateBeamInForWorkshopParams } from '@/entities/beam-in/model'
+import { WorkshopBeamInTableRow } from '@/widgets/workshopInputWoods/types/types'
 import {
   useFetchAllBeamSizesQuery,
   useUpdateBeamInForWorkshopMutation,
 } from '@/entities/beam-in/api'
-import { useSnackbar } from 'notistack'
-import { useParams } from 'react-router-dom'
-import { CommonErrorType } from '@/shared/types'
+import { BeamInFormType, UpdateBeamInForWorkshopParams } from '@/entities/beam-in/model'
+import { UpdateInputWoodModal } from '@/entities/wood'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType } from '@/shared/types'
+import { EditIcon } from '@/shared/ui'
+
 import { getDefaultValues } from '../lib/helpers'
-import { WorkshopBeamInTableRow } from '@/widgets/workshopInputWoods/types/types'
+import { useSnackbar } from 'notistack'
 
 type UpdateInputWoodButtonProps = {
   beamIn: WorkshopBeamInTableRow

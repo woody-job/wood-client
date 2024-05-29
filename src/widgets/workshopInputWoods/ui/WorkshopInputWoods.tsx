@@ -1,21 +1,24 @@
+import { FC, useMemo } from 'react'
+
+import { useParams } from 'react-router-dom'
+
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { AddInputWoodButton } from '@/features/wood-input-woods/add'
 import { UpdateInputWoodButton } from '@/features/wood-input-woods/update'
-import { ButtonWithConfirm, CustomGridPanel, dataGridStyles } from '@/shared/ui'
-import { DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
-import { useParams } from 'react-router-dom'
-import { WORKSHOP_BEAM_IN_TABLE_COLUMNS } from '../constants'
 import {
   useDeleteBeamInForWorkshopMutation,
   useFetchAllBeamInForWorkshopQuery,
 } from '@/entities/beam-in/api'
-import { FC, useMemo } from 'react'
-import { WorkshopBeamInTableRow } from '../types/types'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
+import { ButtonWithConfirm, CustomGridPanel, dataGridStyles } from '@/shared/ui'
+import { DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
+
+import { WORKSHOP_BEAM_IN_TABLE_COLUMNS } from '../constants'
+import { WorkshopBeamInTableRow } from '../types/types'
 import { enqueueSnackbar } from 'notistack'
 
 type WorkshopInputWoodsProps = {
@@ -90,7 +93,9 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
     <Box>
       <Box display='flex' mb={1}>
         <Typography variant='h6'>Вход</Typography>
-        <AddInputWoodButton sx={{ ml: 'auto' }}>Добавить</AddInputWoodButton>
+        <AddInputWoodButton now={now} sx={{ ml: 'auto' }}>
+          Добавить
+        </AddInputWoodButton>
       </Box>
       <DataGridContainer height={400}>
         {isBeamInLoading && (
