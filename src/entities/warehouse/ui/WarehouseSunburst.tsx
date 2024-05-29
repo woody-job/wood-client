@@ -17,15 +17,15 @@ export const WarehouseSunburst: FC<DimensionProps> = ({ data, total }) => {
       id='name'
       value='size'
       containerProps={{
-        width: '750px',
-        height: '750px',
+        width: '800px',
+        height: '800px',
       }}
       arcLabel={({ id }) => `${id}`}
       valueFormat={value => value.toFixed(2) + ' м3'}
       arcLabelsSkipAngle={6}
     >
-      <Typography>Всего м3</Typography>
-      <Typography>{total}</Typography>
+      <Typography textAlign='center'>Всего м3</Typography>
+      <Typography textAlign='center'>{total}</Typography>
     </CustomSunburst>
   )
 }
