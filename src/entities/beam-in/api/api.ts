@@ -5,6 +5,8 @@ import {
   DeleteBeamInForWorkshopParams,
   GetBeamInForWorkshopParams,
   GetBeamInResponse,
+  GetBeamInWorkshopStatsParams,
+  GetBeamInWorkshopStatsResponse,
   UpdateBeamInForWorkshopParams,
 } from '../model'
 
@@ -22,6 +24,17 @@ export const beamInApi = baseApi.injectEndpoints({
       query: () => ({
         url: `beam-size/list`,
       }),
+    }),
+
+    fetchBeamInStatsForWorkshop: build.query<
+      GetBeamInWorkshopStatsResponse,
+      GetBeamInWorkshopStatsParams
+    >({
+      query: ({ workshopId, startDate, endDate }) => ({
+        url: `beam-in/get/workshop-stats/${workshopId}`,
+        params: { startDate, endDate },
+      }),
+      providesTags: ['BeamInWorkshopStats'],
     }),
 
     createBeamInForWorkshop: build.mutation<void, CreateBeamInForWorkshopParams>({
@@ -55,6 +68,7 @@ export const beamInApi = baseApi.injectEndpoints({
 export const {
   useFetchAllBeamInForWorkshopQuery,
   useFetchAllBeamSizesQuery,
+  useFetchBeamInStatsForWorkshopQuery,
   useCreateBeamInForWorkshopMutation,
   useUpdateBeamInForWorkshopMutation,
   useDeleteBeamInForWorkshopMutation,

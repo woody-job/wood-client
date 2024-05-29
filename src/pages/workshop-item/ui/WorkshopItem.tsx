@@ -38,6 +38,9 @@ export const WorkshopItem: FC = () => {
   // По дефолту открывается предыдущий день
   const [date, setDate] = useState(dayjs().subtract(1, 'days'))
 
+  // По дефолту открывается позавчера/вчера
+  const [timeRange, setTimeRange] = useState({ startDate: dayjs(), endDate: dayjs() })
+
   const currentWorkshop = useMemo(
     () => workshops?.find(workshop => `${workshop.id}` === workshopId),
     [workshops, workshopId]
@@ -106,7 +109,7 @@ export const WorkshopItem: FC = () => {
       </CustomTabPanel>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>
-        <TimeRangeInputs />
+        <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
 
         <Box mt={3}>
           <WorkshopCharts />

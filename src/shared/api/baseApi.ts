@@ -14,6 +14,10 @@ export const tagTypes = [
   'DryersDataById',
   'WorkshopOutForDay',
   'WorkshopDailyData',
+  'BeamInWorkshopStats',
+  'WorkshopOutStats',
+  'WorkshopProfitStats',
+  'WorkshopReportStats',
 ]
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({

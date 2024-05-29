@@ -60,3 +60,56 @@ export type WorkshopOutFormType = {
   woodTypeId: number
   amount: number
 }
+
+// TODO: Привести типы к единому виду (то же касается и beam in)
+export type GetWorkshopOutStatsResponse = {
+  date: string
+  woods: { name: string; percentage: 37.05 }[]
+}[]
+
+export type GetWorkshopOutStatsParams = {
+  workshopId: number
+  startDate?: string
+  endDate?: string
+}
+
+export type GetProfitStatsForWorkshopParams = {
+  workshopId: number
+  startDate?: string
+  endDate?: string
+  perUnit: boolean
+}
+
+export type GetProfitStatsForWorkshopResponse = {
+  x: string
+  y: number
+}[]
+
+export type WorkshopReportItem = {
+  date: string
+  woodNaming: null | string
+  dimension: null | string
+  totalBeamInVolume: number
+  totalWorkshopOutVolume: number
+  totalWoodPrice: number
+  priceOfRawMaterials: number
+  sawingPrice: number
+  profit: number
+  profitPerUnit: number
+  firstClassVolume: number
+  firstClassPercentage: null | number
+  secondClassVolume: number
+  secondClassPercentage: null | number
+  marketClassVolume: number
+  marketClassPercentage: null | number
+  brownClassVolume: number
+  brownClassPercentage: null | number
+}
+
+export type GetWorkshopReportResponse = WorkshopReportItem[]
+
+export type GetWorkshopReportParams = {
+  workshopId: number
+  startDate?: string
+  endDate?: string
+}
