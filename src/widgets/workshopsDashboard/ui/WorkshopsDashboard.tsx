@@ -1,17 +1,36 @@
-import { Box } from '@mui/material'
+import { Box, Skeleton } from '@mui/material'
 
 import { WorkshopDashItem } from '@/entities/workshop/ui'
 import { DashboardTitle } from '@/shared/ui'
+import { useFetchCurrentWorkshopsStatsQuery } from '@/entities/workshop-out'
 
 export const WorkshopsDashboard = () => {
+  const { data: workshopCurrentStats, isLoading: isLoadingWorkshopCurrentStats } =
+    useFetchCurrentWorkshopsStatsQuery()
+
   return (
     <Box>
-      <DashboardTitle>Цеха сейчас</DashboardTitle>
+      <DashboardTitle>Цеха</DashboardTitle>
       <Box display='flex' gap={2} flexWrap='wrap' justifyContent='center'>
-        {/* Либо скролл, либо flex-wrap: wrap */}
-        <WorkshopDashItem />
-        <WorkshopDashItem />
-        <WorkshopDashItem />
+        {isLoadingWorkshopCurrentStats && (
+          <>
+            <Skeleton sx={{ width: 500, height: 441 }} variant='rounded' />
+            <Skeleton sx={{ width: 500, height: 441 }} variant='rounded' />
+            <Skeleton sx={{ width: 500, height: 441 }} variant='rounded' />
+          </>
+        )}
+        {workshopCurrentStats &&
+          workshopCurrentStats.map(workshopCurrentStat => {
+            return (
+              <WorkshopDashItem
+                key={workshopCurrentStat.workshopId}
+                workshopId={workshopCurrentStat.workshopId}
+                workshopName={workshopCurrentStat.workshopName}
+                woods={workshopCurrentStat.woods}
+                lastWorkingDayStats={workshopCurrentStat.lastWorkingDayStats}
+              />
+            )
+          })}
       </Box>
     </Box>
   )

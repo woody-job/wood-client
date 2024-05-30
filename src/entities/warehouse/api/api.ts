@@ -1,4 +1,4 @@
-import { Warehouse } from '@/entities/warehouse'
+import { Warehouse, WarehouseStats } from '@/entities/warehouse'
 import { baseApi } from '@/shared/api'
 
 export const warehouseApi = baseApi.injectEndpoints({
@@ -6,7 +6,11 @@ export const warehouseApi = baseApi.injectEndpoints({
     fetchWarehouse: builder.query<Warehouse, number>({
       query: woodConditionId => `warehouse/${woodConditionId}`,
     }),
+
+    fetchWarehouseStats: builder.query<WarehouseStats, void>({
+      query: () => `warehouse/get/stats`,
+    }),
   }),
 })
 
-export const { useFetchWarehouseQuery } = warehouseApi
+export const { useFetchWarehouseQuery, useFetchWarehouseStatsQuery } = warehouseApi

@@ -32,3 +32,12 @@ export type WarehouseOutput = {
   woodCondition: WoodCondition
   dimension: Dimension
 }
+
+export type WarehouseStatsData = {
+  woodConditionId: number
+  woodConditionName: string
+  sorts: Record<string, number>
+  totalVolume: number
+}
+
+export type WarehouseStats = WarehouseStatsData[]

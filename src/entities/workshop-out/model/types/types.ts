@@ -120,3 +120,18 @@ export type GetWorkshopReportParams = {
   startDate?: string
   endDate?: string
 }
+
+export type LastWorkingDayStats = {
+  date: string
+  totalBeamInVolume: number
+  profitPerUnit: number
+}
+
+export type WorkshopCurrentStat = {
+  workshopId: number
+  workshopName: string
+  woods: WorkshopOutStat[]
+  lastWorkingDayStats: LastWorkingDayStats
+}
+
+export type WorkshopCurrentStats = WorkshopCurrentStat[]
