@@ -30,36 +30,38 @@ import { urls } from '@/shared/constants'
 
 export const AppRouter = () => {
   const routes = createRoutesFromElements(
-    <Route path='/' errorElement={<RouteError />} element={<RootLayout />}>
-      <Route path={urls.arrival} element={<Arrival />} />
-      <Route path={urls.shipment} element={<Shipment />} />
-      <Route path={urls.warehouse} element={<Warehouse />} />
-      <Route path={urls.dashboard} element={<Dashboard />} />
-      <Route path={urls.login} element={<Login />} />
+    <>
+      <Route path={`/${urls.login}`} errorElement={<RouteError />} element={<Login />} />
+      <Route path='/' errorElement={<RouteError />} element={<RootLayout />}>
+        <Route path={urls.arrival} element={<Arrival />} />
+        <Route path={urls.shipment} element={<Shipment />} />
+        <Route path={urls.warehouse} element={<Warehouse />} />
+        <Route path={urls.dashboard} element={<Dashboard />} />
 
-      <Route path={urls.admin} element={<Admin />}>
-        <Route path={urls.adminUsers} element={<AdminUsers />} />
+        <Route path={urls.admin} element={<Admin />}>
+          <Route path={urls.adminUsers} element={<AdminUsers />} />
 
-        <Route path={urls.systemSettings} element={<SystemSettings />}>
-          <Route path={urls.workshops} element={<Workshops />} />
-          <Route path={urls.woodNamings} element={<WoodNamings />} />
-          <Route path={urls.referenceBook} element={<SettingsReferenceBook />} />
-          <Route path={urls.dryers} element={<SettingsDryers />} />
+          <Route path={urls.systemSettings} element={<SystemSettings />}>
+            <Route path={urls.workshops} element={<Workshops />} />
+            <Route path={urls.woodNamings} element={<WoodNamings />} />
+            <Route path={urls.referenceBook} element={<SettingsReferenceBook />} />
+            <Route path={urls.dryers} element={<SettingsDryers />} />
+          </Route>
         </Route>
+
+        <Route path={urls.referenceBook} element={<ReferenceBook />} />
+        <Route path={urls.dryer} element={<Dryer />} />
+
+        <Route path={urls.vault} element={<Outlet />}>
+          <Route path={urls.dryWoodVault} element={<DryWoodVault />} />
+          <Route path={urls.wetWoodVault} element={<WetWoodVault />} />
+        </Route>
+
+        <Route path={urls.workshop + '/:workshopId'} element={<WorkshopItem />} />
+
+        <Route path='*' element={<NotFound />} />
       </Route>
-
-      <Route path={urls.referenceBook} element={<ReferenceBook />} />
-      <Route path={urls.dryer} element={<Dryer />} />
-
-      <Route path={urls.vault} element={<Outlet />}>
-        <Route path={urls.dryWoodVault} element={<DryWoodVault />} />
-        <Route path={urls.wetWoodVault} element={<WetWoodVault />} />
-      </Route>
-
-      <Route path={urls.workshop + '/:workshopId'} element={<WorkshopItem />} />
-
-      <Route path='*' element={<NotFound />} />
-    </Route>
+    </>
   )
 
   const appRouterObject = createBrowserRouter(routes)
