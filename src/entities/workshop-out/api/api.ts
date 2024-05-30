@@ -56,7 +56,7 @@ export const workshopOutApi = baseApi.injectEndpoints({
         url: `workshop-out/get/workshop-stats/report/${workshopId}`,
         params: { startDate, endDate },
       }),
-      providesTags: ['WorkshopReportStats', 'WorkshopProducedStats'],
+      providesTags: ['WorkshopReportStats'],
     }),
 
     fetchWorkshopProducedStats: build.query<GetWorkshopProducedResponse, GetWorkshopProducedParams>(
@@ -65,7 +65,7 @@ export const workshopOutApi = baseApi.injectEndpoints({
           url: `workshop-out/get/produced-stats`,
         }),
         providesTags: ['WorkshopProducedStats'],
-      }
+      },
     ),
 
     createWorkshopOut: build.mutation<void, CreateWorkshopOutParams>({

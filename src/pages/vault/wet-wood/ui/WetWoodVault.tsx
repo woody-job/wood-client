@@ -22,8 +22,8 @@ export const WetWoodVault = () => {
       <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
 
       <WetWoodVaultStats
-        endDate={timeRange.endDate.toISOString()}
-        startDate={timeRange.startDate.toISOString()}
+        endDate={timeRange.endDate.format('YYYY-MM-DD')}
+        startDate={timeRange.startDate.format('YYYY-MM-DD')}
       />
     </Box>
   )

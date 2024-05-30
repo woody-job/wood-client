@@ -28,26 +28,17 @@ export const WetWoodVaultStats: FC<WetWoodVaultStatsProps> = ({ startDate, endDa
       startDate,
       endDate,
     })
+
+  const params = useMemo(() => (wetWoodCondition ? {
+    startDate,
+    endDate,
+    woodConditionId: wetWoodCondition.id,
+  } : skipToken), [startDate, endDate, wetWoodCondition])
+
   const { data: woodArrivalByRange, isLoading: isLoadingWoodArrival } =
-    useFetchWoodArrivalByRangeQuery(
-      wetWoodCondition
-        ? {
-            startDate,
-            endDate,
-            woodConditionId: wetWoodCondition.id,
-          }
-        : skipToken
-    )
+    useFetchWoodArrivalByRangeQuery(params)
   const { data: woodShipmentByRange, isLoading: isLoadingWoodShipment } =
-    useFetchWoodShipmentByRangeQuery(
-      wetWoodCondition
-        ? {
-            startDate,
-            endDate,
-            woodConditionId: wetWoodCondition.id,
-          }
-        : skipToken
-    )
+    useFetchWoodShipmentByRangeQuery(params)
 
   const isLoading =
     isLoadingWorkshopProduced ||
@@ -56,22 +47,22 @@ export const WetWoodVaultStats: FC<WetWoodVaultStatsProps> = ({ startDate, endDa
     isLoadingWoodShipment
 
   return (
-    <Box display='flex' gap={3} mt={5} flexWrap='wrap' justifyContent='space-evenly'>
+    <Box display="flex" gap={3} mt={5} flexWrap="wrap" justifyContent="space-evenly">
       {isLoading && (
         <>
-          <Skeleton variant='circular' width='700px' height='700px' />
-          <Skeleton variant='circular' width='700px' height='700px' />
-          <Skeleton variant='circular' width='700px' height='700px' />
+          <Skeleton variant="circular" width="700px" height="700px" />
+          <Skeleton variant="circular" width="700px" height="700px" />
+          <Skeleton variant="circular" width="700px" height="700px" />
         </>
       )}
       {workshopProducedStats && (
-        <VaultItem title='Произвели' sunburstData={workshopProducedStats.sunburstData} />
+        <VaultItem title="Произвели" sunburstData={workshopProducedStats.sunburstData} />
       )}
       {woodArrivalByRange && (
-        <VaultItem title='Поступило' sunburstData={woodArrivalByRange.sunburstData} />
+        <VaultItem title="Поступило" sunburstData={woodArrivalByRange.sunburstData} />
       )}
       {woodShipmentByRange && (
-        <VaultItem title='Отгрузили' sunburstData={woodShipmentByRange.sunburstData} />
+        <VaultItem title="Отгрузили" sunburstData={woodShipmentByRange.sunburstData} />
       )}
     </Box>
   )

@@ -22,26 +22,18 @@ export const DryWoodVaultStats: FC<DryWoodVaultStatsProps> = ({ startDate, endDa
     return woodConditions?.find(condition => condition.name === 'Сухая')
   }, [woodConditions])
 
+  const params = dryWoodCondition
+      ? {
+        startDate,
+        endDate,
+        woodConditionId: dryWoodCondition.id,
+      }
+      : skipToken
+
   const { data: woodArrivalByRange, isLoading: isLoadingWoodArrival } =
-    useFetchWoodArrivalByRangeQuery(
-      dryWoodCondition
-        ? {
-            startDate,
-            endDate,
-            woodConditionId: dryWoodCondition.id,
-          }
-        : skipToken
-    )
+    useFetchWoodArrivalByRangeQuery(params)
   const { data: woodShipmentByRange, isLoading: isLoadingWoodShipment } =
-    useFetchWoodShipmentByRangeQuery(
-      dryWoodCondition
-        ? {
-            startDate,
-            endDate,
-            woodConditionId: dryWoodCondition.id,
-          }
-        : skipToken
-    )
+    useFetchWoodShipmentByRangeQuery(params)
 
   const isLoading = isLoadingWoodArrival || isLoadingWoodConditions || isLoadingWoodShipment
   return (
