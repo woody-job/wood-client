@@ -1,3 +1,5 @@
+import { ChangeEvent, FC, useState } from 'react'
+
 import { Box, FormControlLabel, Grid, Radio, RadioGroup, Typography } from '@mui/material'
 
 import {
@@ -5,18 +7,29 @@ import {
   WorkshopWoodsDiametersLine,
   WorkshopWoodsTotalLine,
 } from '@/entities/workshop'
+import { TimeRange } from '@/shared/types'
 
-export const WorkshopCharts = () => {
+type WorkshopChartsProps = {
+  timeRange: TimeRange
+}
+
+export const WorkshopCharts: FC<WorkshopChartsProps> = ({ timeRange }) => {
+  const [unitSelection, setUnitSelection] = useState('perTotal')
+
+  const handleUnitSelectionChange = (event: ChangeEvent<HTMLInputElement>, value: string) => {
+    setUnitSelection(value)
+  }
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} lg={6} xl={4}>
         <Typography sx={{ mb: 1 }}>Вход</Typography>
-        <WorkshopWoodsDiametersLine />
+        <WorkshopWoodsDiametersLine timeRange={timeRange} />
       </Grid>
 
       <Grid item xs={12} lg={6} xl={4}>
         <Typography sx={{ mb: 1 }}>Выход</Typography>
-        <WorkshopWoodsBar />
+        <WorkshopWoodsBar timeRange={timeRange} />
       </Grid>
 
       <Grid item xs={12} lg={6} xl={4}>
@@ -30,17 +43,19 @@ export const WorkshopCharts = () => {
               },
               ml: 'auto',
             }}
+            value={unitSelection}
+            onChange={handleUnitSelectionChange}
           >
             <FormControlLabel
-              value='на_куб'
+              value='perUnit'
               control={<Radio size='small' />}
               label='На куб'
               sx={{ ml: 'auto', mr: 1 }}
             />
-            <FormControlLabel value='всего' control={<Radio size='small' />} label='Всего' />
+            <FormControlLabel value='perTotal' control={<Radio size='small' />} label='Всего' />
           </RadioGroup>
         </Box>
-        <WorkshopWoodsTotalLine />
+        <WorkshopWoodsTotalLine timeRange={timeRange} unitSelection={unitSelection} />
       </Grid>
     </Grid>
   )

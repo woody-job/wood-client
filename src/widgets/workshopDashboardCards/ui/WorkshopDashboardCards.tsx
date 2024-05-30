@@ -1,40 +1,92 @@
-import { Box, Typography } from '@mui/material'
+import { FC } from 'react'
 
+import { useParams } from 'react-router-dom'
+
+import { Box, Grid, Skeleton, Typography } from '@mui/material'
+
+import { EditWorkshopDimensionOfTheDay } from '@/features/workshop/edit-dimension-of-the-day'
+import { EditWoodNamingOfTheDay } from '@/features/workshop/edit-wood-naming-of-the-day'
+import { useFetchWorkshopDailyStatsQuery } from '@/entities/workshop'
 import { DashItem } from '@/shared/ui'
 
-export const WorkshopDashboardCards = () => {
+type WorkshopDashboardCardsProps = {
+  now: string
+}
+
+export const WorkshopDashboardCards: FC<WorkshopDashboardCardsProps> = ({ now }) => {
+  const { workshopId } = useParams()
+  const { data: workshopDailyData, isLoading: isLoadingWorkshopDailyData } =
+    useFetchWorkshopDailyStatsQuery(
+      { workshopId: workshopId ? Number(workshopId) : -1, date: now },
+      { skip: !workshopId, refetchOnMountOrArgChange: true }
+    )
+
   return (
-    <Box
-      display='flex'
-      flexDirection='column'
-      gap={3}
-      sx={{
-        '& div:nth-child(2n)': {
-          backgroundColor: theme => theme.primary.purple,
-        },
-        '& div:nth-child(2n+1)': {
-          backgroundColor: theme => theme.primary.blue,
-        },
-      }}
-    >
-      <DashItem>
-        <Typography>Выручка: 613402.02р</Typography>
-        <Typography>Сырье: 613402.02р</Typography>
-        <Typography>Распиловка: 613402.02р</Typography>
-        <Typography variant='h6' sx={{ mt: 3 }}>
-          Итог: 613402.02р
-        </Typography>
-      </DashItem>
+    <Box display='flex' flexDirection='column' gap={3} width={'100%'}>
+      <Grid container gap={3} flex='6'>
+        <Grid item>
+          {isLoadingWorkshopDailyData ? (
+            <Skeleton sx={{ height: 178, width: '209px !important' }} variant='rounded' />
+          ) : (
+            <DashItem sx={{ backgroundColor: theme => theme.primary.purple }}>
+              <Typography>Выручка: {workshopDailyData?.totalWoodPrice ?? 0}₽</Typography>
+              <Typography>Сырье: {workshopDailyData?.priceOfRawMaterials ?? 0}₽</Typography>
+              <Typography>Распиловка: {workshopDailyData?.sawingPrice ?? 0}₽</Typography>
+              <Typography variant='h6' sx={{ mt: 3 }}>
+                Итог: {workshopDailyData?.profit}₽
+              </Typography>
+            </DashItem>
+          )}
+        </Grid>
 
-      <DashItem>
-        <Typography variant='h6'>Итог на куб:</Typography>
-        <Typography variant='subtitle1'>613402.02р</Typography>
-      </DashItem>
+        <Grid item alignSelf='stretch' flex='6'>
+          {isLoadingWorkshopDailyData ? (
+            <Skeleton sx={{ height: 178, width: '336px !important' }} variant='rounded' />
+          ) : (
+            <DashItem
+              sx={{
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: theme => theme.primary.blue,
+              }}
+            >
+              <Box>
+                <Typography variant='h6'>Итог на куб:</Typography>
+                <Typography variant='subtitle1'>
+                  {workshopDailyData?.profitPerUnit ?? 0}₽
+                </Typography>
+              </Box>
+            </DashItem>
+          )}
+        </Grid>
+      </Grid>
 
-      <DashItem>
-        <Typography variant='h6'>Сечение дня: 200x47x6</Typography>
-        <Typography>613402.02р</Typography>
-      </DashItem>
+      {isLoadingWorkshopDailyData ? (
+        <Skeleton sx={{ height: 115 }} variant='rounded' />
+      ) : (
+        <DashItem sx={{ backgroundColor: theme => theme.primary.purpleOpacity }}>
+          <Typography variant='h6'>Сечение дня</Typography>
+          <EditWorkshopDimensionOfTheDay
+            dimensionOfTheDay={workshopDailyData?.dimensionOfTheDay}
+            date={now}
+            workshopId={Number(workshopId)}
+          />
+        </DashItem>
+      )}
+
+      {isLoadingWorkshopDailyData ? (
+        <Skeleton sx={{ height: 115 }} variant='rounded' />
+      ) : (
+        <DashItem sx={{ backgroundColor: theme => theme.primary.purple }}>
+          <Typography variant='h6'>Условное обозначение дня</Typography>
+          <EditWoodNamingOfTheDay
+            woodNamingOfTheDay={workshopDailyData?.woodNamingOfTheDay}
+            date={now}
+            workshopId={Number(workshopId)}
+          />
+        </DashItem>
+      )}
     </Box>
   )
 }

@@ -15,7 +15,7 @@ export const CustomTabPanel: FC<CustomTabPanelProps> = props => {
 
   return (
     <div role='tabpanel' {...other}>
-      <Box sx={{ p: 3 }}>{children}</Box>
+      <Box sx={{ p: 1.5 }}>{children}</Box>
     </div>
   )
 }

@@ -1,36 +1,51 @@
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
+
+import { useParams } from 'react-router-dom'
 
 import { Serie } from '@nivo/line'
 
-import { Box } from '@mui/material'
+import { Box, Skeleton } from '@mui/material'
 
-import { shortRuDateFormater } from '@/shared/constants'
+import { useFetchBeamInStatsForWorkshopQuery } from '@/entities/beam-in'
+import { getRussianDayAndMonth } from '@/shared/libs/helpers'
+import { TimeRange } from '@/shared/types'
 import { CustomLine } from '@/shared/ui'
 
-const data = [
-  { date: '2024-04-01', volume: 30 },
-  { date: '2024-04-02', volume: 20 },
-  { date: '2024-04-03', volume: 30 },
-  { date: '2024-04-04', volume: 40 },
-  { date: '2024-04-05', volume: 30 },
-]
+type WorkshopWoodsDiametersLineProps = {
+  timeRange: TimeRange
+}
 
-export const WorkshopWoodsDiametersLine = () => {
-  const min = Math.min(...data.map(item => item.volume))
-  const max = Math.min(...data.map(item => item.volume))
+export const WorkshopWoodsDiametersLine: FC<WorkshopWoodsDiametersLineProps> = ({ timeRange }) => {
+  const { workshopId } = useParams()
+
+  const { data: beamInStats, isLoading: isLoadingBeamInStats } =
+    useFetchBeamInStatsForWorkshopQuery({
+      workshopId: workshopId ? Number(workshopId) : -1,
+      startDate: timeRange.startDate.toISOString(),
+      endDate: timeRange.endDate.toISOString(),
+    })
 
   const series: Serie[] = useMemo(
     () => [
       {
         id: 'WorkshopWoodsDiametersLine',
-        data: data.map(datum => ({
-          x: shortRuDateFormater.format(new Date(datum.date)),
-          y: datum.volume,
-        })),
+        data: beamInStats
+          ? beamInStats.map(beamInStat => ({
+              x: getRussianDayAndMonth(beamInStat.x),
+              y: beamInStat.y,
+            }))
+          : [],
       },
     ],
-    [data]
+    [beamInStats]
   )
+
+  const min = beamInStats ? Math.min(...beamInStats.map(item => item.y)) : 0
+  const max = beamInStats ? Math.max(...beamInStats.map(item => item.y)) : 0
+
+  if (isLoadingBeamInStats) {
+    return <Skeleton variant='rounded' sx={{ height: 240, width: 410, mx: 'auto' }} />
+  }
 
   return (
     <Box height={300} width={'100%'}>

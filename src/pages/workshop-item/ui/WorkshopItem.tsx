@@ -1,23 +1,35 @@
+import { FC, useMemo, useState } from 'react'
+
 import { useParams } from 'react-router-dom'
 
-import { Box, Grid, Input, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material'
 
 import { WorkshopCharts } from '@/widgets/workshopCharts'
 import { WorkshopDashboardCards } from '@/widgets/workshopDashboardCards'
 import { WorkshopInputWoods } from '@/widgets/workshopInputWoods'
 import { WorkshopOutputWoods } from '@/widgets/workshopOutputWoods'
-import { WorkshopTotalTable, WorkshopTrashStatsSunburst } from '@/entities/workshop'
+import {
+  useFetchAllWorkshopsQuery,
+  WorkshopTotalTable,
+  WorkshopTrashStatsSunburst,
+} from '@/entities/workshop'
+import { useFetchWorkshopOutForDateQuery } from '@/entities/workshop-out'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
-import { CustomTabPanel } from '@/shared/ui'
+import { TimeRange } from '@/shared/types'
+import { CustomTabPanel, DatePicker } from '@/shared/ui'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
 
-export const WorkshopItem = () => {
+import dayjs from 'dayjs'
+
+export const WorkshopItem: FC = () => {
   const { workshopId } = useParams()
   const tabs = [
     { id: 'day', name: 'За день' },
     { id: 'few-days', name: 'За несколько дней' },
   ]
+
+  const { data: workshops } = useFetchAllWorkshopsQuery()
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
     appSearchParams.currentTab,
@@ -26,50 +38,92 @@ export const WorkshopItem = () => {
     tabs[0]
   )
 
-  const today = new Date().toISOString().split('T')[0]
+  // По дефолту открывается предыдущий день
+  const [date, setDate] = useState(dayjs().subtract(1, 'days'))
+
+  // По дефолту открывается позавчера/вчера
+  const [timeRange, setTimeRange] = useState<TimeRange>({
+    startDate: dayjs().subtract(2, 'days'),
+    endDate: dayjs().subtract(1, 'days'),
+  })
+
+  const currentWorkshop = useMemo(
+    () => workshops?.find(workshop => `${workshop.id}` === workshopId),
+    [workshops, workshopId]
+  )
+
+  const { data: workshopOut, isLoading: isWorkshopOutLoading } = useFetchWorkshopOutForDateQuery(
+    { workshopId: workshopId ? Number(workshopId) : -1, date: date.toISOString() },
+    { skip: !workshopId, refetchOnMountOrArgChange: true }
+  )
+
+  const workshopOutData = workshopOut ? workshopOut.data : []
+  const workshopOutSunburstData = workshopOut ? workshopOut.sunburstData : []
+  const totalWorkshopOutVolume = workshopOut?.totalWorkshopOutVolume
+    ? workshopOut.totalWorkshopOutVolume
+    : 0
 
   return (
     <>
-      <Typography variant='h5' sx={{ mb: 5 }}>
-        Цех 1
-      </Typography>
-      <Tabs value={currentTab.id} onChange={handleChangeTab} sx={{ mt: 5 }}>
-        {tabs.map(tab => (
-          <Tab key={tab.name} label={tab.name} value={tab.id} />
-        ))}
-      </Tabs>
+      <Box px={1.5}>
+        <Typography variant='h5' sx={{ mb: 1.5 }}>
+          {currentWorkshop?.name}
+        </Typography>
+        <Tabs value={currentTab.id} onChange={handleChangeTab} sx={{ mt: 1 }}>
+          {tabs.map(tab => (
+            <Tab key={tab.name} label={tab.name} value={tab.id} />
+          ))}
+        </Tabs>
+      </Box>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} xl={3}>
-            <Input type='date' value={today} sx={{ my: 3 }} />
+        <Box>
+          <Box sx={{ mb: 2, mt: 1 }} width={200}>
+            <DatePicker
+              value={date}
+              onAccept={value => {
+                if (value) {
+                  setDate(value)
+                }
+              }}
+            />
+          </Box>
 
-            <WorkshopDashboardCards />
-          </Grid>
+          <Grid container gap={3}>
+            <Grid item xs={12} md={12} lg={7} xl={7}>
+              {Number(workshopId) !== 2 && <WorkshopInputWoods now={date.toISOString()} />}
 
-          {Number(workshopId) !== 2 && (
-            <Grid item md={12} lg={6} xl={4.5}>
-              <WorkshopInputWoods />
+              <Divider sx={{ my: 3 }} />
+
+              <WorkshopOutputWoods
+                now={date.toISOString()}
+                workshopOutData={workshopOutData}
+                isWorkshopOutLoading={isWorkshopOutLoading}
+              />
             </Grid>
-          )}
-
-          <Grid item md={12} lg={6} xl={4.5}>
-            <WorkshopOutputWoods />
+            <Grid item xs={12} md={12} lg={4.5} xl={4.5} flexShrink={1}>
+              <Grid container flexDirection='column' width='100%'>
+                <WorkshopDashboardCards now={date.toISOString()} />
+                <WorkshopTrashStatsSunburst
+                  workshopOutSunburstData={workshopOutSunburstData}
+                  totalWorkshopOutVolume={totalWorkshopOutVolume}
+                  isWorkshopOutLoading={isWorkshopOutLoading}
+                />
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-
-        <WorkshopTrashStatsSunburst />
+        </Box>
       </CustomTabPanel>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>
-        <TimeRangeInputs />
+        <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
 
         <Box mt={3}>
-          <WorkshopCharts />
+          <WorkshopCharts timeRange={timeRange} />
         </Box>
 
         <Box mt={3}>
-          <WorkshopTotalTable />
+          <WorkshopTotalTable timeRange={timeRange} />
         </Box>
       </CustomTabPanel>
     </>

@@ -10,7 +10,6 @@ export type User = {
   id: number
   login: string
   fullName: string
-  password: string // TODO: Не надо так
   roleId: number
   role: UserRole
 }

@@ -1,17 +1,12 @@
-export interface WoodsOldItem {
-  day: string
-  woods: {
-    name: string
-    count: number
-  }[]
-}
+import { WorkshopOutStat } from '@/entities/workshop-out'
+import { getRussianDayAndMonth } from '@/shared/libs/helpers'
 
 export type MapDataToWoodsBarReturnItem = {
   day: string
 } & Record<string, string>
 
 export const mapDataToWoodsBar = (
-  data: WoodsOldItem[]
+  data: WorkshopOutStat[]
 ): {
   items: MapDataToWoodsBarReturnItem[]
   keys: string[]
@@ -20,10 +15,10 @@ export const mapDataToWoodsBar = (
 
   const result = data.map(item => {
     return {
-      day: item.day,
+      day: getRussianDayAndMonth(item.date),
       ...item.woods.reduce((prevItem, currentItem) => {
         keys.add(currentItem.name)
-        return { ...prevItem, [currentItem.name]: currentItem.count }
+        return { ...prevItem, [currentItem.name]: currentItem.percentage }
       }, {}),
     }
   })
