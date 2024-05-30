@@ -120,3 +120,21 @@ export type GetWorkshopReportParams = {
   startDate?: string
   endDate?: string
 }
+
+export type WorkshopProducedSunburstDataItem = {
+  name: string
+  children: {
+    name: string
+    size: number
+  }[]
+}
+
+export type GetWorkshopProducedResponse = {
+  sunburstData: WorkshopProducedSunburstDataItem[]
+  totalVolume: number
+}
+
+export type GetWorkshopProducedParams = {
+  startDate?: string
+  endDate?: string
+}
