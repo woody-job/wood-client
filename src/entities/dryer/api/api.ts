@@ -1,4 +1,10 @@
-import { Dryer, DryerDataParams, DryerDataResponse, DryerWithoutId } from '@/entities/dryer'
+import {
+  Dryer,
+  DryerDataList,
+  DryerDataParams,
+  DryerDataResponse,
+  DryerWithoutId,
+} from '@/entities/dryer'
 import { baseApi } from '@/shared/api'
 
 export const dryerApi = baseApi.injectEndpoints({
@@ -53,6 +59,12 @@ export const dryerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['DryersDataById'],
     }),
+    fetchDryerDataList: build.query<DryerDataList, void>({
+      query: () => ({
+        url: `dryer-chamber-data/list`,
+      }),
+      providesTags: ['Dryers'],
+    }),
   }),
 })
 
@@ -64,4 +76,5 @@ export const {
   useFetchDryerDataByIdQuery,
   useBringInMutation,
   useTakeOutMutation,
+  useFetchDryerDataListQuery,
 } = dryerApi

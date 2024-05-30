@@ -1,4 +1,4 @@
-export { UpdateDimensionModal, DimensionsSunburst } from './ui'
+export { UpdateDimensionModal } from './ui'
 
 export * from './api'
 export * from './model/types'
