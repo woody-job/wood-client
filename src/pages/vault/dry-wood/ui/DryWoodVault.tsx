@@ -15,14 +15,16 @@ export const DryWoodVault = () => {
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 5 }}>
+      <Typography variant='h5' sx={{ mb: 5 }}>
         Свод сухой доски
       </Typography>
 
       <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
 
-      <DryWoodVaultStats endDate={timeRange.endDate.format('YYYY-MM-DD')}
-                         startDate={timeRange.startDate.format('YYYY-MM-DD')} />
+      <DryWoodVaultStats
+        endDate={timeRange.endDate.format('YYYY-MM-DD')}
+        startDate={timeRange.startDate.format('YYYY-MM-DD')}
+      />
     </Box>
   )
 }

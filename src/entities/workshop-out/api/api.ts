@@ -65,7 +65,7 @@ export const workshopOutApi = baseApi.injectEndpoints({
           url: `workshop-out/get/produced-stats`,
         }),
         providesTags: ['WorkshopProducedStats'],
-      },
+      }
     ),
 
     createWorkshopOut: build.mutation<void, CreateWorkshopOutParams>({

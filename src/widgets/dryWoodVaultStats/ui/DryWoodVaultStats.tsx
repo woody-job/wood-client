@@ -23,12 +23,12 @@ export const DryWoodVaultStats: FC<DryWoodVaultStatsProps> = ({ startDate, endDa
   }, [woodConditions])
 
   const params = dryWoodCondition
-      ? {
+    ? {
         startDate,
         endDate,
         woodConditionId: dryWoodCondition.id,
       }
-      : skipToken
+    : skipToken
 
   const { data: woodArrivalByRange, isLoading: isLoadingWoodArrival } =
     useFetchWoodArrivalByRangeQuery(params)
@@ -40,16 +40,27 @@ export const DryWoodVaultStats: FC<DryWoodVaultStatsProps> = ({ startDate, endDa
     <Box display='flex' gap={3} mt={5} flexWrap='wrap' justifyContent='space-evenly'>
       {isLoading && (
         <>
-          <Skeleton variant='circular' width='700px' height='700px' />
-          <Skeleton variant='circular' width='700px' height='700px' />
-          <Skeleton variant='circular' width='700px' height='700px' />
+          <Skeleton variant='circular' width='600px' height='600px' />
+          <Skeleton variant='circular' width='600px' height='600px' />
         </>
       )}
-      {woodArrivalByRange && (
-        <VaultItem title='Поступило' sunburstData={woodArrivalByRange.sunburstData} />
-      )}
-      {woodShipmentByRange && (
-        <VaultItem title='Отгрузили' sunburstData={woodShipmentByRange.sunburstData} />
+      {!isLoading && (
+        <>
+          {woodArrivalByRange && (
+            <VaultItem
+              title='Поступило'
+              sunburstData={woodArrivalByRange.sunburstData}
+              total={woodArrivalByRange.totalVolume}
+            />
+          )}
+          {woodShipmentByRange && (
+            <VaultItem
+              title='Отгрузили'
+              sunburstData={woodShipmentByRange.sunburstData}
+              total={woodShipmentByRange.totalVolume}
+            />
+          )}
+        </>
       )}
     </Box>
   )

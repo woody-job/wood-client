@@ -9,9 +9,10 @@ export type VaultSunburstItem = { name: string; children: { name: string; size: 
 export interface VaultItemProps {
   title?: string
   sunburstData: VaultSunburstItem[]
+  total: number
 }
 
-export const VaultItem: FC<VaultItemProps> = ({ title, sunburstData }) => {
+export const VaultItem: FC<VaultItemProps> = ({ title, sunburstData, total }) => {
   const data = {
     name: 'root',
     children: sunburstData,
@@ -33,7 +34,7 @@ export const VaultItem: FC<VaultItemProps> = ({ title, sunburstData }) => {
         valueFormat={value => value.toFixed(2) + ' м3'}
       >
         <Typography variant='subtitle1'>Всего м3</Typography>
-        <Typography variant='subtitle1'>80.0448</Typography>
+        <Typography variant='subtitle1'>{total}</Typography>
       </CustomSunburst>
     </Box>
   )
