@@ -9,6 +9,8 @@ import {
   GetWorkshopOutForDateResponse,
   GetWorkshopOutStatsParams,
   GetWorkshopOutStatsResponse,
+  GetWorkshopProducedParams,
+  GetWorkshopProducedResponse,
   GetWorkshopReportParams,
   GetWorkshopReportResponse,
   UpdateWorkshopOutParams,
@@ -57,13 +59,22 @@ export const workshopOutApi = baseApi.injectEndpoints({
       providesTags: ['WorkshopReportStats'],
     }),
 
+    fetchWorkshopProducedStats: build.query<GetWorkshopProducedResponse, GetWorkshopProducedParams>(
+      {
+        query: () => ({
+          url: `workshop-out/get/produced-stats`,
+        }),
+        providesTags: ['WorkshopProducedStats'],
+      }
+    ),
+
     createWorkshopOut: build.mutation<void, CreateWorkshopOutParams>({
       query: createWorkshopOutParams => ({
         url: `workshop-out`,
         method: 'POST',
         body: createWorkshopOutParams,
       }),
-      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData'],
+      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData', 'WorkshopProducedStats'],
     }),
 
     updateWorkshopOut: build.mutation<void, UpdateWorkshopOutParams>({
@@ -72,7 +83,7 @@ export const workshopOutApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: workshopOutData,
       }),
-      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData'],
+      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData', 'WorkshopProducedStats'],
     }),
 
     deleteWorkshopOut: build.mutation<void, DeleteWorkshopOutParams>({
@@ -80,7 +91,7 @@ export const workshopOutApi = baseApi.injectEndpoints({
         url: `workshop-out/${workshopOutId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData'],
+      invalidatesTags: ['WorkshopOutForDay', 'WorkshopDailyData', 'WorkshopProducedStats'],
     }),
   }),
 })
@@ -90,6 +101,7 @@ export const {
   useFetchProfitStatsForWorkshopQuery,
   useFetchWorkshopOutStatsForWorkshopQuery,
   useFetchWorkshopReportQuery,
+  useFetchWorkshopProducedStatsQuery,
   useCreateWorkshopOutMutation,
   useUpdateWorkshopOutMutation,
   useDeleteWorkshopOutMutation,
