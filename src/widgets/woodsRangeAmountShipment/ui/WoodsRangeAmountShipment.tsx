@@ -21,6 +21,7 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = props => {
         woodConditions.map(woodCondition => (
           <WoodShipmentRangeItem
             key={woodCondition.id}
+            woodConditionName={woodCondition.name}
             woodConditionId={woodCondition.id}
             endDate={endDate}
             startDate={startDate}

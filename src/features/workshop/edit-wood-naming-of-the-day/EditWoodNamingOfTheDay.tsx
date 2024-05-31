@@ -13,6 +13,8 @@ import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
 
 import { enqueueSnackbar } from 'notistack'
+import { useAuth } from '@/entities/auth'
+import { USER_ROLE } from '@/entities/user'
 
 export interface EditWoodNamingOfTheDayProps {
   workshopId: number
@@ -26,6 +28,10 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
   date,
 }) => {
   const [isEdit, setEdit] = useState(false)
+
+  const user = useAuth()
+
+  const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
 
   const {
     formState: { errors },
@@ -112,7 +118,7 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
   return (
     <Box display='flex' mt={2} flexDirection='column' alignItems='center' ref={editInputWrapperRef}>
       <Grid container sx={{ width: '100%' }} justifyContent='space-between'>
-        <Grid item xs={7}>
+        <Grid item xs={isAdmin ? 7 : 12}>
           <Box sx={{ position: 'relative' }}>
             <Controller
               name='woodNaming'
@@ -162,19 +168,21 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
           </Box>
         </Grid>
 
-        <Grid item xs={4.5}>
-          <Button
-            size='small'
-            sx={{ height: '40px', width: '100%' }}
-            onClick={() => {
-              handleButtonClick(isEdit)
-            }}
-            variant={isEdit ? 'gray' : 'contained'}
-            type='button'
-          >
-            {buttonText}
-          </Button>
-        </Grid>
+        {isAdmin && (
+          <Grid item xs={4.5}>
+            <Button
+              size='small'
+              sx={{ height: '40px', width: '100%' }}
+              onClick={() => {
+                handleButtonClick(isEdit)
+              }}
+              variant={isEdit ? 'gray' : 'contained'}
+              type='button'
+            >
+              {buttonText}
+            </Button>
+          </Grid>
+        )}
       </Grid>
     </Box>
   )

@@ -55,7 +55,7 @@ export const dryerApi = baseApi.injectEndpoints({
         method: 'POST',
         body: dryer,
       }),
-      invalidatesTags: ['DryersDataById'],
+      invalidatesTags: ['DryersDataById', 'Dryers'],
     }),
 
     takeOut: build.mutation<void, number>({
@@ -63,7 +63,7 @@ export const dryerApi = baseApi.injectEndpoints({
         url: `dryer-chamber-data/take-out/${dryerChamberId}`,
         method: 'POST',
       }),
-      invalidatesTags: ['DryersDataById'],
+      invalidatesTags: ['DryersDataById', 'Dryers'],
     }),
 
     fetchDryerDataList: build.query<DryerDataList, void>({

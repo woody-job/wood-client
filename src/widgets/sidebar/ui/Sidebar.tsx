@@ -10,11 +10,15 @@ import { MenuSidebarItem } from '@/shared/ui'
 
 import { getSidebarPaths } from '../lib/helpers'
 import { settingsPaths } from './Sidebar.constants.ts'
+import { useAuth } from '@/entities/auth/index.ts'
+import { USER_ROLE } from '@/entities/user/index.ts'
 
 export const Sidebar = () => {
   const location = useLocation()
 
   const { data: workshops, isLoading: isLoadingWorkshops } = useFetchAllWorkshopsQuery()
+
+  const user = useAuth()
 
   const paths = useMemo(() => {
     return getSidebarPaths(workshops)
@@ -94,20 +98,25 @@ export const Sidebar = () => {
         fontWeight='bold'
         textAlign='right'
       >
-        Woody
+        Учет
+        <p style={{ margin: 0 }}>производства</p>
       </Typography>
 
       {isLoadingWorkshops ? menuItemsSkeleton : configuredMenuItems}
 
-      <Box display='flex' flexDirection='column' gap='2px' mb={2} mt={2}>
-        <Typography color={theme => theme.black[40]}>Настройки</Typography>
+      {user?.role.name === USER_ROLE.SUPERADMIN && (
+        <Box display='flex' flexDirection='column' gap='2px' mb={2} mt={2}>
+          <Typography color={theme => theme.black[40]}>Настройки</Typography>
 
-        {settingsPaths.map(({ path, name }) => (
-          <NavLink to={path} key={name}>
-            <MenuSidebarItem isActive={location.pathname.startsWith(path)}>{name}</MenuSidebarItem>
-          </NavLink>
-        ))}
-      </Box>
+          {settingsPaths.map(({ path, name }) => (
+            <NavLink to={path} key={name}>
+              <MenuSidebarItem isActive={location.pathname.startsWith(path)}>
+                {name}
+              </MenuSidebarItem>
+            </NavLink>
+          ))}
+        </Box>
+      )}
     </Box>
   )
 }

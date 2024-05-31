@@ -3,6 +3,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 import { logout } from '@/entities/auth'
 import { baseQuery } from '@/shared/api/baseQuery.ts'
 import { TokenService } from '@/shared/libs/services'
+import { urls } from '../constants'
 
 export const baseQueryWithAuth: BaseQueryFn<
   string | FetchArgs,
@@ -27,6 +28,9 @@ export const baseQueryWithAuth: BaseQueryFn<
   if ((result.error && result.error.status === 401) || !accessToken) {
     api.dispatch(logout())
     TokenService.removeToken()
+
+    window.location.href = `/${urls.login}`
   }
+
   return result
 }

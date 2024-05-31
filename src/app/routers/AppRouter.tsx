@@ -26,10 +26,29 @@ import DryWoodVault from '@/pages/vault/dry-wood'
 import WetWoodVault from '@/pages/vault/wet-wood'
 import { Warehouse } from '@/pages/warehouse/ui/Warehouse'
 import WorkshopItem from '@/pages/workshop-item'
-import { PrivatePage } from '@/entities/auth'
+import { PrivatePage, useAuth } from '@/entities/auth'
 import { urls } from '@/shared/constants'
+import { USER_ROLE } from '@/entities/user'
 
 export const AppRouter = () => {
+  const user = useAuth()
+
+  const systemSettingsRoutes =
+    user?.role.name === USER_ROLE.SUPERADMIN ? (
+      <Route path={urls.admin} element={<Admin />}>
+        <Route path={urls.adminUsers} element={<AdminUsers />} />
+
+        <Route path={urls.systemSettings} element={<SystemSettings />}>
+          <Route path={urls.workshops} element={<Workshops />} />
+          <Route path={urls.woodNamings} element={<WoodNamings />} />
+          <Route path={urls.referenceBook} element={<SettingsReferenceBook />} />
+          <Route path={urls.dryers} element={<SettingsDryers />} />
+        </Route>
+      </Route>
+    ) : (
+      <></>
+    )
+
   const routes = createRoutesFromElements(
     <>
       <Route path={`/${urls.login}`} errorElement={<RouteError />} element={<Login />} />
@@ -40,16 +59,7 @@ export const AppRouter = () => {
           <Route path={urls.warehouse} element={<Warehouse />} />
           <Route path={urls.dashboard} element={<Dashboard />} />
 
-          <Route path={urls.admin} element={<Admin />}>
-            <Route path={urls.adminUsers} element={<AdminUsers />} />
-
-            <Route path={urls.systemSettings} element={<SystemSettings />}>
-              <Route path={urls.workshops} element={<Workshops />} />
-              <Route path={urls.woodNamings} element={<WoodNamings />} />
-              <Route path={urls.referenceBook} element={<SettingsReferenceBook />} />
-              <Route path={urls.dryers} element={<SettingsDryers />} />
-            </Route>
-          </Route>
+          {systemSettingsRoutes}
 
           <Route path={urls.referenceBook} element={<ReferenceBook />} />
           <Route path={urls.dryer} element={<Dryer />} />

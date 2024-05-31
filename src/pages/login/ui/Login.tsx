@@ -10,6 +10,7 @@ import { AuthUser, login } from '@/entities/auth'
 import { validateUser } from '@/entities/auth/libs/helpers/validateUser.ts'
 import { parseJWT } from '@/shared/libs/helpers'
 import { TokenService } from '@/shared/libs/services'
+import { urls } from '@/shared/constants'
 
 export const Login = () => {
   const navigate = useNavigate()
@@ -18,13 +19,18 @@ export const Login = () => {
   useEffect(() => {
     const accessToken = TokenService.getToken()
 
-    if (accessToken === null) return
+    if (accessToken === null) {
+      return
+    }
+
     const jwtUser = parseJWT(accessToken)
 
-    if (!validateUser(jwtUser)) return
+    if (!validateUser(jwtUser)) {
+      return
+    }
 
     dispatch(login(jwtUser as AuthUser))
-    navigate('/')
+    navigate(`/${urls.dashboard}`)
   }, [])
 
   return (

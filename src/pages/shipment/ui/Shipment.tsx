@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Tab, Tabs, Typography } from '@mui/material'
+import { Box, Tab, Tabs, Typography } from '@mui/material'
 
 import { WoodsDayAmountShipment } from '@/widgets/woodsDayAmountShipment'
 import { WoodsRangeAmountShipment } from '@/widgets/woodsRangeAmountShipment'
@@ -37,14 +37,16 @@ export const Shipment = () => {
 
   return (
     <>
-      <Typography variant='h5' sx={{ mb: 5 }}>
-        Отгрузки
-      </Typography>
-      <Tabs value={currentTab.id} onChange={handleChangeTab} sx={{ mt: 5 }}>
-        {tabs.map(tab => (
-          <Tab key={tab.name} label={tab.name} value={tab.id} />
-        ))}
-      </Tabs>
+      <Box px={1.5} mb={1}>
+        <Typography variant='h5' sx={{ mb: 1.5 }}>
+          Отгрузки
+        </Typography>
+        <Tabs value={currentTab.id} onChange={handleChangeTab}>
+          {tabs.map(tab => (
+            <Tab key={tab.name} label={tab.name} value={tab.id} />
+          ))}
+        </Tabs>
+      </Box>
 
       <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
         <DatePicker value={selectedDate} onAccept={handleAccept} sx={{ maxWidth: 'fit-content' }} />

@@ -20,6 +20,8 @@ import {
 
 import { WORKSHOP_OUT_TABLE_COLUMNS } from '../constants'
 import { enqueueSnackbar } from 'notistack'
+import { useAuth } from '@/entities/auth'
+import { USER_ROLE } from '@/entities/user'
 
 export type WorkshopOutWoodsProps = {
   workshopOutData: WorkshopOut[] | undefined
@@ -34,6 +36,10 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
 }) => {
   const [deleteWorkshopOutMutation] = useDeleteWorkshopOutMutation()
 
+  const user = useAuth()
+
+  const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
+
   const handleDeleteWorkshopOut = (workshopOutId: number) => {
     deleteWorkshopOutMutation({ workshopOutId })
       .unwrap()
@@ -47,27 +53,31 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
 
   const columns: GridColDef[] = [
     ...WORKSHOP_OUT_TABLE_COLUMNS,
-    {
-      field: 'actions',
-      headerName: '',
-      disableColumnMenu: true,
-      sortable: false,
-      width: 100,
-      renderCell: params => {
-        return (
-          <Box sx={{ ml: 'auto' }}>
-            <UpdateOutputWoodButton workshopOut={params.row} sx={{ mr: 1 }} />
-            <ButtonWithConfirm
-              header='Удалить лес на выход'
-              description='Вы точно хотите удалить выход леса?'
-              onConfirm={() => {
-                handleDeleteWorkshopOut(params.row.id)
-              }}
-            />
-          </Box>
-        )
-      },
-    },
+    ...(isAdmin
+      ? [
+          {
+            field: 'actions',
+            headerName: '',
+            disableColumnMenu: true,
+            sortable: false,
+            width: 100,
+            renderCell: params => {
+              return (
+                <Box sx={{ ml: 'auto' }}>
+                  <UpdateOutputWoodButton workshopOut={params.row} sx={{ mr: 1 }} />
+                  <ButtonWithConfirm
+                    header='Удалить лес на выход'
+                    description='Вы точно хотите удалить выход леса?'
+                    onConfirm={() => {
+                      handleDeleteWorkshopOut(params.row.id)
+                    }}
+                  />
+                </Box>
+              )
+            },
+          },
+        ]
+      : []),
   ]
 
   const rows = useMemo(() => {
@@ -93,9 +103,11 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
     <Box>
       <Box display='flex' mb={1}>
         <Typography variant='h6'>Выход</Typography>
-        <AddOutputWoodButton now={now} sx={{ ml: 'auto' }}>
-          Добавить
-        </AddOutputWoodButton>
+        {isAdmin && (
+          <AddOutputWoodButton now={now} sx={{ ml: 'auto' }}>
+            Добавить
+          </AddOutputWoodButton>
+        )}
       </Box>
       <DataGridContainer height={400}>
         {isWorkshopOutLoading && (

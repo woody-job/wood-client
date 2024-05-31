@@ -9,11 +9,12 @@ export interface DryerConditionItemProps {
   actions?: ReactNode
   dryerName: string
   dryerData: DryerDataResponse | undefined
+  dryerIterationCount: number
   isLoadingDryerData: boolean
 }
 
 export const DryerConditionItem: FC<DryerConditionItemProps> = props => {
-  const { actions, dryerName, dryerData, isLoadingDryerData } = props
+  const { actions, dryerName, dryerData, isLoadingDryerData, dryerIterationCount } = props
 
   return (
     <Box
@@ -35,7 +36,7 @@ export const DryerConditionItem: FC<DryerConditionItemProps> = props => {
         minHeight='650px'
       >
         <Typography variant='h6'>{dryerName}</Typography>
-        <Typography variant='subtitle1'>Цикл 501</Typography>
+        <Typography variant='subtitle1'>Цикл {dryerIterationCount}</Typography>
 
         {isLoadingDryerData ? (
           <Box
