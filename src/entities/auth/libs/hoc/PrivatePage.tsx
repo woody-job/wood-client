@@ -1,35 +1,35 @@
 import { useEffect } from 'react'
 
-import { useNavigate } from 'react-router-dom'
-
-import { Box } from '@mui/material'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '@/app/store.ts'
-import { LoginForm } from '@/widgets/loginForm'
-import { AuthUser, login } from '@/entities/auth'
+import { AuthUser, login, logout, useAuth } from '@/entities/auth'
 import { validateUser } from '@/entities/auth/libs/helpers/validateUser.ts'
+import { urls } from '@/shared/constants'
 import { parseJWT } from '@/shared/libs/helpers'
 import { TokenService } from '@/shared/libs/services'
 
-export const Login = () => {
+export const PrivatePage = () => {
+  const user = useAuth()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout())
+    TokenService.removeToken()
+    navigate(urls.login)
+  }
 
   useEffect(() => {
     const accessToken = TokenService.getToken()
 
-    if (accessToken === null) return
+    if (accessToken === null) return handleLogout()
     const jwtUser = parseJWT(accessToken)
 
-    if (!validateUser(jwtUser)) return
+    if (!validateUser(jwtUser)) return handleLogout()
 
     dispatch(login(jwtUser as AuthUser))
-    navigate('/')
   }, [])
 
-  return (
-    <Box display='flex' justifyContent='center' alignItems='center' width='100%' height='100vh'>
-      <LoginForm />
-    </Box>
-  )
+  return user === null ? null : <Outlet />
 }

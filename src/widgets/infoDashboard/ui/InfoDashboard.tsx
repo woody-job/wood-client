@@ -1,7 +1,7 @@
 import { Box, Skeleton, Typography } from '@mui/material'
 
-import { DashItem, DashboardTitle } from '@/shared/ui'
 import { useFetchWarehouseStatsQuery } from '@/entities/warehouse'
+import { DashboardTitle, DashItem } from '@/shared/ui'
 
 export const InfoDashboard = () => {
   const { data: warehouseStats, isLoading: isLoadingWarehouseStats } = useFetchWarehouseStatsQuery()

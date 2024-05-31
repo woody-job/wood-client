@@ -1,7 +1,7 @@
 import { Box, Skeleton, Typography } from '@mui/material'
 
-import { DashItem, DashboardTitle } from '@/shared/ui'
 import { useFetchDryerStatsQuery } from '@/entities/dryer'
+import { DashboardTitle, DashItem } from '@/shared/ui'
 
 export const DryersDashboard = () => {
   const { data: dryerStats, isLoading: isLoadingDryerStats } = useFetchDryerStatsQuery()

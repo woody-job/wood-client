@@ -1,8 +1,8 @@
 import { Box, Skeleton } from '@mui/material'
 
 import { WorkshopDashItem } from '@/entities/workshop/ui'
-import { DashboardTitle } from '@/shared/ui'
 import { useFetchCurrentWorkshopsStatsQuery } from '@/entities/workshop-out'
+import { DashboardTitle } from '@/shared/ui'
 
 export const WorkshopsDashboard = () => {
   const { data: workshopCurrentStats, isLoading: isLoadingWorkshopCurrentStats } =

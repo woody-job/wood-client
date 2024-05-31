@@ -1,11 +1,13 @@
+import { FC } from 'react'
+
 import { NavLink } from 'react-router-dom'
 
 import { Box, Button, Typography } from '@mui/material'
 
+import { LastWorkingDayStats, WorkshopOutStat } from '@/entities/workshop-out'
 import { urls } from '@/shared/constants'
 import { DashItem } from '@/shared/ui'
-import { FC } from 'react'
-import { LastWorkingDayStats, WorkshopOutStat } from '@/entities/workshop-out'
+
 import { WorkshopStatsWoodsBar } from './WorkshopStatsWoodsBar'
 
 type WorkshopDashItemProps = {
