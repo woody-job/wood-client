@@ -135,3 +135,21 @@ export type WorkshopCurrentStat = {
 }
 
 export type WorkshopCurrentStats = WorkshopCurrentStat[]
+
+export type WorkshopProducedSunburstDataItem = {
+  name: string
+  children: {
+    name: string
+    size: number
+  }[]
+}
+
+export type GetWorkshopProducedResponse = {
+  sunburstData: WorkshopProducedSunburstDataItem[]
+  totalVolume: number
+}
+
+export type GetWorkshopProducedParams = {
+  startDate?: string
+  endDate?: string
+}

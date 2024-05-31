@@ -4,49 +4,18 @@ import { Box, Typography } from '@mui/material'
 
 import { CustomSunburst } from '@/shared/ui'
 
+export type VaultSunburstItem = { name: string; children: { name: string; size: number }[] }
+
 export interface VaultItemProps {
   title?: string
+  sunburstData: VaultSunburstItem[]
+  total: number
 }
 
-export const VaultItem: FC<VaultItemProps> = ({ title }) => {
+export const VaultItem: FC<VaultItemProps> = ({ title, sunburstData, total }) => {
   const data = {
     name: 'root',
-    children: [
-      {
-        name: '1 сорт',
-        children: [
-          {
-            name: '100x110x10',
-            value: 0.5,
-          },
-          {
-            name: '100x120x10',
-            value: 0.6,
-          },
-          {
-            name: '100x130x10',
-            value: 0.7,
-          },
-        ],
-      },
-      {
-        name: '2 сорт',
-        children: [
-          {
-            name: '100x110x10',
-            value: 0.3,
-          },
-          {
-            name: '100x120x10',
-            value: 0.4,
-          },
-          {
-            name: '100x130x10',
-            value: 0.5,
-          },
-        ],
-      },
-    ],
+    children: sunburstData,
   }
 
   return (
@@ -56,7 +25,7 @@ export const VaultItem: FC<VaultItemProps> = ({ title }) => {
       <CustomSunburst
         data={data}
         id='name'
-        value='value'
+        value='size'
         containerProps={{
           width: '650px',
           height: '650px',
@@ -65,7 +34,7 @@ export const VaultItem: FC<VaultItemProps> = ({ title }) => {
         valueFormat={value => value.toFixed(2) + ' м3'}
       >
         <Typography variant='subtitle1'>Всего м3</Typography>
-        <Typography variant='subtitle1'>80.0448</Typography>
+        <Typography variant='subtitle1'>{total}</Typography>
       </CustomSunburst>
     </Box>
   )
