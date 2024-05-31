@@ -3,7 +3,7 @@ import {
   DryerDataList,
   DryerDataParams,
   DryerDataResponse,
-  DryerWithoutId,
+  DryerStats,
 } from '@/entities/dryer'
 import { baseApi } from '@/shared/api'
 
@@ -15,7 +15,8 @@ export const dryerApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Dryers'],
     }),
-    createDryer: build.mutation<Dryer, DryerWithoutId>({
+
+    createDryer: build.mutation<Dryer, void>({
       query: dryer => ({
         url: 'dryer-chamber',
         method: 'POST',
@@ -23,6 +24,7 @@ export const dryerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Dryers'],
     }),
+
     updateDryer: build.mutation<Dryer, Dryer>({
       query: ({ id, ...dryer }) => ({
         url: `dryer-chamber/${id}`,
@@ -31,6 +33,7 @@ export const dryerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Dryers'],
     }),
+
     deleteDryer: build.mutation<void, number>({
       query: id => ({
         url: `dryer-chamber/${id}`,
@@ -38,12 +41,14 @@ export const dryerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Dryers'],
     }),
+
     fetchDryerDataById: build.query<DryerDataResponse, number>({
       query: dryerId => ({
         url: `dryer-chamber-data/get/chamber-data/${dryerId}`,
       }),
       providesTags: ['DryersDataById'],
     }),
+
     bringIn: build.mutation<DryerDataParams, DryerDataParams>({
       query: ({ dryerChamberId, ...dryer }) => ({
         url: `dryer-chamber-data/bring-in/${dryerChamberId}`,
@@ -52,6 +57,7 @@ export const dryerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['DryersDataById'],
     }),
+
     takeOut: build.mutation<void, number>({
       query: dryerChamberId => ({
         url: `dryer-chamber-data/take-out/${dryerChamberId}`,
@@ -59,11 +65,18 @@ export const dryerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['DryersDataById'],
     }),
+
     fetchDryerDataList: build.query<DryerDataList, void>({
       query: () => ({
         url: `dryer-chamber-data/list`,
       }),
       providesTags: ['Dryers'],
+    }),
+
+    fetchDryerStats: build.query<DryerStats, void>({
+      query: () => ({
+        url: `dryer-chamber-data/get/stats`,
+      }),
     }),
   }),
 })
@@ -77,4 +90,5 @@ export const {
   useBringInMutation,
   useTakeOutMutation,
   useFetchDryerDataListQuery,
+  useFetchDryerStatsQuery,
 } = dryerApi

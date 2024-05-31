@@ -20,6 +20,7 @@ export const tagTypes = [
   'WorkshopReportStats',
   'Arrival',
   'Shipment',
+  'WorkshopCurrentStats',
   'WorkshopProducedStats',
 ]
 export const baseApi = createApi({

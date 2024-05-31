@@ -37,8 +37,11 @@ export type DryerDataParams = {
   dryerChamberId: number
 }
 
-export type DryerBringInFormType = Omit<DryerDataParams, 'dryerChamberId' | 'date'>
+export type DryerStatsData = {
+  dryerId: number
+  dryerName: string
+  sorts: Record<string, number>
+  totalVolume: number
+}
 
-export type DryerWithoutId = Omit<Dryer, 'id'>
-
-export type DryerFormType = DryerWithoutId
+export type DryerStats = DryerStatsData[]

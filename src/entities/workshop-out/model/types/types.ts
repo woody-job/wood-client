@@ -121,6 +121,21 @@ export type GetWorkshopReportParams = {
   endDate?: string
 }
 
+export type LastWorkingDayStats = {
+  date: string
+  totalBeamInVolume: number
+  profitPerUnit: number
+}
+
+export type WorkshopCurrentStat = {
+  workshopId: number
+  workshopName: string
+  woods: WorkshopOutStat[]
+  lastWorkingDayStats: LastWorkingDayStats
+}
+
+export type WorkshopCurrentStats = WorkshopCurrentStat[]
+
 export type WorkshopProducedSunburstDataItem = {
   name: string
   children: {
