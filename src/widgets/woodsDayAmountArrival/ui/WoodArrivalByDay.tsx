@@ -6,6 +6,8 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { AddWoodsArrival } from '@/features/arrival/add'
 import { DeleteArrivalButton } from '@/features/arrival/delete'
 import { UpdateArrivalButton } from '@/features/arrival/update'
+import { useAuth } from '@/entities/auth'
+import { USER_ROLE } from '@/entities/user'
 import { WoodAmountByDaySunburst } from '@/entities/wood'
 import { useFetchWoodArrivalByDayQuery } from '@/entities/wood-arrival'
 import {
@@ -14,8 +16,6 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { useAuth } from '@/entities/auth'
-import { USER_ROLE } from '@/entities/user'
 
 export interface WoodArrivalByDayProps {
   title?: string

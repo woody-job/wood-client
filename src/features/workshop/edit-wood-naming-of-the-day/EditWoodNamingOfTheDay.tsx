@@ -3,6 +3,8 @@ import { Controller, useForm } from 'react-hook-form'
 
 import { Box, Button, Grid, MenuItem, Select } from '@mui/material'
 
+import { useAuth } from '@/entities/auth'
+import { USER_ROLE } from '@/entities/user'
 import { useFetchAllWoodNamingsQuery } from '@/entities/wood-naming'
 import {
   UpdateWorkshopDailyWoodNamingParams,
@@ -13,8 +15,6 @@ import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
 
 import { enqueueSnackbar } from 'notistack'
-import { useAuth } from '@/entities/auth'
-import { USER_ROLE } from '@/entities/user'
 
 export interface EditWoodNamingOfTheDayProps {
   workshopId: number

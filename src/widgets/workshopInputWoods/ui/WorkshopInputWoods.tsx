@@ -8,10 +8,12 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { AddInputWoodButton } from '@/features/wood-input-woods/add'
 import { UpdateInputWoodButton } from '@/features/wood-input-woods/update'
+import { useAuth } from '@/entities/auth'
 import {
   useDeleteBeamInForWorkshopMutation,
   useFetchAllBeamInForWorkshopQuery,
 } from '@/entities/beam-in/api'
+import { USER_ROLE } from '@/entities/user'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm, CustomGridPanel, dataGridStyles } from '@/shared/ui'
@@ -20,8 +22,6 @@ import { DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
 import { WORKSHOP_BEAM_IN_TABLE_COLUMNS } from '../constants'
 import { WorkshopBeamInTableRow } from '../types/types'
 import { enqueueSnackbar } from 'notistack'
-import { useAuth } from '@/entities/auth'
-import { USER_ROLE } from '@/entities/user'
 
 type WorkshopInputWoodsProps = {
   now: string

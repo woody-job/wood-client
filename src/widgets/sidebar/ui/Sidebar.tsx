@@ -4,14 +4,14 @@ import { NavLink, useLocation } from 'react-router-dom'
 
 import { Box, Skeleton, Typography } from '@mui/material'
 
+import { useAuth } from '@/entities/auth/index.ts'
+import { USER_ROLE } from '@/entities/user/index.ts'
 import { useFetchAllWorkshopsQuery } from '@/entities/workshop/api/api.ts'
 import { urls } from '@/shared/constants'
 import { MenuSidebarItem } from '@/shared/ui'
 
 import { getSidebarPaths } from '../lib/helpers'
 import { settingsPaths } from './Sidebar.constants.ts'
-import { useAuth } from '@/entities/auth/index.ts'
-import { USER_ROLE } from '@/entities/user/index.ts'
 
 export const Sidebar = () => {
   const location = useLocation()

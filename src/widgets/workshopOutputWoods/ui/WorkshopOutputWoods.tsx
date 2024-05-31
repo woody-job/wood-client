@@ -6,6 +6,8 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { AddOutputWoodButton } from '@/features/wood-output-woods/add'
 import { UpdateOutputWoodButton } from '@/features/wood-output-woods/update'
+import { useAuth } from '@/entities/auth'
+import { USER_ROLE } from '@/entities/user'
 import { useDeleteWorkshopOutMutation } from '@/entities/workshop-out/api'
 import { WorkshopOut } from '@/entities/workshop-out/model'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
@@ -20,8 +22,6 @@ import {
 
 import { WORKSHOP_OUT_TABLE_COLUMNS } from '../constants'
 import { enqueueSnackbar } from 'notistack'
-import { useAuth } from '@/entities/auth'
-import { USER_ROLE } from '@/entities/user'
 
 export type WorkshopOutWoodsProps = {
   workshopOutData: WorkshopOut[] | undefined

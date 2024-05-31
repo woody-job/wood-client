@@ -27,8 +27,8 @@ import WetWoodVault from '@/pages/vault/wet-wood'
 import { Warehouse } from '@/pages/warehouse/ui/Warehouse'
 import WorkshopItem from '@/pages/workshop-item'
 import { PrivatePage, useAuth } from '@/entities/auth'
-import { urls } from '@/shared/constants'
 import { USER_ROLE } from '@/entities/user'
+import { urls } from '@/shared/constants'
 
 export const AppRouter = () => {
   const user = useAuth()

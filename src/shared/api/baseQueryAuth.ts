@@ -3,6 +3,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 import { logout } from '@/entities/auth'
 import { baseQuery } from '@/shared/api/baseQuery.ts'
 import { TokenService } from '@/shared/libs/services'
+
 import { urls } from '../constants'
 
 export const baseQueryWithAuth: BaseQueryFn<

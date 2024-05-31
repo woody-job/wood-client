@@ -4,15 +4,15 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 
 import { InsertWoodButton } from '@/features/dryer/insert-wood'
 import { RemoveWoodButton } from '@/features/dryer/remove-wood'
+import { useAuth } from '@/entities/auth'
 import {
   DryerConditionItem,
   useFetchAllDryersQuery,
   useFetchDryerDataByIdQuery,
 } from '@/entities/dryer'
+import { USER_ROLE } from '@/entities/user'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
-import { useAuth } from '@/entities/auth'
-import { USER_ROLE } from '@/entities/user'
 
 export const Dryer = () => {
   const { data: dryers, isLoading: isLoadingAllDryers } = useFetchAllDryersQuery()

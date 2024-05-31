@@ -7,6 +7,7 @@ import { Box, Button, Typography } from '@mui/material'
 import { LastWorkingDayStats, WorkshopOutStat } from '@/entities/workshop-out'
 import { urls } from '@/shared/constants'
 import { DashItem } from '@/shared/ui'
+
 import { WorkshopStatsWoodsBar } from './WorkshopStatsWoodsBar'
 
 type WorkshopDashItemProps = {

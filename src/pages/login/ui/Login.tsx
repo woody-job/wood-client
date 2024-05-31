@@ -8,9 +8,9 @@ import { useAppDispatch } from '@/app/store.ts'
 import { LoginForm } from '@/widgets/loginForm'
 import { AuthUser, login } from '@/entities/auth'
 import { validateUser } from '@/entities/auth/libs/helpers/validateUser.ts'
+import { urls } from '@/shared/constants'
 import { parseJWT } from '@/shared/libs/helpers'
 import { TokenService } from '@/shared/libs/services'
-import { urls } from '@/shared/constants'
 
 export const Login = () => {
   const navigate = useNavigate()
