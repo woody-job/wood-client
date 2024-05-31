@@ -4,16 +4,22 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 
 import { InsertWoodButton } from '@/features/dryer/insert-wood'
 import { RemoveWoodButton } from '@/features/dryer/remove-wood'
+import { useAuth } from '@/entities/auth'
 import {
   DryerConditionItem,
   useFetchAllDryersQuery,
   useFetchDryerDataByIdQuery,
 } from '@/entities/dryer'
+import { USER_ROLE } from '@/entities/user'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 
 export const Dryer = () => {
   const { data: dryers, isLoading: isLoadingAllDryers } = useFetchAllDryersQuery()
+
+  const user = useAuth()
+
+  const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
     appSearchParams.currentTab,
@@ -44,11 +50,16 @@ export const Dryer = () => {
             isLoadingDryerData={isDryerDataLoading}
             dryerData={dryerData}
             dryerName={currentTab.name}
+            dryerIterationCount={currentTab.chamberIterationCount}
             actions={
-              <>
-                <InsertWoodButton dryerId={currentTab.id}>Внести</InsertWoodButton>
-                <RemoveWoodButton dryerId={currentTab.id} />
-              </>
+              isAdmin ? (
+                <>
+                  <InsertWoodButton dryerId={currentTab.id}>Внести</InsertWoodButton>
+                  <RemoveWoodButton dryerId={currentTab.id} />
+                </>
+              ) : (
+                <></>
+              )
             }
           />
         </Box>

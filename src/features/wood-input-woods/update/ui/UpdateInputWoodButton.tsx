@@ -29,7 +29,6 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({ beamIn, 
   const [isOpen, setIsOpen] = useState(false)
 
   const methods = useForm<BeamInFormType>({ defaultValues: getDefaultValues(beamIn) })
-  const { reset } = methods
 
   const [updateBeamInMutation] = useUpdateBeamInForWorkshopMutation()
 
@@ -50,7 +49,6 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({ beamIn, 
 
   const handleClose = () => {
     setIsOpen(false)
-    reset()
   }
 
   const handleSave: SubmitHandler<BeamInFormType> = data => {

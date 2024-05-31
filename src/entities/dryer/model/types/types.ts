@@ -1,6 +1,7 @@
 export type Dryer = {
   id: number
   name: string
+  chamberIterationCount: number
 }
 
 export type DryerDataItem = {

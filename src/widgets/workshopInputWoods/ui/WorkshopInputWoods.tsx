@@ -8,10 +8,12 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { AddInputWoodButton } from '@/features/wood-input-woods/add'
 import { UpdateInputWoodButton } from '@/features/wood-input-woods/update'
+import { useAuth } from '@/entities/auth'
 import {
   useDeleteBeamInForWorkshopMutation,
   useFetchAllBeamInForWorkshopQuery,
 } from '@/entities/beam-in/api'
+import { USER_ROLE } from '@/entities/user'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm, CustomGridPanel, dataGridStyles } from '@/shared/ui'
@@ -27,6 +29,10 @@ type WorkshopInputWoodsProps = {
 
 export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
   const { workshopId } = useParams()
+
+  const user = useAuth()
+
+  const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
 
   const [deleteBeamInMutation] = useDeleteBeamInForWorkshopMutation()
 
@@ -51,29 +57,33 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
 
   const columns: GridColDef[] = [
     ...WORKSHOP_BEAM_IN_TABLE_COLUMNS,
-    {
-      field: 'actions',
-      headerName: '',
-      disableColumnMenu: true,
-      sortable: false,
-      width: 100,
-      renderCell: params => {
-        return (
-          <Box sx={{ ml: 'auto' }}>
-            <UpdateInputWoodButton beamIn={params.row} sx={{ mr: 1 }} />
-            <ButtonWithConfirm
-              header='Удалить лес на вход'
-              description='Вы точно хотите удалить вход леса?'
-              onConfirm={() => {
-                handleDeleteBeamIn(params.row.id)
-              }}
-            >
-              Удалить
-            </ButtonWithConfirm>
-          </Box>
-        )
-      },
-    },
+    ...(isAdmin
+      ? [
+          {
+            field: 'actions',
+            headerName: '',
+            disableColumnMenu: true,
+            sortable: false,
+            width: 100,
+            renderCell: params => {
+              return (
+                <Box sx={{ ml: 'auto' }}>
+                  <UpdateInputWoodButton beamIn={params.row} sx={{ mr: 1 }} />
+                  <ButtonWithConfirm
+                    header='Удалить лес на вход'
+                    description='Вы точно хотите удалить вход леса?'
+                    onConfirm={() => {
+                      handleDeleteBeamIn(params.row.id)
+                    }}
+                  >
+                    Удалить
+                  </ButtonWithConfirm>
+                </Box>
+              )
+            },
+          },
+        ]
+      : []),
   ]
 
   const rows: WorkshopBeamInTableRow[] = useMemo(() => {
@@ -93,9 +103,11 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
     <Box>
       <Box display='flex' mb={1}>
         <Typography variant='h6'>Вход</Typography>
-        <AddInputWoodButton now={now} sx={{ ml: 'auto' }}>
-          Добавить
-        </AddInputWoodButton>
+        {isAdmin && (
+          <AddInputWoodButton now={now} sx={{ ml: 'auto' }}>
+            Добавить
+          </AddInputWoodButton>
+        )}
       </Box>
       <DataGridContainer height={400}>
         {isBeamInLoading && (

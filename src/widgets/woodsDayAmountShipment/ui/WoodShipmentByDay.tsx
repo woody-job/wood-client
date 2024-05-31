@@ -6,6 +6,8 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { AddWoodsShipment } from '@/features/shipment/add'
 import { DeleteShipmentButton } from '@/features/shipment/delete'
 import { UpdateShipmentButton } from '@/features/shipment/update'
+import { useAuth } from '@/entities/auth'
+import { USER_ROLE } from '@/entities/user'
 import { WoodAmountByDaySunburst } from '@/entities/wood'
 import { useFetchWoodShipmentByDayQuery } from '@/entities/wood-shipment'
 import {
@@ -28,6 +30,10 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
 }) => {
   const [openEditId, setOpenEditId] = useState<number>()
 
+  const user = useAuth()
+
+  const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
+
   const { data: woodShipment, isLoading: isLoadingWoodShipment } = useFetchWoodShipmentByDayQuery({
     woodConditionId,
     date: selectedDate,
@@ -40,27 +46,31 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
     { field: 'dimension', headerName: 'Сечение', width: 150 },
     { field: 'woodClass', headerName: 'Сорт', width: 100 },
     { field: 'amount', headerName: 'Кол-во', width: 100 },
-    {
-      field: 'actions',
-      headerName: '',
-      disableColumnMenu: true,
-      sortable: false,
-      width: 100,
-      renderCell: ({ id, row }) => (
-        <Box sx={{ ml: 'auto' }}>
-          <UpdateShipmentButton
-            onClick={() => handleOpenModal(id as number)}
-            isOpen={openEditId === id}
-            onClose={handleCloseModal}
-            shipmentId={id as number}
-            dimension={row.dimension}
-            woodClass={row.woodClass}
-            amount={row.amount}
-          />
-          <DeleteShipmentButton id={id as number} onClose={handleCloseModal} />
-        </Box>
-      ),
-    },
+    ...(isAdmin
+      ? [
+          {
+            field: 'actions',
+            headerName: '',
+            disableColumnMenu: true,
+            sortable: false,
+            width: 100,
+            renderCell: ({ id, row }) => (
+              <Box sx={{ ml: 'auto' }}>
+                <UpdateShipmentButton
+                  onClick={() => handleOpenModal(id as number)}
+                  isOpen={openEditId === id}
+                  onClose={handleCloseModal}
+                  shipmentId={id as number}
+                  dimension={row.dimension}
+                  woodClass={row.woodClass}
+                  amount={row.amount}
+                />
+                <DeleteShipmentButton id={id as number} onClose={handleCloseModal} />
+              </Box>
+            ),
+          },
+        ]
+      : []),
   ]
 
   return (
@@ -68,11 +78,13 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
       <Box display='flex' justifyContent='space-between' mb={3}>
         <Typography>{title}</Typography>
 
-        <AddWoodsShipment
-          title='Добавить доски на отгрузку'
-          woodConditionId={woodConditionId}
-          selectedDate={selectedDate}
-        />
+        {isAdmin && (
+          <AddWoodsShipment
+            title='Добавить доски на отгрузку'
+            woodConditionId={woodConditionId}
+            selectedDate={selectedDate}
+          />
+        )}
       </Box>
 
       <DataGridContainer height='400px' width='600px'>

@@ -9,6 +9,6 @@ export const settingsPaths: SidebarPath[] = [
   },
   {
     path: `/${urls.admin}/${urls.systemSettings}`,
-    name: 'Найстройки системы',
+    name: 'Настройки системы',
   },
 ]

@@ -30,7 +30,7 @@ export const UpdateOutputWoodButton: FC<UpdateOutputWoodButtonProps> = ({
   const [isOpen, setIsOpen] = useState(false)
 
   const methods = useForm<WorkshopOutFormType>({ defaultValues: getDefaultValues(workshopOut) })
-  const { watch, reset } = methods
+  const { watch } = methods
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -57,7 +57,6 @@ export const UpdateOutputWoodButton: FC<UpdateOutputWoodButtonProps> = ({
   }
   const handleClose = () => {
     setIsOpen(false)
-    reset()
   }
 
   const handleSubmit: SubmitHandler<WorkshopOutFormType> = data => {

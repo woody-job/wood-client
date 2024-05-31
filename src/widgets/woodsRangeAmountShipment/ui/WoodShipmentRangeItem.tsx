@@ -8,14 +8,14 @@ import { WoodAmountSunburst } from '@/entities/wood'
 import { useFetchWoodShipmentByRangeQuery } from '@/entities/wood-shipment'
 
 export interface WoodShipmentRangeItemProps {
-  title?: string
+  woodConditionName: string
   startDate: string
   endDate: string
   woodConditionId: number
 }
 
 export const WoodShipmentRangeItem: FC<WoodShipmentRangeItemProps> = ({
-  title,
+  woodConditionName,
   woodConditionId,
   endDate,
   startDate,
@@ -32,7 +32,7 @@ export const WoodShipmentRangeItem: FC<WoodShipmentRangeItemProps> = ({
 
   return (
     <Box display='flex' flexDirection='column' alignItems='center'>
-      <Typography variant='h6'>{title}</Typography>
+      <Typography variant='h6'>{woodConditionName}</Typography>
 
       {isLoadingWoodShipment && <Skeleton variant='circular' width='600px' height='600px' />}
       {woodShipment && (

@@ -1,4 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+
+import { baseQueryWithAuth } from '@/shared/api/baseQueryAuth.ts'
 
 export const tagTypes = [
   'AllUsers',
@@ -24,9 +26,7 @@ export const tagTypes = [
   'WorkshopProducedStats',
 ]
 export const baseApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BACKEND_URL,
-  }),
+  baseQuery: baseQueryWithAuth,
   endpoints: () => ({}),
   tagTypes,
 })
