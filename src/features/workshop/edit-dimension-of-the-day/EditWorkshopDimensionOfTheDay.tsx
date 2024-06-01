@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Box, Button, Grid, MenuItem, Select } from '@mui/material'
+import { Box, Grid, MenuItem, Select } from '@mui/material'
 
 import { useAuth } from '@/entities/auth'
 import { getDimensionString, useFetchAllDimensionsQuery } from '@/entities/dimension'
@@ -13,6 +13,8 @@ import {
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
+import { SelectPlaceholderWrapper } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { enqueueSnackbar } from 'notistack'
 
@@ -48,7 +50,10 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
 
   const { data: allDimensions } = useFetchAllDimensionsQuery()
 
-  const [updatWorkshopDailyDimensionMutation] = useUpdateWorkshopDailyDimensionMutation()
+  const [
+    updatWorkshopDailyDimensionMutation,
+    { isLoading: isLoadingUpdatWorkshopDailyDimensionMutation },
+  ] = useUpdateWorkshopDailyDimensionMutation()
 
   useEffect(() => {
     setValue('dimension', dimensionOfTheDay)
@@ -142,24 +147,9 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
               control={control}
               render={({ field: { onChange, value } }) => {
                 return (
-                  <Box
-                    sx={{
-                      position: 'relative',
-                      ...(!watchDimension
-                        ? {
-                            '&::before': {
-                              position: 'absolute',
-                              content: '"Сечение"',
-                              top: 7,
-                              left: 15,
-                              color: theme =>
-                                theme.palette.mode === 'light'
-                                  ? theme.palette.grey['700']
-                                  : theme.palette.grey['400'],
-                            },
-                          }
-                        : {}),
-                    }}
+                  <SelectPlaceholderWrapper
+                    shouldShowPlaceholder={!watchDimension}
+                    placeholderText='Сечение'
                   >
                     <Select
                       MenuProps={{
@@ -178,7 +168,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
                         </MenuItem>
                       ))}
                     </Select>
-                  </Box>
+                  </SelectPlaceholderWrapper>
                 )
               }}
             />
@@ -187,7 +177,9 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
 
         {isAdmin && (
           <Grid item xs={4.5}>
-            <Button
+            <ButtonWithLoader
+              isLoading={isLoadingUpdatWorkshopDailyDimensionMutation}
+              loaderSx={{ left: -28 }}
               size='small'
               sx={{ height: '40px', width: '100%' }}
               onClick={() => {
@@ -197,7 +189,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
               type='button'
             >
               {buttonText}
-            </Button>
+            </ButtonWithLoader>
           </Grid>
         )}
       </Grid>

@@ -24,7 +24,8 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
 
   const [isOpenModal, setIsOpenModal] = useState(false)
 
-  const [updateWoodNamingMutation] = useUpdateWoodNamingMutation()
+  const [updateWoodNamingMutation, { isLoading: isLoadingUpdateWoodNamingMutation }] =
+    useUpdateWoodNamingMutation()
 
   const methods = useForm<WoodNamingFormType>({
     defaultValues: woodNaming,
@@ -62,6 +63,7 @@ export const UpdateWoodNamingButton: FC<UpdateWoodNamingButtonProps> = props => 
         title={'Редактировать обозначение'}
         open={isOpenModal}
         onClose={handleCloseModal}
+        isLoading={isLoadingUpdateWoodNamingMutation}
       />
     </>
   )

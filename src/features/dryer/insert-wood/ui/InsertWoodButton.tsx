@@ -30,7 +30,7 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
 
   const watchWoodClassId = watch('woodClassId')
 
-  const [bringInMutation] = useBringInMutation()
+  const [bringInMutation, { isLoading: isLoadingBringInMutation }] = useBringInMutation()
   const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery(
     undefined,
     { skip: !isOpenInsert }
@@ -84,6 +84,7 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
         isDimensionsLoading={isDimensionsLoading}
         woodTypes={woodTypes}
         isWoodTypesLoading={isWoodTypesLoading}
+        isLoading={isLoadingBringInMutation}
       />
     </>
   )

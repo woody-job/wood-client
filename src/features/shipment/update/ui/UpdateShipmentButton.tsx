@@ -33,7 +33,8 @@ export const UpdateShipmentButton: FC<UpdateShipmentButtonProps> = ({
   shipmentId,
   amount,
 }) => {
-  const [updateShipmentMutation] = useUpdateWoodShipmentMutation()
+  const [updateShipmentMutation, { isLoading: isLoadingUpdateShipmentMutation }] =
+    useUpdateWoodShipmentMutation()
   const { data: woodClasses } = useFetchAllWoodClassesQuery()
 
   const currentWoodClass = useMemo(
@@ -93,6 +94,7 @@ export const UpdateShipmentButton: FC<UpdateShipmentButtonProps> = ({
         open={isOpen}
         onClose={onClose}
         methods={methods}
+        isLoading={isLoadingUpdateShipmentMutation}
       />
     </>
   )

@@ -22,7 +22,7 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
   const methods = useForm<UserFormType>()
   const { reset } = methods
 
-  const [createUserMutation] = useCreateUserMutation()
+  const [createUserMutation, { isLoading: isLoadingCreateUserMutation }] = useCreateUserMutation()
 
   const { data: userRoles, isLoading: isUserRolesLoading } = useFetchAllRolesQuery(undefined, {
     skip: !isOpenModal,
@@ -82,6 +82,7 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
         onUpdate={handleSave}
         action='Создать'
         title={`Создать пользователя`}
+        isLoading={isLoadingCreateUserMutation}
       />
     </>
   )

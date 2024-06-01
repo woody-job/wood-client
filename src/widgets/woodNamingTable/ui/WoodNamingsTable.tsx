@@ -25,7 +25,8 @@ export type WoodNamingsTableProps = {
 export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
   const { woodNamings, isLoadingWoodNamings } = props
 
-  const [deleteWoodNamingMutation] = useDeleteWoodNamingMutation()
+  const [deleteWoodNamingMutation, { isLoading: isLoadingDeleteWoodNamingMutation }] =
+    useDeleteWoodNamingMutation()
   const { enqueueSnackbar } = useSnackbar()
 
   const handleDeleteWoodNaming = (woodNamingId: number) => {
@@ -56,6 +57,7 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
             onConfirm={() => {
               handleDeleteWoodNaming(row.id)
             }}
+            isLoading={isLoadingDeleteWoodNamingMutation}
           />
         </>
       ),

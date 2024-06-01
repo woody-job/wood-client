@@ -25,7 +25,8 @@ export type DryersTableProps = {
 export const DryersTable: FC<DryersTableProps> = props => {
   const { dryers, isLoadingDryers } = props
 
-  const [deleteDryerMutation] = useDeleteDryerMutation()
+  const [deleteDryerMutation, { isLoading: isLoadingDeleteDryerMutation }] =
+    useDeleteDryerMutation()
   const { enqueueSnackbar } = useSnackbar()
 
   const columns: GridColDef[] = [
@@ -42,6 +43,7 @@ export const DryersTable: FC<DryersTableProps> = props => {
           <ButtonWithConfirm
             header={'Удалить сушильную камеру'}
             description={'Вы точно хотите удалить эту сушильную камеру?'}
+            isLoading={isLoadingDeleteDryerMutation}
             onConfirm={() => {
               deleteDryerMutation(row.id)
                 .unwrap()

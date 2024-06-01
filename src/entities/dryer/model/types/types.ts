@@ -29,6 +29,19 @@ type DryerDataListSunburstDataItem = {
   children: DryerDataListSunburstItem[]
 }
 
+export type DryerFormType = {
+  name: string
+}
+
+export type CreateDryerParams = {
+  name: string
+}
+
+export type UpdateDryerParams = {
+  id: number
+  name: string
+}
+
 export type DryerDataParams = {
   woodClassId: number
   dimensionId: number

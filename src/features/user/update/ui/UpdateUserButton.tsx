@@ -27,7 +27,7 @@ export const UpdateUserButton: FC<UpdateUserButtonProps> = ({ user, ...props }) 
   const methods = useForm<UserFormType>({ defaultValues: getDefaultValues(user) })
   const { reset } = methods
 
-  const [updateUserMutation] = useUpdateUserMutation()
+  const [updateUserMutation, { isLoading: isLoadingUpdateUserMutation }] = useUpdateUserMutation()
 
   const { data: userRoles, isLoading: isUserRolesLoading } = useFetchAllRolesQuery(undefined, {
     skip: !isOpenModal,
@@ -92,6 +92,7 @@ export const UpdateUserButton: FC<UpdateUserButtonProps> = ({ user, ...props }) 
         onUpdate={handleSave}
         title='Редактировать пользователя'
         action='Редактировать'
+        isLoading={isLoadingUpdateUserMutation}
       />
     </>
   )

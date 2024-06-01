@@ -34,7 +34,8 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
 
   const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
 
-  const [deleteBeamInMutation] = useDeleteBeamInForWorkshopMutation()
+  const [deleteBeamInMutation, { isLoading: isLoadingDeleteBeamInMutation }] =
+    useDeleteBeamInForWorkshopMutation()
 
   const { data: beamIn, isLoading: isBeamInLoading } = useFetchAllBeamInForWorkshopQuery(
     { workshopId: workshopId ? Number(workshopId) : -1, startDate: now, endDate: now },
@@ -70,6 +71,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
                 <Box sx={{ ml: 'auto' }}>
                   <UpdateInputWoodButton beamIn={params.row} sx={{ mr: 1 }} />
                   <ButtonWithConfirm
+                    isLoading={isLoadingDeleteBeamInMutation}
                     header='Удалить лес на вход'
                     description='Вы точно хотите удалить вход леса?'
                     onConfirm={() => {

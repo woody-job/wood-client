@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Box, Button, Grid, MenuItem, Select } from '@mui/material'
+import { Box, Grid, MenuItem, Select } from '@mui/material'
 
 import { useAuth } from '@/entities/auth'
 import { USER_ROLE } from '@/entities/user'
@@ -13,6 +13,8 @@ import {
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
+import { SelectPlaceholderWrapper } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { enqueueSnackbar } from 'notistack'
 
@@ -48,7 +50,10 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
 
   const { data: allwoodNamings } = useFetchAllWoodNamingsQuery()
 
-  const [updatWorkshopDailywoodNamingMutation] = useUpdateWorkshopDailyWoodNamingMutation()
+  const [
+    updatWorkshopDailywoodNamingMutation,
+    { isLoading: isLoadingUpdatWorkshopDailywoodNamingMutation },
+  ] = useUpdateWorkshopDailyWoodNamingMutation()
 
   useEffect(() => {
     setValue('woodNaming', woodNamingOfTheDay)
@@ -125,24 +130,9 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
               control={control}
               render={({ field: { onChange, value } }) => {
                 return (
-                  <Box
-                    sx={{
-                      position: 'relative',
-                      ...(!watchWoodNaming
-                        ? {
-                            '&::before': {
-                              position: 'absolute',
-                              content: '"Условное обозначение"',
-                              top: 7,
-                              left: 15,
-                              color: theme =>
-                                theme.palette.mode === 'light'
-                                  ? theme.palette.grey['700']
-                                  : theme.palette.grey['400'],
-                            },
-                          }
-                        : {}),
-                    }}
+                  <SelectPlaceholderWrapper
+                    shouldShowPlaceholder={!watchWoodNaming}
+                    placeholderText='Условное обозначение'
                   >
                     <Select
                       MenuProps={{
@@ -161,7 +151,7 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
                         </MenuItem>
                       ))}
                     </Select>
-                  </Box>
+                  </SelectPlaceholderWrapper>
                 )
               }}
             />
@@ -170,7 +160,9 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
 
         {isAdmin && (
           <Grid item xs={4.5}>
-            <Button
+            <ButtonWithLoader
+              isLoading={isLoadingUpdatWorkshopDailywoodNamingMutation}
+              loaderSx={{ left: -28 }}
               size='small'
               sx={{ height: '40px', width: '100%' }}
               onClick={() => {
@@ -180,7 +172,7 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
               type='button'
             >
               {buttonText}
-            </Button>
+            </ButtonWithLoader>
           </Grid>
         )}
       </Grid>

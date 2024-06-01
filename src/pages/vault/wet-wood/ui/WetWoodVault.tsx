@@ -1,17 +1,11 @@
-import { useState } from 'react'
-
 import { Box, Typography } from '@mui/material'
 
 import { WetWoodVaultStats } from '@/widgets/wetWoodVaultStats'
+import { useTimeRangeInSearchParams } from '@/shared/libs/hooks'
 import { TimeRangeInputs } from '@/shared/ui/time-range'
 
-import dayjs from 'dayjs'
-
 export const WetWoodVault = () => {
-  const [timeRange, setTimeRange] = useState({
-    startDate: dayjs().subtract(2, 'day'),
-    endDate: dayjs().subtract(1, 'day'),
-  })
+  const { timeRange, handleSetTimeRange } = useTimeRangeInSearchParams()
 
   return (
     <Box>
@@ -19,7 +13,7 @@ export const WetWoodVault = () => {
         Свод сырой доски
       </Typography>
 
-      <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
+      <TimeRangeInputs range={timeRange} setRange={handleSetTimeRange} />
 
       <WetWoodVaultStats
         endDate={timeRange.endDate.format('YYYY-MM-DD')}

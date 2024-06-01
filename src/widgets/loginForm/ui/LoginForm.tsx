@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useNavigate } from 'react-router-dom'
 
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 
 import { useAppDispatch } from '@/app/store.ts'
 import { loginRegex } from '@/widgets/loginForm/constants'
@@ -11,6 +11,7 @@ import { AuthUser, login, validateUser } from '@/entities/auth'
 import { useLoginMutation } from '@/entities/user'
 import { defaultErrorHandler, parseJWT } from '@/shared/libs/helpers'
 import { TokenService } from '@/shared/libs/services'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { useSnackbar } from 'notistack'
 
@@ -21,7 +22,7 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginFormType>()
 
-  const [loginMutation] = useLoginMutation()
+  const [loginMutation, { isLoading: isLoginMutationLoading }] = useLoginMutation()
   const navigate = useNavigate()
 
   const { enqueueSnackbar } = useSnackbar()
@@ -111,9 +112,9 @@ export const LoginForm = () => {
           </Typography>
         )}
       </Box>
-      <Button type='submit' sx={{ mt: 4 }}>
+      <ButtonWithLoader isLoading={isLoginMutationLoading} type='submit' sx={{ mt: 4 }}>
         Войти
-      </Button>
+      </ButtonWithLoader>
     </Box>
   )
 }

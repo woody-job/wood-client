@@ -13,6 +13,7 @@ import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { useSnackbar } from 'notistack'
 
@@ -44,7 +45,8 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const [addWoodShipmentMutation] = useAddWoodShipmentMutation()
+  const [addWoodShipmentMutation, { isLoading: isLoadingAddWoodShipmentMutation }] =
+    useAddWoodShipmentMutation()
 
   const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery()
 
@@ -163,9 +165,13 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
             label='Количество'
             inputProps={{ ...register('amount', { required: true, valueAsNumber: true }) }}
           />
-          <Button type='submit' sx={{ mt: 2 }}>
+          <ButtonWithLoader
+            isLoading={isLoadingAddWoodShipmentMutation}
+            type='submit'
+            sx={{ mt: 2 }}
+          >
             Добавить
-          </Button>
+          </ButtonWithLoader>
         </ModalContent>
       </Modal>
     </>

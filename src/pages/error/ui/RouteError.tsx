@@ -4,7 +4,7 @@ export const RouteError = () => {
   return (
     <Box width='100%' display='flex' justifyContent='center' alignItems='center' pt={4} px={2}>
       <Button variant='outlined' size='large' sx={{ textAlign: 'center' }}>
-        Error loading page
+        Ошибка при загрузке страницы
       </Button>
     </Box>
   )

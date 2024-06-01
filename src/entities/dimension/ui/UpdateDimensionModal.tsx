@@ -1,18 +1,10 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  MenuItem,
-  Modal,
-  ModalProps,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
-import { ModalContent } from '@/shared/ui'
+import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { DimensionFormType } from '../model'
 
@@ -28,6 +20,7 @@ export interface UpdateDimensionModalProps extends Omit<ModalProps, 'children'> 
       }[]
     | undefined
   isWoodClassesLoading: boolean
+  isLoading: boolean
 }
 
 export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
@@ -37,6 +30,7 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
   methods,
   woodClassesOptions,
   isWoodClassesLoading,
+  isLoading,
   ...modalProps
 }) => {
   const {
@@ -103,25 +97,7 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
         {isWoodClassesLoading ? (
           <CircularProgress size={15} />
         ) : (
-          <Box
-            sx={{
-              position: 'relative',
-              ...(!watchWoodClass
-                ? {
-                    '&::before': {
-                      position: 'absolute',
-                      content: '"Сорт"',
-                      top: 7,
-                      left: 15,
-                      color: theme =>
-                        theme.palette.mode === 'light'
-                          ? theme.palette.grey['700']
-                          : theme.palette.grey['400'],
-                    },
-                  }
-                : {}),
-            }}
-          >
+          <SelectPlaceholderWrapper shouldShowPlaceholder={!watchWoodClass} placeholderText='Сорт'>
             <TextField
               inputProps={{ ...register('woodClass', { required: true }) }}
               select
@@ -134,7 +110,7 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
                 return <MenuItem value={woodClassOption.name}>{woodClassOption.name}</MenuItem>
               })}
             </TextField>
-          </Box>
+          </SelectPlaceholderWrapper>
         )}
         {errors.woodClass?.type === 'required' && (
           <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
@@ -142,9 +118,9 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
           </Typography>
         )}
 
-        <Button type='submit' variant='contained'>
+        <ButtonWithLoader isLoading={isLoading} type='submit' variant='contained'>
           {action}
-        </Button>
+        </ButtonWithLoader>
       </ModalContent>
     </Modal>
   )

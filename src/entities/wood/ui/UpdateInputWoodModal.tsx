@@ -1,19 +1,11 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  MenuItem,
-  Modal,
-  ModalProps,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { BeamInFormType } from '@/entities/beam-in/model'
-import { ModalContent } from '@/shared/ui'
+import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -27,6 +19,7 @@ export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> 
       }[]
     | undefined
   isLoadingBeamSizes: boolean
+  isLoading: boolean
 }
 
 export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
@@ -36,6 +29,7 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
   methods,
   beamSizesOptions,
   isLoadingBeamSizes,
+  isLoading,
   ...modalProps
 }) => {
   const {
@@ -52,25 +46,7 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
       {isLoadingBeamSizes ? (
         <CircularProgress size={15} />
       ) : (
-        <Box
-          sx={{
-            position: 'relative',
-            ...(!watchDiameter
-              ? {
-                  '&::before': {
-                    position: 'absolute',
-                    content: '"Диаметр"',
-                    top: 7,
-                    left: 15,
-                    color: theme =>
-                      theme.palette.mode === 'light'
-                        ? theme.palette.grey['700']
-                        : theme.palette.grey['400'],
-                  },
-                }
-              : {}),
-          }}
-        >
+        <SelectPlaceholderWrapper shouldShowPlaceholder={!watchDiameter} placeholderText='Диаметр'>
           <TextField
             inputProps={{ ...register('diameter', { required: true }) }}
             select
@@ -83,7 +59,7 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
               return <MenuItem value={beamSizeOption.name}>{beamSizeOption.name}</MenuItem>
             })}
           </TextField>
-        </Box>
+        </SelectPlaceholderWrapper>
       )}
       {errors.diameter?.type === 'required' && (
         <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
@@ -118,9 +94,15 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
           </Typography>
         )}
 
-        <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
+        <ButtonWithLoader
+          isLoading={isLoading}
+          type='submit'
+          sx={{ mt: 5 }}
+          variant='contained'
+          color='primary'
+        >
           {action}
-        </Button>
+        </ButtonWithLoader>
       </ModalContent>
     </Modal>
   )

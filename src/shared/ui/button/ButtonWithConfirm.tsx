@@ -3,6 +3,7 @@ import { FC, ReactNode, useState } from 'react'
 import {
   Button,
   ButtonProps,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -19,12 +20,21 @@ export interface ButtonWithConfirmProps extends ButtonProps {
   submitText?: string
   cancelText?: string
   onConfirm: () => void
+  isLoading: boolean
   renderButton?: (props: { onClick: () => void }) => ReactNode
 }
 
 export const ButtonWithConfirm: FC<ButtonWithConfirmProps> = props => {
-  const { onConfirm, header, description, submitText, cancelText, renderButton, ...buttonProps } =
-    props
+  const {
+    onConfirm,
+    header,
+    description,
+    submitText,
+    cancelText,
+    renderButton,
+    isLoading,
+    ...buttonProps
+  } = props
 
   const [isOpenAlert, setIsOpenAlert] = useState(false)
 
@@ -57,7 +67,18 @@ export const ButtonWithConfirm: FC<ButtonWithConfirmProps> = props => {
           <DialogContentText id='alert-dialog-description'>{description}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSubmit}>{submitText || 'Удалить'}</Button>
+          <Button onClick={handleSubmit}>
+            {isLoading && (
+              <CircularProgress
+                size={20}
+                sx={{
+                  color: theme => theme.palette.primary.contrastText,
+                  mr: 1,
+                }}
+              />
+            )}
+            {submitText || 'Удалить'}
+          </Button>
           <Button onClick={handleCloseAlert} variant='gray' autoFocus>
             {cancelText || 'Отмена'}
           </Button>

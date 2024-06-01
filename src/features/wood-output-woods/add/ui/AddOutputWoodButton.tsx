@@ -34,7 +34,8 @@ export const AddOutputWoodButton: FC<AddOutputWoodButtonProps> = ({ now, ...prop
 
   const watchWoodClassId = watch('woodClassId')
 
-  const [createWorkshopOutMutation] = useCreateWorkshopOutMutation()
+  const [createWorkshopOutMutation, { isLoading: isLoadingCreateWorkshopOutMutation }] =
+    useCreateWorkshopOutMutation()
 
   const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery(
     undefined,
@@ -91,6 +92,7 @@ export const AddOutputWoodButton: FC<AddOutputWoodButtonProps> = ({ now, ...prop
         woodTypes={woodTypes}
         isWoodTypesLoading={isWoodTypesLoading}
         methods={methods}
+        isLoading={isLoadingCreateWorkshopOutMutation}
       />
     </>
   )

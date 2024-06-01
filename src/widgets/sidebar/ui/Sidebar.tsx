@@ -104,7 +104,7 @@ export const Sidebar = () => {
 
       {isLoadingWorkshops ? menuItemsSkeleton : configuredMenuItems}
 
-      {user?.role.name === USER_ROLE.SUPERADMIN && (
+      {user?.role.name === USER_ROLE.SUPERADMIN ? (
         <Box display='flex' flexDirection='column' gap='2px' mb={2} mt={2}>
           <Typography color={theme => theme.black[40]}>Настройки</Typography>
 
@@ -116,6 +116,8 @@ export const Sidebar = () => {
             </NavLink>
           ))}
         </Box>
+      ) : (
+        <Box />
       )}
     </Box>
   )

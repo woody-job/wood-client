@@ -1,9 +1,11 @@
 import {
+  CreateDryerParams,
   Dryer,
   DryerDataList,
   DryerDataParams,
   DryerDataResponse,
   DryerStats,
+  UpdateDryerParams,
 } from '@/entities/dryer'
 import { baseApi } from '@/shared/api'
 
@@ -16,7 +18,7 @@ export const dryerApi = baseApi.injectEndpoints({
       providesTags: ['Dryers'],
     }),
 
-    createDryer: build.mutation<Dryer, void>({
+    createDryer: build.mutation<void, CreateDryerParams>({
       query: dryer => ({
         url: 'dryer-chamber',
         method: 'POST',
@@ -25,7 +27,7 @@ export const dryerApi = baseApi.injectEndpoints({
       invalidatesTags: ['Dryers'],
     }),
 
-    updateDryer: build.mutation<Dryer, Dryer>({
+    updateDryer: build.mutation<Dryer, UpdateDryerParams>({
       query: ({ id, ...dryer }) => ({
         url: `dryer-chamber/${id}`,
         method: 'PUT',

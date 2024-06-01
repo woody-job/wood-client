@@ -1,15 +1,7 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import {
-  Button,
-  CircularProgress,
-  MenuItem,
-  Modal,
-  ModalProps,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { Dimension, getDimensionString } from '@/entities/dimension'
 import { DryerBringInFormType } from '@/entities/dryer'
@@ -17,6 +9,7 @@ import { WoodClass } from '@/entities/wood-class'
 import { WoodType } from '@/entities/wood-type'
 import { WorkshopOutFormType } from '@/entities/workshop-out/model'
 import { ModalContent } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateOutputWoodModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -29,6 +22,7 @@ export interface UpdateOutputWoodModalProps extends Omit<ModalProps, 'children'>
   methods: UseFormReturn<DryerBringInFormType>
   woodClasses: WoodClass[] | undefined
   woodTypes: WoodType[] | undefined
+  isLoading: boolean
 }
 
 export const UpdateOutputWoodModal: FC<UpdateOutputWoodModalProps> = ({
@@ -42,6 +36,7 @@ export const UpdateOutputWoodModal: FC<UpdateOutputWoodModalProps> = ({
   methods,
   woodClasses,
   woodTypes,
+  isLoading,
   ...modalProps
 }) => {
   const {
@@ -154,9 +149,15 @@ export const UpdateOutputWoodModal: FC<UpdateOutputWoodModalProps> = ({
           </Typography>
         )}
 
-        <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
+        <ButtonWithLoader
+          isLoading={isLoading}
+          type='submit'
+          sx={{ mt: 5 }}
+          variant='contained'
+          color='primary'
+        >
           {action}
-        </Button>
+        </ButtonWithLoader>
       </ModalContent>
     </Modal>
   )

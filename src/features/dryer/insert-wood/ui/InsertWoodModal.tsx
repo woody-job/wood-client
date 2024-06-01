@@ -1,21 +1,14 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import {
-  Button,
-  CircularProgress,
-  MenuItem,
-  Modal,
-  ModalProps,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { Dimension, getDimensionString } from '@/entities/dimension'
 import { DryerBringInFormType } from '@/entities/dryer'
 import { WoodClass } from '@/entities/wood-class'
 import { WoodType } from '@/entities/wood-type'
 import { ModalContent } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export type InsertWoodModalProps = Omit<ModalProps, 'children'> & {
   dimensions: Dimension[] | undefined
@@ -26,6 +19,7 @@ export type InsertWoodModalProps = Omit<ModalProps, 'children'> & {
   methods: UseFormReturn<DryerBringInFormType>
   woodClasses: WoodClass[] | undefined
   woodTypes: WoodType[] | undefined
+  isLoading: boolean
 }
 
 export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
@@ -38,6 +32,7 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
     isDimensionsLoading,
     woodTypes,
     isWoodTypesLoading,
+    isLoading,
     ...modalProps
   } = props
 
@@ -149,9 +144,16 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
           </Typography>
         )}
 
-        <Button type='submit' sx={{ mt: 4 }} variant='contained' color='primary'>
+        <ButtonWithLoader
+          isLoading={isLoading}
+          type='submit'
+          sx={{ mt: 4 }}
+          loaderSx={{ top: -14 }}
+          variant='contained'
+          color='primary'
+        >
           Внести
-        </Button>
+        </ButtonWithLoader>
       </ModalContent>
     </Modal>
   )

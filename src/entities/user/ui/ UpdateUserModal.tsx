@@ -3,7 +3,6 @@ import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import {
   Box,
-  Button,
   CircularProgress,
   MenuItem,
   Modal,
@@ -13,7 +12,8 @@ import {
 } from '@mui/material'
 
 import { USER_ROLE } from '@/entities/user/contansts'
-import { ModalContent } from '@/shared/ui'
+import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { UserFormType } from '../model'
 
@@ -29,6 +29,7 @@ export interface UpdateUserModalProps extends Omit<ModalProps, 'children'> {
       }[]
     | undefined
   isUserRolesLoading: boolean
+  isLoading: boolean
 }
 
 export const UpdateUserModal: FC<UpdateUserModalProps> = ({
@@ -39,6 +40,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
   methods,
   roleOptions,
   isUserRolesLoading,
+  isLoading,
   ...modalProps
 }) => {
   const {
@@ -147,28 +149,9 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
           {isUserRolesLoading ? (
             <CircularProgress size={15} />
           ) : (
-            <Box
-              sx={{
-                position: 'relative',
-                ...(!watchRole
-                  ? {
-                      '&::before': {
-                        position: 'absolute',
-                        content: '"Роль"',
-                        top: 7,
-                        left: 15,
-                        color: theme =>
-                          theme.palette.mode === 'light'
-                            ? theme.palette.grey['700']
-                            : theme.palette.grey['400'],
-                      },
-                    }
-                  : {}),
-              }}
-            >
+            <SelectPlaceholderWrapper shouldShowPlaceholder={!watchRole} placeholderText='Роль'>
               <TextField
                 select
-                placeholder='Роль'
                 defaultValue={watchRole}
                 sx={{ width: '100%' }}
                 inputProps={{ ...register('role', { required: true }) }}
@@ -179,7 +162,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
                   return <MenuItem value={roleOption.name}>{roleOption.name}</MenuItem>
                 })}
               </TextField>
-            </Box>
+            </SelectPlaceholderWrapper>
           )}
           {errors.role?.type === 'required' && (
             <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
@@ -247,9 +230,15 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             </Typography>
           )}
 
-          <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
+          <ButtonWithLoader
+            isLoading={isLoading}
+            type='submit'
+            sx={{ mt: 5 }}
+            variant='contained'
+            color='primary'
+          >
             {action}
-          </Button>
+          </ButtonWithLoader>
         </Box>
       </ModalContent>
     </Modal>

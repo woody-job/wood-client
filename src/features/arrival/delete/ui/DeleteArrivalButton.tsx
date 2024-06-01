@@ -12,7 +12,8 @@ export type DeleteArrivalButtonProps = {
 }
 
 export const DeleteArrivalButton: FC<DeleteArrivalButtonProps> = ({ id, onClose }) => {
-  const [deleteWoodArrivalMutation] = useDeleteWoodArrivalMutation()
+  const [deleteWoodArrivalMutation, { isLoading: isLoadingDeleteWoodArrivalMutation }] =
+    useDeleteWoodArrivalMutation()
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -30,6 +31,7 @@ export const DeleteArrivalButton: FC<DeleteArrivalButtonProps> = ({ id, onClose 
 
   return (
     <ButtonWithConfirm
+      isLoading={isLoadingDeleteWoodArrivalMutation}
       header={'Удаление досок'}
       description={'Вы точно хотите удалить?'}
       onConfirm={() => handleDeleteShipment(id as number)}

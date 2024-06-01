@@ -21,7 +21,8 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
   const methods = useForm<DimensionFormType>()
   const { reset } = methods
 
-  const [createDimensionMutation] = useCreateDimensionMutation()
+  const [createDimensionMutation, { isLoading: isLoadingCreateDimensionMutation }] =
+    useCreateDimensionMutation()
 
   const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery(
     undefined,
@@ -85,6 +86,7 @@ export const CreateDimensionButton = forwardRef<HTMLButtonElement, ButtonProps>(
         onUpdate={handleSave}
         open={isOpen}
         onClose={handleClose}
+        isLoading={isLoadingCreateDimensionMutation}
       />
     </>
   )
