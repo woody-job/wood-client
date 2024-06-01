@@ -16,6 +16,7 @@ import { CommonErrorType } from '@/shared/types'
 
 import { enqueueSnackbar } from 'notistack'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { SelectPlaceholderWrapper } from '@/shared/ui'
 
 export interface EditWoodNamingOfTheDayProps {
   workshopId: number
@@ -129,24 +130,9 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
               control={control}
               render={({ field: { onChange, value } }) => {
                 return (
-                  <Box
-                    sx={{
-                      position: 'relative',
-                      ...(!watchWoodNaming
-                        ? {
-                            '&::before': {
-                              position: 'absolute',
-                              content: '"Условное обозначение"',
-                              top: 7,
-                              left: 15,
-                              color: theme =>
-                                theme.palette.mode === 'light'
-                                  ? theme.palette.grey['700']
-                                  : theme.palette.grey['400'],
-                            },
-                          }
-                        : {}),
-                    }}
+                  <SelectPlaceholderWrapper
+                    shouldShowPlaceholder={!watchWoodNaming}
+                    placeholderText='Условное обозначение'
                   >
                     <Select
                       MenuProps={{
@@ -165,7 +151,7 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
                         </MenuItem>
                       ))}
                     </Select>
-                  </Box>
+                  </SelectPlaceholderWrapper>
                 )
               }}
             />

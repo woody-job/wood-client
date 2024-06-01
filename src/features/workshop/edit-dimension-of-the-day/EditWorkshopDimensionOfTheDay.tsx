@@ -16,6 +16,7 @@ import { CommonErrorType } from '@/shared/types'
 
 import { enqueueSnackbar } from 'notistack'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { SelectPlaceholderWrapper } from '@/shared/ui'
 
 export interface EditWorkshopDimensionOfTheDayProps {
   workshopId: number
@@ -146,24 +147,9 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
               control={control}
               render={({ field: { onChange, value } }) => {
                 return (
-                  <Box
-                    sx={{
-                      position: 'relative',
-                      ...(!watchDimension
-                        ? {
-                            '&::before': {
-                              position: 'absolute',
-                              content: '"Сечение"',
-                              top: 7,
-                              left: 15,
-                              color: theme =>
-                                theme.palette.mode === 'light'
-                                  ? theme.palette.grey['700']
-                                  : theme.palette.grey['400'],
-                            },
-                          }
-                        : {}),
-                    }}
+                  <SelectPlaceholderWrapper
+                    shouldShowPlaceholder={!watchDimension}
+                    placeholderText='Сечение'
                   >
                     <Select
                       MenuProps={{
@@ -182,7 +168,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
                         </MenuItem>
                       ))}
                     </Select>
-                  </Box>
+                  </SelectPlaceholderWrapper>
                 )
               }}
             />

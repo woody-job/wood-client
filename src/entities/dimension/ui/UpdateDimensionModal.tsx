@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material'
 
-import { ModalContent } from '@/shared/ui'
+import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'
 
 import { DimensionFormType } from '../model'
 import { ButtonWithLoader } from '@/shared/ui/button'
@@ -106,25 +106,7 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
         {isWoodClassesLoading ? (
           <CircularProgress size={15} />
         ) : (
-          <Box
-            sx={{
-              position: 'relative',
-              ...(!watchWoodClass
-                ? {
-                    '&::before': {
-                      position: 'absolute',
-                      content: '"Сорт"',
-                      top: 7,
-                      left: 15,
-                      color: theme =>
-                        theme.palette.mode === 'light'
-                          ? theme.palette.grey['700']
-                          : theme.palette.grey['400'],
-                    },
-                  }
-                : {}),
-            }}
-          >
+          <SelectPlaceholderWrapper shouldShowPlaceholder={!watchWoodClass} placeholderText='Сорт'>
             <TextField
               inputProps={{ ...register('woodClass', { required: true }) }}
               select
@@ -137,7 +119,7 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
                 return <MenuItem value={woodClassOption.name}>{woodClassOption.name}</MenuItem>
               })}
             </TextField>
-          </Box>
+          </SelectPlaceholderWrapper>
         )}
         {errors.woodClass?.type === 'required' && (
           <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
