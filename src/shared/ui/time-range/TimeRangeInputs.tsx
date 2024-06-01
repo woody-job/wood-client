@@ -1,14 +1,15 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import { FC } from 'react'
 
 import { Box, BoxProps, Typography } from '@mui/material'
 
 import { DatePicker } from '@/shared/ui/date-picker'
 
 import { Dayjs } from 'dayjs'
+import { TimeRange } from '@/shared/types'
 
 export type TimeRangeInputsProps = BoxProps & {
-  range: { startDate: Dayjs; endDate: Dayjs }
-  setRange: Dispatch<SetStateAction<{ startDate: Dayjs; endDate: Dayjs }>>
+  range: TimeRange
+  setRange: (value: TimeRange) => void
 }
 
 export const TimeRangeInputs: FC<TimeRangeInputsProps> = props => {
@@ -16,17 +17,17 @@ export const TimeRangeInputs: FC<TimeRangeInputsProps> = props => {
 
   const handleChangeStartDate = (value: Dayjs | null) => {
     value &&
-      setRange(prev => ({
-        ...prev,
+      setRange({
+        ...range,
         startDate: value,
-      }))
+      })
   }
   const handleChangeEndDate = (value: Dayjs | null) => {
     value &&
-      setRange(prev => ({
-        ...prev,
+      setRange({
+        ...range,
         endDate: value,
-      }))
+      })
   }
 
   return (

@@ -29,6 +29,12 @@ import WorkshopItem from '@/pages/workshop-item'
 import { PrivatePage, useAuth } from '@/entities/auth'
 import { USER_ROLE } from '@/entities/user'
 import { urls } from '@/shared/constants'
+import WorkshopDayInfo from '@/pages/workshop-day-info'
+import WorkshopTimeRangeInfo from '@/pages/workshop-time-range-info'
+import ArrivalDayInfo from '@/pages/arrival-day-info'
+import ArrivalTimeRangeInfo from '@/pages/arrival-time-range-info'
+import ShipmentDayInfo from '@/pages/shipment-day-info'
+import ShipmentTimeRangeInfo from '@/pages/shipment-time-range-info'
 
 export const AppRouter = () => {
   const user = useAuth()
@@ -54,8 +60,16 @@ export const AppRouter = () => {
       <Route path={`/${urls.login}`} errorElement={<RouteError />} element={<Login />} />
       <Route element={<PrivatePage />}>
         <Route path='/' errorElement={<RouteError />} element={<RootLayout />}>
-          <Route path={urls.arrival} element={<Arrival />} />
-          <Route path={urls.shipment} element={<Shipment />} />
+          <Route path={urls.arrival} element={<Arrival />}>
+            <Route path={urls.day} element={<ArrivalDayInfo />} />
+            <Route path={urls.timeRange} element={<ArrivalTimeRangeInfo />} />
+          </Route>
+
+          <Route path={urls.shipment} element={<Shipment />}>
+            <Route path={urls.day} element={<ShipmentDayInfo />} />
+            <Route path={urls.timeRange} element={<ShipmentTimeRangeInfo />} />
+          </Route>
+
           <Route path={urls.warehouse} element={<Warehouse />} />
           <Route path={urls.dashboard} element={<Dashboard />} />
 
@@ -69,7 +83,10 @@ export const AppRouter = () => {
             <Route path={urls.wetWoodVault} element={<WetWoodVault />} />
           </Route>
 
-          <Route path={urls.workshop + '/:workshopId'} element={<WorkshopItem />} />
+          <Route path={urls.workshop + '/:workshopId'} element={<WorkshopItem />}>
+            <Route path={urls.day} element={<WorkshopDayInfo />} />
+            <Route path={urls.timeRange} element={<WorkshopTimeRangeInfo />} />
+          </Route>
 
           <Route path='*' element={<NotFound />} />
         </Route>

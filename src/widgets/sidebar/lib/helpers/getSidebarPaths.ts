@@ -7,7 +7,7 @@ export const getSidebarPaths = (workshops: Workshop[] | undefined): SidebarPath[
   const workshopPaths: SidebarPath[] = workshops
     ? workshops.map(workshop => {
         return {
-          path: `${urls.workshop}/${workshop.id}`,
+          path: `${urls.workshop}/${workshop.id}/${urls.day}`,
           name: workshop.name,
         }
       })
@@ -23,11 +23,11 @@ export const getSidebarPaths = (workshops: Workshop[] | undefined): SidebarPath[
       name: 'Свод сырой',
     },
     {
-      path: '/' + urls.arrival,
+      path: `${urls.arrival}/${urls.day}`,
       name: 'Поступления',
     },
     {
-      path: '/' + urls.shipment,
+      path: `${urls.shipment}/${urls.day}`,
       name: 'Отгрузки',
     },
     {

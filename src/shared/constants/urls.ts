@@ -16,4 +16,6 @@ export const urls = {
   dryWoodVault: 'dry-wood',
   wetWoodVault: 'wet-wood',
   workshop: 'workshop',
+  day: 'day',
+  timeRange: 'time-range',
 } as const

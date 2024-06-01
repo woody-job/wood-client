@@ -1,38 +1,30 @@
-import { useState } from 'react'
+import { SyntheticEvent, useEffect, useState } from 'react'
 
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 
-import { WoodsDayAmountArrival } from '@/widgets/woodsDayAmountArrival'
-import { WoodsRangeAmountArrival } from '@/widgets/woodsRangeAmountArrival'
-import { appSearchParams } from '@/shared/constants'
-import { useSearchParamsTabs } from '@/shared/libs/hooks'
-import { CustomTabPanel } from '@/shared/ui'
-import { DatePicker } from '@/shared/ui/date-picker'
-import { TimeRangeInputs } from '@/shared/ui/time-range'
-
-import dayjs, { Dayjs } from 'dayjs'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 export const Arrival = () => {
   const tabs = [
     { id: 'day', name: 'За день' },
-    { id: 'few-days', name: 'За несколько дней' },
+    { id: 'time-range', name: 'За несколько дней' },
   ]
 
-  const { currentTab, handleChangeTab } = useSearchParamsTabs(
-    appSearchParams.currentTab,
-    tabs,
-    tab => tab.id,
-    tabs[0]
-  )
+  const location = useLocation()
+  const navigate = useNavigate()
 
-  const [selectedDate, setSelectedDate] = useState(() => dayjs().subtract(1, 'day'))
-  const [timeRange, setTimeRange] = useState({
-    startDate: dayjs().subtract(2, 'day'),
-    endDate: dayjs().subtract(1, 'day'),
-  })
+  const isDay = location.pathname.includes('day')
+  const [currentTab, setCurrentTab] = useState(isDay ? 'day' : 'time-range')
 
-  const handleAccept = (value: Dayjs | null) => {
-    value && setSelectedDate(value)
+  useEffect(() => {
+    const isDay = location.pathname.includes('day')
+
+    setCurrentTab(isDay ? 'day' : 'time-range')
+  }, [location.pathname])
+
+  const handleChangeTab = (_event: SyntheticEvent, newValue: string) => {
+    setCurrentTab(newValue)
+    navigate(newValue)
   }
 
   return (
@@ -41,27 +33,14 @@ export const Arrival = () => {
         <Typography variant='h5' sx={{ mb: 1.5 }}>
           Поступления
         </Typography>
-        <Tabs value={currentTab.id} onChange={handleChangeTab}>
+        <Tabs value={currentTab} onChange={handleChangeTab}>
           {tabs.map(tab => (
             <Tab key={tab.name} label={tab.name} value={tab.id} />
           ))}
         </Tabs>
       </Box>
 
-      <CustomTabPanel tabPanelValue={currentTab.id} value={'day'}>
-        <DatePicker value={selectedDate} onAccept={handleAccept} sx={{ maxWidth: 'fit-content' }} />
-
-        <WoodsDayAmountArrival selectedDate={selectedDate.toISOString()} />
-      </CustomTabPanel>
-
-      <CustomTabPanel tabPanelValue={currentTab.id} value={'few-days'}>
-        <TimeRangeInputs range={timeRange} setRange={setTimeRange} />
-
-        <WoodsRangeAmountArrival
-          endDate={timeRange.endDate.toISOString()}
-          startDate={timeRange.startDate.toISOString()}
-        />
-      </CustomTabPanel>
+      <Outlet />
     </>
   )
 }
