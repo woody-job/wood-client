@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Button, Modal, ModalProps, TextField, Typography } from '@mui/material'
+import { Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'

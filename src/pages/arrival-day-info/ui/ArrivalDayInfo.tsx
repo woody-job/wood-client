@@ -1,8 +1,10 @@
+import { FC } from 'react'
+
+import { WoodsDayAmountArrival } from '@/widgets/woodsDayAmountArrival'
 import { useDateInSearchParams } from '@/shared/libs/hooks'
 import { CustomTabPanel, DatePicker } from '@/shared/ui'
-import { WoodsDayAmountArrival } from '@/widgets/woodsDayAmountArrival'
+
 import { Dayjs } from 'dayjs'
-import { FC } from 'react'
 
 export const ArrivalDayInfo: FC = () => {
   const { date, handleSetDate } = useDateInSearchParams()

@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonProps, IconButton, Modal, TextField, Typography } from '@mui/material'
+import { ButtonProps, IconButton, Modal, TextField, Typography } from '@mui/material'
 
 import { WorkshopWoodPricesTableRow } from '@/widgets/workshopSettingsTabs/types'
 import { useFetchAllDimensionsQuery } from '@/entities/dimension'
@@ -15,9 +15,9 @@ import {
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { EditIcon, ModalContent } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { enqueueSnackbar } from 'notistack'
-import { ButtonWithLoader } from '@/shared/ui/button'
 
 type UpdateDimensionPriceButtonProps = {
   workshopWoodPrice: WorkshopWoodPricesTableRow

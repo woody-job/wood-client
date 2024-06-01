@@ -13,9 +13,9 @@ import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { useSnackbar } from 'notistack'
-import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface AddWoodsArrivalShipmentProps {
   title: string

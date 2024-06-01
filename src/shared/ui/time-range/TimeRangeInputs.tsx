@@ -2,10 +2,10 @@ import { FC } from 'react'
 
 import { Box, BoxProps, Typography } from '@mui/material'
 
+import { TimeRange } from '@/shared/types'
 import { DatePicker } from '@/shared/ui/date-picker'
 
 import { Dayjs } from 'dayjs'
-import { TimeRange } from '@/shared/types'
 
 export type TimeRangeInputsProps = BoxProps & {
   range: TimeRange

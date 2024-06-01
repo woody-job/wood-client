@@ -3,9 +3,10 @@ import { SyntheticEvent, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { TimeRange } from '@/shared/types'
+
+import { UseSearchParamsTabsReturn } from './types'
 import dayjs, { Dayjs } from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { UseSearchParamsTabsReturn } from './types'
 
 export const useSearchParamsTabs = <TTab>(
   tabName: string,

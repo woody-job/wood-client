@@ -13,7 +13,6 @@ import {
 } from '@mui/material'
 
 import { TrashIcon } from '@/shared/ui'
-import { ButtonWithLoader } from './ButtonWithLoader'
 
 export interface ButtonWithConfirmProps extends ButtonProps {
   header: string

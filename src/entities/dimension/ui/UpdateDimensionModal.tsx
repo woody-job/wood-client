@@ -1,21 +1,12 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  MenuItem,
-  Modal,
-  ModalProps,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { DimensionFormType } from '../model'
-import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateDimensionModalProps extends Omit<ModalProps, 'children'> {
   title: string

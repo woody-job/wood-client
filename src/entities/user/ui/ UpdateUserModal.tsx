@@ -3,7 +3,6 @@ import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import {
   Box,
-  Button,
   CircularProgress,
   MenuItem,
   Modal,
@@ -14,9 +13,9 @@ import {
 
 import { USER_ROLE } from '@/entities/user/contansts'
 import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { UserFormType } from '../model'
-import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateUserModalProps extends Omit<ModalProps, 'children'> {
   onUpdate: SubmitHandler<UserFormType>

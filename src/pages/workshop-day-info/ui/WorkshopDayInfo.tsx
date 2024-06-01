@@ -1,14 +1,18 @@
+import { FC } from 'react'
+
+import { useParams } from 'react-router-dom'
+
+import { Box, Divider,Grid } from '@mui/material'
+
+import { WorkshopDashboardCards } from '@/widgets/workshopDashboardCards'
+import { WorkshopInputWoods } from '@/widgets/workshopInputWoods'
+import { WorkshopOutputWoods } from '@/widgets/workshopOutputWoods'
 import { WorkshopTrashStatsSunburst } from '@/entities/workshop'
 import { useFetchWorkshopOutForDateQuery } from '@/entities/workshop-out'
 import { useDateInSearchParams } from '@/shared/libs/hooks/search-params-with-state'
 import { CustomTabPanel, DatePicker } from '@/shared/ui'
-import { WorkshopDashboardCards } from '@/widgets/workshopDashboardCards'
-import { WorkshopInputWoods } from '@/widgets/workshopInputWoods'
-import { WorkshopOutputWoods } from '@/widgets/workshopOutputWoods'
-import { Box, Grid, Divider } from '@mui/material'
+
 import { Dayjs } from 'dayjs'
-import { FC } from 'react'
-import { useParams } from 'react-router-dom'
 
 export const WorkshopDayInfo: FC = () => {
   const { workshopId } = useParams()

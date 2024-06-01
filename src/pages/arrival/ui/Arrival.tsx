@@ -1,8 +1,8 @@
 import { SyntheticEvent, useEffect, useState } from 'react'
 
-import { Box, Tab, Tabs, Typography } from '@mui/material'
-
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+
+import { Box, Tab, Tabs, Typography } from '@mui/material'
 
 export const Arrival = () => {
   const tabs = [

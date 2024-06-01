@@ -6,6 +6,7 @@ import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridEventListener } from '@mui/x-data-grid'
 
 import { useFetchWorkshopReportQuery } from '@/entities/workshop-out'
+import { urls } from '@/shared/constants'
 import { TimeRange } from '@/shared/types'
 import {
   CustomGridPanel,
@@ -16,7 +17,6 @@ import {
 
 import { WORKSHOP_TOTAL_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
-import { urls } from '@/shared/constants'
 
 type WorkshopTotalTableProps = {
   timeRange: TimeRange

@@ -1,9 +1,8 @@
 import { Box, Typography } from '@mui/material'
 
 import { DryWoodVaultStats } from '@/widgets/dryWoodVaultStats'
-import { TimeRangeInputs } from '@/shared/ui/time-range'
-
 import { useTimeRangeInSearchParams } from '@/shared/libs/hooks'
+import { TimeRangeInputs } from '@/shared/ui/time-range'
 
 export const DryWoodVault = () => {
   const { timeRange, handleSetTimeRange } = useTimeRangeInSearchParams()

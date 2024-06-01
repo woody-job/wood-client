@@ -1,16 +1,7 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  MenuItem,
-  Modal,
-  ModalProps,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { BeamInFormType } from '@/entities/beam-in/model'
 import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'

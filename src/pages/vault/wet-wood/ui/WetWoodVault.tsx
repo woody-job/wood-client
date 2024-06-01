@@ -1,9 +1,8 @@
 import { Box, Typography } from '@mui/material'
 
 import { WetWoodVaultStats } from '@/widgets/wetWoodVaultStats'
-import { TimeRangeInputs } from '@/shared/ui/time-range'
-
 import { useTimeRangeInSearchParams } from '@/shared/libs/hooks'
+import { TimeRangeInputs } from '@/shared/ui/time-range'
 
 export const WetWoodVault = () => {
   const { timeRange, handleSetTimeRange } = useTimeRangeInSearchParams()

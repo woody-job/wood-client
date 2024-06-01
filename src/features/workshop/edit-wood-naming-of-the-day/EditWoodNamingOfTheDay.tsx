@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Box, Button, Grid, MenuItem, Select } from '@mui/material'
+import { Box, Grid, MenuItem, Select } from '@mui/material'
 
 import { useAuth } from '@/entities/auth'
 import { USER_ROLE } from '@/entities/user'
@@ -13,10 +13,10 @@ import {
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
+import { SelectPlaceholderWrapper } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { enqueueSnackbar } from 'notistack'
-import { ButtonWithLoader } from '@/shared/ui/button'
-import { SelectPlaceholderWrapper } from '@/shared/ui'
 
 export interface EditWoodNamingOfTheDayProps {
   workshopId: number

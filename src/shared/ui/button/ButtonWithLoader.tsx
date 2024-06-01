@@ -1,6 +1,7 @@
+import { FC } from 'react'
+
 import { Box, Button, ButtonProps, CircularProgress, SxProps } from '@mui/material'
 import { Theme } from '@mui/material/styles'
-import { FC } from 'react'
 
 export type ButtonWithLoaderProps = {
   isLoading: boolean
