@@ -16,6 +16,7 @@ import { USER_ROLE } from '@/entities/user/contansts'
 import { ModalContent } from '@/shared/ui'
 
 import { UserFormType } from '../model'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateUserModalProps extends Omit<ModalProps, 'children'> {
   onUpdate: SubmitHandler<UserFormType>
@@ -29,6 +30,7 @@ export interface UpdateUserModalProps extends Omit<ModalProps, 'children'> {
       }[]
     | undefined
   isUserRolesLoading: boolean
+  isLoading: boolean
 }
 
 export const UpdateUserModal: FC<UpdateUserModalProps> = ({
@@ -39,6 +41,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
   methods,
   roleOptions,
   isUserRolesLoading,
+  isLoading,
   ...modalProps
 }) => {
   const {
@@ -247,9 +250,15 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             </Typography>
           )}
 
-          <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
+          <ButtonWithLoader
+            isLoading={isLoading}
+            type='submit'
+            sx={{ mt: 5 }}
+            variant='contained'
+            color='primary'
+          >
             {action}
-          </Button>
+          </ButtonWithLoader>
         </Box>
       </ModalContent>
     </Modal>

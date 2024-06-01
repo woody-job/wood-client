@@ -33,7 +33,8 @@ export const UpdateDimensionParamsButton = forwardRef<
   })
   const { reset } = methods
 
-  const [updateDimensionMutation] = useUpdateDimensionMutation()
+  const [updateDimensionMutation, { isLoading: isLoadingUpdateDimensionMutation }] =
+    useUpdateDimensionMutation()
 
   const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery(
     undefined,
@@ -96,6 +97,7 @@ export const UpdateDimensionParamsButton = forwardRef<
         onUpdate={handleSave}
         open={isOpen}
         onClose={handleClose}
+        isLoading={isLoadingUpdateDimensionMutation}
       />
     </>
   )

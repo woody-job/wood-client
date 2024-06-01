@@ -15,6 +15,7 @@ import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
 
 import { enqueueSnackbar } from 'notistack'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface EditWorkshopDimensionOfTheDayProps {
   workshopId: number
@@ -48,7 +49,10 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
 
   const { data: allDimensions } = useFetchAllDimensionsQuery()
 
-  const [updatWorkshopDailyDimensionMutation] = useUpdateWorkshopDailyDimensionMutation()
+  const [
+    updatWorkshopDailyDimensionMutation,
+    { isLoading: isLoadingUpdatWorkshopDailyDimensionMutation },
+  ] = useUpdateWorkshopDailyDimensionMutation()
 
   useEffect(() => {
     setValue('dimension', dimensionOfTheDay)
@@ -187,7 +191,9 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
 
         {isAdmin && (
           <Grid item xs={4.5}>
-            <Button
+            <ButtonWithLoader
+              isLoading={isLoadingUpdatWorkshopDailyDimensionMutation}
+              loaderSx={{ left: -28 }}
               size='small'
               sx={{ height: '40px', width: '100%' }}
               onClick={() => {
@@ -197,7 +203,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
               type='button'
             >
               {buttonText}
-            </Button>
+            </ButtonWithLoader>
           </Grid>
         )}
       </Grid>

@@ -15,6 +15,7 @@ import {
 import { ModalContent } from '@/shared/ui'
 
 import { DimensionFormType } from '../model'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateDimensionModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -28,6 +29,7 @@ export interface UpdateDimensionModalProps extends Omit<ModalProps, 'children'> 
       }[]
     | undefined
   isWoodClassesLoading: boolean
+  isLoading: boolean
 }
 
 export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
@@ -37,6 +39,7 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
   methods,
   woodClassesOptions,
   isWoodClassesLoading,
+  isLoading,
   ...modalProps
 }) => {
   const {
@@ -142,9 +145,9 @@ export const UpdateDimensionModal: FC<UpdateDimensionModalProps> = ({
           </Typography>
         )}
 
-        <Button type='submit' variant='contained'>
+        <ButtonWithLoader isLoading={isLoading} type='submit' variant='contained'>
           {action}
-        </Button>
+        </ButtonWithLoader>
       </ModalContent>
     </Modal>
   )

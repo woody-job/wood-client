@@ -33,7 +33,8 @@ export const UpdateArrivalButton: FC<UpdateArrivalButtonProps> = ({
   dimension,
   arrivalId,
 }) => {
-  const [updateArrivalMutation] = useUpdateWoodArrivalMutation()
+  const [updateArrivalMutation, { isLoading: isLoadingUpdateWoodArrivalMutation }] =
+    useUpdateWoodArrivalMutation()
 
   const { data: woodClasses } = useFetchAllWoodClassesQuery()
 
@@ -94,6 +95,7 @@ export const UpdateArrivalButton: FC<UpdateArrivalButtonProps> = ({
         open={isOpen}
         onClose={onClose}
         methods={methods}
+        isLoading={isLoadingUpdateWoodArrivalMutation}
       />
     </>
   )

@@ -15,7 +15,8 @@ export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((pro
   const methods = useForm<DryerFormType>()
   const { reset } = methods
 
-  const [createDryerMutation] = useCreateDryerMutation()
+  const [createDryerMutation, { isLoading: isLoadingCreateDryerMutation }] =
+    useCreateDryerMutation()
   const { enqueueSnackbar } = useSnackbar()
 
   const handleOpenModal = () => setIsOpenModal(true)
@@ -47,6 +48,7 @@ export const CreateDryerButton = forwardRef<HTMLButtonElement, ButtonProps>((pro
         onUpdate={handleCreateDryer}
         open={isOpenModal}
         onClose={handleCloseModal}
+        isLoading={isLoadingCreateDryerMutation}
       />
     </>
   )

@@ -30,7 +30,8 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({ beamIn, 
 
   const methods = useForm<BeamInFormType>({ defaultValues: getDefaultValues(beamIn) })
 
-  const [updateBeamInMutation] = useUpdateBeamInForWorkshopMutation()
+  const [updateBeamInMutation, { isLoading: isLoadingUpdateBeamInMutation }] =
+    useUpdateBeamInForWorkshopMutation()
 
   const { data: beamSizes, isLoading: isLoadingBeamSizes } = useFetchAllBeamSizesQuery()
 
@@ -98,6 +99,7 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({ beamIn, 
         open={isOpen}
         onClose={handleClose}
         isLoadingBeamSizes={isLoadingBeamSizes}
+        isLoading={isLoadingUpdateBeamInMutation}
       />
     </>
   )

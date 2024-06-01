@@ -13,6 +13,7 @@ import { defaultErrorHandler, parseJWT } from '@/shared/libs/helpers'
 import { TokenService } from '@/shared/libs/services'
 
 import { useSnackbar } from 'notistack'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export const LoginForm = () => {
   const {
@@ -21,7 +22,7 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginFormType>()
 
-  const [loginMutation] = useLoginMutation()
+  const [loginMutation, { isLoading: isLoginMutationLoading }] = useLoginMutation()
   const navigate = useNavigate()
 
   const { enqueueSnackbar } = useSnackbar()
@@ -111,9 +112,9 @@ export const LoginForm = () => {
           </Typography>
         )}
       </Box>
-      <Button type='submit' sx={{ mt: 4 }}>
+      <ButtonWithLoader isLoading={isLoginMutationLoading} type='submit' sx={{ mt: 4 }}>
         Войти
-      </Button>
+      </ButtonWithLoader>
     </Box>
   )
 }

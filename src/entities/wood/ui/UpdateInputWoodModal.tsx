@@ -14,6 +14,7 @@ import {
 
 import { BeamInFormType } from '@/entities/beam-in/model'
 import { ModalContent } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -27,6 +28,7 @@ export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> 
       }[]
     | undefined
   isLoadingBeamSizes: boolean
+  isLoading: boolean
 }
 
 export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
@@ -36,6 +38,7 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
   methods,
   beamSizesOptions,
   isLoadingBeamSizes,
+  isLoading,
   ...modalProps
 }) => {
   const {
@@ -118,9 +121,15 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
           </Typography>
         )}
 
-        <Button type='submit' sx={{ mt: 5 }} variant='contained' color='primary'>
+        <ButtonWithLoader
+          isLoading={isLoading}
+          type='submit'
+          sx={{ mt: 5 }}
+          variant='contained'
+          color='primary'
+        >
           {action}
-        </Button>
+        </ButtonWithLoader>
       </ModalContent>
     </Modal>
   )

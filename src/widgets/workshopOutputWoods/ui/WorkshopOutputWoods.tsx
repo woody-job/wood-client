@@ -34,7 +34,8 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
   isWorkshopOutLoading,
   now,
 }) => {
-  const [deleteWorkshopOutMutation] = useDeleteWorkshopOutMutation()
+  const [deleteWorkshopOutMutation, { isLoading: isLoadingDeleteWorkshopOutMutation }] =
+    useDeleteWorkshopOutMutation()
 
   const user = useAuth()
 
@@ -66,6 +67,7 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
                 <Box sx={{ ml: 'auto' }}>
                   <UpdateOutputWoodButton workshopOut={params.row} sx={{ mr: 1 }} />
                   <ButtonWithConfirm
+                    isLoading={isLoadingDeleteWorkshopOutMutation}
                     header='Удалить лес на выход'
                     description='Вы точно хотите удалить выход леса?'
                     onConfirm={() => {

@@ -18,7 +18,8 @@ export const UpdateDryerButton: FC<UpdateDryerButtonProps> = props => {
   const { dryer, ...buttonProps } = props
   const [isOpenModal, setIsOpenModal] = useState(false)
 
-  const [updateDryerMutation] = useUpdateDryerMutation()
+  const [updateDryerMutation, { isLoading: isLoadingUpdateDryerMutation }] =
+    useUpdateDryerMutation()
   const methods = useForm<DryerFormType>({
     defaultValues: {
       ...dryer,
@@ -57,6 +58,7 @@ export const UpdateDryerButton: FC<UpdateDryerButtonProps> = props => {
         onUpdate={handleCreateDryer}
         open={isOpenModal}
         onClose={handleCloseModal}
+        isLoading={isLoadingUpdateDryerMutation}
       />
     </>
   )

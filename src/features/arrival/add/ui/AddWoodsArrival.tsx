@@ -14,6 +14,7 @@ import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 
 import { useSnackbar } from 'notistack'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface AddWoodsArrivalShipmentProps {
   title: string
@@ -51,7 +52,8 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const [addWoodArrivalMutation] = useAddWoodArrivalMutation()
+  const [addWoodArrivalMutation, { isLoading: isLoadingAddWoodArrivalMutation }] =
+    useAddWoodArrivalMutation()
   const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery()
   const { data: dimensions, isLoading: isDimensionsLoading } = useFetchDimensionsByWoodClassQuery(
     watchWoodClassId ?? skipToken
@@ -175,9 +177,13 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
               Количество не может быть пустым
             </Typography>
           )}
-          <Button type='submit' sx={{ mt: 2 }}>
+          <ButtonWithLoader
+            isLoading={isLoadingAddWoodArrivalMutation}
+            type='submit'
+            sx={{ mt: 2 }}
+          >
             Добавить
-          </Button>
+          </ButtonWithLoader>
         </ModalContent>
       </Modal>
     </>

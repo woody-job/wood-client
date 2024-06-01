@@ -17,6 +17,7 @@ import { CommonErrorType } from '@/shared/types'
 import { EditIcon, ModalContent } from '@/shared/ui'
 
 import { enqueueSnackbar } from 'notistack'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 type UpdateDimensionPriceButtonProps = {
   workshopWoodPrice: WorkshopWoodPricesTableRow
@@ -29,8 +30,10 @@ export const UpdateDimensionPriceButton = forwardRef<
 >(({ workshopWoodPrice, workshopId, ...props }, ref) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const [createWorkshopWoodPriceMutation] = useCreateWorkshopWoodPriceMutation()
-  const [updateWorkshopWoodPriceMutation] = useUpdateWorkshopWoodPriceMutation()
+  const [createWorkshopWoodPriceMutation, { isLoading: isLoadingCreateWorkshopWoodPriceMutation }] =
+    useCreateWorkshopWoodPriceMutation()
+  const [updateWorkshopWoodPriceMutation, { isLoading: isLoadingUpdateWorkshopWoodPriceMutation }] =
+    useUpdateWorkshopWoodPriceMutation()
 
   const { data: dimensions } = useFetchAllDimensionsQuery(undefined)
   const { data: workshopWoodPrices } = useFetchWorkshopWoodPricesQuery({ workshopId })
@@ -81,9 +84,13 @@ export const UpdateDimensionPriceButton = forwardRef<
         .unwrap()
         .then(() => {
           enqueueSnackbar('Цена сечения успешно задана', { variant: 'success' })
+          handleClose()
+          reset()
         })
         .catch((error: CommonErrorType) => {
           defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
+          handleClose()
+          reset()
         })
     }
 
@@ -97,14 +104,15 @@ export const UpdateDimensionPriceButton = forwardRef<
         .unwrap()
         .then(() => {
           enqueueSnackbar('Цена сечения успешно изменена', { variant: 'success' })
+          handleClose()
+          reset()
         })
         .catch((error: CommonErrorType) => {
           defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
+          handleClose()
+          reset()
         })
     }
-
-    handleClose()
-    reset()
   }
 
   const title = `Редактировать сечение ${workshopWoodPrice.dimension}`
@@ -141,9 +149,15 @@ export const UpdateDimensionPriceButton = forwardRef<
             </Typography>
           )}
 
-          <Button type='submit' variant='contained'>
+          <ButtonWithLoader
+            isLoading={
+              isLoadingCreateWorkshopWoodPriceMutation || isLoadingUpdateWorkshopWoodPriceMutation
+            }
+            type='submit'
+            variant='contained'
+          >
             Редактировать
-          </Button>
+          </ButtonWithLoader>
         </ModalContent>
       </Modal>
     </>

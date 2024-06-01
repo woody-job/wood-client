@@ -29,7 +29,8 @@ export const DimensionsSettingsTable: FC<DimensionsSettingsTableProps> = ({
   dimensions,
   isLoadingDimensions,
 }) => {
-  const [deleteDimensionMutation] = useDeleteDimensionMutation()
+  const [deleteDimensionMutation, { isLoading: isLoadingDeleteDimensionMutation }] =
+    useDeleteDimensionMutation()
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -57,6 +58,7 @@ export const DimensionsSettingsTable: FC<DimensionsSettingsTableProps> = ({
           <Box sx={{ ml: 'auto' }}>
             <UpdateDimensionParamsButton dimension={params.row} sx={{ mr: 1 }} />
             <ButtonWithConfirm
+              isLoading={isLoadingDeleteDimensionMutation}
               header='Удалить сечение?'
               description='Вы точно хотите удалить это сечение?'
               onConfirm={() => {

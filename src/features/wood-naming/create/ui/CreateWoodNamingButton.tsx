@@ -16,7 +16,8 @@ import { useSnackbar } from 'notistack'
 export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
 
-  const [createWoodNamingMutation] = useCreateWoodNamingMutation()
+  const [createWoodNamingMutation, { isLoading: isLoadingCreateWoodNamingMutation }] =
+    useCreateWoodNamingMutation()
   const { enqueueSnackbar } = useSnackbar()
 
   const methods = useForm<WoodNamingFormType>()
@@ -51,6 +52,7 @@ export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>
         title={'Создать обозначение'}
         open={isOpenModal}
         onClose={handleCloseModal}
+        isLoading={isLoadingCreateWoodNamingMutation}
       />
     </>
   )

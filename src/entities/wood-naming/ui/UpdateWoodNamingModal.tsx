@@ -1,20 +1,22 @@
 import { FC } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Button, Modal, ModalProps, TextField, Typography } from '@mui/material'
+import { Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { WoodNamingFormType } from '@/entities/wood-naming'
 import { ModalContent } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateWoodNamingModalProps extends Omit<ModalProps, 'children'> {
   onUpdate: SubmitHandler<WoodNamingFormType>
   action: string
   title: string
   methods: UseFormReturn<WoodNamingFormType>
+  isLoading: boolean
 }
 
 export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = props => {
-  const { onUpdate, action, title, methods, ...modalProps } = props
+  const { onUpdate, action, title, methods, isLoading, ...modalProps } = props
 
   const {
     register,
@@ -48,9 +50,15 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = props => {
           </Typography>
         )}
 
-        <Button type='submit' variant='contained' color='primary' sx={{ mt: 2 }}>
+        <ButtonWithLoader
+          isLoading={isLoading}
+          type='submit'
+          variant='contained'
+          color='primary'
+          sx={{ mt: 2 }}
+        >
           {action}
-        </Button>
+        </ButtonWithLoader>
       </ModalContent>
     </Modal>
   )

@@ -20,7 +20,7 @@ type UsersTableProps = {
 }
 
 export const UsersTable: FC<UsersTableProps> = ({ users, isLoadingUsers }) => {
-  const [deleteUserMutation] = useDeleteUserMutation()
+  const [deleteUserMutation, { isLoading: isLoadingDeleteUserMutation }] = useDeleteUserMutation()
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -50,6 +50,7 @@ export const UsersTable: FC<UsersTableProps> = ({ users, isLoadingUsers }) => {
               Редактировать
             </UpdateUserButton>
             <ButtonWithConfirm
+              isLoading={isLoadingDeleteUserMutation}
               header='Удалить пользователя'
               description='Вы уверены, что хотите удалить пользователя?'
               onConfirm={() => {

@@ -15,6 +15,7 @@ import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
 
 import { enqueueSnackbar } from 'notistack'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface EditWoodNamingOfTheDayProps {
   workshopId: number
@@ -48,7 +49,10 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
 
   const { data: allwoodNamings } = useFetchAllWoodNamingsQuery()
 
-  const [updatWorkshopDailywoodNamingMutation] = useUpdateWorkshopDailyWoodNamingMutation()
+  const [
+    updatWorkshopDailywoodNamingMutation,
+    { isLoading: isLoadingUpdatWorkshopDailywoodNamingMutation },
+  ] = useUpdateWorkshopDailyWoodNamingMutation()
 
   useEffect(() => {
     setValue('woodNaming', woodNamingOfTheDay)
@@ -170,7 +174,9 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
 
         {isAdmin && (
           <Grid item xs={4.5}>
-            <Button
+            <ButtonWithLoader
+              isLoading={isLoadingUpdatWorkshopDailywoodNamingMutation}
+              loaderSx={{ left: -28 }}
               size='small'
               sx={{ height: '40px', width: '100%' }}
               onClick={() => {
@@ -180,7 +186,7 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
               type='button'
             >
               {buttonText}
-            </Button>
+            </ButtonWithLoader>
           </Grid>
         )}
       </Grid>

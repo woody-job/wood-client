@@ -12,7 +12,8 @@ export type DeleteShipmentButtonProps = {
 }
 
 export const DeleteShipmentButton: FC<DeleteShipmentButtonProps> = ({ id, onClose }) => {
-  const [deleteWoodShipmentMutation] = useDeleteWoodShipmentMutation()
+  const [deleteWoodShipmentMutation, { isLoading: isLoadingDeleteWoodShipmentMutation }] =
+    useDeleteWoodShipmentMutation()
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -33,6 +34,7 @@ export const DeleteShipmentButton: FC<DeleteShipmentButtonProps> = ({ id, onClos
       header={'Удаление досок'}
       description={'Вы точно хотите удалить?'}
       onConfirm={() => handleDeleteShipment(id as number)}
+      isLoading={isLoadingDeleteWoodShipmentMutation}
     />
   )
 }

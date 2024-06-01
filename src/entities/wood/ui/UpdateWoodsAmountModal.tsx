@@ -4,16 +4,18 @@ import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Button, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { ModalContent } from '@/shared/ui'
+import { ButtonWithLoader } from '@/shared/ui/button'
 
 export interface UpdateWoodsAmountModalProps extends Omit<ModalProps, 'children' | 'onSubmit'> {
   title: string
   actionTitle: string
   onSubmit: SubmitHandler<{ amount: number }>
   methods: UseFormReturn<{ amount: number }>
+  isLoading: boolean
 }
 
 export const UpdateWoodsAmountModal: FC<UpdateWoodsAmountModalProps> = props => {
-  const { title, actionTitle, onSubmit, methods, ...modalProps } = props
+  const { title, actionTitle, onSubmit, methods, isLoading, ...modalProps } = props
   const {
     handleSubmit,
     register,
@@ -42,9 +44,9 @@ export const UpdateWoodsAmountModal: FC<UpdateWoodsAmountModalProps> = props => 
             Количество обязательно
           </Typography>
         )}
-        <Button type='submit' sx={{ mt: 2 }}>
+        <ButtonWithLoader isLoading={isLoading} type='submit' sx={{ mt: 2 }}>
           {actionTitle}
-        </Button>
+        </ButtonWithLoader>
       </ModalContent>
     </Modal>
   )
