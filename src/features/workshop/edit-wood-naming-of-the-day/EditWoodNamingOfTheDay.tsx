@@ -122,7 +122,13 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
 
   return (
     <Box display='flex' mt={2} flexDirection='column' alignItems='center' ref={editInputWrapperRef}>
-      <Grid container sx={{ width: '100%' }} justifyContent='space-between'>
+      <Grid
+        container
+        sx={{ width: '100%' }}
+        justifyContent='space-between'
+        spacing={1}
+        flexWrap='nowrap'
+      >
         <Grid item xs={isAdmin ? 7 : 12}>
           <Box sx={{ position: 'relative' }}>
             <Controller
@@ -159,7 +165,7 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
         </Grid>
 
         {isAdmin && (
-          <Grid item xs={4.5}>
+          <Grid item xs={5} minWidth={197}>
             <ButtonWithLoader
               isLoading={isLoadingUpdatWorkshopDailywoodNamingMutation}
               loaderSx={{ left: -28 }}
