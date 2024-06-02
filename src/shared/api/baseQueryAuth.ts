@@ -3,8 +3,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 import { logout } from '@/entities/auth'
 import { baseQuery } from '@/shared/api/baseQuery.ts'
 import { TokenService } from '@/shared/libs/services'
-
-import { urls } from '../constants'
+import { urls } from '@/shared/constants'
 
 export const baseQueryWithAuth: BaseQueryFn<
   string | FetchArgs,
@@ -26,7 +25,7 @@ export const baseQueryWithAuth: BaseQueryFn<
     extraOptions,
   )
 
-  if (result.error && (result.error.status === 401 || result.error.status === 403)) {
+  if (result.error && result.error.status === 403) {
     api.dispatch(logout())
     TokenService.removeToken()
     window.location.href = `/wood-client/${urls.login}`
