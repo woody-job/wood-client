@@ -62,10 +62,12 @@ export const WorkshopPrices: FC<WorkshopPricesProps> = ({ workshop }) => {
 
   return (
     <Box display='flex' flexDirection='column' gap={2}>
-      <EditWorkshopMaterialsPrice
-        priceOfRawMaterials={priceOfRawMaterials}
-        onSubmit={handleNewMaterialPrice}
-      />
+      {name !== 'Цех 2' && (
+        <EditWorkshopMaterialsPrice
+          priceOfRawMaterials={priceOfRawMaterials}
+          onSubmit={handleNewMaterialPrice}
+        />
+      )}
 
       <EditWorkshopSawingPrice sawingPrice={sawingPrice} onSubmit={handleNewSawingPrice} />
     </Box>
