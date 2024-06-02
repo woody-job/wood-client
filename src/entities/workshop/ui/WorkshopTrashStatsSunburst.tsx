@@ -44,7 +44,7 @@ export const WorkshopTrashStatsSunburst: FC<WorkshopTrashStatsSunburstProps> = (
       value='size'
       valueFormat={value => `${value.toFixed(2)} м3`}
       arcLabel={({ path, value, percentage }) => {
-        return path[1] === 'Выход'
+        return path[0] === 'Выход'
           ? `${path[0]}, ${value.toFixed(2)} м3`
           : `${path[0]}: ${percentage.toFixed(2)}%`
       }}

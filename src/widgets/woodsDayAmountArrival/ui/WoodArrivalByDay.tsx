@@ -87,7 +87,7 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
         )}
       </Box>
 
-      <DataGridContainer height='400px' width='600px'>
+      <DataGridContainer height='400px'>
         {isLoadingWoodArrival && (
           <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
             <CircularProgress size={100} />

@@ -29,7 +29,6 @@ export const WorkshopDashItem: FC<WorkshopDashItemProps> = ({
       justifyContent='center'
       alignItems='start'
       flexDirection='column'
-      width='500px'
       gap={1}
       sx={{
         background: theme => theme.primary.purpleOpacity,

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Typography } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 
 import { WarehouseSunburstData } from '@/entities/warehouse'
 import { CustomSunburst } from '@/shared/ui'
@@ -18,7 +18,7 @@ export const WarehouseSunburst: FC<DimensionProps> = ({ data, total }) => {
       value='size'
       containerProps={{
         width: '800px',
-        height: '800px',
+        height: '100%',
       }}
       arcLabel={({ id }) => `${id}`}
       valueFormat={value => value.toFixed(2) + ' м3'}

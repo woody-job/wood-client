@@ -9,8 +9,8 @@ export const DryersDashboard = () => {
   return (
     <Box>
       <DashboardTitle>Общие данные по сушилкам</DashboardTitle>
-      <Box display='flex' gap={3} flexWrap='wrap' justifyContent='space-between'>
-        {isLoadingDryerStats && <Skeleton variant='rounded' sx={{ width: 771, height: 378 }} />}
+      <Box display='flex' gap={2} flexWrap='wrap' justifyContent='space-between'>
+        {isLoadingDryerStats && <Skeleton variant='rounded' sx={{ width: '100%', height: 378 }} />}
 
         {dryerStats &&
           dryerStats.map(dryerStat => {
@@ -27,7 +27,7 @@ export const DryersDashboard = () => {
 
             return (
               <DashItem
-                width={'31.2%'}
+                width={'31%'}
                 height={100}
                 sx={{
                   '&:nth-child(2n)': {

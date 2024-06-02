@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react'
 
 import { skipToken } from '@reduxjs/toolkit/query'
 
-import { Box, Skeleton } from '@mui/material'
+import { Box, Grid, Skeleton } from '@mui/material'
 
 import { VaultItem } from '@/entities/vault'
 import { useFetchWoodArrivalByRangeQuery } from '@/entities/wood-arrival'
@@ -53,39 +53,51 @@ export const WetWoodVaultStats: FC<WetWoodVaultStatsProps> = ({ startDate, endDa
     isLoadingWoodShipment
 
   return (
-    <Box display='flex' gap={3} mt={5} flexWrap='wrap' justifyContent='space-evenly'>
+    <Grid container xs={12} spacing={3} mt={5} justifyContent={'center'}>
       {isLoading && (
         <>
-          <Skeleton variant='circular' width='600px' height='600px' />
-          <Skeleton variant='circular' width='600px' height='600px' />
-          <Skeleton variant='circular' width='600px' height='600px' />
+          <Grid item lg={6} xl={6}>
+            <Skeleton variant='circular' width='500px' height='500px' sx={{ mx: 'auto' }} />
+          </Grid>
+          <Grid item lg={6} xl={6}>
+            <Skeleton variant='circular' width='500px' height='500px' sx={{ mx: 'auto' }} />
+          </Grid>
+          <Grid item lg={6} xl={6}>
+            <Skeleton variant='circular' width='500px' height='500px' sx={{ mx: 'auto' }} />
+          </Grid>
         </>
       )}
       {!isLoading && (
         <>
           {workshopProducedStats && (
-            <VaultItem
-              title='Произвели'
-              sunburstData={workshopProducedStats.sunburstData}
-              total={workshopProducedStats.totalVolume}
-            />
+            <Grid item lg={6} xl={6}>
+              <VaultItem
+                title='Произвели'
+                sunburstData={workshopProducedStats.sunburstData}
+                total={workshopProducedStats.totalVolume}
+              />
+            </Grid>
           )}
           {woodArrivalByRange && (
-            <VaultItem
-              title='Поступило'
-              sunburstData={woodArrivalByRange.sunburstData}
-              total={woodArrivalByRange.totalVolume}
-            />
+            <Grid item lg={6} xl={6}>
+              <VaultItem
+                title='Поступило'
+                sunburstData={woodArrivalByRange.sunburstData}
+                total={woodArrivalByRange.totalVolume}
+              />
+            </Grid>
           )}
           {woodShipmentByRange && (
-            <VaultItem
-              title='Отгрузили'
-              sunburstData={woodShipmentByRange.sunburstData}
-              total={woodShipmentByRange.totalVolume}
-            />
+            <Grid item lg={6} xl={6}>
+              <VaultItem
+                title='Отгрузили'
+                sunburstData={woodShipmentByRange.sunburstData}
+                total={woodShipmentByRange.totalVolume}
+              />
+            </Grid>
           )}
         </>
       )}
-    </Box>
+    </Grid>
   )
 }

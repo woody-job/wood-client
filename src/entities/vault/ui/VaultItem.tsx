@@ -27,8 +27,8 @@ export const VaultItem: FC<VaultItemProps> = ({ title, sunburstData, total }) =>
         id='name'
         value='size'
         containerProps={{
-          width: '650px',
-          height: '650px',
+          width: '100%',
+          height: '600px',
         }}
         arcLabel={({ id }) => `${id}`}
         valueFormat={value => value.toFixed(2) + ' м3'}

@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { skipToken } from '@reduxjs/toolkit/query'
 
-import { Box, Skeleton, Typography } from '@mui/material'
+import { Box, Grid, Skeleton, Typography } from '@mui/material'
 
 import { WoodAmountSunburst } from '@/entities/wood'
 import { useFetchWoodShipmentByRangeQuery } from '@/entities/wood-shipment'
@@ -31,13 +31,17 @@ export const WoodShipmentRangeItem: FC<WoodShipmentRangeItemProps> = ({
   )
 
   return (
-    <Box display='flex' flexDirection='column' alignItems='center'>
+    <Grid container flexDirection='column' alignItems='center'>
       <Typography variant='h6'>{woodConditionName}</Typography>
 
-      {isLoadingWoodShipment && <Skeleton variant='circular' width='600px' height='600px' />}
+      {isLoadingWoodShipment && (
+        <Grid item lg={6} xl={6}>
+          <Skeleton variant='circular' width='500px' height='500px' />
+        </Grid>
+      )}
       {woodShipment && (
         <WoodAmountSunburst data={woodShipment.sunburstData} total={woodShipment.totalVolume} />
       )}
-    </Box>
+    </Grid>
   )
 }

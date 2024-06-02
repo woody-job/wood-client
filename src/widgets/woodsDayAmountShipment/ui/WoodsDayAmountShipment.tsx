@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Box } from '@mui/material'
+import { Grid } from '@mui/material'
 
 import { useFetchAllWoodConditionsQuery } from '@/entities/wood-condition'
 
@@ -14,16 +14,18 @@ export const WoodsDayAmountShipment: FC<WoodsDayAmountShipmentProps> = ({ select
   const { data: woodConditions } = useFetchAllWoodConditionsQuery()
 
   return (
-    <Box display='flex' gap={10} mt={5} flexWrap='wrap'>
+    <Grid container mt={5} spacing={5}>
       {woodConditions &&
         woodConditions.map(woodCondition => (
-          <WoodShipmentByDay
-            key={woodCondition.id}
-            woodConditionId={woodCondition.id}
-            selectedDate={selectedDate}
-            title={woodCondition.name}
-          />
+          <Grid item xs={12} lg={6} xl={6}>
+            <WoodShipmentByDay
+              key={woodCondition.id}
+              woodConditionId={woodCondition.id}
+              selectedDate={selectedDate}
+              title={woodCondition.name}
+            />
+          </Grid>
         ))}
-    </Box>
+    </Grid>
   )
 }
