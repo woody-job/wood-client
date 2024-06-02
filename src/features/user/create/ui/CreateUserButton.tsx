@@ -53,7 +53,7 @@ export const CreateUserButton = forwardRef<HTMLButtonElement, ButtonProps>((prop
 
     const body: CreateUserParams = {
       login,
-      fullName: `${secondName} ${firstName} ${fatherName}`,
+      fullName: `${secondName.trim()} ${firstName.trim()} ${fatherName.trim()}`,
       roleId,
       password,
     }

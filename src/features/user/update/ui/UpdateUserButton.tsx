@@ -59,7 +59,7 @@ export const UpdateUserButton: FC<UpdateUserButtonProps> = ({ user, ...props }) 
       userId: user.id,
       userData: {
         login,
-        fullName: `${secondName} ${firstName} ${fatherName}`,
+        fullName: `${secondName.trim()} ${firstName.trim()} ${fatherName.trim()}`,
         roleId,
         password,
       },
