@@ -14,6 +14,7 @@ import { TokenService } from '@/shared/libs/services'
 import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { useSnackbar } from 'notistack'
+import { urls } from '@/shared/constants'
 
 export const LoginForm = () => {
   const {
@@ -38,7 +39,7 @@ export const LoginForm = () => {
         if (!validateUser(user)) enqueueSnackbar('Ошибка авторизации', { variant: 'error' })
         TokenService.setToken(response.token)
         dispatch(login(user as AuthUser))
-        navigate('/')
+        navigate("/" + urls.dashboard)
       })
       .catch(error => {
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))

@@ -23,14 +23,13 @@ export const baseQueryWithAuth: BaseQueryFn<
       },
     },
     api,
-    extraOptions
+    extraOptions,
   )
 
-  if ((result.error && result.error.status === 401) || !accessToken) {
+  if (result.error && (result.error.status === 401 || result.error.status === 403)) {
     api.dispatch(logout())
     TokenService.removeToken()
-
-    window.location.href = `/${urls.login}`
+    window.location.href = `/wood-client/${urls.login}`
   }
 
   return result
