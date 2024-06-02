@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { Box, Divider,Grid } from '@mui/material'
+import { Box, Divider, Grid } from '@mui/material'
 
 import { WorkshopDashboardCards } from '@/widgets/workshopDashboardCards'
 import { WorkshopInputWoods } from '@/widgets/workshopInputWoods'
