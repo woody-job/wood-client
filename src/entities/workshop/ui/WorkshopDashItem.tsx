@@ -51,7 +51,12 @@ export const WorkshopDashItem: FC<WorkshopDashItemProps> = ({
           </Typography>
         </Box>
 
-        <Button component={NavLink} to={`/${urls.workshop}/${workshopId}`} replace size='small'>
+        <Button
+          component={NavLink}
+          to={`/${urls.workshop}/${workshopId}/${urls.day}`}
+          replace
+          size='small'
+        >
           Подробнее
         </Button>
       </Box>
