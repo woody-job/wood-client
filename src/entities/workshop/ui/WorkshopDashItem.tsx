@@ -29,7 +29,6 @@ export const WorkshopDashItem: FC<WorkshopDashItemProps> = ({
       justifyContent='center'
       alignItems='start'
       flexDirection='column'
-      width='500px'
       gap={1}
       sx={{
         background: theme => theme.primary.purpleOpacity,
@@ -52,7 +51,12 @@ export const WorkshopDashItem: FC<WorkshopDashItemProps> = ({
           </Typography>
         </Box>
 
-        <Button component={NavLink} to={`/${urls.workshop}/${workshopId}`} replace size='small'>
+        <Button
+          component={NavLink}
+          to={`/${urls.workshop}/${workshopId}/${urls.day}`}
+          replace
+          size='small'
+        >
           Подробнее
         </Button>
       </Box>

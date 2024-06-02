@@ -30,7 +30,7 @@ export const WoodAmountByDaySunburst: FC<WoodAmountByDaySunburstProps> = ({
         arcLabel={({ id }) => `${id}`}
         valueFormat={value => value.toFixed(2) + ' м3'}
         containerProps={{
-          width: '500px',
+          width: '100%',
           height: '500px',
         }}
       >

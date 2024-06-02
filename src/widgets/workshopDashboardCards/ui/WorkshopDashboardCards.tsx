@@ -26,7 +26,7 @@ export const WorkshopDashboardCards: FC<WorkshopDashboardCardsProps> = ({ now })
       <Grid container gap={3} flex='6'>
         <Grid item>
           {isLoadingWorkshopDailyData ? (
-            <Skeleton sx={{ height: 178, width: '209px !important' }} variant='rounded' />
+            <Skeleton sx={{ height: 178, width: '172px !important' }} variant='rounded' />
           ) : (
             <DashItem sx={{ backgroundColor: theme => theme.primary.purple }}>
               <Typography>Выручка: {workshopDailyData?.totalWoodPrice ?? 0}₽</Typography>
@@ -41,7 +41,7 @@ export const WorkshopDashboardCards: FC<WorkshopDashboardCardsProps> = ({ now })
 
         <Grid item alignSelf='stretch' flex='6'>
           {isLoadingWorkshopDailyData ? (
-            <Skeleton sx={{ height: 178, width: '336px !important' }} variant='rounded' />
+            <Skeleton sx={{ height: 178, width: '100% !important' }} variant='rounded' />
           ) : (
             <DashItem
               sx={{

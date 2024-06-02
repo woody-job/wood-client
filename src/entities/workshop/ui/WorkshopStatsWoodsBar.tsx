@@ -20,7 +20,7 @@ export const WorkshopStatsWoodsBar: FC<WorkshopStatsWoodsBarProps> = ({ woods })
   }, [woods])
 
   return (
-    <Box height='280px' width='100%' borderRadius={4}>
+    <Box height='230px' width='100%' borderRadius={4}>
       <CustomBar
         data={items}
         keys={keys}

@@ -12,7 +12,7 @@ export const InfoDashboard = () => {
       <Box display='flex' gap={3} flexWrap='wrap'>
         {isLoadingWarehouseStats &&
           Array.from(Array(2)).map(() => {
-            return <Skeleton variant='rounded' sx={{ width: 231, height: 182 }} />
+            return <Skeleton variant='rounded' sx={{ width: 200, height: 182 }} />
           })}
 
         {warehouseStats &&
@@ -26,7 +26,6 @@ export const InfoDashboard = () => {
 
             return (
               <DashItem
-                flex={'0 0 30%'}
                 sx={{
                   '&:nth-child(2n)': {
                     backgroundColor: theme => theme.primary.purpleOpacity,

@@ -139,8 +139,14 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
 
   return (
     <Box display='flex' mt={2} flexDirection='column' alignItems='center' ref={editInputWrapperRef}>
-      <Grid container sx={{ width: '100%' }} justifyContent='space-between'>
-        <Grid item xs={isAdmin ? 7 : 12}>
+      <Grid
+        container
+        sx={{ width: '100%' }}
+        justifyContent='space-between'
+        spacing={1}
+        flexWrap='nowrap'
+      >
+        <Grid item xs={isAdmin ? 7 : 12} flexShrink={1}>
           <Box sx={{ position: 'relative' }}>
             <Controller
               name='dimension'
@@ -176,7 +182,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
         </Grid>
 
         {isAdmin && (
-          <Grid item xs={4.5}>
+          <Grid item xs={5} minWidth={197}>
             <ButtonWithLoader
               isLoading={isLoadingUpdatWorkshopDailyDimensionMutation}
               loaderSx={{ left: -28 }}

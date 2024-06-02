@@ -1,4 +1,4 @@
-import { Box, Skeleton } from '@mui/material'
+import { Box, Grid, Skeleton } from '@mui/material'
 
 import { WorkshopDashItem } from '@/entities/workshop/ui'
 import { useFetchCurrentWorkshopsStatsQuery } from '@/entities/workshop-out'
@@ -11,27 +11,35 @@ export const WorkshopsDashboard = () => {
   return (
     <Box>
       <DashboardTitle>Цеха</DashboardTitle>
-      <Box display='flex' gap={2} flexWrap='wrap' justifyContent='center'>
+      <Grid container spacing={3}>
         {isLoadingWorkshopCurrentStats && (
           <>
-            <Skeleton sx={{ width: 500, height: 441 }} variant='rounded' />
-            <Skeleton sx={{ width: 500, height: 441 }} variant='rounded' />
-            <Skeleton sx={{ width: 500, height: 441 }} variant='rounded' />
+            <Grid item xs={12} lg={6} xl={4}>
+              <Skeleton sx={{ width: '100%', height: 430 }} variant='rounded' />
+            </Grid>
+            <Grid item xs={12} lg={6} xl={4}>
+              <Skeleton sx={{ width: '100%', height: 430 }} variant='rounded' />
+            </Grid>
+            <Grid item xs={12} lg={6} xl={4}>
+              <Skeleton sx={{ width: '100%', height: 430 }} variant='rounded' />
+            </Grid>
           </>
         )}
         {workshopCurrentStats &&
           workshopCurrentStats.map(workshopCurrentStat => {
             return (
-              <WorkshopDashItem
-                key={workshopCurrentStat.workshopId}
-                workshopId={workshopCurrentStat.workshopId}
-                workshopName={workshopCurrentStat.workshopName}
-                woods={workshopCurrentStat.woods}
-                lastWorkingDayStats={workshopCurrentStat.lastWorkingDayStats}
-              />
+              <Grid item xs={12} lg={6} xl={4}>
+                <WorkshopDashItem
+                  key={workshopCurrentStat.workshopId}
+                  workshopId={workshopCurrentStat.workshopId}
+                  workshopName={workshopCurrentStat.workshopName}
+                  woods={workshopCurrentStat.woods}
+                  lastWorkingDayStats={workshopCurrentStat.lastWorkingDayStats}
+                />
+              </Grid>
             )
           })}
-      </Box>
+      </Grid>
     </Box>
   )
 }

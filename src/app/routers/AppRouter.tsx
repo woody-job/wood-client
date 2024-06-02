@@ -94,7 +94,7 @@ export const AppRouter = () => {
     </>
   )
 
-  const appRouterObject = createBrowserRouter(routes)
+  const appRouterObject = createBrowserRouter(routes, { basename: '/wood-client' })
 
   return <RouterProvider router={appRouterObject} />
 }

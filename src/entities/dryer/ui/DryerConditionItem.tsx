@@ -32,8 +32,7 @@ export const DryerConditionItem: FC<DryerConditionItemProps> = props => {
         flexDirection='column'
         alignItems='center'
         className='dryer-condition-item'
-        minWidth='650px'
-        minHeight='650px'
+        height={'70vh'}
       >
         <Typography variant='h6'>{dryerName}</Typography>
         <Typography variant='subtitle1'>Цикл {dryerIterationCount}</Typography>

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Skeleton } from '@mui/material'
+import { Box, Skeleton } from '@mui/material'
 
 import { useFetchWarehouseQuery, WarehouseSunburst } from '@/entities/warehouse'
 
@@ -11,9 +11,15 @@ export type WarehouseItemProps = {
 export const WarehouseItem: FC<WarehouseItemProps> = ({ woodConditionId }) => {
   const { data: warehouse, isLoading: isLoadingWarehouse } = useFetchWarehouseQuery(woodConditionId)
 
-  return isLoadingWarehouse ? (
-    <Skeleton variant='circular' width='750px' height='750px' />
-  ) : (
-    warehouse && <WarehouseSunburst data={warehouse.sunburstData} total={warehouse.totalVolume} />
+  return (
+    <Box sx={{ height: '70vh' }}>
+      {isLoadingWarehouse ? (
+        <Skeleton variant='circular' sx={{ aspectRatio: '1 / 1', height: '70vh' }} />
+      ) : (
+        warehouse && (
+          <WarehouseSunburst data={warehouse.sunburstData} total={warehouse.totalVolume} />
+        )
+      )}
+    </Box>
   )
 }
