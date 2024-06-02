@@ -11,23 +11,23 @@ export const WORKSHOP_TOTAL_TABLE_COLUMNS: GridColDef[] = [
   { headerName: 'Выход, %', field: 'totalWorkshopOutPercentage' },
 
   // Сорта
-  { headerName: 'Сорт первый, м3', field: 'firstClassVolume' },
-  { headerName: 'Сорт первый, %', field: 'firstClassPercentage' },
+  { headerName: 'Сорт первый, м3', field: 'firstClassVolume', width: 130 },
+  { headerName: 'Сорт первый, %', field: 'firstClassPercentage', width: 130 },
 
-  { headerName: 'Сорт второй, м3', field: 'secondClassVolume' },
-  { headerName: 'Сорт второй, %', field: 'secondClassPercentage' },
+  { headerName: 'Сорт второй, м3', field: 'secondClassVolume', width: 130 },
+  { headerName: 'Сорт второй, %', field: 'secondClassPercentage', width: 130 },
 
-  { headerName: 'Сорт рыночный, м3', field: 'marketClassVolume' },
-  { headerName: 'Сорт рыночный, %', field: 'marketClassPercentage' },
+  { headerName: 'Сорт рыночный, м3', field: 'marketClassVolume', width: 150 },
+  { headerName: 'Сорт рыночный, %', field: 'marketClassPercentage', width: 150 },
 
-  { headerName: 'Сорт браун, м3', field: 'brownClassVolume' },
-  { headerName: 'Сорт браун, %', field: 'brownClassPercentage' },
+  { headerName: 'Сорт браун, м3', field: 'brownClassVolume', width: 130 },
+  { headerName: 'Сорт браун, %', field: 'brownClassPercentage', width: 130 },
   // Сорта
 
   // Дэньги
   { headerName: 'Выручка, ₽', field: 'totalWoodPrice' },
   { headerName: 'Сырье, ₽', field: 'priceOfRawMaterials' },
-  { headerName: 'Распиловка, ₽', field: 'sawingPrice' },
+  { headerName: 'Распиловка, ₽', field: 'sawingPrice', width: 130 },
   { headerName: 'Итог, ₽', field: 'profit' },
-  { headerName: 'Итог на куб, ₽', field: 'profitPerUnit' },
+  { headerName: 'Итог на куб, ₽', field: 'profitPerUnit', width: 130 },
 ]
