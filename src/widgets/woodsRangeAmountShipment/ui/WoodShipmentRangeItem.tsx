@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { skipToken } from '@reduxjs/toolkit/query'
 
-import { Box, Grid, Skeleton, Typography } from '@mui/material'
+import { Grid, Skeleton, Typography } from '@mui/material'
 
 import { WoodAmountSunburst } from '@/entities/wood'
 import { useFetchWoodShipmentByRangeQuery } from '@/entities/wood-shipment'

@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react'
 
 import { skipToken } from '@reduxjs/toolkit/query'
 
-import { Box, Grid, Skeleton } from '@mui/material'
+import { Grid, Skeleton } from '@mui/material'
 
 import { VaultItem } from '@/entities/vault'
 import { useFetchWoodArrivalByRangeQuery } from '@/entities/wood-arrival'

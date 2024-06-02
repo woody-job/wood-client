@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Skeleton, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 
 import { WarehouseSunburstData } from '@/entities/warehouse'
 import { CustomSunburst } from '@/shared/ui'
