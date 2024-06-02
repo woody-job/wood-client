@@ -16,7 +16,7 @@ type WorkshopChartsProps = {
 export const WorkshopCharts: FC<WorkshopChartsProps> = ({ timeRange }) => {
   const [unitSelection, setUnitSelection] = useState('perTotal')
 
-  const handleUnitSelectionChange = (event: ChangeEvent<HTMLInputElement>, value: string) => {
+  const handleUnitSelectionChange = (_event: ChangeEvent<HTMLInputElement>, value: string) => {
     setUnitSelection(value)
   }
 

@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { Box, CircularProgress, Typography } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridCellParams } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { AddInputWoodButton } from '@/features/wood-input-woods/add'
@@ -66,7 +66,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
             disableColumnMenu: true,
             sortable: false,
             width: 100,
-            renderCell: params => {
+            renderCell: (params: GridCellParams) => {
               return (
                 <Box sx={{ ml: 'auto' }}>
                   <UpdateInputWoodButton beamIn={params.row} sx={{ mr: 1 }} />

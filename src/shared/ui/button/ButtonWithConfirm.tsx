@@ -20,7 +20,7 @@ export interface ButtonWithConfirmProps extends ButtonProps {
   submitText?: string
   cancelText?: string
   onConfirm: () => void
-  isLoading: boolean
+  isLoading?: boolean
   renderButton?: (props: { onClick: () => void }) => ReactNode
 }
 

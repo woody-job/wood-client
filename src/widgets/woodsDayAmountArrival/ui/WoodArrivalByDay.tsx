@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
 import { Box, CircularProgress, Typography } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddWoodsArrival } from '@/features/arrival/add'
 import { DeleteArrivalButton } from '@/features/arrival/delete'
@@ -54,7 +54,7 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
             disableColumnMenu: true,
             sortable: false,
             width: 100,
-            renderCell: ({ id, row }) => (
+            renderCell: ({ id, row }: GridCellParams) => (
               <Box sx={{ ml: 'auto' }}>
                 <UpdateArrivalButton
                   onClick={() => handleOpenModal(id as number)}

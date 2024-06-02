@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import { Box, CircularProgress, Typography } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridCellParams } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { AddOutputWoodButton } from '@/features/wood-output-woods/add'
@@ -62,7 +62,7 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
             disableColumnMenu: true,
             sortable: false,
             width: 100,
-            renderCell: params => {
+            renderCell: (params: GridCellParams) => {
               return (
                 <Box sx={{ ml: 'auto' }}>
                   <UpdateOutputWoodButton workshopOut={params.row} sx={{ mr: 1 }} />

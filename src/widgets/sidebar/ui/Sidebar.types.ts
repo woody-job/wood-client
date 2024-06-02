@@ -9,4 +9,5 @@ export type SidebarPath =
         name: string
       }[]
       name: string
+      path?: string
     }

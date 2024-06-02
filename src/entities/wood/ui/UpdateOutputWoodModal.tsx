@@ -4,7 +4,6 @@ import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { Dimension, getDimensionString } from '@/entities/dimension'
-import { DryerBringInFormType } from '@/entities/dryer'
 import { WoodClass } from '@/entities/wood-class'
 import { WoodType } from '@/entities/wood-type'
 import { WorkshopOutFormType } from '@/entities/workshop-out/model'
@@ -19,7 +18,7 @@ export interface UpdateOutputWoodModalProps extends Omit<ModalProps, 'children'>
   isDimensionsLoading: boolean
   isWoodClassesLoading: boolean
   isWoodTypesLoading: boolean
-  methods: UseFormReturn<DryerBringInFormType>
+  methods: UseFormReturn<WorkshopOutFormType>
   woodClasses: WoodClass[] | undefined
   woodTypes: WoodType[] | undefined
   isLoading: boolean

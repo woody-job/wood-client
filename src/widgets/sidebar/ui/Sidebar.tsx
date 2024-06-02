@@ -108,13 +108,16 @@ export const Sidebar = () => {
         <Box display='flex' flexDirection='column' gap='2px' mb={2} mt={2}>
           <Typography color={theme => theme.black[40]}>Настройки</Typography>
 
-          {settingsPaths.map(({ path, name }) => (
-            <NavLink to={path} key={name}>
-              <MenuSidebarItem isActive={location.pathname.startsWith(path)}>
-                {name}
-              </MenuSidebarItem>
-            </NavLink>
-          ))}
+          {settingsPaths.map(
+            ({ path, name }) =>
+              path && (
+                <NavLink to={path} key={name}>
+                  <MenuSidebarItem isActive={location.pathname.startsWith(path)}>
+                    {name}
+                  </MenuSidebarItem>
+                </NavLink>
+              )
+          )}
         </Box>
       ) : (
         <Box />

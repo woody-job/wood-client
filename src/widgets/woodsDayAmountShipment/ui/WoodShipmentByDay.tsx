@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
 import { Box, CircularProgress, Typography } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddWoodsShipment } from '@/features/shipment/add'
 import { DeleteShipmentButton } from '@/features/shipment/delete'
@@ -54,7 +54,7 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
             disableColumnMenu: true,
             sortable: false,
             width: 100,
-            renderCell: ({ id, row }) => (
+            renderCell: ({ id, row }: GridCellParams) => (
               <Box sx={{ ml: 'auto' }}>
                 <UpdateShipmentButton
                   onClick={() => handleOpenModal(id as number)}
