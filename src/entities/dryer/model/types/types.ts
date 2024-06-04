@@ -51,7 +51,19 @@ export type DryerDataParams = {
   dryerChamberId: number
 }
 
-export type DryerBringInFormType = Omit<DryerDataParams, 'date' | 'dryerChamberId'>
+export type DryerBringInFormType = {
+  woods: {
+    woodClassId: number | undefined
+    dimensionId: number | undefined
+    woodTypeId: number | undefined
+    amount: number
+  }[]
+}
+
+export type BringWoodInDryerParams = {
+  dryerChamberId: number
+  woods: Omit<DryerDataParams, 'dryerChamberId'>[]
+}
 
 export type DryerStatsData = {
   dryerId: number

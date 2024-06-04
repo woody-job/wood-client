@@ -1,18 +1,16 @@
 import { FC, useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-
-import { skipToken } from '@reduxjs/toolkit/query'
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
 import { Button, ButtonProps } from '@mui/material'
 
 import { InsertWoodModal } from '@/features/dryer/insert-wood'
-import { useFetchDimensionsByWoodClassQuery } from '@/entities/dimension'
 import { DryerBringInFormType, useBringInMutation } from '@/entities/dryer'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
+import dayjs from 'dayjs'
 import { useSnackbar } from 'notistack'
 
 export type InsertWoodButtonProps = ButtonProps & {
@@ -23,21 +21,27 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
   const { dryerId, ...buttonProps } = props
   const [isOpenInsert, setIsOpenInsert] = useState(false)
 
-  const methods = useForm<DryerBringInFormType>()
-  const { watch, reset } = methods
+  const methods = useForm<DryerBringInFormType>({
+    defaultValues: {
+      woods: [
+        {
+          woodClassId: undefined,
+          dimensionId: undefined,
+          woodTypeId: undefined,
+          amount: NaN,
+        },
+      ],
+    },
+  })
+  const { reset, control } = methods
+
+  const { fields, append, remove } = useFieldArray({ control, name: 'woods' })
 
   const { enqueueSnackbar } = useSnackbar()
-
-  const watchWoodClassId = watch('woodClassId')
 
   const [bringInMutation, { isLoading: isLoadingBringInMutation }] = useBringInMutation()
   const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery(
     undefined,
-    { skip: !isOpenInsert }
-  )
-
-  const { data: dimensions, isLoading: isDimensionsLoading } = useFetchDimensionsByWoodClassQuery(
-    watchWoodClassId ?? skipToken,
     { skip: !isOpenInsert }
   )
 
@@ -46,16 +50,27 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
   })
 
   useEffect(() => {
-    if (!isOpenInsert) reset()
+    if (!isOpenInsert) {
+      reset()
+    }
   }, [isOpenInsert, reset])
 
   const handleCloseInsert = () => setIsOpenInsert(false)
 
-  const handleSubmitInsert: SubmitHandler<DryerBringInFormType> = values => {
+  const handleSubmitInsert: SubmitHandler<DryerBringInFormType> = ({ woods }) => {
+    const woodsForRequest = woods.map(wood => {
+      return {
+        woodClassId: wood.woodClassId ?? 0,
+        dimensionId: wood.dimensionId ?? 0,
+        woodTypeId: wood.woodTypeId ?? 0,
+        amount: wood.amount,
+        date: dayjs().toISOString(),
+      }
+    })
+
     bringInMutation({
-      ...values,
       dryerChamberId: dryerId,
-      date: new Date().toISOString(),
+      woods: woodsForRequest,
     })
       .unwrap()
       .then(() => {
@@ -80,11 +95,12 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
         methods={methods}
         woodClasses={woodClasses}
         isWoodClassesLoading={isWoodClassesLoading}
-        dimensions={dimensions}
-        isDimensionsLoading={isDimensionsLoading}
         woodTypes={woodTypes}
         isWoodTypesLoading={isWoodTypesLoading}
         isLoading={isLoadingBringInMutation}
+        fields={fields}
+        append={append}
+        remove={remove}
       />
     </>
   )

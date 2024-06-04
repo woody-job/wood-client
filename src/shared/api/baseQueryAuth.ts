@@ -2,8 +2,8 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 
 import { logout } from '@/entities/auth'
 import { baseQuery } from '@/shared/api/baseQuery.ts'
-import { TokenService } from '@/shared/libs/services'
 import { urls } from '@/shared/constants'
+import { TokenService } from '@/shared/libs/services'
 
 export const baseQueryWithAuth: BaseQueryFn<
   string | FetchArgs,
@@ -22,7 +22,7 @@ export const baseQueryWithAuth: BaseQueryFn<
       },
     },
     api,
-    extraOptions,
+    extraOptions
   )
 
   if (result.error && result.error.status === 403) {

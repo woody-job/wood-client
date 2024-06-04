@@ -1,4 +1,5 @@
 import {
+  BringWoodInDryerParams,
   CreateDryerParams,
   Dryer,
   DryerDataList,
@@ -51,11 +52,11 @@ export const dryerApi = baseApi.injectEndpoints({
       providesTags: ['DryersDataById'],
     }),
 
-    bringIn: build.mutation<DryerDataParams, DryerDataParams>({
-      query: ({ dryerChamberId, ...dryer }) => ({
+    bringIn: build.mutation<DryerDataParams, BringWoodInDryerParams>({
+      query: ({ dryerChamberId, woods }) => ({
         url: `dryer-chamber-data/bring-in/${dryerChamberId}`,
         method: 'POST',
-        body: dryer,
+        body: woods,
       }),
       invalidatesTags: ['DryersDataById', 'Dryers'],
     }),
