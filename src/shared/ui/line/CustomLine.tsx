@@ -65,7 +65,7 @@ export const CustomLine: FC<CustomLineProps> = props => {
 
         <IconButton
           onClick={handleOpen}
-          sx={{ position: 'absolute', top: -10, right: -10, transition: 'all 300ms' }}
+          sx={{ position: 'absolute', top: -20, right: -20, transition: 'all 300ms' }}
           className='line-fullscreen'
         >
           <FullscreenIcon />

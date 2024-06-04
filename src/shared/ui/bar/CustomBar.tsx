@@ -62,7 +62,7 @@ export const CustomBar = <T extends BarDatum>(props: CustomBarProps<T>) => {
       />
 
       <IconButton
-        sx={{ position: 'absolute', top: -10, right: -10, transition: 'all 300ms' }}
+        sx={{ position: 'absolute', top: -20, right: -20, transition: 'all 300ms' }}
         className='bar-fullscreen'
         onClick={handleOpen}
       >
