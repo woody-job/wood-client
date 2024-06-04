@@ -1,15 +1,13 @@
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 
-import { ColorModifier } from '@nivo/colors/dist/types/inheritedColor'
-import { ResponsiveSunburst, SunburstSvgProps } from '@nivo/sunburst'
+import { SunburstSvgProps } from '@nivo/sunburst'
 
-import { Box, BoxProps, Typography } from '@mui/material'
+import { Box, BoxProps, Modal } from '@mui/material'
 
-import { useAppSelector } from '@/app/store.ts'
-import { chartColors, colorTokens } from '@/shared/constants'
-import { modeSwitcher } from '@/shared/libs/helpers'
-import { useNivoTheme } from '@/shared/libs/hooks'
-import { ColorItem, CustomTooltip } from '@/shared/ui'
+import { ModalContent } from '@/shared/ui'
+import { ModalCloseButton } from '@/shared/ui/modal'
+import { CustomSunburstFullscreen } from '@/shared/ui/sunburst/CustomSunburstFullscreen.tsx'
+import { CustomSunburstItem } from '@/shared/ui/sunburst/CustomSunburstItem.tsx'
 
 export type CustomSunburstProps<T> = Partial<SunburstSvgProps<T>> & {
   data: T
@@ -23,47 +21,61 @@ export const CustomSunburst = <T,>({
   children,
   ...restProps
 }: CustomSunburstProps<T>) => {
-  const nivoTheme = useNivoTheme()
-  const currentMode = useAppSelector(state => state.theme.mode)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+  const handleOpen = () => {
+    setIsOpen(true)
+  }
 
   return (
-    <Box
-      position='relative'
-      width='450px'
-      height='450px'
-      display='flex'
-      justifyContent='center'
-      alignItems='center'
-      {...containerProps}
-    >
-      <Box>{children}</Box>
+    <>
+      <Box
+        position='relative'
+        width='450px'
+        height='450px'
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        sx={{
+          '&:hover .sunburst-fullscreen': {
+            pointerEvents: 'all',
+            opacity: 1,
+          },
+          '& .sunburst-fullscreen': {
+            pointerEvents: 'none',
+            opacity: 0,
+          },
+        }}
+        {...containerProps}
+      >
+        <CustomSunburstFullscreen onClick={handleOpen} />
+        <Box>{children}</Box>
 
-      <Box position='absolute' width='100%' height='100%'>
-        <ResponsiveSunburst
-          data={data}
-          margin={{ top: 40, right: 20, bottom: 20, left: 20 }}
-          colors={chartColors}
-          borderColor={colorTokens.black[40]}
-          arcLabelsSkipAngle={10}
-          arcLabelsTextColor={{
-            from: 'color',
-            modifiers: [modeSwitcher<ColorModifier>(['darker', 2], ['brighter', 5])(currentMode)],
-          }}
-          childColor={{ from: 'color', modifiers: [['opacity', 0.75]] }}
-          borderWidth={1}
-          theme={nivoTheme}
-          enableArcLabels
-          tooltip={({ id, color, formattedValue }) => (
-            <CustomTooltip>
-              <ColorItem bgcolor={color} />
-              <Typography>
-                {id} - {formattedValue}
-              </Typography>
-            </CustomTooltip>
-          )}
-          {...restProps}
-        />
+        <CustomSunburstItem data={data} {...restProps} />
       </Box>
-    </Box>
+
+      <Modal open={isOpen} onClose={handleClose}>
+        <ModalContent fullscreen display='flex' justifyContent='center' alignItems='center'>
+          <ModalCloseButton onClick={handleClose} />
+
+          <Box
+            position='relative'
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            {...containerProps}
+            width='100%'
+            height='100%'
+          >
+            <Box>{children}</Box>
+
+            <CustomSunburstItem data={data} {...restProps} />
+          </Box>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
