@@ -32,7 +32,6 @@ export const DryerConditionItem: FC<DryerConditionItemProps> = props => {
         flexDirection='column'
         alignItems='center'
         className='dryer-condition-item'
-        height={'70vh'}
       >
         <Typography variant='h6'>{dryerName}</Typography>
         <Typography variant='subtitle1' sx={{ mb: 2 }}>
