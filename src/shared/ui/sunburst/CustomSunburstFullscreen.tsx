@@ -9,8 +9,8 @@ export const CustomSunburstFullscreen: FC<IconButtonProps> = props => {
     <IconButton
       sx={{
         position: 'absolute',
-        top: 0,
-        right: 0,
+        top: 30,
+        right: 30,
         zIndex: 3,
         transition: 'all 300ms',
       }}
