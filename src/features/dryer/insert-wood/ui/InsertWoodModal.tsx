@@ -1,25 +1,32 @@
 import { FC } from 'react'
-import { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import {
+  SubmitHandler,
+  UseFieldArrayAppend,
+  UseFieldArrayRemove,
+  UseFormReturn,
+} from 'react-hook-form'
 
-import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
+import { Box, Button, Modal, ModalProps, Typography } from '@mui/material'
 
-import { Dimension, getDimensionString } from '@/entities/dimension'
 import { DryerBringInFormType } from '@/entities/dryer'
 import { WoodClass } from '@/entities/wood-class'
 import { WoodType } from '@/entities/wood-type'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
 
+import { InsertWoodFormItem } from './InsertWoodFormItem'
+
 export type InsertWoodModalProps = Omit<ModalProps, 'children'> & {
-  dimensions: Dimension[] | undefined
   onSubmitForm: SubmitHandler<DryerBringInFormType>
-  isDimensionsLoading: boolean
   isWoodClassesLoading: boolean
   isWoodTypesLoading: boolean
   methods: UseFormReturn<DryerBringInFormType>
   woodClasses: WoodClass[] | undefined
   woodTypes: WoodType[] | undefined
   isLoading: boolean
+  fields: Record<'id', string>[]
+  append: UseFieldArrayAppend<DryerBringInFormType, 'woods'>
+  remove: UseFieldArrayRemove
 }
 
 export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
@@ -28,11 +35,12 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
     methods,
     woodClasses,
     isWoodClassesLoading,
-    dimensions,
-    isDimensionsLoading,
     woodTypes,
     isWoodTypesLoading,
     isLoading,
+    fields,
+    append,
+    remove,
     ...modalProps
   } = props
 
@@ -41,8 +49,8 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
     watch,
     register,
     formState: { errors },
+    control,
   } = methods
-  const watchWoodClassId = watch('woodClassId')
 
   return (
     <Modal {...modalProps} aria-labelledby='create-user-modal-title'>
@@ -50,110 +58,80 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
         component='form'
         sx={{
           display: 'flex',
+          width: 510,
+          maxHeight: '90vh',
           flexDirection: 'column',
           '.MuiFormControl-root, .MuiCircularProgress-root': {
             mt: 2,
           },
+          alignItems: 'center',
         }}
         onSubmit={handleSubmit(onSubmitForm)}
       >
-        <Typography
-          id='create-user-modal-title'
-          variant='h5'
-          component='h2'
-          sx={{ textAlign: 'center', mb: 2 }}
+        <Box
+          sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            width: 505,
+            overflowY: 'scroll',
+            pr: 0.5,
+            px: 3,
+            pb: 1,
+          }}
         >
-          Внести доски
-        </Typography>
-        {isWoodClassesLoading ? (
-          <CircularProgress size={20} />
-        ) : (
-          <TextField
-            select
-            label='Сорт'
-            inputProps={{ ...register('woodClassId', { required: true }) }}
+          <Typography
+            id='create-user-modal-title'
+            variant='h5'
+            component='h2'
+            sx={{ textAlign: 'center', mb: 2 }}
           >
-            {woodClasses?.map(woodClass => (
-              <MenuItem key={woodClass.id} value={woodClass.id}>
-                {woodClass.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-        {errors.woodClassId?.type === 'required' && (
-          <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-            Порода обязательна
+            Внести доски
           </Typography>
-        )}
 
-        {isDimensionsLoading ? (
-          <CircularProgress size={20} />
-        ) : (
-          <TextField
-            select
-            label='Сечение'
-            inputProps={{ ...register('dimensionId', { required: true }) }}
+          {fields.map((field, fieldIndex) => {
+            return (
+              <InsertWoodFormItem
+                field={field}
+                fieldIndex={fieldIndex}
+                watch={watch}
+                register={register}
+                errors={errors}
+                isWoodClassesLoading={isWoodClassesLoading}
+                isWoodTypesLoading={isWoodTypesLoading}
+                woodClasses={woodClasses}
+                woodTypes={woodTypes}
+                control={control}
+                remove={remove}
+              />
+            )
+          })}
+
+          <Button
+            onClick={() =>
+              append({
+                woodClassId: undefined,
+                dimensionId: undefined,
+                woodTypeId: undefined,
+                amount: NaN,
+              })
+            }
+            variant='outlined'
           >
-            {watchWoodClassId ? (
-              dimensions?.map(dimension => (
-                <MenuItem key={dimension.id} value={dimension.id}>
-                  {getDimensionString(dimension)}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem disabled>Выберите сорт</MenuItem>
-            )}
-          </TextField>
-        )}
-        {errors.dimensionId?.type === 'required' && (
-          <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-            Сечение обязательно
-          </Typography>
-        )}
+            Добавить
+          </Button>
 
-        {isWoodTypesLoading ? (
-          <CircularProgress size={20} />
-        ) : (
-          <TextField
-            select
-            label='Порода'
-            inputProps={{ ...register('woodTypeId', { required: true }) }}
+          <ButtonWithLoader
+            isLoading={isLoading}
+            type='submit'
+            sx={{ mt: 4 }}
+            loaderSx={{ top: -14 }}
+            variant='contained'
+            color='primary'
           >
-            {woodTypes?.map(woodType => (
-              <MenuItem key={woodType.id} value={woodType.id}>
-                {woodType.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-        {errors.woodTypeId?.type === 'required' && (
-          <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-            Порода обязательна
-          </Typography>
-        )}
-
-        <TextField
-          label='Количество'
-          variant='outlined'
-          type='number'
-          inputProps={{ ...register('amount', { required: true, valueAsNumber: true }) }}
-        />
-        {errors.amount?.type === 'required' && (
-          <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-            Количество не может быть пустым
-          </Typography>
-        )}
-
-        <ButtonWithLoader
-          isLoading={isLoading}
-          type='submit'
-          sx={{ mt: 4 }}
-          loaderSx={{ top: -14 }}
-          variant='contained'
-          color='primary'
-        >
-          Внести
-        </ButtonWithLoader>
+            Внести
+          </ButtonWithLoader>
+        </Box>
       </ModalContent>
     </Modal>
   )

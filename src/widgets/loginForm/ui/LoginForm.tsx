@@ -9,12 +9,12 @@ import { loginRegex } from '@/widgets/loginForm/constants'
 import { LoginFormType } from '@/widgets/loginForm/model'
 import { AuthUser, login, validateUser } from '@/entities/auth'
 import { useLoginMutation } from '@/entities/user'
+import { urls } from '@/shared/constants'
 import { defaultErrorHandler, parseJWT } from '@/shared/libs/helpers'
 import { TokenService } from '@/shared/libs/services'
 import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { useSnackbar } from 'notistack'
-import { urls } from '@/shared/constants'
 
 export const LoginForm = () => {
   const {
@@ -39,7 +39,7 @@ export const LoginForm = () => {
         if (!validateUser(user)) enqueueSnackbar('Ошибка авторизации', { variant: 'error' })
         TokenService.setToken(response.token)
         dispatch(login(user as AuthUser))
-        navigate("/" + urls.dashboard)
+        navigate('/' + urls.dashboard)
       })
       .catch(error => {
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
