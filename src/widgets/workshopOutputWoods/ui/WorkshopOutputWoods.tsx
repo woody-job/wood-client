@@ -1,6 +1,6 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 
-import { Box, CircularProgress, Modal, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridCellParams } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
@@ -12,7 +12,7 @@ import { useDeleteWorkshopOutMutation } from '@/entities/workshop-out/api'
 import { WorkshopOut } from '@/entities/workshop-out/model'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
-import { ButtonWithConfirm, ModalContent } from '@/shared/ui'
+import { ButtonWithConfirm, TableFullscreen } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -20,7 +20,6 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { ModalCloseButton } from '@/shared/ui/modal'
 
 import { WORKSHOP_OUT_TABLE_COLUMNS } from '../constants'
 import { enqueueSnackbar } from 'notistack'
@@ -40,15 +39,6 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
     useDeleteWorkshopOutMutation()
 
   const user = useAuth()
-
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
-  const handleOpen = () => {
-    setIsOpen(true)
-  }
 
   const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
 
@@ -122,31 +112,10 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
           </AddOutputWoodButton>
         )}
       </Box>
-      <DataGridContainer height={400}>
-        <DataGridFullscreenButton onClick={handleOpen} />
-        {isWorkshopOutLoading && (
-          <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
-            <CircularProgress size={100} />
-          </Box>
-        )}
-        {workshopOutData && !isWorkshopOutLoading && (
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={dataGridStyles}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
-        )}
-      </DataGridContainer>
-
-      <Modal open={isOpen} onClose={handleClose}>
-        <ModalContent fullscreen>
-          <ModalCloseButton onClick={handleClose} />
-          <DataGridContainer height='90vh'>
+      <TableFullscreen
+        renderTable={({ fullscreen, onFullscreen }) => (
+          <DataGridContainer height={fullscreen ? '100%' : 400}>
+            {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
             {isWorkshopOutLoading && (
               <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
                 <CircularProgress size={100} />
@@ -165,8 +134,8 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
               />
             )}
           </DataGridContainer>
-        </ModalContent>
-      </Modal>
+        )}
+      />
     </Box>
   )
 }

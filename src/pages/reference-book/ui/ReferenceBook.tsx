@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
-import { Box, CircularProgress, Modal, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 import { useFetchAllDimensionsQuery } from '@/entities/dimension'
-import { ModalContent } from '@/shared/ui'
+import { TableFullscreen } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -12,7 +12,6 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { ModalCloseButton } from '@/shared/ui/modal'
 
 export const ReferenceBook = () => {
   const columns: GridColDef[] = [
@@ -24,15 +23,6 @@ export const ReferenceBook = () => {
   ]
 
   const { data: dimensions, isLoading: isLoadingDimensions } = useFetchAllDimensionsQuery()
-
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
-  const handleOpen = () => {
-    setIsOpen(true)
-  }
 
   const rows = useMemo(
     () =>
@@ -52,52 +42,33 @@ export const ReferenceBook = () => {
       <Typography variant='h5'>Справочник</Typography>
 
       <Box display={'flex'} flexDirection='column' mt={10}>
-        <DataGridContainer>
-          <DataGridFullscreenButton onClick={handleOpen} />
-          {isLoadingDimensions && (
-            <Box sx={{ width: '100%', height: '100%', display: 'grid', placeContent: 'center' }}>
-              <CircularProgress size={100} />
-            </Box>
+        <TableFullscreen
+          renderTable={({ fullscreen, onFullscreen }) => (
+            <DataGridContainer height={fullscreen ? '100%' : 600}>
+              {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+              {isLoadingDimensions && (
+                <Box
+                  sx={{ width: '100%', height: '100%', display: 'grid', placeContent: 'center' }}
+                >
+                  <CircularProgress size={100} />
+                </Box>
+              )}
+              {rows && (
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  disableRowSelectionOnClick
+                  disableMultipleRowSelection
+                  localeText={dataGridLocaleText}
+                  sx={dataGridStyles}
+                  hideFooter
+                  slots={{ panel: CustomGridPanel }}
+                />
+              )}
+            </DataGridContainer>
           )}
-          {rows && (
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              disableRowSelectionOnClick
-              disableMultipleRowSelection
-              localeText={dataGridLocaleText}
-              sx={dataGridStyles}
-              hideFooter
-              slots={{ panel: CustomGridPanel }}
-            />
-          )}
-        </DataGridContainer>
+        />
       </Box>
-
-      <Modal open={isOpen} onClose={handleClose}>
-        <ModalContent fullscreen>
-          <ModalCloseButton onClick={handleClose} />
-          <DataGridContainer height='90vh'>
-            {isLoadingDimensions && (
-              <Box sx={{ width: '100%', height: '100%', display: 'grid', placeContent: 'center' }}>
-                <CircularProgress size={100} />
-              </Box>
-            )}
-            {rows && (
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                disableRowSelectionOnClick
-                disableMultipleRowSelection
-                localeText={dataGridLocaleText}
-                sx={dataGridStyles}
-                hideFooter
-                slots={{ panel: CustomGridPanel }}
-              />
-            )}
-          </DataGridContainer>
-        </ModalContent>
-      </Modal>
     </Box>
   )
 }

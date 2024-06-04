@@ -51,6 +51,7 @@ export const WorkshopTrashStatsSunburst: FC<WorkshopTrashStatsSunburstProps> = (
       containerProps={{
         width: '100%',
         ml: 'auto',
+        mt: 2,
       }}
     >
       <Typography>Всего на выходе м3:</Typography>

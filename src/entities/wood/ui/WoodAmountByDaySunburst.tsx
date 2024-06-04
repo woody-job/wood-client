@@ -21,7 +21,7 @@ export const WoodAmountByDaySunburst: FC<WoodAmountByDaySunburstProps> = ({
   total,
 }) => {
   return (
-    <Box display='flex' justifyContent='center' width='100%' px={5}>
+    <Box display='flex' justifyContent='center' width='100%' px={5} mt={2}>
       {isLoading && <Skeleton variant='circular' width='500px' height='500px' />}
       <CustomSunburst
         data={{ children: data }}

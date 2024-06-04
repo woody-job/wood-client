@@ -26,7 +26,7 @@ export const CustomSunburstItem = <T,>(props: CustomSunburstItemProps<T>) => {
     <Box position='absolute' width='100%' height='100%'>
       <ResponsiveSunburst
         data={data}
-        margin={{ top: 40, right: 20, bottom: 20, left: 20 }}
+        margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
         colors={chartColors}
         borderColor={colorTokens.black[40]}
         arcLabelsSkipAngle={10}

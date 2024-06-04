@@ -1,30 +1,18 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
-import { Box, CircularProgress, Modal, Tab, Tabs } from '@mui/material'
+import { Box, CircularProgress, Tab, Tabs } from '@mui/material'
 
 import { useFetchAllWorkshopsQuery } from '@/entities/workshop/api'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
-import { CustomTabPanel } from '@/shared/ui'
-import { ModalCloseButton, ModalContent } from '@/shared/ui/modal'
+import { CustomTabPanel, TableFullscreen } from '@/shared/ui'
 
-import { WorkshopPrices } from '../ui/workshopPrices'
 import { WorkshopWoodPricesTable } from './workshopWoodPricesTable'
 
 const getTabValue = (id: number) => 'workshop' + id
 
 export const WorkshopSettingsTabs: FC = () => {
   const { data: workshops, isLoading: isLoadingWorkshops } = useFetchAllWorkshopsQuery()
-
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handleCloseModal = () => {
-    setIsOpen(false)
-  }
-
-  const handleOpenModal = () => {
-    setIsOpen(true)
-  }
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
     appSearchParams.currentTab,
@@ -64,16 +52,9 @@ export const WorkshopSettingsTabs: FC = () => {
             value={currentTabValue as string}
             tabPanelValue={getTabValue(workshop.id)}
           >
-            <WorkshopPrices workshop={workshop} />
-
-            <Modal open={isOpen} onClose={handleCloseModal}>
-              <ModalContent fullscreen>
-                <ModalCloseButton onClick={handleCloseModal} />
-                <WorkshopWoodPricesTable workshop={workshop} fullscreen />
-              </ModalContent>
-            </Modal>
-
-            <WorkshopWoodPricesTable workshop={workshop} onFullscreen={handleOpenModal} />
+            <TableFullscreen
+              renderTable={props => <WorkshopWoodPricesTable workshop={workshop} {...props} />}
+            />
           </CustomTabPanel>
         )
       })}

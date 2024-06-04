@@ -61,7 +61,7 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
         backgroundColor: theme =>
           theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
       }}
-      height={fullscreen ? '90vh' : 600}
+      height={fullscreen ? '100%' : 600}
     >
       {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
       {isLoadingWorkshopOutReport && (

@@ -91,7 +91,7 @@ export const UsersTable: FC<UsersTableProps> = ({
   }, [users])
 
   return (
-    <DataGridContainer height={fullscreen ? '90vh' : 600}>
+    <DataGridContainer height={fullscreen ? '100%' : 600}>
       <Typography
         variant='subtitle1'
         fontWeight='bold'

@@ -1,25 +1,12 @@
-import { useState } from 'react'
-
-import { Box, Modal, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 import { UsersTable } from '@/widgets/userTable'
 import { CreateUserButton } from '@/features/user/create'
 import { useFetchAllUsersQuery } from '@/entities/user'
-import { ModalContent } from '@/shared/ui'
-import { ModalCloseButton } from '@/shared/ui/modal/ModalCloseButton'
+import { TableFullscreen } from '@/shared/ui'
 
 export const AdminUsers = () => {
   const { data: users, isLoading: isLoadingUsers } = useFetchAllUsersQuery()
-
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handleCloseModal = () => {
-    setIsOpen(false)
-  }
-
-  const handleOpenModal = () => {
-    setIsOpen(true)
-  }
 
   return (
     <Box
@@ -34,14 +21,11 @@ export const AdminUsers = () => {
 
       <CreateUserButton sx={{ alignSelf: 'flex-end', mb: 2 }}>Новый пользователь</CreateUserButton>
 
-      <Modal open={isOpen} onClose={handleCloseModal}>
-        <ModalContent fullscreen>
-          <ModalCloseButton onClick={handleCloseModal} />
-          <UsersTable users={users} isLoadingUsers={isLoadingUsers} fullscreen />
-        </ModalContent>
-      </Modal>
-
-      <UsersTable users={users} isLoadingUsers={isLoadingUsers} onFullscreen={handleOpenModal} />
+      <TableFullscreen
+        renderTable={props => (
+          <UsersTable users={users} isLoadingUsers={isLoadingUsers} {...props} />
+        )}
+      />
     </Box>
   )
 }

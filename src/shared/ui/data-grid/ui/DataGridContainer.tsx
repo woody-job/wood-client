@@ -3,6 +3,8 @@ import { Box, BoxProps } from '@mui/material'
 export interface DataGridContainerProps extends BoxProps {}
 
 export const DataGridContainer = (props: DataGridContainerProps) => {
+  const { sx, ...restProps } = props
+
   return (
     <Box
       height={600}
@@ -22,8 +24,9 @@ export const DataGridContainer = (props: DataGridContainerProps) => {
           pointerEvents: 'none',
           opacity: '0',
         },
+        ...sx,
       }}
-      {...props}
+      {...restProps}
     />
   )
 }

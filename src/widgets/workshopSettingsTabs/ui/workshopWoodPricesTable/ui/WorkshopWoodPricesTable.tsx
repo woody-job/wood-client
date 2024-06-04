@@ -78,37 +78,40 @@ export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({
   }, [dimensions, workshopWoodPrices])
 
   return (
-    <Box display={'flex'} flexDirection='column'>
-      <DataGridContainer height={fullscreen ? '90vh' : 660} mt={5}>
-        <Typography
-          variant='subtitle1'
-          fontWeight='bold'
-          mb='15px'
-          sx={{ paddingLeft: '24px', paddingTop: '24px' }}
-        >
-          Цены
-        </Typography>
+    <DataGridContainer
+      height={fullscreen ? '100%' : 660}
+      mt={fullscreen ? 0 : 5}
+      display='flex'
+      flexDirection='column'
+    >
+      <Typography
+        variant='subtitle1'
+        fontWeight='bold'
+        mb='15px'
+        sx={{ paddingLeft: '24px', paddingTop: '24px' }}
+      >
+        Цены
+      </Typography>
 
-        {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+      {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
 
-        {(isLoadingWorkshopWoodPrices || isLoadingDimensions) && (
-          <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
-            <CircularProgress size={100} />
-          </Box>
-        )}
-        {dimensions && workshopWoodPrices && (
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={{ ...dataGridStyles, maxHeight: '85% !important' }}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
-        )}
-      </DataGridContainer>
-    </Box>
+      {(isLoadingWorkshopWoodPrices || isLoadingDimensions) && (
+        <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+          <CircularProgress size={100} />
+        </Box>
+      )}
+      {dimensions && workshopWoodPrices && (
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          disableRowSelectionOnClick
+          disableMultipleRowSelection
+          localeText={dataGridLocaleText}
+          sx={{ ...dataGridStyles }}
+          hideFooter
+          slots={{ panel: CustomGridPanel }}
+        />
+      )}
+    </DataGridContainer>
   )
 }

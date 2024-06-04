@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Box, CircularProgress, Modal, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddWoodsArrival } from '@/features/arrival/add'
@@ -10,7 +10,7 @@ import { useAuth } from '@/entities/auth'
 import { USER_ROLE } from '@/entities/user'
 import { WoodAmountByDaySunburst } from '@/entities/wood'
 import { useFetchWoodArrivalByDayQuery } from '@/entities/wood-arrival'
-import { ModalContent } from '@/shared/ui'
+import { TableFullscreen } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -18,7 +18,6 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
-import { ModalCloseButton } from '@/shared/ui/modal'
 
 export interface WoodArrivalByDayProps {
   title?: string
@@ -44,15 +43,6 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
 
   const handleOpenModal = (id: number) => setOpenEditId(id)
   const handleCloseModal = () => setOpenEditId(undefined)
-
-  const [isOpenFullscreen, setIsOpenFullscreen] = useState(false)
-
-  const handleCloseFullscreen = () => {
-    setIsOpenFullscreen(false)
-  }
-  const handleOpenFullscreen = () => {
-    setIsOpenFullscreen(true)
-  }
 
   const columns: GridColDef[] = [
     { field: 'dimension', headerName: 'Сечение', width: 150 },
@@ -99,31 +89,10 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
         )}
       </Box>
 
-      <DataGridContainer height='400px'>
-        <DataGridFullscreenButton onClick={handleOpenFullscreen} />
-        {isLoadingWoodArrival && (
-          <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
-            <CircularProgress size={100} />
-          </Box>
-        )}
-        {woodArrival?.tableData && (
-          <DataGrid
-            rows={woodArrival.tableData}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={dataGridStyles}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
-        )}
-      </DataGridContainer>
-
-      <Modal open={isOpenFullscreen} onClose={handleCloseFullscreen}>
-        <ModalContent fullscreen>
-          <ModalCloseButton onClick={handleCloseFullscreen} />
-          <DataGridContainer height='90vh'>
+      <TableFullscreen
+        renderTable={({ fullscreen, onFullscreen }) => (
+          <DataGridContainer height={fullscreen ? '100%' : '400px'} mb={fullscreen}>
+            {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
             {isLoadingWoodArrival && (
               <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
                 <CircularProgress size={100} />
@@ -142,8 +111,8 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
               />
             )}
           </DataGridContainer>
-        </ModalContent>
-      </Modal>
+        )}
+      />
 
       {woodArrival && (
         <WoodAmountByDaySunburst

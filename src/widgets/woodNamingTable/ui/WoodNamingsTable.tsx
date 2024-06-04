@@ -68,7 +68,7 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
   ]
 
   return (
-    <DataGridContainer height={fullscreen ? '95vh' : 600}>
+    <DataGridContainer height={fullscreen ? '100%' : 600}>
       {isLoadingWoodNamings && (
         <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
           <CircularProgress size={100} />

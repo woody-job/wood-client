@@ -54,7 +54,7 @@ export const CustomSunburst = <T,>({
         <CustomSunburstFullscreen onClick={handleOpen} />
         <Box>{children}</Box>
 
-        <CustomSunburstItem data={data} {...restProps} />
+        <CustomSunburstItem data={data} arcLabelsSkipAngle={3} {...restProps} />
       </Box>
 
       <Modal open={isOpen} onClose={handleClose}>
@@ -72,7 +72,7 @@ export const CustomSunburst = <T,>({
           >
             <Box>{children}</Box>
 
-            <CustomSunburstItem data={data} {...restProps} />
+            <CustomSunburstItem data={data} {...restProps} arcLabelsSkipAngle={0.1} />
           </Box>
         </ModalContent>
       </Modal>
