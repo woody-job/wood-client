@@ -16,8 +16,12 @@ import {
 import { USER_ROLE } from '@/entities/user'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
-import { ButtonWithConfirm, CustomGridPanel, dataGridStyles } from '@/shared/ui'
-import { DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
+import { ButtonWithConfirm, CustomGridPanel, dataGridStyles, TableFullscreen } from '@/shared/ui'
+import {
+  DataGridContainer,
+  DataGridFullscreenButton,
+  dataGridLocaleText,
+} from '@/shared/ui/data-grid'
 
 import { WORKSHOP_BEAM_IN_TABLE_COLUMNS } from '../constants'
 import { WorkshopBeamInTableRow } from '../types/types'
@@ -111,25 +115,30 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
           </AddInputWoodButton>
         )}
       </Box>
-      <DataGridContainer height={400}>
-        {isBeamInLoading && (
-          <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
-            <CircularProgress size={100} />
-          </Box>
+      <TableFullscreen
+        renderTable={({ fullscreen, onFullscreen }) => (
+          <DataGridContainer height={fullscreen ? '95vh' : 400}>
+            {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+            {isBeamInLoading && (
+              <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+                <CircularProgress size={100} />
+              </Box>
+            )}
+            {beamInData && !isBeamInLoading && (
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                disableRowSelectionOnClick
+                disableMultipleRowSelection
+                localeText={dataGridLocaleText}
+                sx={dataGridStyles}
+                hideFooter
+                slots={{ panel: CustomGridPanel }}
+              />
+            )}
+          </DataGridContainer>
         )}
-        {beamInData && !isBeamInLoading && (
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={dataGridStyles}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
-        )}
-      </DataGridContainer>
+      />
       <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {totalVolume}</Typography>
     </Box>
   )

@@ -4,9 +4,11 @@ import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 import { useFetchAllDimensionsQuery } from '@/entities/dimension'
+import { TableFullscreen } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -40,25 +42,32 @@ export const ReferenceBook = () => {
       <Typography variant='h5'>Справочник</Typography>
 
       <Box display={'flex'} flexDirection='column' mt={10}>
-        <DataGridContainer>
-          {isLoadingDimensions && (
-            <Box sx={{ width: '100%', height: '100%', display: 'grid', placeContent: 'center' }}>
-              <CircularProgress size={100} />
-            </Box>
+        <TableFullscreen
+          renderTable={({ fullscreen, onFullscreen }) => (
+            <DataGridContainer height={fullscreen ? '100%' : 600}>
+              {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+              {isLoadingDimensions && (
+                <Box
+                  sx={{ width: '100%', height: '100%', display: 'grid', placeContent: 'center' }}
+                >
+                  <CircularProgress size={100} />
+                </Box>
+              )}
+              {rows && (
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  disableRowSelectionOnClick
+                  disableMultipleRowSelection
+                  localeText={dataGridLocaleText}
+                  sx={dataGridStyles}
+                  hideFooter
+                  slots={{ panel: CustomGridPanel }}
+                />
+              )}
+            </DataGridContainer>
           )}
-          {rows && (
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              disableRowSelectionOnClick
-              disableMultipleRowSelection
-              localeText={dataGridLocaleText}
-              sx={dataGridStyles}
-              hideFooter
-              slots={{ panel: CustomGridPanel }}
-            />
-          )}
-        </DataGridContainer>
+        />
       </Box>
     </Box>
   )

@@ -11,6 +11,7 @@ import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -20,10 +21,12 @@ import { useSnackbar } from 'notistack'
 export type WoodNamingsTableProps = {
   woodNamings: WoodNaming[] | undefined
   isLoadingWoodNamings: boolean
+  onFullscreen?: () => void
+  fullscreen?: boolean
 }
 
 export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
-  const { woodNamings, isLoadingWoodNamings } = props
+  const { woodNamings, isLoadingWoodNamings, onFullscreen, fullscreen } = props
 
   const [deleteWoodNamingMutation, { isLoading: isLoadingDeleteWoodNamingMutation }] =
     useDeleteWoodNamingMutation()
@@ -65,12 +68,14 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
   ]
 
   return (
-    <DataGridContainer>
+    <DataGridContainer height={fullscreen ? '100%' : 600}>
       {isLoadingWoodNamings && (
         <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
           <CircularProgress size={100} />
         </Box>
       )}
+      {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+
       {woodNamings && (
         <DataGrid
           rows={woodNamings}

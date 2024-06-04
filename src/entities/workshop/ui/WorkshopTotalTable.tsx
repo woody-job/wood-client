@@ -11,6 +11,7 @@ import { TimeRange } from '@/shared/types'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -20,9 +21,15 @@ import dayjs from 'dayjs'
 
 type WorkshopTotalTableProps = {
   timeRange: TimeRange
+  onFullscreen?: () => void
+  fullscreen?: boolean
 }
 
-export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({ timeRange }) => {
+export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
+  timeRange,
+  onFullscreen,
+  fullscreen,
+}) => {
   const { workshopId } = useParams()
   const navigate = useNavigate()
 
@@ -54,7 +61,9 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({ timeRange }) =
         backgroundColor: theme =>
           theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
       }}
+      height={fullscreen ? '100%' : 600}
     >
+      {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
       {isLoadingWorkshopOutReport && (
         <Box sx={{ width: '100%', height: '100%', display: 'grid', placeContent: 'center' }}>
           <CircularProgress size={100} />

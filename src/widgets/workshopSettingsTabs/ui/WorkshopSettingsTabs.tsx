@@ -5,9 +5,8 @@ import { Box, CircularProgress, Tab, Tabs } from '@mui/material'
 import { useFetchAllWorkshopsQuery } from '@/entities/workshop/api'
 import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
-import { CustomTabPanel } from '@/shared/ui'
+import { CustomTabPanel, TableFullscreen } from '@/shared/ui'
 
-import { WorkshopPrices } from '../ui/workshopPrices'
 import { WorkshopWoodPricesTable } from './workshopWoodPricesTable'
 
 const getTabValue = (id: number) => 'workshop' + id
@@ -53,8 +52,9 @@ export const WorkshopSettingsTabs: FC = () => {
             value={currentTabValue as string}
             tabPanelValue={getTabValue(workshop.id)}
           >
-            <WorkshopPrices workshop={workshop} />
-            <WorkshopWoodPricesTable workshop={workshop} />
+            <TableFullscreen
+              renderTable={props => <WorkshopWoodPricesTable workshop={workshop} {...props} />}
+            />
           </CustomTabPanel>
         )
       })}

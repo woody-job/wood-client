@@ -11,6 +11,7 @@ import { useFetchWorkshopWoodPricesQuery } from '@/entities/workshop-wood-price'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -19,9 +20,15 @@ import { WORKSHOP_WOOD_PRICES_TABLE_COLUMNS } from '../../../constants'
 
 export interface WorkshopWoodPricesTableProps {
   workshop: Workshop
+  onFullscreen?: () => void
+  fullscreen?: boolean
 }
 
-export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({ workshop }) => {
+export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({
+  workshop,
+  fullscreen,
+  onFullscreen,
+}) => {
   const { id } = workshop
 
   const { data: workshopWoodPrices, isLoading: isLoadingWorkshopWoodPrices } =
@@ -71,35 +78,40 @@ export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({ work
   }, [dimensions, workshopWoodPrices])
 
   return (
-    <Box display={'flex'} flexDirection='column'>
-      <DataGridContainer height={660} mt={5}>
-        <Typography
-          variant='subtitle1'
-          fontWeight='bold'
-          mb='15px'
-          sx={{ paddingLeft: '24px', paddingTop: '24px' }}
-        >
-          Цены
-        </Typography>
+    <DataGridContainer
+      height={fullscreen ? '100%' : 660}
+      mt={fullscreen ? 0 : 5}
+      display='flex'
+      flexDirection='column'
+    >
+      <Typography
+        variant='subtitle1'
+        fontWeight='bold'
+        mb='15px'
+        sx={{ paddingLeft: '24px', paddingTop: '24px' }}
+      >
+        Цены
+      </Typography>
 
-        {(isLoadingWorkshopWoodPrices || isLoadingDimensions) && (
-          <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
-            <CircularProgress size={100} />
-          </Box>
-        )}
-        {dimensions && workshopWoodPrices && (
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={{ ...dataGridStyles, maxHeight: '85% !important' }}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
-        )}
-      </DataGridContainer>
-    </Box>
+      {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+
+      {(isLoadingWorkshopWoodPrices || isLoadingDimensions) && (
+        <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+          <CircularProgress size={100} />
+        </Box>
+      )}
+      {dimensions && workshopWoodPrices && (
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          disableRowSelectionOnClick
+          disableMultipleRowSelection
+          localeText={dataGridLocaleText}
+          sx={{ ...dataGridStyles }}
+          hideFooter
+          slots={{ panel: CustomGridPanel }}
+        />
+      )}
+    </DataGridContainer>
   )
 }

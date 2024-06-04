@@ -3,7 +3,6 @@ import { FC, useMemo } from 'react'
 import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
-import { CreateDimensionButton } from '@/features/dimensions/create'
 import { UpdateDimensionParamsButton } from '@/features/dimensions/update-params'
 import { Dimension, useDeleteDimensionMutation } from '@/entities/dimension'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
@@ -12,6 +11,7 @@ import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -23,11 +23,15 @@ import { useSnackbar } from 'notistack'
 type DimensionsSettingsTableProps = {
   dimensions: Dimension[] | undefined
   isLoadingDimensions: boolean
+  onFullscreen?: () => void
+  fullscreen?: boolean
 }
 
 export const DimensionsSettingsTable: FC<DimensionsSettingsTableProps> = ({
   dimensions,
   isLoadingDimensions,
+  onFullscreen,
+  fullscreen,
 }) => {
   const [deleteDimensionMutation, { isLoading: isLoadingDeleteDimensionMutation }] =
     useDeleteDimensionMutation()
@@ -86,28 +90,26 @@ export const DimensionsSettingsTable: FC<DimensionsSettingsTableProps> = ({
   }, [dimensions])
 
   return (
-    <Box display={'flex'} flexDirection='column'>
-      <CreateDimensionButton sx={{ my: 4, alignSelf: 'end' }}>Добавить</CreateDimensionButton>
+    <DataGridContainer height={fullscreen ? '100%' : 600}>
+      {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
 
-      <DataGridContainer>
-        {isLoadingDimensions && (
-          <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
-            <CircularProgress size={100} />
-          </Box>
-        )}
-        {dimensions && (
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={dataGridStyles}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
-        )}
-      </DataGridContainer>
-    </Box>
+      {isLoadingDimensions && (
+        <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+          <CircularProgress size={100} />
+        </Box>
+      )}
+      {dimensions && (
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          disableRowSelectionOnClick
+          disableMultipleRowSelection
+          localeText={dataGridLocaleText}
+          sx={dataGridStyles}
+          hideFooter
+          slots={{ panel: CustomGridPanel }}
+        />
+      )}
+    </DataGridContainer>
   )
 }

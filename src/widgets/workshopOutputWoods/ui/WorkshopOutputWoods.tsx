@@ -12,10 +12,11 @@ import { useDeleteWorkshopOutMutation } from '@/entities/workshop-out/api'
 import { WorkshopOut } from '@/entities/workshop-out/model'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
-import { ButtonWithConfirm } from '@/shared/ui'
+import { ButtonWithConfirm, TableFullscreen } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -111,25 +112,30 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
           </AddOutputWoodButton>
         )}
       </Box>
-      <DataGridContainer height={400}>
-        {isWorkshopOutLoading && (
-          <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
-            <CircularProgress size={100} />
-          </Box>
+      <TableFullscreen
+        renderTable={({ fullscreen, onFullscreen }) => (
+          <DataGridContainer height={fullscreen ? '100%' : 400}>
+            {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+            {isWorkshopOutLoading && (
+              <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+                <CircularProgress size={100} />
+              </Box>
+            )}
+            {workshopOutData && !isWorkshopOutLoading && (
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                disableRowSelectionOnClick
+                disableMultipleRowSelection
+                localeText={dataGridLocaleText}
+                sx={dataGridStyles}
+                hideFooter
+                slots={{ panel: CustomGridPanel }}
+              />
+            )}
+          </DataGridContainer>
         )}
-        {workshopOutData && !isWorkshopOutLoading && (
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={dataGridStyles}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
-        )}
-      </DataGridContainer>
+      />
     </Box>
   )
 }

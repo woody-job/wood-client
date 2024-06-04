@@ -9,7 +9,7 @@ export const DryersDashboard = () => {
   return (
     <Box>
       <DashboardTitle>Общие данные по сушилкам</DashboardTitle>
-      <Box display='flex' gap={2} flexWrap='wrap' justifyContent='space-between'>
+      <Box display='flex' gap={2} flexWrap='wrap' justifyContent='space-between' alignItems='start'>
         {isLoadingDryerStats && <Skeleton variant='rounded' sx={{ width: '100%', height: 378 }} />}
 
         {dryerStats &&
@@ -28,7 +28,6 @@ export const DryersDashboard = () => {
             return (
               <DashItem
                 width={'31%'}
-                height={100}
                 sx={{
                   '&:nth-child(2n)': {
                     backgroundColor: theme => theme.primary.purpleOpacity,

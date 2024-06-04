@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material'
 import { UsersTable } from '@/widgets/userTable'
 import { CreateUserButton } from '@/features/user/create'
 import { useFetchAllUsersQuery } from '@/entities/user'
+import { TableFullscreen } from '@/shared/ui'
 
 export const AdminUsers = () => {
   const { data: users, isLoading: isLoadingUsers } = useFetchAllUsersQuery()
@@ -20,7 +21,11 @@ export const AdminUsers = () => {
 
       <CreateUserButton sx={{ alignSelf: 'flex-end', mb: 2 }}>Новый пользователь</CreateUserButton>
 
-      <UsersTable users={users} isLoadingUsers={isLoadingUsers} />
+      <TableFullscreen
+        renderTable={props => (
+          <UsersTable users={users} isLoadingUsers={isLoadingUsers} {...props} />
+        )}
+      />
     </Box>
   )
 }

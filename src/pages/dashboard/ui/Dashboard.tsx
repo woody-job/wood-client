@@ -11,7 +11,7 @@ export const Dashboard = () => {
         Общая информация
       </Typography>
 
-      <Box display='grid' mb={5} gridTemplateColumns='repeat(2, 1fr)'>
+      <Box display='grid' mb={5} gridTemplateColumns='2fr 3fr'>
         <InfoDashboard />
         <DryersDashboard />
       </Box>

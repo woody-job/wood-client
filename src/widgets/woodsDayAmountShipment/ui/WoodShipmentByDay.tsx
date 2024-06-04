@@ -10,9 +10,11 @@ import { useAuth } from '@/entities/auth'
 import { USER_ROLE } from '@/entities/user'
 import { WoodAmountByDaySunburst } from '@/entities/wood'
 import { useFetchWoodShipmentByDayQuery } from '@/entities/wood-shipment'
+import { TableFullscreen } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -87,25 +89,31 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
         )}
       </Box>
 
-      <DataGridContainer height='400px'>
-        {isLoadingWoodShipment && (
-          <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
-            <CircularProgress size={100} />
-          </Box>
+      <TableFullscreen
+        renderTable={({ fullscreen, onFullscreen }) => (
+          <DataGridContainer height={fullscreen ? '100%' : '400px'}>
+            {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+
+            {isLoadingWoodShipment && (
+              <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+                <CircularProgress size={100} />
+              </Box>
+            )}
+            {woodShipment?.tableData && (
+              <DataGrid
+                rows={woodShipment.tableData}
+                columns={columns}
+                disableRowSelectionOnClick
+                disableMultipleRowSelection
+                localeText={dataGridLocaleText}
+                sx={dataGridStyles}
+                hideFooter
+                slots={{ panel: CustomGridPanel }}
+              />
+            )}
+          </DataGridContainer>
         )}
-        {woodShipment?.tableData && (
-          <DataGrid
-            rows={woodShipment.tableData}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            localeText={dataGridLocaleText}
-            sx={dataGridStyles}
-            hideFooter
-            slots={{ panel: CustomGridPanel }}
-          />
-        )}
-      </DataGridContainer>
+      />
 
       {woodShipment && (
         <WoodAmountByDaySunburst
