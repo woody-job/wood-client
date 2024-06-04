@@ -11,6 +11,7 @@ import { ButtonWithConfirm } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -20,10 +21,12 @@ import { useSnackbar } from 'notistack'
 export type DryersTableProps = {
   dryers: Dryer[] | undefined
   isLoadingDryers: boolean
+  onFullscreen?: () => void
+  fullscreen?: boolean
 }
 
 export const DryersTable: FC<DryersTableProps> = props => {
-  const { dryers, isLoadingDryers } = props
+  const { dryers, isLoadingDryers, onFullscreen, fullscreen } = props
 
   const [deleteDryerMutation, { isLoading: isLoadingDeleteDryerMutation }] =
     useDeleteDryerMutation()
@@ -63,12 +66,14 @@ export const DryersTable: FC<DryersTableProps> = props => {
   ]
 
   return (
-    <DataGridContainer>
+    <DataGridContainer height={fullscreen ? '95vh' : 600}>
       {isLoadingDryers && (
         <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
           <CircularProgress size={100} />
         </Box>
       )}
+      {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+
       {dryers && (
         <DataGrid
           rows={dryers}

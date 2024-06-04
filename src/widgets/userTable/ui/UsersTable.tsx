@@ -8,7 +8,12 @@ import { useDeleteUserMutation, User } from '@/entities/user'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm, dataGridStyles } from '@/shared/ui'
-import { CustomGridPanel, DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
+import {
+  CustomGridPanel,
+  DataGridContainer,
+  DataGridFullscreenButton,
+  dataGridLocaleText,
+} from '@/shared/ui/data-grid'
 
 import { USER_TABLE_COLUMNS } from '../constants'
 import { UserTableRow } from '../types'
@@ -17,9 +22,16 @@ import { useSnackbar } from 'notistack'
 type UsersTableProps = {
   users: User[] | undefined
   isLoadingUsers: boolean
+  onFullscreen?: () => void
+  fullscreen?: boolean
 }
 
-export const UsersTable: FC<UsersTableProps> = ({ users, isLoadingUsers }) => {
+export const UsersTable: FC<UsersTableProps> = ({
+  users,
+  isLoadingUsers,
+  onFullscreen,
+  fullscreen,
+}) => {
   const [deleteUserMutation, { isLoading: isLoadingDeleteUserMutation }] = useDeleteUserMutation()
 
   const { enqueueSnackbar } = useSnackbar()
@@ -79,7 +91,7 @@ export const UsersTable: FC<UsersTableProps> = ({ users, isLoadingUsers }) => {
   }, [users])
 
   return (
-    <DataGridContainer>
+    <DataGridContainer height={fullscreen ? '90vh' : 600}>
       <Typography
         variant='subtitle1'
         fontWeight='bold'
@@ -88,6 +100,9 @@ export const UsersTable: FC<UsersTableProps> = ({ users, isLoadingUsers }) => {
       >
         Пользователи
       </Typography>
+
+      {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+
       {isLoadingUsers && (
         <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
           <CircularProgress size={100} />

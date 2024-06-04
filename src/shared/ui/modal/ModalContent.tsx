@@ -2,8 +2,12 @@ import { FC } from 'react'
 
 import { Box, BoxProps } from '@mui/material'
 
-export const ModalContent: FC<BoxProps> = props => {
-  const { sx, ...restProps } = props
+export type ModalContentProps = BoxProps & {
+  fullscreen?: boolean
+}
+
+export const ModalContent: FC<ModalContentProps> = props => {
+  const { sx, fullscreen, ...restProps } = props
 
   return (
     <Box
@@ -18,6 +22,7 @@ export const ModalContent: FC<BoxProps> = props => {
         borderRadius: 4,
         p: 4,
         ...sx,
+        ...(fullscreen ? { height: '100%', width: '100%', borderRadius: '0' } : {}),
       }}
       {...restProps}
     />

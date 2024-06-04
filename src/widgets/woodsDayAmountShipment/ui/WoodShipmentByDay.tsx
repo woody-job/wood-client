@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress, Modal, Typography } from '@mui/material'
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddWoodsShipment } from '@/features/shipment/add'
@@ -10,12 +10,15 @@ import { useAuth } from '@/entities/auth'
 import { USER_ROLE } from '@/entities/user'
 import { WoodAmountByDaySunburst } from '@/entities/wood'
 import { useFetchWoodShipmentByDayQuery } from '@/entities/wood-shipment'
+import { ModalContent } from '@/shared/ui'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { ModalCloseButton } from '@/shared/ui/modal'
 
 export interface WoodShipmentByDayProps {
   title?: string
@@ -38,6 +41,15 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
     woodConditionId,
     date: selectedDate,
   })
+
+  const [isOpenFullScreen, setIsOpenFullscreen] = useState(false)
+
+  const handleCloseFullscreen = () => {
+    setIsOpenFullscreen(false)
+  }
+  const handleOpenFullscreen = () => {
+    setIsOpenFullscreen(true)
+  }
 
   const handleOpenModal = (id: number) => setOpenEditId(id)
   const handleCloseModal = () => setOpenEditId(undefined)
@@ -88,6 +100,8 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
       </Box>
 
       <DataGridContainer height='400px'>
+        <DataGridFullscreenButton onClick={handleOpenFullscreen} />
+
         {isLoadingWoodShipment && (
           <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
             <CircularProgress size={100} />
@@ -106,6 +120,31 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
           />
         )}
       </DataGridContainer>
+
+      <Modal open={isOpenFullScreen} onClose={handleCloseFullscreen}>
+        <ModalContent fullscreen>
+          <ModalCloseButton onClick={handleCloseFullscreen} />
+          <DataGridContainer height='90vh'>
+            {isLoadingWoodShipment && (
+              <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+                <CircularProgress size={100} />
+              </Box>
+            )}
+            {woodShipment?.tableData && (
+              <DataGrid
+                rows={woodShipment.tableData}
+                columns={columns}
+                disableRowSelectionOnClick
+                disableMultipleRowSelection
+                localeText={dataGridLocaleText}
+                sx={dataGridStyles}
+                hideFooter
+                slots={{ panel: CustomGridPanel }}
+              />
+            )}
+          </DataGridContainer>
+        </ModalContent>
+      </Modal>
 
       {woodShipment && (
         <WoodAmountByDaySunburst

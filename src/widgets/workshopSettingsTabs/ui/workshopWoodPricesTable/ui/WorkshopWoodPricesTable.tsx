@@ -11,6 +11,7 @@ import { useFetchWorkshopWoodPricesQuery } from '@/entities/workshop-wood-price'
 import {
   CustomGridPanel,
   DataGridContainer,
+  DataGridFullscreenButton,
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
@@ -19,9 +20,15 @@ import { WORKSHOP_WOOD_PRICES_TABLE_COLUMNS } from '../../../constants'
 
 export interface WorkshopWoodPricesTableProps {
   workshop: Workshop
+  onFullscreen?: () => void
+  fullscreen?: boolean
 }
 
-export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({ workshop }) => {
+export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({
+  workshop,
+  fullscreen,
+  onFullscreen,
+}) => {
   const { id } = workshop
 
   const { data: workshopWoodPrices, isLoading: isLoadingWorkshopWoodPrices } =
@@ -72,7 +79,7 @@ export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({ work
 
   return (
     <Box display={'flex'} flexDirection='column'>
-      <DataGridContainer height={660} mt={5}>
+      <DataGridContainer height={fullscreen ? '90vh' : 660} mt={5}>
         <Typography
           variant='subtitle1'
           fontWeight='bold'
@@ -81,6 +88,8 @@ export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({ work
         >
           Цены
         </Typography>
+
+        {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
 
         {(isLoadingWorkshopWoodPrices || isLoadingDimensions) && (
           <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>

@@ -1,8 +1,8 @@
-import { FC, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress, Modal, Typography } from '@mui/material'
 import { DataGrid, GridCellParams } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
@@ -16,8 +16,13 @@ import {
 import { USER_ROLE } from '@/entities/user'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
-import { ButtonWithConfirm, CustomGridPanel, dataGridStyles } from '@/shared/ui'
-import { DataGridContainer, dataGridLocaleText } from '@/shared/ui/data-grid'
+import { ButtonWithConfirm, CustomGridPanel, dataGridStyles, ModalContent } from '@/shared/ui'
+import {
+  DataGridContainer,
+  DataGridFullscreenButton,
+  dataGridLocaleText,
+} from '@/shared/ui/data-grid'
+import { ModalCloseButton } from '@/shared/ui/modal'
 
 import { WORKSHOP_BEAM_IN_TABLE_COLUMNS } from '../constants'
 import { WorkshopBeamInTableRow } from '../types/types'
@@ -41,6 +46,15 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
     { workshopId: workshopId ? Number(workshopId) : -1, startDate: now, endDate: now },
     { skip: !workshopId }
   )
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+  const handleOpen = () => {
+    setIsOpen(true)
+  }
 
   const beamInData = beamIn ? beamIn.data : []
   const totalVolume = beamIn?.totalVolume ? beamIn.totalVolume : 0
@@ -112,6 +126,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
         )}
       </Box>
       <DataGridContainer height={400}>
+        <DataGridFullscreenButton onClick={handleOpen} />
         {isBeamInLoading && (
           <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
             <CircularProgress size={100} />
@@ -131,6 +146,30 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
         )}
       </DataGridContainer>
       <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {totalVolume}</Typography>
+      <Modal open={isOpen} onClose={handleClose}>
+        <ModalContent fullscreen>
+          <ModalCloseButton onClick={handleClose} />
+          <DataGridContainer height='90vh'>
+            {isBeamInLoading && (
+              <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+                <CircularProgress size={100} />
+              </Box>
+            )}
+            {beamInData && !isBeamInLoading && (
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                disableRowSelectionOnClick
+                disableMultipleRowSelection
+                localeText={dataGridLocaleText}
+                sx={dataGridStyles}
+                hideFooter
+                slots={{ panel: CustomGridPanel }}
+              />
+            )}
+          </DataGridContainer>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }
