@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -7,7 +7,8 @@ import { DataGrid, GridEventListener } from '@mui/x-data-grid'
 
 import { useFetchWorkshopReportQuery } from '@/entities/workshop-out'
 import { urls } from '@/shared/constants'
-import { TimeRange } from '@/shared/types'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { CommonErrorType, TimeRange } from '@/shared/types'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -18,6 +19,7 @@ import {
 
 import { WORKSHOP_TOTAL_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
+import { useSnackbar } from 'notistack'
 
 type WorkshopTotalTableProps = {
   timeRange: TimeRange
@@ -33,12 +35,26 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
   const { workshopId } = useParams()
   const navigate = useNavigate()
 
-  const { data: workshopOutReportData, isLoading: isLoadingWorkshopOutReport } =
-    useFetchWorkshopReportQuery({
-      workshopId: workshopId ? Number(workshopId) : -1,
-      startDate: timeRange.startDate.toISOString(),
-      endDate: timeRange.endDate.toISOString(),
-    })
+  const {
+    data: workshopOutReportData,
+    isLoading: isLoadingWorkshopOutReport,
+    isError,
+    error,
+  } = useFetchWorkshopReportQuery({
+    workshopId: workshopId ? Number(workshopId) : -1,
+    startDate: timeRange.startDate.toISOString(),
+    endDate: timeRange.endDate.toISOString(),
+  })
+
+  const { enqueueSnackbar } = useSnackbar()
+
+  useEffect(() => {
+    if (!isError) return
+
+    defaultErrorHandler(error as CommonErrorType, message =>
+      enqueueSnackbar(message, { variant: 'error' })
+    )
+  }, [isError])
 
   const rows = useMemo(() => {
     if (!workshopOutReportData) {

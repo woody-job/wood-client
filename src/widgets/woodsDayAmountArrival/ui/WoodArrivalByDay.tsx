@@ -91,7 +91,7 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
 
       <TableFullscreen
         renderTable={({ fullscreen, onFullscreen }) => (
-          <DataGridContainer height={fullscreen ? '100%' : '400px'} mb={fullscreen}>
+          <DataGridContainer height={fullscreen ? '100%' : '400px'}>
             {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
             {isLoadingWoodArrival && (
               <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
