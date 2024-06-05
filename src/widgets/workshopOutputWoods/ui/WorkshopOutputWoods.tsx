@@ -1,5 +1,7 @@
 import { FC, useMemo } from 'react'
 
+import { useParams } from 'react-router-dom'
+
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridCellParams } from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
@@ -7,7 +9,9 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 import { AddOutputWoodButton } from '@/features/wood-output-woods/add'
 import { UpdateOutputWoodButton } from '@/features/wood-output-woods/update'
 import { useAuth } from '@/entities/auth'
+import { getDimensionString, useFetchAllDimensionsQuery } from '@/entities/dimension'
 import { USER_ROLE } from '@/entities/user'
+import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { useDeleteWorkshopOutMutation } from '@/entities/workshop-out/api'
 import { WorkshopOut } from '@/entities/workshop-out/model'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
@@ -22,6 +26,8 @@ import {
 } from '@/shared/ui/data-grid'
 
 import { WORKSHOP_OUT_TABLE_COLUMNS } from '../constants'
+import { getWorkshopOutDefaults } from '../libs/helpers'
+import { WorkshopOutTableRow } from '../types'
 import { enqueueSnackbar } from 'notistack'
 
 export type WorkshopOutWoodsProps = {
@@ -35,8 +41,14 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
   isWorkshopOutLoading,
   now,
 }) => {
+  const { workshopId } = useParams()
+
   const [deleteWorkshopOutMutation, { isLoading: isLoadingDeleteWorkshopOutMutation }] =
     useDeleteWorkshopOutMutation()
+
+  const { data: dimensions } = useFetchAllDimensionsQuery()
+
+  const { data: woodTypes } = useFetchAllWoodTypesQuery()
 
   const user = useAuth()
 
@@ -66,13 +78,13 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
             renderCell: (params: GridCellParams) => {
               return (
                 <Box sx={{ ml: 'auto' }}>
-                  <UpdateOutputWoodButton workshopOut={params.row} sx={{ mr: 1 }} />
+                  <UpdateOutputWoodButton now={now} workshopOut={params.row} sx={{ mr: 1 }} />
                   <ButtonWithConfirm
                     isLoading={isLoadingDeleteWorkshopOutMutation}
                     header='Удалить лес на выход'
                     description='Вы точно хотите удалить выход леса?'
                     onConfirm={() => {
-                      handleDeleteWorkshopOut(params.row.id)
+                      handleDeleteWorkshopOut(params.row.workshopOutId)
                     }}
                   />
                 </Box>
@@ -83,24 +95,55 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
       : []),
   ]
 
-  const rows = useMemo(() => {
-    return workshopOutData
-      ? workshopOutData.map(({ id, woodClass, woodType, amount, dimension }) => {
-          const dimensionString = `${dimension.width}x${dimension.thickness}x${dimension.length}`
+  const rows: WorkshopOutTableRow[] = useMemo(() => {
+    if (!workshopOutData || !dimensions || !workshopId || !woodTypes) {
+      return []
+    }
 
-          return {
-            id: id,
-            woodClass: woodClass.name,
-            woodClassId: woodClass.id,
-            dimension: dimensionString,
-            dimensionId: dimension.id,
-            woodType: woodType.name,
-            woodTypeId: woodType.id,
-            amount: amount,
-          }
-        })
-      : []
-  }, [workshopOutData])
+    const defaults = getWorkshopOutDefaults({
+      dimensions,
+      woodTypes,
+      workshopId,
+    })
+
+    const actualData = workshopOutData.map(({ id, woodClass, woodType, amount, dimension }) => {
+      return {
+        id: id,
+        woodClass: woodClass.name,
+        woodClassId: woodClass.id,
+        dimension: getDimensionString(dimension),
+        dimensionId: dimension.id,
+        woodType: woodType.name,
+        woodTypeId: woodType.id,
+        amount: amount,
+        workshopOutId: id,
+        isEmptyDefault: false,
+      }
+    })
+
+    const output = defaults
+
+    actualData.forEach(actualDataWorkshopOut => {
+      const inDefaults = output.find(defaultItem => {
+        return (
+          defaultItem.dimensionId === actualDataWorkshopOut.dimensionId &&
+          defaultItem.woodTypeId === actualDataWorkshopOut.woodTypeId
+        )
+      })
+
+      if (inDefaults) {
+        inDefaults.amount = actualDataWorkshopOut.amount
+        inDefaults.workshopOutId = actualDataWorkshopOut.id
+        inDefaults.isEmptyDefault = false
+
+        return
+      }
+
+      output.unshift(actualDataWorkshopOut)
+    })
+
+    return output
+  }, [workshopOutData, dimensions, woodTypes])
 
   return (
     <Box>

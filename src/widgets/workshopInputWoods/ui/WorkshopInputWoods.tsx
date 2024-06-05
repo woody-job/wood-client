@@ -12,6 +12,7 @@ import { useAuth } from '@/entities/auth'
 import {
   useDeleteBeamInForWorkshopMutation,
   useFetchAllBeamInForWorkshopQuery,
+  useFetchAllBeamSizesQuery,
 } from '@/entities/beam-in/api'
 import { USER_ROLE } from '@/entities/user'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
@@ -24,6 +25,7 @@ import {
 } from '@/shared/ui/data-grid'
 
 import { WORKSHOP_BEAM_IN_TABLE_COLUMNS } from '../constants'
+import { getWorkshopBeamInDefaults } from '../libs/helpers'
 import { WorkshopBeamInTableRow } from '../types/types'
 import { enqueueSnackbar } from 'notistack'
 
@@ -45,6 +47,8 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
     { workshopId: workshopId ? Number(workshopId) : -1, startDate: now, endDate: now },
     { skip: !workshopId }
   )
+
+  const { data: beamSizes } = useFetchAllBeamSizesQuery()
 
   const beamInData = beamIn ? beamIn.data : []
   const totalVolume = beamIn?.totalVolume ? beamIn.totalVolume : 0
@@ -73,13 +77,13 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
             renderCell: (params: GridCellParams) => {
               return (
                 <Box sx={{ ml: 'auto' }}>
-                  <UpdateInputWoodButton beamIn={params.row} sx={{ mr: 1 }} />
+                  <UpdateInputWoodButton beamIn={params.row} now={now} sx={{ mr: 1 }} />
                   <ButtonWithConfirm
                     isLoading={isLoadingDeleteBeamInMutation}
                     header='Удалить лес на вход'
                     description='Вы точно хотите удалить вход леса?'
                     onConfirm={() => {
-                      handleDeleteBeamIn(params.row.id)
+                      handleDeleteBeamIn(params.row.beamInId)
                     }}
                   >
                     Удалить
@@ -93,17 +97,43 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
   ]
 
   const rows: WorkshopBeamInTableRow[] = useMemo(() => {
-    return beamInData
-      ? beamInData.map(beamIn => {
-          return {
-            id: beamIn.id,
-            amount: beamIn.amount,
-            volume: Number((beamIn.beamSize.volume * beamIn.amount).toFixed(2)),
-            diameter: beamIn.beamSize.diameter,
-          }
-        })
-      : []
-  }, [beamInData])
+    if (!beamInData || !workshopId || !beamSizes) {
+      return []
+    }
+
+    const defaults = getWorkshopBeamInDefaults(beamSizes, workshopId)
+
+    const actualData = beamInData.map(beamIn => {
+      return {
+        id: new Date().valueOf(),
+        amount: beamIn.amount,
+        volume: Number((beamIn.beamSize.volume * beamIn.amount).toFixed(2)),
+        diameter: beamIn.beamSize.diameter,
+        beamInId: beamIn.id,
+        isEmptyDefault: false,
+      }
+    })
+
+    const output = defaults
+
+    actualData.forEach(actualDataBeamIn => {
+      const inDefaults = output.find(defaultItem => {
+        return defaultItem.diameter === actualDataBeamIn.diameter
+      })
+
+      if (inDefaults) {
+        inDefaults.amount = actualDataBeamIn.amount
+        inDefaults.beamInId = actualDataBeamIn.beamInId
+        inDefaults.isEmptyDefault = false
+
+        return
+      }
+
+      output.unshift(actualDataBeamIn)
+    })
+
+    return output
+  }, [beamInData, beamSizes])
 
   return (
     <Box>

@@ -7,10 +7,15 @@ import { ButtonProps, IconButton } from '@mui/material'
 
 import { WorkshopBeamInTableRow } from '@/widgets/workshopInputWoods/types/types'
 import {
+  useCreateBeamInForWorkshopMutation,
   useFetchAllBeamSizesQuery,
   useUpdateBeamInForWorkshopMutation,
 } from '@/entities/beam-in/api'
-import { BeamInFormType, UpdateBeamInForWorkshopParams } from '@/entities/beam-in/model'
+import {
+  BeamInFormType,
+  CreateBeamInForWorkshopParams,
+  UpdateBeamInForWorkshopParams,
+} from '@/entities/beam-in/model'
 import { UpdateInputWoodModal } from '@/entities/wood'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
@@ -21,15 +26,22 @@ import { useSnackbar } from 'notistack'
 
 type UpdateInputWoodButtonProps = {
   beamIn: WorkshopBeamInTableRow
+  now: string
 } & ButtonProps
 
-export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({ beamIn, ...props }) => {
+export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
+  beamIn,
+  now,
+  ...props
+}) => {
   const { workshopId } = useParams()
 
   const [isOpen, setIsOpen] = useState(false)
 
   const methods = useForm<BeamInFormType>({ defaultValues: getDefaultValues(beamIn) })
 
+  const [createBeamInMutation, { isLoading: isLoadingCreateBeamInMutation }] =
+    useCreateBeamInForWorkshopMutation()
   const [updateBeamInMutation, { isLoading: isLoadingUpdateBeamInMutation }] =
     useUpdateBeamInForWorkshopMutation()
 
@@ -65,8 +77,32 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({ beamIn, 
       return
     }
 
+    // Логика добавлена в связи с появлением дефолтных строк в таблице с пустым amount
+    const isCreate = beamIn.isEmptyDefault
+
+    if (isCreate) {
+      const body: CreateBeamInForWorkshopParams = {
+        workshopId: Number(workshopId),
+        beamSizeId,
+        amount: Number(amount),
+        date: now,
+      }
+
+      createBeamInMutation(body)
+        .unwrap()
+        .then(() => {
+          enqueueSnackbar('Запись входа успешно создана', { variant: 'success' })
+          handleClose()
+        })
+        .catch((error: CommonErrorType) => {
+          defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
+        })
+
+      return
+    }
+
     const body: UpdateBeamInForWorkshopParams = {
-      beamInId: Number(beamIn.id),
+      beamInId: beamIn.beamInId as number,
       beamInData: {
         beamSizeId,
         amount: Number(amount),
@@ -99,7 +135,7 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({ beamIn, 
         open={isOpen}
         onClose={handleClose}
         isLoadingBeamSizes={isLoadingBeamSizes}
-        isLoading={isLoadingUpdateBeamInMutation}
+        isLoading={isLoadingUpdateBeamInMutation || isLoadingCreateBeamInMutation}
       />
     </>
   )
