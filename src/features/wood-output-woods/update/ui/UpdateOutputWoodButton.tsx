@@ -96,6 +96,10 @@ export const UpdateOutputWoodButton: FC<UpdateOutputWoodButtonProps> = ({
       return
     }
 
+    if (!workshopOut.workshopOutId) {
+      return
+    }
+
     updateWorkshopOutMutation({
       workshopOutId: workshopOut.workshopOutId,
       workshopOutData: data,
