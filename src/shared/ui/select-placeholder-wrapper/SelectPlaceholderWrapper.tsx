@@ -17,11 +17,14 @@ export const SelectPlaceholderWrapper: FC<SelectPlaceholderWrapperProps> = ({
     <Box
       sx={{
         position: 'relative',
+        overflow: 'hidden',
         ...(shouldShowPlaceholder
           ? {
               '&::before': {
                 position: 'absolute',
                 content: `"${placeholderText}"`,
+                textWrap: 'nowrap',
+                wordBreak: 'break-all',
                 top: 7,
                 left: 15,
                 color: theme =>
