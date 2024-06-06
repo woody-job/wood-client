@@ -18,4 +18,5 @@ export const urls = {
   workshop: 'workshop',
   day: 'day',
   timeRange: 'time-range',
+  delete: 'delete',
 } as const
