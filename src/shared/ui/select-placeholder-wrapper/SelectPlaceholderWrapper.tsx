@@ -22,8 +22,14 @@ export const SelectPlaceholderWrapper: FC<SelectPlaceholderWrapperProps> = ({
               '&::before': {
                 position: 'absolute',
                 content: `"${placeholderText}"`,
+                textWrap: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                wordBreak: 'break-all',
+                width: 'calc(100% - 40px)',
                 top: 7,
-                left: 15,
+                left: 0,
+                ml: '10px',
                 color: theme =>
                   theme.palette.mode === 'light'
                     ? theme.palette.grey['700']

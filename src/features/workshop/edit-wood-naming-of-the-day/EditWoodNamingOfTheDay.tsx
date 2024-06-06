@@ -130,7 +130,7 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
         flexWrap='nowrap'
       >
         <Grid item xs={isAdmin ? 7 : 12}>
-          <Box sx={{ position: 'relative' }}>
+          <Box title={!watchWoodNaming ? 'Условное обозначение дня' : ''}>
             <Controller
               name='woodNaming'
               control={control}
