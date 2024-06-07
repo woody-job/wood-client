@@ -24,6 +24,16 @@ export const buttonMUI: ButtonMUI = {
   },
   variants: [
     {
+      props: { variant: 'error' },
+      style: ({ theme }) => ({
+        backgroundColor: theme.palette.error.light,
+        color: theme.white['100'],
+        '&:hover': {
+          backgroundColor: theme.palette.error.dark,
+        },
+      }),
+    },
+    {
       props: { variant: 'contained' },
       style: ({ theme }) => ({
         backgroundColor: theme.primary.brand,
@@ -98,5 +108,6 @@ export const buttonMUI: ButtonMUI = {
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     gray: true
+    error: true
   }
 }

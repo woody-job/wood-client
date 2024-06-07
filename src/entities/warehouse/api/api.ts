@@ -5,10 +5,12 @@ export const warehouseApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     fetchWarehouse: builder.query<Warehouse, number>({
       query: woodConditionId => `warehouse/${woodConditionId}`,
+      providesTags: ['Warehouse'],
     }),
 
     fetchWarehouseStats: builder.query<WarehouseStats, void>({
       query: () => `warehouse/get/stats`,
+      providesTags: ['WarehouseStats'],
     }),
   }),
 })
