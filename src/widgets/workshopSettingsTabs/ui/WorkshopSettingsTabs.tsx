@@ -7,6 +7,7 @@ import { appSearchParams } from '@/shared/constants'
 import { useSearchParamsTabs } from '@/shared/libs/hooks'
 import { CustomTabPanel, TableFullscreen } from '@/shared/ui'
 
+import { WorkshopPrices } from './workshopPrices'
 import { WorkshopWoodPricesTable } from './workshopWoodPricesTable'
 
 const getTabValue = (id: number) => 'workshop' + id
@@ -52,6 +53,7 @@ export const WorkshopSettingsTabs: FC = () => {
             value={currentTabValue as string}
             tabPanelValue={getTabValue(workshop.id)}
           >
+            <WorkshopPrices workshop={workshop} />
             <TableFullscreen
               renderTable={props => <WorkshopWoodPricesTable workshop={workshop} {...props} />}
             />
