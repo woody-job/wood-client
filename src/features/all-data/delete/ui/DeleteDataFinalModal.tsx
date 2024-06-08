@@ -51,7 +51,7 @@ export const DeleteDataFinalModal: FC<DeleteDataFinalModalProps> = props => {
           <Button variant='gray' onClick={onClose}>
             Отмена
           </Button>
-          <Button disabled={!isValid} onClick={onClose}>
+          <Button disabled={!isValid} type='submit'>
             Удалить
           </Button>
         </Box>
