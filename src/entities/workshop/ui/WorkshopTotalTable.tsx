@@ -25,15 +25,21 @@ type WorkshopTotalTableProps = {
   timeRange: TimeRange
   onFullscreen?: () => void
   fullscreen?: boolean
+  workshopId?: number
+  initialHeight?: number
 }
 
 export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
   timeRange,
   onFullscreen,
   fullscreen,
+  workshopId: workshopIdFromProps,
+  initialHeight = 600,
 }) => {
   const { workshopId } = useParams()
   const navigate = useNavigate()
+
+  const actualWorkshopId = workshopId ?? workshopIdFromProps
 
   const {
     data: workshopOutReportData,
@@ -41,7 +47,7 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
     isError,
     error,
   } = useFetchWorkshopReportQuery({
-    workshopId: workshopId ? Number(workshopId) : -1,
+    workshopId: actualWorkshopId ? Number(actualWorkshopId) : -1,
     startDate: timeRange.startDate.toISOString(),
     endDate: timeRange.endDate.toISOString(),
   })
@@ -67,7 +73,7 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
   }, [workshopOutReportData])
 
   const handleRowDoubleClick: GridEventListener<'rowDoubleClick'> = event => {
-    navigate(`/${urls.workshop}/${workshopId}/${urls.day}?date=${event.row.date}`)
+    navigate(`/${urls.workshop}/${actualWorkshopId}/${urls.day}?date=${event.row.date}`)
   }
 
   return (
@@ -77,7 +83,7 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
         backgroundColor: theme =>
           theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
       }}
-      height={fullscreen ? '100%' : 600}
+      height={fullscreen ? '100%' : initialHeight}
     >
       {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
       {isLoadingWorkshopOutReport && (

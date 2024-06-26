@@ -4,53 +4,48 @@ import { NavLink } from 'react-router-dom'
 
 import { Box, Button, Typography } from '@mui/material'
 
-import { LastWorkingDayStats, WorkshopOutStat } from '@/entities/workshop-out'
 import { urls } from '@/shared/constants'
-import { DashItem } from '@/shared/ui'
+import { DashItem, TableFullscreen } from '@/shared/ui'
 
-import { WorkshopStatsWoodsBar } from './WorkshopStatsWoodsBar'
+import { WorkshopTotalTable } from './WorkshopTotalTable'
+import dayjs from 'dayjs'
 
 type WorkshopDashItemProps = {
   workshopName: string
   workshopId: number
-  woods: WorkshopOutStat[]
-  lastWorkingDayStats: LastWorkingDayStats
 }
 
-export const WorkshopDashItem: FC<WorkshopDashItemProps> = ({
-  workshopName,
-  workshopId,
-  woods,
-  lastWorkingDayStats,
-}) => {
+export const WorkshopDashItem: FC<WorkshopDashItemProps> = ({ workshopName, workshopId }) => {
+  const today = dayjs()
+
+  // В таблице отображается текущая рабочая неделя
+  const weekStart = today.clone().startOf('week').add(1, 'days')
+  const weekEnd = weekStart.add(5, 'days')
+
   return (
     <DashItem
-      display='flex'
-      justifyContent='center'
-      alignItems='start'
-      flexDirection='column'
-      gap={1}
       sx={{
         background: theme => theme.primary.purpleOpacity,
+        mb: 2,
       }}
     >
-      <Typography>{workshopName}</Typography>
+      <Typography sx={{ mb: 1 }}>{workshopName}</Typography>
 
-      <WorkshopStatsWoodsBar woods={woods} />
+      <TableFullscreen
+        renderTable={props => (
+          <WorkshopTotalTable
+            timeRange={{
+              startDate: weekStart,
+              endDate: weekEnd,
+            }}
+            workshopId={workshopId}
+            initialHeight={430}
+            {...props}
+          />
+        )}
+      />
 
-      <Box display='flex' justifyContent='space-between' alignItems='end' width='100%'>
-        <Box display='flex' flexDirection='column'>
-          <Typography variant='subtitle1' color={theme => theme.black['80']}>
-            Последний рабочий день:
-          </Typography>
-          <Typography variant='subtitle2' color={theme => theme.black['80']}>
-            <strong>Вход:</strong> {lastWorkingDayStats.totalBeamInVolume} м3
-          </Typography>
-          <Typography variant='subtitle2' color={theme => theme.black['80']}>
-            <strong>Итого на куб:</strong> {lastWorkingDayStats.profitPerUnit} ₽
-          </Typography>
-        </Box>
-
+      <Box display='flex' justifyContent='space-between' alignItems='end' mt={2}>
         <Button
           component={NavLink}
           to={`/${urls.workshop}/${workshopId}/${urls.day}`}
