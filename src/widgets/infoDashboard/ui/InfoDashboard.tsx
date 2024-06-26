@@ -1,10 +1,25 @@
-import { Box, Skeleton, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+
+import { Box, darken, Skeleton, Typography } from '@mui/material'
 
 import { useFetchWarehouseStatsQuery } from '@/entities/warehouse'
+import { urls, WOOD_CONDITION } from '@/shared/constants'
 import { DashboardTitle, DashItem } from '@/shared/ui'
 
 export const InfoDashboard = () => {
   const { data: warehouseStats, isLoading: isLoadingWarehouseStats } = useFetchWarehouseStatsQuery()
+
+  const navigate = useNavigate()
+
+  const handleNavigateToWarehouse = (woodConditionId: number) => {
+    if (woodConditionId === WOOD_CONDITION.DRY) {
+      navigate(`/${urls.warehouse}?tab=${woodConditionId}`)
+    }
+
+    if (woodConditionId === WOOD_CONDITION.WET) {
+      navigate(`/${urls.warehouse}?tab=${woodConditionId}`)
+    }
+  }
 
   return (
     <Box>
@@ -27,12 +42,23 @@ export const InfoDashboard = () => {
             return (
               <DashItem
                 sx={{
+                  cursor: 'pointer',
+                  transition: 'background 0.3s ease',
                   '&:nth-child(2n)': {
                     backgroundColor: theme => theme.primary.purpleOpacity,
+                    '&:hover': {
+                      backgroundColor: theme => darken(theme.primary.purpleOpacity, 0.04),
+                    },
                   },
                   '&:nth-child(2n+1)': {
                     backgroundColor: theme => theme.primary.blue,
+                    '&:hover': {
+                      backgroundColor: theme => darken(theme.primary.blue, 0.04),
+                    },
                   },
+                }}
+                onClick={() => {
+                  handleNavigateToWarehouse(warehouseStat.woodConditionId)
                 }}
               >
                 <Box mb={1} key={warehouseStat.woodConditionId}>

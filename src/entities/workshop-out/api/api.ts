@@ -14,7 +14,6 @@ import {
   GetWorkshopReportParams,
   GetWorkshopReportResponse,
   UpdateWorkshopOutParams,
-  WorkshopCurrentStats,
 } from '../model'
 
 export const workshopOutApi = baseApi.injectEndpoints({
@@ -39,13 +38,6 @@ export const workshopOutApi = baseApi.injectEndpoints({
         params: { startDate, endDate },
       }),
       providesTags: ['WorkshopOutStats'],
-    }),
-
-    fetchCurrentWorkshopsStats: build.query<WorkshopCurrentStats, void>({
-      query: () => ({
-        url: `workshop-out/get/stats`,
-      }),
-      providesTags: ['WorkshopCurrentStats'],
     }),
 
     fetchProfitStatsForWorkshop: build.query<
@@ -113,5 +105,4 @@ export const {
   useCreateWorkshopOutMutation,
   useUpdateWorkshopOutMutation,
   useDeleteWorkshopOutMutation,
-  useFetchCurrentWorkshopsStatsQuery,
 } = workshopOutApi

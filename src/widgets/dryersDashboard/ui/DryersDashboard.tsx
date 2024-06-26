@@ -1,10 +1,19 @@
-import { Box, Skeleton, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+
+import { Box, darken,Skeleton, Typography } from '@mui/material'
 
 import { useFetchDryerStatsQuery } from '@/entities/dryer'
+import { urls } from '@/shared/constants'
 import { DashboardTitle, DashItem } from '@/shared/ui'
 
 export const DryersDashboard = () => {
   const { data: dryerStats, isLoading: isLoadingDryerStats } = useFetchDryerStatsQuery()
+
+  const navigate = useNavigate()
+
+  const handleNavigateToDryer = (dryerId: number) => {
+    navigate(`/${urls.dryer}?tab=${dryerId}`)
+  }
 
   return (
     <Box>
@@ -29,12 +38,23 @@ export const DryersDashboard = () => {
               <DashItem
                 width={'31%'}
                 sx={{
+                  cursor: 'pointer',
+                  transition: 'background 0.3s ease',
                   '&:nth-child(2n)': {
                     backgroundColor: theme => theme.primary.purpleOpacity,
+                    '&:hover': {
+                      backgroundColor: theme => darken(theme.primary.purpleOpacity, 0.04),
+                    },
                   },
                   '&:nth-child(2n+1)': {
                     backgroundColor: theme => theme.primary.blue,
+                    '&:hover': {
+                      backgroundColor: theme => darken(theme.primary.blue, 0.04),
+                    },
                   },
+                }}
+                onClick={() => {
+                  handleNavigateToDryer(dryerStat.dryerId)
                 }}
               >
                 <Box mb={1} key={dryerStat.dryerId}>
