@@ -44,7 +44,7 @@ export const Dryer = () => {
       </Tabs>
 
       {currentTab && (
-        <Box alignSelf='center' mt={4}>
+        <Box mt={4}>
           <DryerConditionItem
             key={currentTab.id}
             isLoadingDryerData={isDryerDataLoading}
