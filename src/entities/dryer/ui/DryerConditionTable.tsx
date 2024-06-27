@@ -11,7 +11,7 @@ import {
 } from '@/shared/ui/data-grid'
 import { DataGridContainer } from '@/shared/ui/data-grid'
 
-import { DRYER_TABLE_CONDITION_TABLE_COLUMNS } from '../constants'
+import { DRYER_CONDITION_TABLE_COLUMNS } from '../constants'
 import { DryerDataResponse } from '../model'
 
 type DryerConditionTableProps = {
@@ -55,7 +55,7 @@ export const DryerConditionTable: FC<DryerConditionTableProps> = ({
     >
       {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
       <DataGrid
-        columns={DRYER_TABLE_CONDITION_TABLE_COLUMNS}
+        columns={DRYER_CONDITION_TABLE_COLUMNS}
         rows={rows}
         disableRowSelectionOnClick
         disableMultipleRowSelection

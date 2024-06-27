@@ -1,8 +1,10 @@
 import { FC, ReactNode } from 'react'
 
+import { skipToken } from '@reduxjs/toolkit/query'
+
 import { Box, Grid, Typography } from '@mui/material'
 
-import { DryerDataResponse } from '@/entities/dryer'
+import { useFetchDryerDataByIdQuery } from '@/entities/dryer'
 import { DashItem, TableFullscreen } from '@/shared/ui'
 
 import { DryerConditionTable } from './DryerConditionTable'
@@ -10,13 +12,19 @@ import { DryerConditionTable } from './DryerConditionTable'
 export interface DryerConditionItemProps {
   actions?: ReactNode
   dryerName: string
-  dryerData: DryerDataResponse | undefined
   dryerIterationCount: number
-  isLoadingDryerData: boolean
+  dryerId: number
 }
 
-export const DryerConditionItem: FC<DryerConditionItemProps> = props => {
-  const { actions, dryerName, dryerData, isLoadingDryerData, dryerIterationCount } = props
+export const DryerConditionItem: FC<DryerConditionItemProps> = ({
+  actions,
+  dryerName,
+  dryerIterationCount,
+  dryerId,
+}) => {
+  const { data: dryerData, isLoading: isLoadingDryerData } = useFetchDryerDataByIdQuery(
+    dryerId ?? skipToken
+  )
 
   return (
     <Box

@@ -1,73 +1,26 @@
+import { FC } from 'react'
+
 import { Box, Grid, MenuItem } from '@mui/material'
 import {
-  gridFilteredSortedRowIdsSelector,
   GridToolbarContainer,
   GridToolbarExportContainer,
   GridToolbarQuickFilter,
   useGridApiContext,
 } from '@mui/x-data-grid'
-import { GridApiCommunity, gridVisibleColumnFieldsSelector } from '@mui/x-data-grid/internals'
 
-import * as XLSX from 'xlsx'
+import { handleExport } from '../lib/helpers'
 
-const getExcelData = (apiRef: React.MutableRefObject<GridApiCommunity>) => {
-  // Select rows and columns
-  const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef)
-  const visibleColumnsField = gridVisibleColumnFieldsSelector(apiRef)
-
-  // Format the data. Here we only keep the value
-  return filteredSortedRowIds.map(id => {
-    const row = {}
-
-    visibleColumnsField.forEach(field => {
-      // @eslint-ignore
-      // @ts-expect-error 'error occured'
-      row[field] = apiRef.current.getCellParams(id, field).value
-    })
-
-    return row
-  })
+export type ExportMenuItemProps = {
+  excelFileName?: string
 }
 
-const handleExport = (apiRef: React.MutableRefObject<GridApiCommunity>) => {
-  const data = getExcelData(apiRef)
-
-  const columns = apiRef.current.getAllColumns()
-
-  const fields = columns.map(c => c.field)
-  const rows = data.map(row => {
-    const mRow = {}
-
-    for (const key of fields) {
-      // @eslint-ignore
-      // @ts-expect-error 'error occured'
-      mRow[key] = row[key]
-    }
-
-    return mRow
-  })
-
-  const columnNames = columns.map(c => c.headerName)
-  const worksheet = XLSX.utils.json_to_sheet(rows)
-
-  XLSX.utils.sheet_add_aoa(worksheet, [[...columnNames]], {
-    origin: 'A1',
-  })
-
-  const workbook = XLSX.utils.book_new()
-
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1')
-  XLSX.writeFile(workbook, document.title + '.xlsx', { compression: true })
-}
-
-export const ExportMenuItem = () => {
+export const ExportMenuItem: FC<ExportMenuItemProps> = ({ excelFileName }) => {
   const apiRef = useGridApiContext()
 
   return (
     <MenuItem
-      sx={{ py: '0px !important', px: 1, height: 40 }}
       onClick={() => {
-        handleExport(apiRef)
+        handleExport(apiRef, excelFileName)
         apiRef.current.hideColumnMenu?.()
       }}
     >
@@ -76,17 +29,21 @@ export const ExportMenuItem = () => {
   )
 }
 
-export const ExportButton = () => {
+export type ExportButtonProps = {
+  excelFileName?: string
+}
+
+export const ExportButton: FC<ExportButtonProps> = ({ excelFileName }) => {
   return (
     <GridToolbarExportContainer>
-      <ExportMenuItem />
+      <ExportMenuItem excelFileName={excelFileName} />
     </GridToolbarExportContainer>
   )
 }
 
-export type CustomToolbarProps = { withExcelExport?: boolean }
+export type CustomToolbarProps = { withExcelExport?: boolean; excelFileName?: string }
 
-export const CustomToolbar = ({ withExcelExport = true }: CustomToolbarProps) => {
+export const CustomToolbar = ({ withExcelExport = true, excelFileName }: CustomToolbarProps) => {
   return (
     <GridToolbarContainer>
       <Grid container justifyContent='flex-end'>
@@ -95,7 +52,7 @@ export const CustomToolbar = ({ withExcelExport = true }: CustomToolbarProps) =>
         </Box>
         {withExcelExport && (
           <Box mr={3}>
-            <ExportButton />
+            <ExportButton excelFileName={excelFileName} />
           </Box>
         )}
       </Grid>
