@@ -15,6 +15,7 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
 
 import { WORKSHOP_WOOD_PRICES_TABLE_COLUMNS } from '../../../constants'
 
@@ -109,7 +110,8 @@ export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({
           localeText={dataGridLocaleText}
           sx={{ ...dataGridStyles }}
           hideFooter
-          slots={{ panel: CustomGridPanel }}
+          slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
+          slotProps={{ toolbar: { withExcelExport: false } }}
         />
       )}
     </DataGridContainer>

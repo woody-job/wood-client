@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { Box, darken,Skeleton, Typography } from '@mui/material'
+import { Box, darken, Skeleton, Typography } from '@mui/material'
 
 import { useFetchDryerStatsQuery } from '@/entities/dryer'
 import { urls } from '@/shared/constants'

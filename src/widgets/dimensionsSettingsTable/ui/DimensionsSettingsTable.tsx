@@ -15,6 +15,7 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
 
 import { DIMENSIONS_TABLE_COLUMNS } from '../constants'
 import { DimensionsTableRow } from '../types'
@@ -107,7 +108,8 @@ export const DimensionsSettingsTable: FC<DimensionsSettingsTableProps> = ({
           localeText={dataGridLocaleText}
           sx={dataGridStyles}
           hideFooter
-          slots={{ panel: CustomGridPanel }}
+          slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
+          slotProps={{ toolbar: { withExcelExport: false } }}
         />
       )}
     </DataGridContainer>
