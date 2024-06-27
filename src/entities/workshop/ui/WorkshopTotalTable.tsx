@@ -56,7 +56,9 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
-    if (!isError) return
+    if (!isError) {
+      return
+    }
 
     defaultErrorHandler(error as CommonErrorType, message =>
       enqueueSnackbar(message, { variant: 'error' })

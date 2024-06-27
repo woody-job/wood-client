@@ -5,7 +5,9 @@ import {
   DryerDataList,
   DryerDataParams,
   DryerDataResponse,
+  DryerInfoData,
   DryerStats,
+  GetDryerInfoParams,
   UpdateDryerParams,
 } from '@/entities/dryer'
 import { baseApi } from '@/shared/api'
@@ -17,6 +19,16 @@ export const dryerApi = baseApi.injectEndpoints({
         url: 'dryer-chamber/list',
       }),
       providesTags: ['Dryers'],
+    }),
+
+    fetchAllWoodsGoneThroughDryer: build.query<DryerInfoData, GetDryerInfoParams>({
+      query: ({ startDate, endDate }) => ({
+        url: `/dryer-chamber-data/all-records`,
+        params: {
+          startDate,
+          endDate,
+        },
+      }),
     }),
 
     createDryer: build.mutation<void, CreateDryerParams>({
@@ -86,6 +98,7 @@ export const dryerApi = baseApi.injectEndpoints({
 
 export const {
   useFetchAllDryersQuery,
+  useFetchAllWoodsGoneThroughDryerQuery,
   useCreateDryerMutation,
   useUpdateDryerMutation,
   useDeleteDryerMutation,

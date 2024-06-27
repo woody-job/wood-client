@@ -81,3 +81,26 @@ export type DryerStatsData = {
 }
 
 export type DryerStats = DryerStatsData[]
+
+export type GetDryerInfoParams = {
+  startDate: string
+  endDate: string
+}
+
+export type DryerInfo = {
+  id: number
+  date: string
+  amount: number
+  isDrying: boolean
+  isTakenOut: boolean
+  dryerChamber: Dryer
+  woodType: WoodType
+  dimension: Dimension
+  woodClass: WoodClass
+  chamberIterationCountWhenBringingIn: number
+}
+
+export type DryerInfoData = {
+  data: DryerInfo[]
+  totalVolume: number
+}
