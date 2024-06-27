@@ -1,3 +1,7 @@
+import { Dimension } from '@/entities/dimension'
+import { WoodClass } from '@/entities/wood-class'
+import { WoodType } from '@/entities/wood-type'
+
 export type Dryer = {
   id: number
   name: string
@@ -5,13 +9,17 @@ export type Dryer = {
 }
 
 export type DryerDataItem = {
-  name: string
-  size: number
+  amount: number
+  date: string
+  dimension: Dimension
+  id: number
+  woodClass: WoodClass
+  woodType: WoodType
 }
 
 export type DryerDataResponse = {
   data: DryerDataItem[]
-  total: number
+  totalVolume: number
 }
 
 export type DryerDataList = {

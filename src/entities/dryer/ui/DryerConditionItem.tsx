@@ -1,9 +1,11 @@
 import { FC, ReactNode } from 'react'
 
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 
-import { DryerConditionSunburst, DryerDataResponse } from '@/entities/dryer'
-import { DashItem } from '@/shared/ui'
+import { DryerDataResponse } from '@/entities/dryer'
+import { DashItem, TableFullscreen } from '@/shared/ui'
+
+import { DryerConditionTable } from './DryerConditionTable'
 
 export interface DryerConditionItemProps {
   actions?: ReactNode
@@ -28,46 +30,34 @@ export const DryerConditionItem: FC<DryerConditionItemProps> = props => {
       }}
     >
       <DashItem
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        className='dryer-condition-item'
+        sx={{
+          background: theme => theme.primary.purpleOpacity,
+          mb: 2,
+        }}
       >
-        <Typography variant='h6'>{dryerName}</Typography>
-        <Typography variant='subtitle1' sx={{ mb: 2 }}>
-          Цикл {dryerIterationCount}
-        </Typography>
-
-        {isLoadingDryerData ? (
-          <Box
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-            minWidth='650px'
-            minHeight='650px'
-          >
-            <CircularProgress size={100} />
-          </Box>
-        ) : dryerData ? (
-          <DryerConditionSunburst dryerData={dryerData} />
-        ) : (
-          <Box
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-            minWidth='650px'
-            minHeight='650px'
-          >
-            <Typography variant='h6' fontWeight='regular'>
-              Нет данных о сушилке
+        <Grid container justifyContent='space-between' alignItems='flex-end'>
+          <Typography sx={{ mb: 1 }} variant='subtitle1'>
+            {dryerName} |{' '}
+            <Typography fontWeight='bold' display='inline-block'>
+              цикл {dryerIterationCount}
             </Typography>
-          </Box>
-        )}
-      </DashItem>
+          </Typography>
 
-      <Box width='100' display='flex' justifyContent='space-evenly' mt={1}>
-        {actions}
-      </Box>
+          <Box width='100' display='flex' gap={2} my={1}>
+            {actions}
+          </Box>
+        </Grid>
+
+        <TableFullscreen
+          renderTable={props => (
+            <DryerConditionTable
+              dryerData={dryerData}
+              isLoadingDryerData={isLoadingDryerData}
+              {...props}
+            />
+          )}
+        />
+      </DashItem>
     </Box>
   )
 }

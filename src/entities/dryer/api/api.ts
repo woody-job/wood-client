@@ -47,7 +47,7 @@ export const dryerApi = baseApi.injectEndpoints({
 
     fetchDryerDataById: build.query<DryerDataResponse, number>({
       query: dryerId => ({
-        url: `dryer-chamber-data/get/chamber-data/${dryerId}`,
+        url: `dryer-chamber-data/list/${dryerId}`,
       }),
       providesTags: ['DryersDataById'],
     }),

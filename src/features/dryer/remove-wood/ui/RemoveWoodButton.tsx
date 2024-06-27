@@ -12,7 +12,7 @@ export type RemoveWoodButtonProps = {
   dryerId: number
 }
 
-export const RemoveWoodButton: FC<RemoveWoodButtonProps> = ({ dryerId }) => {
+export const RemoveWoodButton: FC<RemoveWoodButtonProps> = ({ dryerId, ...buttonProps }) => {
   const [takeOut, { isLoading: isLoadingTakeOut }] = useTakeOutMutation()
 
   const { enqueueSnackbar } = useSnackbar()
@@ -38,7 +38,7 @@ export const RemoveWoodButton: FC<RemoveWoodButtonProps> = ({ dryerId }) => {
       onConfirm={handleTakeOut}
       submitText='Убрать'
       renderButton={({ onClick }) => (
-        <Button variant='gray' onClick={onClick}>
+        <Button variant='gray' onClick={onClick} size='small' {...buttonProps}>
           Убрать
         </Button>
       )}

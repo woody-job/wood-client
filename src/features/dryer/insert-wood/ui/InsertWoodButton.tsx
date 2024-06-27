@@ -86,7 +86,7 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
 
   return (
     <>
-      <Button variant='outlined' onClick={handleOpenInsert} {...buttonProps} />
+      <Button variant='outlined' onClick={handleOpenInsert} size='small' {...buttonProps} />
 
       <InsertWoodModal
         open={isOpenInsert}
