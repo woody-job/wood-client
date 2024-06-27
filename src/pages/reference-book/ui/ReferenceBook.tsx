@@ -12,6 +12,7 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
 
 export const ReferenceBook = () => {
   const columns: GridColDef[] = [
@@ -62,7 +63,8 @@ export const ReferenceBook = () => {
                   localeText={dataGridLocaleText}
                   sx={dataGridStyles}
                   hideFooter
-                  slots={{ panel: CustomGridPanel }}
+                  slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
+                  slotProps={{ toolbar: { withExcelExport: false } }}
                 />
               )}
             </DataGridContainer>

@@ -16,6 +16,7 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
 
 import { WORKSHOP_TOTAL_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
@@ -100,7 +101,7 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
           localeText={dataGridLocaleText}
           sx={{ ...dataGridStyles, width: 400 }}
           hideFooter
-          slots={{ panel: CustomGridPanel }}
+          slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
           onRowDoubleClick={handleRowDoubleClick}
         />
       )}
