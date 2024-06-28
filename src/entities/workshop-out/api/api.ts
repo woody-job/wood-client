@@ -3,12 +3,8 @@ import { baseApi } from '@/shared/api'
 import {
   CreateWorkshopOutParams,
   DeleteWorkshopOutParams,
-  GetProfitStatsForWorkshopParams,
-  GetProfitStatsForWorkshopResponse,
   GetWorkshopOutForDateParams,
   GetWorkshopOutForDateResponse,
-  GetWorkshopOutStatsParams,
-  GetWorkshopOutStatsResponse,
   GetWorkshopProducedParams,
   GetWorkshopProducedResponse,
   GetWorkshopReportParams,
@@ -27,28 +23,6 @@ export const workshopOutApi = baseApi.injectEndpoints({
         params: { date },
       }),
       providesTags: ['WorkshopOutForDay'],
-    }),
-
-    fetchWorkshopOutStatsForWorkshop: build.query<
-      GetWorkshopOutStatsResponse,
-      GetWorkshopOutStatsParams
-    >({
-      query: ({ workshopId, startDate, endDate }) => ({
-        url: `workshop-out/get/workshop-stats/${workshopId}`,
-        params: { startDate, endDate },
-      }),
-      providesTags: ['WorkshopOutStats'],
-    }),
-
-    fetchProfitStatsForWorkshop: build.query<
-      GetProfitStatsForWorkshopResponse,
-      GetProfitStatsForWorkshopParams
-    >({
-      query: ({ workshopId, startDate, endDate, perUnit }) => ({
-        url: `workshop-out/get/workshop-stats/profit/${workshopId}`,
-        params: { startDate, endDate, perUnit },
-      }),
-      providesTags: ['WorkshopProfitStats'],
     }),
 
     fetchWorkshopReport: build.query<GetWorkshopReportResponse, GetWorkshopReportParams>({
@@ -98,8 +72,6 @@ export const workshopOutApi = baseApi.injectEndpoints({
 
 export const {
   useFetchWorkshopOutForDateQuery,
-  useFetchProfitStatsForWorkshopQuery,
-  useFetchWorkshopOutStatsForWorkshopQuery,
   useFetchWorkshopReportQuery,
   useFetchWorkshopProducedStatsQuery,
   useCreateWorkshopOutMutation,

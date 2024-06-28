@@ -24,6 +24,7 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
 
 import { WORKSHOP_OUT_TABLE_COLUMNS } from '../constants'
 import { getWorkshopOutDefaults } from '../libs/helpers'
@@ -33,12 +34,14 @@ import { enqueueSnackbar } from 'notistack'
 export type WorkshopOutWoodsProps = {
   workshopOutData: WorkshopOut[] | undefined
   isWorkshopOutLoading: boolean
+  totalWorkshopOutVolume: number
   now: string
 }
 
 export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
   workshopOutData,
   isWorkshopOutLoading,
+  totalWorkshopOutVolume,
   now,
 }) => {
   const { workshopId } = useParams()
@@ -157,7 +160,7 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
       </Box>
       <TableFullscreen
         renderTable={({ fullscreen, onFullscreen }) => (
-          <DataGridContainer height={fullscreen ? '100%' : 400}>
+          <DataGridContainer height={fullscreen ? '100%' : '50vh'}>
             {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
             {isWorkshopOutLoading && (
               <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
@@ -173,12 +176,16 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
                 localeText={dataGridLocaleText}
                 sx={dataGridStyles}
                 hideFooter
-                slots={{ panel: CustomGridPanel }}
+                slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
+                slotProps={{
+                  toolbar: { withExcelExport: false },
+                }}
               />
             )}
           </DataGridContainer>
         )}
       />
+      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {totalWorkshopOutVolume}</Typography>
     </Box>
   )
 }

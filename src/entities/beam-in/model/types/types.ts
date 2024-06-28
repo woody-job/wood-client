@@ -45,14 +45,3 @@ export type BeamInFormType = {
   diameter: number
   amount: number
 }
-
-export type GetBeamInWorkshopStatsResponse = {
-  x: string
-  y: number
-}[]
-
-export type GetBeamInWorkshopStatsParams = {
-  workshopId: number
-  startDate?: string
-  endDate?: string
-}

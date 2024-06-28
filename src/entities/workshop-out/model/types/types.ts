@@ -27,7 +27,6 @@ export type SunburstData = SunburstItem[]
 
 export type GetWorkshopOutForDateResponse = {
   data: WorkshopOut[]
-  sunburstData: SunburstData
   totalWorkshopOutVolume: number
 }
 
@@ -71,26 +70,6 @@ export type WorkshopOutStat = {
   date: string
   woods: WorkshopOutStatWood[]
 }
-
-export type GetWorkshopOutStatsResponse = WorkshopOutStat[]
-
-export type GetWorkshopOutStatsParams = {
-  workshopId: number
-  startDate?: string
-  endDate?: string
-}
-
-export type GetProfitStatsForWorkshopParams = {
-  workshopId: number
-  startDate?: string
-  endDate?: string
-  perUnit: boolean
-}
-
-export type GetProfitStatsForWorkshopResponse = {
-  x: string
-  y: number
-}[]
 
 export type WorkshopReportItem = {
   date: string

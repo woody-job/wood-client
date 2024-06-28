@@ -7,7 +7,6 @@ import { Box, Divider, Grid } from '@mui/material'
 import { WorkshopDashboardCards } from '@/widgets/workshopDashboardCards'
 import { WorkshopInputWoods } from '@/widgets/workshopInputWoods'
 import { WorkshopOutputWoods } from '@/widgets/workshopOutputWoods'
-import { WorkshopTrashStatsSunburst } from '@/entities/workshop'
 import { useFetchWorkshopOutForDateQuery } from '@/entities/workshop-out'
 import { useDateInSearchParams } from '@/shared/libs/hooks/search-params-with-state'
 import { CustomTabPanel, DatePicker } from '@/shared/ui'
@@ -25,7 +24,6 @@ export const WorkshopDayInfo: FC = () => {
   )
 
   const workshopOutData = workshopOut ? workshopOut.data : []
-  const workshopOutSunburstData = workshopOut ? workshopOut.sunburstData : []
   const totalWorkshopOutVolume = workshopOut?.totalWorkshopOutVolume
     ? workshopOut.totalWorkshopOutVolume
     : 0
@@ -53,16 +51,12 @@ export const WorkshopDayInfo: FC = () => {
               now={date.toISOString()}
               workshopOutData={workshopOutData}
               isWorkshopOutLoading={isWorkshopOutLoading}
+              totalWorkshopOutVolume={totalWorkshopOutVolume}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={4.5} xl={4.5} flexShrink={1}>
             <Grid container flexDirection='column' width='100%'>
               <WorkshopDashboardCards now={date.toISOString()} />
-              <WorkshopTrashStatsSunburst
-                workshopOutSunburstData={workshopOutSunburstData}
-                totalWorkshopOutVolume={totalWorkshopOutVolume}
-                isWorkshopOutLoading={isWorkshopOutLoading}
-              />
             </Grid>
           </Grid>
         </Grid>

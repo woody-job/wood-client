@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { Box } from '@mui/material'
 
-import { WorkshopCharts } from '@/widgets/workshopCharts'
 import { WorkshopTotalTable } from '@/entities/workshop'
 import { useTimeRangeInSearchParams } from '@/shared/libs/hooks/search-params-with-state'
 import { CustomTabPanel, TableFullscreen } from '@/shared/ui'
@@ -16,12 +15,10 @@ export const WorkshopTimeRangeInfo: FC = () => {
       <TimeRangeInputs range={timeRange} setRange={handleSetTimeRange} />
 
       <Box mt={3}>
-        <WorkshopCharts timeRange={timeRange} />
-      </Box>
-
-      <Box mt={3}>
         <TableFullscreen
-          renderTable={props => <WorkshopTotalTable timeRange={timeRange} {...props} />}
+          renderTable={props => (
+            <WorkshopTotalTable timeRange={timeRange} initialHeight={'70vh'} {...props} />
+          )}
         />
       </Box>
     </CustomTabPanel>

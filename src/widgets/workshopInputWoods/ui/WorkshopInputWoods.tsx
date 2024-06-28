@@ -23,6 +23,7 @@ import {
   DataGridFullscreenButton,
   dataGridLocaleText,
 } from '@/shared/ui/data-grid'
+import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
 
 import { WORKSHOP_BEAM_IN_TABLE_COLUMNS } from '../constants'
 import { getWorkshopBeamInDefaults } from '../libs/helpers'
@@ -147,7 +148,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
       </Box>
       <TableFullscreen
         renderTable={({ fullscreen, onFullscreen }) => (
-          <DataGridContainer height={fullscreen ? '95vh' : 400}>
+          <DataGridContainer height={fullscreen ? '95vh' : '50vh'}>
             {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
             {isBeamInLoading && (
               <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
@@ -163,7 +164,10 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
                 localeText={dataGridLocaleText}
                 sx={dataGridStyles}
                 hideFooter
-                slots={{ panel: CustomGridPanel }}
+                slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
+                slotProps={{
+                  toolbar: { withExcelExport: false },
+                }}
               />
             )}
           </DataGridContainer>
