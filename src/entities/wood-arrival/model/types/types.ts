@@ -28,17 +28,6 @@ export type ArrivalByDayResponse = {
   totalVolume: number
 }
 
-export type ArrivalByRangeResponse = {
-  sunburstData: { name: string; children: ArrivalSunburstItem[] }[]
-  totalVolume: number
-}
-
-export type ArrivalFetchRangeParams = {
-  startDate: string
-  endDate: string
-  woodConditionId: number
-}
-
 export type ArrivalFetchDayParams = {
   date: string
   woodConditionId: number

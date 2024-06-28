@@ -15,14 +15,6 @@ export const getSidebarPaths = (workshops: Workshop[] | undefined): SidebarPath[
 
   return [
     {
-      path: `/${urls.vault}/${urls.dryWoodVault}`,
-      name: 'Свод сухой',
-    },
-    {
-      path: `/${urls.vault}/${urls.wetWoodVault}`,
-      name: 'Свод сырой',
-    },
-    {
       path: `${urls.arrival}/${urls.day}`,
       name: 'Поступления',
     },

@@ -1,8 +1,6 @@
 import {
   ShipmentByDayResponse,
-  ShipmentByRangeResponse,
   ShipmentFetchByDayParams,
-  ShipmentFetchByRangeParams,
   ShipmentParams,
   UpdateShipmentParams,
 } from '@/entities/wood-shipment'
@@ -13,14 +11,6 @@ export const woodShipmentApi = baseApi.injectEndpoints({
     fetchWoodShipmentByDay: build.query<ShipmentByDayResponse, ShipmentFetchByDayParams>({
       query: ({ woodConditionId, ...params }) => ({
         url: `wood-shipment/get/day-data-stats/${woodConditionId}`,
-        params: params,
-      }),
-      providesTags: ['Shipment'],
-    }),
-
-    fetchWoodShipmentByRange: build.query<ShipmentByRangeResponse, ShipmentFetchByRangeParams>({
-      query: ({ woodConditionId, ...params }) => ({
-        url: `wood-shipment/get/day-range-stats/${woodConditionId}`,
         params: params,
       }),
       providesTags: ['Shipment'],
@@ -56,7 +46,6 @@ export const woodShipmentApi = baseApi.injectEndpoints({
 
 export const {
   useFetchWoodShipmentByDayQuery,
-  useFetchWoodShipmentByRangeQuery,
   useAddWoodShipmentMutation,
   useUpdateWoodShipmentMutation,
   useDeleteWoodShipmentMutation,
