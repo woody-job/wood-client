@@ -40,6 +40,7 @@ export const WorkshopDashItem: FC<WorkshopDashItemProps> = ({ workshopName, work
             }}
             workshopId={workshopId}
             initialHeight={430}
+            displayToolbar={false}
             {...props}
           />
         )}

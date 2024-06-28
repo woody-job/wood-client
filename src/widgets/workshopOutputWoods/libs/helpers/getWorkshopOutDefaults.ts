@@ -12,14 +12,49 @@ import {
   WorkshopOutTableRow,
 } from '../../types/types'
 
-const getDimensionsForEachWoodType = (dimensions: Dimension[], woodTypes: WoodType[]) => {
+const getDimensionsForEachWoodType = ({
+  dimensions,
+  woodTypes,
+  workshopDefaultDimensions,
+}: {
+  dimensions: Dimension[]
+  woodTypes: WoodType[]
+  workshopDefaultDimensions: WorkshopDefaultDimension[]
+}) => {
   const output: DimensionWithWoodType[] = []
 
-  dimensions.forEach(dimension => {
-    woodTypes.forEach(woodType => {
-      output.push({
-        ...dimension,
-        woodType,
+  workshopDefaultDimensions.forEach(workshopDefaultDimension => {
+    const { width, thickness, length } = workshopDefaultDimension
+
+    Object.keys(workshopDefaultDimension.woodParams).forEach(woodClassName => {
+      const currentDimension = dimensions.find(dimension => {
+        return (
+          dimension.width === width &&
+          dimension.thickness === thickness &&
+          dimension.length === length &&
+          dimension.woodClass.name === woodClassName
+        )
+      })
+
+      const defaultWoodTypes = workshopDefaultDimension.woodParams[woodClassName]
+
+      const currentWoodTypes = defaultWoodTypes.map(defaultWoodType => {
+        return woodTypes.find(woodType => woodType.name === defaultWoodType)
+      })
+
+      if (!currentDimension || !currentWoodTypes) {
+        return
+      }
+
+      currentWoodTypes.forEach(currentWoodType => {
+        if (!currentWoodType) {
+          return
+        }
+
+        output.push({
+          ...currentDimension,
+          woodType: currentWoodType,
+        })
       })
     })
   })
@@ -36,7 +71,11 @@ const getWorkshopOutDefaultRows = ({
   woodTypes: WoodType[]
   workshopDefaultDimensions: WorkshopDefaultDimension[]
 }): WorkshopOutTableRow[] => {
-  const dimensionsWithWoodTypes = getDimensionsForEachWoodType(dimensions, woodTypes)
+  const dimensionsWithWoodTypes = getDimensionsForEachWoodType({
+    dimensions,
+    woodTypes,
+    workshopDefaultDimensions,
+  })
 
   const filteredDimensions = dimensionsWithWoodTypes.filter(dimension => {
     const isInDefaultDimensions = workshopDefaultDimensions.find(defaultDimension => {
@@ -45,7 +84,7 @@ const getWorkshopOutDefaultRows = ({
         defaultDimension.thickness === dimension.thickness &&
         defaultDimension.length === dimension.length
 
-      const containsWoodClass = defaultDimension.woodClassesNames.find(woodClassName => {
+      const containsWoodClass = Object.keys(defaultDimension.woodParams).find(woodClassName => {
         return woodClassName === dimension.woodClass.name
       })
 

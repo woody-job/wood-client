@@ -27,7 +27,8 @@ type WorkshopTotalTableProps = {
   onFullscreen?: () => void
   fullscreen?: boolean
   workshopId?: number
-  initialHeight?: number
+  initialHeight?: number | string
+  displayToolbar?: boolean
 }
 
 export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
@@ -36,6 +37,7 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
   fullscreen,
   workshopId: workshopIdFromProps,
   initialHeight = 600,
+  displayToolbar = true,
 }) => {
   const { workshopId } = useParams()
   const navigate = useNavigate()
@@ -103,7 +105,7 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
           localeText={dataGridLocaleText}
           sx={{ ...dataGridStyles, width: 400 }}
           hideFooter
-          slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
+          slots={{ panel: CustomGridPanel, toolbar: displayToolbar && CustomToolbar }}
           onRowDoubleClick={handleRowDoubleClick}
         />
       )}

@@ -14,11 +14,14 @@ export type WorkshopOutTableRow = {
   workshopOutId: number | undefined
 }
 
+// { [woodClass]: [woodType1, woodType2] }
+export type WoodParams = Record<string, string[]>
+
 export type WorkshopDefaultDimension = {
   width: number
   thickness: number
   length: number
-  woodClassesNames: string[]
+  woodParams: WoodParams
 }
 
 export type DimensionWithWoodType = Dimension & { woodType: WoodType }
