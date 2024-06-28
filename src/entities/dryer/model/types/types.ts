@@ -22,21 +22,6 @@ export type DryerDataResponse = {
   totalVolume: number
 }
 
-export type DryerDataList = {
-  sunburstData: DryerDataListSunburstDataItem[]
-  totalVolume: number
-}
-
-type DryerDataListSunburstItem = {
-  name: string
-  children: { name: string; size: number }[]
-}
-
-type DryerDataListSunburstDataItem = {
-  name: string
-  children: DryerDataListSunburstItem[]
-}
-
 export type DryerFormType = {
   name: string
 }
