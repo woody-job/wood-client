@@ -5,8 +5,6 @@ import {
   DeleteWorkshopOutParams,
   GetWorkshopOutForDateParams,
   GetWorkshopOutForDateResponse,
-  GetWorkshopProducedParams,
-  GetWorkshopProducedResponse,
   GetWorkshopReportParams,
   GetWorkshopReportResponse,
   UpdateWorkshopOutParams,
@@ -32,15 +30,6 @@ export const workshopOutApi = baseApi.injectEndpoints({
       }),
       providesTags: ['WorkshopReportStats'],
     }),
-
-    fetchWorkshopProducedStats: build.query<GetWorkshopProducedResponse, GetWorkshopProducedParams>(
-      {
-        query: () => ({
-          url: `workshop-out/get/produced-stats`,
-        }),
-        providesTags: ['WorkshopProducedStats'],
-      }
-    ),
 
     createWorkshopOut: build.mutation<void, CreateWorkshopOutParams>({
       query: createWorkshopOutParams => ({
@@ -73,7 +62,6 @@ export const workshopOutApi = baseApi.injectEndpoints({
 export const {
   useFetchWorkshopOutForDateQuery,
   useFetchWorkshopReportQuery,
-  useFetchWorkshopProducedStatsQuery,
   useCreateWorkshopOutMutation,
   useUpdateWorkshopOutMutation,
   useDeleteWorkshopOutMutation,

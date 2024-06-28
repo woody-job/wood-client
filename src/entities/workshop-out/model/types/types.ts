@@ -122,13 +122,3 @@ export type WorkshopProducedSunburstDataItem = {
     size: number
   }[]
 }
-
-export type GetWorkshopProducedResponse = {
-  sunburstData: WorkshopProducedSunburstDataItem[]
-  totalVolume: number
-}
-
-export type GetWorkshopProducedParams = {
-  startDate?: string
-  endDate?: string
-}

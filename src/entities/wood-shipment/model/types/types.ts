@@ -33,18 +33,7 @@ export type ShipmentByDayResponse = {
   totalVolume: number
 }
 
-export type ShipmentByRangeResponse = {
-  sunburstData: ShipmentSunburstData[]
-  totalVolume: number
-}
-
 export type ShipmentFetchParams = {
-  startDate: string
-  endDate: string
-  woodConditionId: number
-}
-
-export type ShipmentFetchByRangeParams = {
   startDate: string
   endDate: string
   woodConditionId: number

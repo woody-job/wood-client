@@ -1,7 +1,6 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  Outlet,
   Route,
   RouterProvider,
 } from 'react-router-dom'
@@ -27,8 +26,6 @@ import SettingsReferenceBook from '@/pages/system-settings/reference-book'
 import SettingsDryers from '@/pages/system-settings/settings-dryers'
 import WoodNamings from '@/pages/system-settings/wood-namings'
 import Workshops from '@/pages/system-settings/workshops'
-import DryWoodVault from '@/pages/vault/dry-wood'
-import WetWoodVault from '@/pages/vault/wet-wood'
 import { Warehouse } from '@/pages/warehouse/ui/Warehouse'
 import WorkshopDayInfo from '@/pages/workshop-day-info'
 import WorkshopItem from '@/pages/workshop-item'
@@ -79,11 +76,6 @@ export const AppRouter = () => {
 
           <Route path={urls.referenceBook} element={<ReferenceBook />} />
           <Route path={urls.dryer} element={<Dryer />} />
-
-          <Route path={urls.vault} element={<Outlet />}>
-            <Route path={urls.dryWoodVault} element={<DryWoodVault />} />
-            <Route path={urls.wetWoodVault} element={<WetWoodVault />} />
-          </Route>
 
           <Route path={urls.workshop + '/:workshopId'} element={<WorkshopItem />}>
             <Route path={urls.day} element={<WorkshopDayInfo />} />

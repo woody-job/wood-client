@@ -1,8 +1,6 @@
 import {
   ArrivalByDayResponse,
-  ArrivalByRangeResponse,
   ArrivalFetchDayParams,
-  ArrivalFetchRangeParams,
   ArrivalParams,
   UpdateArrivalParams,
 } from '@/entities/wood-arrival'
@@ -13,14 +11,6 @@ export const woodArrivalApi = baseApi.injectEndpoints({
     fetchWoodArrivalByDay: build.query<ArrivalByDayResponse, ArrivalFetchDayParams>({
       query: ({ woodConditionId, ...params }) => ({
         url: `wood-arrival/get/day-data-stats/${woodConditionId}`,
-        params: params,
-      }),
-      providesTags: ['Arrival'],
-    }),
-
-    fetchWoodArrivalByRange: build.query<ArrivalByRangeResponse, ArrivalFetchRangeParams>({
-      query: ({ woodConditionId, ...params }) => ({
-        url: `wood-arrival/get/day-range-stats/${woodConditionId}`,
         params: params,
       }),
       providesTags: ['Arrival'],
@@ -56,7 +46,6 @@ export const woodArrivalApi = baseApi.injectEndpoints({
 
 export const {
   useFetchWoodArrivalByDayQuery,
-  useFetchWoodArrivalByRangeQuery,
   useAddWoodArrivalMutation,
   useUpdateWoodArrivalMutation,
   useDeleteWoodArrivalMutation,
