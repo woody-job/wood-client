@@ -51,7 +51,7 @@ export const DryerConditionTable: FC<DryerConditionTableProps> = ({
         backgroundColor: theme =>
           theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
       }}
-      height={fullscreen ? '100%' : 600}
+      height={fullscreen ? '100%' : '70vh'}
     >
       {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
       <DataGrid

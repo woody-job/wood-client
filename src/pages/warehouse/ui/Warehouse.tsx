@@ -42,7 +42,7 @@ export const Warehouse = () => {
         {!isLoadingWoodConditions && <Tab label='Сушилка' value='dryer' />}
       </Tabs>
 
-      <Box display='flex' flexWrap='wrap' justifyContent='center'>
+      <Box>
         {currentTab &&
           woodConditions?.map(tab => (
             <CustomTabPanel
@@ -50,7 +50,7 @@ export const Warehouse = () => {
               tabPanelValue={currentTab.id.toString()}
               value={tab.id.toString()}
             >
-              <WarehouseItem key={tab.id} woodConditionId={tab.id} />
+              <WarehouseItem key={tab.id} woodConditionName={tab.name} woodConditionId={tab.id} />
             </CustomTabPanel>
           ))}
         {currentTab && (

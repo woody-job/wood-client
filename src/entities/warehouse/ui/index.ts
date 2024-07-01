@@ -1,1 +1,1 @@
-export * from './WarehouseSunburst.tsx'
+export * from './WarehouseTable.tsx'

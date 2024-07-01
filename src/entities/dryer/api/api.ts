@@ -2,7 +2,6 @@ import {
   BringWoodInDryerParams,
   CreateDryerParams,
   Dryer,
-  DryerDataList,
   DryerDataParams,
   DryerDataResponse,
   DryerInfoData,
@@ -10,6 +9,7 @@ import {
   GetDryerInfoParams,
   UpdateDryerParams,
 } from '@/entities/dryer'
+import { Warehouse } from '@/entities/warehouse'
 import { baseApi } from '@/shared/api'
 
 export const dryerApi = baseApi.injectEndpoints({
@@ -81,7 +81,7 @@ export const dryerApi = baseApi.injectEndpoints({
       invalidatesTags: ['DryersDataById', 'Dryers'],
     }),
 
-    fetchDryerDataList: build.query<DryerDataList, void>({
+    fetchDryerDataList: build.query<Warehouse, void>({
       query: () => ({
         url: `dryer-chamber-data/list`,
       }),
