@@ -39,6 +39,14 @@ export const SystemSettings = () => {
           value={urls.referenceBook}
         />
         <Tab component={NavLink} to={urls.dryers} label='Сушилки' value={urls.dryers} />
+        <Tab component={NavLink} to={urls.suppliers} label='Поставщики' value={urls.suppliers} />
+        <Tab component={NavLink} to={urls.buyers} label='Покупатели' value={urls.buyers} />
+        <Tab
+          component={NavLink}
+          to={urls.personsInCharge}
+          label='Ответственные'
+          value={urls.personsInCharge}
+        />
         <Tab component={NavLink} to={urls.delete} label='Стереть данные' value={urls.delete} />
       </Tabs>
 

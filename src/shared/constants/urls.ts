@@ -16,4 +16,7 @@ export const urls = {
   day: 'day',
   timeRange: 'time-range',
   delete: 'delete',
+  suppliers: 'suppliers',
+  buyers: 'buyers',
+  personsInCharge: 'persons-in-charge',
 } as const

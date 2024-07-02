@@ -80,7 +80,7 @@ export const WorkshopWoodPricesTable: FC<WorkshopWoodPricesTableProps> = ({
 
   return (
     <DataGridContainer
-      height={fullscreen ? '100%' : 660}
+      height={fullscreen ? '100%' : '65vh'}
       mt={fullscreen ? 0 : 5}
       display='flex'
       flexDirection='column'

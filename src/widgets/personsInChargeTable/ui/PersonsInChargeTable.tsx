@@ -3,8 +3,8 @@ import { FC } from 'react'
 import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
-import { UpdateWoodNamingButton } from '@/features/wood-naming/update'
-import { useDeleteWoodNamingMutation, WoodNaming } from '@/entities/wood-naming'
+import { UpdatePersonInChargeButton } from '@/features/personInCharge/update'
+import { PersonInCharge, useDeletePersonInChargeMutation } from '@/entities/personInCharge'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm } from '@/shared/ui'
@@ -18,25 +18,25 @@ import {
 
 import { useSnackbar } from 'notistack'
 
-export type WoodNamingsTableProps = {
-  woodNamings: WoodNaming[] | undefined
-  isLoadingWoodNamings: boolean
+export type PersonsInChargeTableProps = {
+  personsInCharge: PersonInCharge[] | undefined
+  isLoadingPersonsInCharge: boolean
   onFullscreen?: () => void
   fullscreen?: boolean
 }
 
-export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
-  const { woodNamings, isLoadingWoodNamings, onFullscreen, fullscreen } = props
+export const PersonsInChargeTable: FC<PersonsInChargeTableProps> = props => {
+  const { personsInCharge, isLoadingPersonsInCharge, onFullscreen, fullscreen } = props
 
-  const [deleteWoodNamingMutation, { isLoading: isLoadingDeleteWoodNamingMutation }] =
-    useDeleteWoodNamingMutation()
+  const [deletePersonInChargeMutation, { isLoading: isLoadingDeletePersonInChargeMutation }] =
+    useDeletePersonInChargeMutation()
   const { enqueueSnackbar } = useSnackbar()
 
-  const handleDeleteWoodNaming = (woodNamingId: number) => {
-    deleteWoodNamingMutation(woodNamingId)
+  const handleDeletePersonInCharge = (personInChargeId: number) => {
+    deletePersonInChargeMutation(personInChargeId)
       .unwrap()
       .then(() => {
-        enqueueSnackbar('Обозначение успешно удалено', { variant: 'info' })
+        enqueueSnackbar('Покупатель успешно удален', { variant: 'info' })
       })
       .catch((error: CommonErrorType) => {
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
@@ -44,7 +44,8 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
   }
 
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Название', width: 200 },
+    { field: 'initials', headerName: 'Инициалы', width: 200 },
+    { field: 'secondName', headerName: 'Фамилия', width: 200 },
     {
       field: 'actions',
       headerName: '',
@@ -53,14 +54,14 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
       width: 300,
       renderCell: ({ row }) => (
         <>
-          <UpdateWoodNamingButton woodNaming={row} sx={{ mr: 1 }} />
+          <UpdatePersonInChargeButton personInCharge={row} sx={{ mr: 1 }} />
           <ButtonWithConfirm
-            header='Редактировать обозначение'
-            description='Вы точно хотите удалить это обозначение?'
+            header='Редактировать ответственного'
+            description='Вы точно хотите удалить этого ответственного?'
             onConfirm={() => {
-              handleDeleteWoodNaming(row.id)
+              handleDeletePersonInCharge(row.id)
             }}
-            isLoading={isLoadingDeleteWoodNamingMutation}
+            isLoading={isLoadingDeletePersonInChargeMutation}
           />
         </>
       ),
@@ -69,16 +70,16 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
 
   return (
     <DataGridContainer height={fullscreen ? '100%' : '70vh'}>
-      {isLoadingWoodNamings && (
+      {isLoadingPersonsInCharge && (
         <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
           <CircularProgress size={100} />
         </Box>
       )}
       {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
 
-      {woodNamings && (
+      {personsInCharge && (
         <DataGrid
-          rows={woodNamings}
+          rows={personsInCharge}
           columns={columns}
           disableRowSelectionOnClick
           disableMultipleRowSelection
