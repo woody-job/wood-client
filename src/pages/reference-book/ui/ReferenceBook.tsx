@@ -45,7 +45,7 @@ export const ReferenceBook = () => {
       <Box display={'flex'} flexDirection='column' mt={10}>
         <TableFullscreen
           renderTable={({ fullscreen, onFullscreen }) => (
-            <DataGridContainer height={fullscreen ? '100%' : 600}>
+            <DataGridContainer height={fullscreen ? '100%' : '70vh'}>
               {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
               {isLoadingDimensions && (
                 <Box

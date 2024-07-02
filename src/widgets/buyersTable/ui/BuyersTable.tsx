@@ -3,8 +3,8 @@ import { FC } from 'react'
 import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
-import { UpdateDryerButton } from '@/features/dryer/update'
-import { Dryer, useDeleteDryerMutation } from '@/entities/dryer'
+import { UpdateBuyerButton } from '@/features/buyer/update'
+import { Buyer, useDeleteBuyerMutation } from '@/entities/buyer'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm } from '@/shared/ui'
@@ -18,65 +18,67 @@ import {
 
 import { useSnackbar } from 'notistack'
 
-export type DryersTableProps = {
-  dryers: Dryer[] | undefined
-  isLoadingDryers: boolean
+export type BuyersTableProps = {
+  buyers: Buyer[] | undefined
+  isLoadingBuyers: boolean
   onFullscreen?: () => void
   fullscreen?: boolean
 }
 
-export const DryersTable: FC<DryersTableProps> = props => {
-  const { dryers, isLoadingDryers, onFullscreen, fullscreen } = props
+export const BuyersTable: FC<BuyersTableProps> = props => {
+  const { buyers, isLoadingBuyers, onFullscreen, fullscreen } = props
 
-  const [deleteDryerMutation, { isLoading: isLoadingDeleteDryerMutation }] =
-    useDeleteDryerMutation()
+  const [deleteBuyerMutation, { isLoading: isLoadingDeleteBuyerMutation }] =
+    useDeleteBuyerMutation()
   const { enqueueSnackbar } = useSnackbar()
 
+  const handleDeleteBuyer = (buyerId: number) => {
+    deleteBuyerMutation(buyerId)
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar('Покупатель успешно удален', { variant: 'info' })
+      })
+      .catch((error: CommonErrorType) => {
+        defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
+      })
+  }
+
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Название', width: 200 },
+    { field: 'name', headerName: 'Наименование', width: 200 },
     {
       field: 'actions',
       headerName: '',
       disableColumnMenu: true,
       sortable: false,
-      width: 100,
+      width: 300,
       renderCell: ({ row }) => (
-        <Box sx={{ ml: 'auto' }}>
-          <UpdateDryerButton dryer={row} sx={{ mr: 1 }} />
+        <>
+          <UpdateBuyerButton buyer={row} sx={{ mr: 1 }} />
           <ButtonWithConfirm
-            header={'Удалить сушильную камеру'}
-            description={'Вы точно хотите удалить эту сушильную камеру?'}
-            isLoading={isLoadingDeleteDryerMutation}
+            header='Редактировать покупателя'
+            description='Вы точно хотите удалить этого покупателя?'
             onConfirm={() => {
-              deleteDryerMutation(row.id)
-                .unwrap()
-                .then(() => {
-                  enqueueSnackbar('Сушильная камера успешно удалена', { variant: 'info' })
-                })
-                .catch((error: CommonErrorType) => {
-                  defaultErrorHandler(error, message =>
-                    enqueueSnackbar(message, { variant: 'error' })
-                  )
-                })
+              handleDeleteBuyer(row.id)
             }}
+            isLoading={isLoadingDeleteBuyerMutation}
           />
-        </Box>
+        </>
       ),
     },
   ]
 
   return (
     <DataGridContainer height={fullscreen ? '100%' : '70vh'}>
-      {isLoadingDryers && (
+      {isLoadingBuyers && (
         <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
           <CircularProgress size={100} />
         </Box>
       )}
       {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
 
-      {dryers && (
+      {buyers && (
         <DataGrid
-          rows={dryers}
+          rows={buyers}
           columns={columns}
           disableRowSelectionOnClick
           disableMultipleRowSelection

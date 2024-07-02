@@ -26,6 +26,9 @@ export const tagTypes = [
   'WorkshopProducedStats',
   'Warehouse',
   'WarehouseStats',
+  'Suppliers',
+  'Buyers',
+  'PersonInCharge',
 ]
 export const baseApi = createApi({
   baseQuery: baseQueryWithAuth,

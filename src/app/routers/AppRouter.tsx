@@ -21,9 +21,12 @@ import Shipment from '@/pages/shipment'
 import ShipmentDayInfo from '@/pages/shipment-day-info'
 import ShipmentTimeRangeInfo from '@/pages/shipment-time-range-info'
 import SystemSettings from '@/pages/system-settings'
+import Buyers from '@/pages/system-settings/buyers'
 import { DeletePage } from '@/pages/system-settings/delete/ui/DeletePage'
+import PersonsInCharge from '@/pages/system-settings/personsInCharge'
 import SettingsReferenceBook from '@/pages/system-settings/reference-book'
 import SettingsDryers from '@/pages/system-settings/settings-dryers'
+import Suppliers from '@/pages/system-settings/suppliers'
 import WoodNamings from '@/pages/system-settings/wood-namings'
 import Workshops from '@/pages/system-settings/workshops'
 import { Warehouse } from '@/pages/warehouse/ui/Warehouse'
@@ -47,6 +50,9 @@ export const AppRouter = () => {
           <Route path={urls.woodNamings} element={<WoodNamings />} />
           <Route path={urls.referenceBook} element={<SettingsReferenceBook />} />
           <Route path={urls.dryers} element={<SettingsDryers />} />
+          <Route path={urls.suppliers} element={<Suppliers />} />
+          <Route path={urls.buyers} element={<Buyers />} />
+          <Route path={urls.personsInCharge} element={<PersonsInCharge />} />
           <Route path={urls.delete} element={<DeletePage />} />
         </Route>
       </Route>

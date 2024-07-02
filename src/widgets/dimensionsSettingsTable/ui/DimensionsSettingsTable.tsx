@@ -91,7 +91,7 @@ export const DimensionsSettingsTable: FC<DimensionsSettingsTableProps> = ({
   }, [dimensions])
 
   return (
-    <DataGridContainer height={fullscreen ? '100%' : 600}>
+    <DataGridContainer height={fullscreen ? '100%' : '70vh'}>
       {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
 
       {isLoadingDimensions && (
