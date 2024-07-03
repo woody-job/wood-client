@@ -6,6 +6,7 @@ import { skipToken } from '@reduxjs/toolkit/query'
 import { Button, CircularProgress, MenuItem, Modal, TextField, Typography } from '@mui/material'
 
 import { getDimensionString, useFetchDimensionsByWoodClassQuery } from '@/entities/dimension'
+import { useFetchAllSuppliersQuery } from '@/entities/supplier'
 import { ArrivalFormType, useAddWoodArrivalMutation } from '@/entities/wood-arrival'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
@@ -37,6 +38,8 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
       amount: undefined,
       woodClassId: undefined,
       woodTypeId: undefined,
+      supplierId: undefined,
+      car: undefined,
       dimensionId: undefined,
     },
   })
@@ -59,10 +62,13 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
     watchWoodClassId ?? skipToken
   )
   const { data: woodTypes, isLoading: isWoodTypesLoading } = useFetchAllWoodTypesQuery()
+  const { data: suppliers, isLoading: isSuppliersLoading } = useFetchAllSuppliersQuery()
 
-  const onSubmit: SubmitHandler<ArrivalFormType> = values => {
+  const onSubmit: SubmitHandler<ArrivalFormType> = ({ supplierId, car, ...values }) => {
     addWoodArrivalMutation({
       ...values,
+      ...(supplierId ? { supplierId } : {}),
+      ...(car ? { car } : {}),
       woodConditionId,
       date: selectedDate,
     })
@@ -98,6 +104,25 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
           <Typography variant='h6' component='h2' sx={{ mb: 3 }}>
             {title}
           </Typography>
+
+          {isSuppliersLoading ? (
+            <CircularProgress size={20} />
+          ) : (
+            <TextField select label='Поставщик' inputProps={{ ...register('supplierId') }}>
+              {suppliers?.map(supplier => (
+                <MenuItem key={supplier.id} value={supplier.id}>
+                  {supplier.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+
+          <TextField
+            label='Машина'
+            variant='outlined'
+            type='string'
+            inputProps={{ ...register('car') }}
+          />
 
           {isWoodClassesLoading ? (
             <CircularProgress size={20} />

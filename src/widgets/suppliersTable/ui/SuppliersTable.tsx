@@ -4,7 +4,7 @@ import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 import { UpdateSupplierButton } from '@/features/supplier/update'
-import { Supplier,useDeleteSupplierMutation } from '@/entities/supplier'
+import { Supplier, useDeleteSupplierMutation } from '@/entities/supplier'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm } from '@/shared/ui'

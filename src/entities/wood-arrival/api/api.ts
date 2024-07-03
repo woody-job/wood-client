@@ -1,6 +1,8 @@
 import {
   ArrivalByDayResponse,
+  ArrivalByTimeRangeResponse,
   ArrivalFetchDayParams,
+  ArrivalFetchTimeRangeParams,
   ArrivalParams,
   UpdateArrivalParams,
 } from '@/entities/wood-arrival'
@@ -14,6 +16,20 @@ export const woodArrivalApi = baseApi.injectEndpoints({
         params: params,
       }),
       providesTags: ['Arrival'],
+    }),
+
+    fetchWoodArrivalByTimeRange: build.query<
+      ArrivalByTimeRangeResponse,
+      ArrivalFetchTimeRangeParams
+    >({
+      query: ({ startDate, endDate }) => ({
+        url: `wood-arrival/get/time-range-stats`,
+        params: {
+          startDate,
+          endDate,
+        },
+      }),
+      providesTags: ['ArrivalTimeRange'],
     }),
 
     addWoodArrival: build.mutation<ArrivalParams, ArrivalParams>({
@@ -46,6 +62,7 @@ export const woodArrivalApi = baseApi.injectEndpoints({
 
 export const {
   useFetchWoodArrivalByDayQuery,
+  useFetchWoodArrivalByTimeRangeQuery,
   useAddWoodArrivalMutation,
   useUpdateWoodArrivalMutation,
   useDeleteWoodArrivalMutation,

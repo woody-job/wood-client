@@ -21,6 +21,7 @@ export const tagTypes = [
   'WorkshopProfitStats',
   'WorkshopReportStats',
   'Arrival',
+  'ArrivalTimeRange',
   'Shipment',
   'WorkshopCurrentStats',
   'WorkshopProducedStats',
