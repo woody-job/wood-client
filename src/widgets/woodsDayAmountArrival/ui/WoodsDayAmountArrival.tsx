@@ -14,10 +14,10 @@ export const WoodsDayAmountArrival: FC<WoodsDayAmountArrivalProps> = ({ selected
   const { data: woodConditions } = useFetchAllWoodConditionsQuery()
 
   return (
-    <Grid container mt={5} spacing={5}>
+    <Grid container spacing={3}>
       {woodConditions &&
         woodConditions.map(woodCondition => (
-          <Grid item xs={12} lg={6} xl={6}>
+          <Grid item xs={12}>
             <WoodArrivalByDay
               key={woodCondition.id}
               woodConditionId={woodCondition.id}

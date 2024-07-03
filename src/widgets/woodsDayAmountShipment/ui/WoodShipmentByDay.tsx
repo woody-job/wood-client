@@ -8,7 +8,6 @@ import { DeleteShipmentButton } from '@/features/shipment/delete'
 import { UpdateShipmentButton } from '@/features/shipment/update'
 import { useAuth } from '@/entities/auth'
 import { USER_ROLE } from '@/entities/user'
-import { WoodAmountByDaySunburst } from '@/entities/wood'
 import { useFetchWoodShipmentByDayQuery } from '@/entities/wood-shipment'
 import { TableFullscreen } from '@/shared/ui'
 import {
@@ -114,14 +113,6 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
           </DataGridContainer>
         )}
       />
-
-      {woodShipment && (
-        <WoodAmountByDaySunburst
-          isLoading={isLoadingWoodShipment}
-          data={woodShipment.sunburstData}
-          total={woodShipment.totalVolume}
-        />
-      )}
     </Box>
   )
 }

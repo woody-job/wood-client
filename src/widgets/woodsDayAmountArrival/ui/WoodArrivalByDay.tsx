@@ -8,7 +8,6 @@ import { DeleteArrivalButton } from '@/features/arrival/delete'
 import { UpdateArrivalButton } from '@/features/arrival/update'
 import { useAuth } from '@/entities/auth'
 import { USER_ROLE } from '@/entities/user'
-import { WoodAmountByDaySunburst } from '@/entities/wood'
 import { useFetchWoodArrivalByDayQuery } from '@/entities/wood-arrival'
 import { TableFullscreen } from '@/shared/ui'
 import {
@@ -45,9 +44,12 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
   const handleCloseModal = () => setOpenEditId(undefined)
 
   const columns: GridColDef[] = [
-    { field: 'dimension', headerName: 'Сечение', width: 150 },
-    { field: 'woodClass', headerName: 'Сорт', width: 100 },
-    { field: 'amount', headerName: 'Кол-во', width: 100 },
+    { field: 'supplier', headerName: 'Поставщик', flex: 0.5 },
+    { field: 'car', headerName: 'Машина', flex: 0.5 },
+    { field: 'dimension', headerName: 'Сечение', flex: 0.5 },
+    { field: 'woodClass', headerName: 'Сорт', flex: 0.5 },
+    { field: 'amount', headerName: 'Кол-во', flex: 0.5 },
+    { field: 'volume', headerName: 'Объем. м3', flex: 0.5 },
     ...(isAdmin
       ? [
           {
@@ -76,9 +78,9 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
   ]
 
   return (
-    <Box overflow='hidden'>
-      <Box display='flex' justifyContent='space-between' mb={3}>
-        <Typography>{title}</Typography>
+    <Box overflow='hidden' mt={3}>
+      <Box display='flex' justifyContent='space-between' mb={1}>
+        <Typography variant='h6'>{title}</Typography>
 
         {isAdmin && (
           <AddWoodsArrival
@@ -91,7 +93,7 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
 
       <TableFullscreen
         renderTable={({ fullscreen, onFullscreen }) => (
-          <DataGridContainer height={fullscreen ? '100%' : '400px'}>
+          <DataGridContainer height={fullscreen ? '100%' : '60vh'}>
             {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
             {isLoadingWoodArrival && (
               <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
@@ -113,14 +115,7 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
           </DataGridContainer>
         )}
       />
-
-      {woodArrival && (
-        <WoodAmountByDaySunburst
-          isLoading={isLoadingWoodArrival}
-          data={woodArrival.sunburstData}
-          total={woodArrival.totalVolume}
-        />
-      )}
+      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {woodArrival?.totalVolume}</Typography>
     </Box>
   )
 }

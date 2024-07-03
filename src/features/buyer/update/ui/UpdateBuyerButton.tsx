@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { ButtonProps, IconButton } from '@mui/material'
 
-import { Buyer, BuyerFormType,useUpdateBuyerMutation } from '@/entities/buyer'
+import { Buyer, BuyerFormType, useUpdateBuyerMutation } from '@/entities/buyer'
 import { UpdateBuyerModal } from '@/entities/buyer/ui'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
