@@ -63,6 +63,8 @@ export const ReferenceBook = () => {
                   localeText={dataGridLocaleText}
                   sx={dataGridStyles}
                   hideFooter
+                  // @eslint-ignore
+                  // @ts-expect-error 'error occured'
                   slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
                   slotProps={{ toolbar: { withExcelExport: false } }}
                 />

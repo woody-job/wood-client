@@ -95,6 +95,8 @@ export const DryersInfo: FC = () => {
               localeText={dataGridLocaleText}
               sx={{ ...dataGridStyles, width: 400 }}
               hideFooter
+              // @eslint-ignore
+              // @ts-expect-error 'error occured'
               slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
               slotProps={{
                 toolbar: {

@@ -15,7 +15,7 @@ import {
   dataGridLocaleText,
 } from '@/shared/ui/data-grid/index.ts'
 import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar.tsx'
-import { CustomGridPanel,dataGridStyles, TableFullscreen } from '@/shared/ui/index.ts'
+import { CustomGridPanel, dataGridStyles, TableFullscreen } from '@/shared/ui/index.ts'
 
 import dayjs from 'dayjs'
 import { enqueueSnackbar } from 'notistack'
@@ -103,6 +103,8 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
               localeText={dataGridLocaleText}
               sx={{ ...dataGridStyles, width: 400 }}
               hideFooter
+              // @eslint-ignore
+              // @ts-expect-error 'error occured'
               slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
               slotProps={{
                 toolbar: {

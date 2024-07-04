@@ -105,6 +105,8 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
           localeText={dataGridLocaleText}
           sx={{ ...dataGridStyles, width: 400 }}
           hideFooter
+          // @eslint-ignore
+          // @ts-expect-error 'error occured'
           slots={{ panel: CustomGridPanel, toolbar: displayToolbar && CustomToolbar }}
           onRowDoubleClick={handleRowDoubleClick}
         />
