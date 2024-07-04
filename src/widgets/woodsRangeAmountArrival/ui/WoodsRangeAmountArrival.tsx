@@ -29,7 +29,7 @@ export type WoodsRangeAmountProps = {
 export const WoodsRangeAmountArrival: FC<WoodsRangeAmountProps> = ({ timeRange }) => {
   const {
     data: woodArrivalData,
-    isLoading: isLoadingWoodArriavlData,
+    isLoading: isLoadingWoodArrivalData,
     isError,
     error,
   } = useFetchWoodArrivalByTimeRangeQuery({
@@ -95,10 +95,10 @@ export const WoodsRangeAmountArrival: FC<WoodsRangeAmountProps> = ({ timeRange }
               slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
               slotProps={{
                 toolbar: {
-                  excelFileName: 'вход-в-сушилки',
+                  excelFileName: 'поступления',
                 },
               }}
-              loading={isLoadingWoodArriavlData}
+              loading={isLoadingWoodArrivalData}
             />
           </DataGridContainer>
         )}

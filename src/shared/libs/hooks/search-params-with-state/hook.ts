@@ -35,12 +35,16 @@ export const useSearchParamsTabs = <TTab>(
   }
 }
 
-export const useDateInSearchParams = () => {
+export const useDateInSearchParams = (params?: { defaultToday?: boolean }) => {
   dayjs.extend(utc)
 
   // По дефолту открывается предыдущий рабочий день
   const [date, setDate] = useState(() => {
     const now = dayjs()
+
+    if (params?.defaultToday) {
+      return now
+    }
 
     const currentWeekday = now.day()
 

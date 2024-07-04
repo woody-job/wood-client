@@ -44,9 +44,13 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
   const handleCloseModal = () => setOpenEditId(undefined)
 
   const columns: GridColDef[] = [
-    { field: 'dimension', headerName: 'Сечение', width: 150 },
-    { field: 'woodClass', headerName: 'Сорт', width: 100 },
-    { field: 'amount', headerName: 'Кол-во', width: 100 },
+    { field: 'buyer', headerName: 'Покупатель', flex: 0.5 },
+    { field: 'personInCharge', headerName: 'Ответственный', flex: 0.5 },
+    { field: 'car', headerName: 'Машина', flex: 0.5 },
+    { field: 'dimension', headerName: 'Сечение', flex: 0.5 },
+    { field: 'woodClass', headerName: 'Сорт', flex: 0.5 },
+    { field: 'amount', headerName: 'Кол-во', flex: 0.5 },
+    { field: 'volume', headerName: 'Объем. м3', flex: 0.5 },
     ...(isAdmin
       ? [
           {
@@ -75,9 +79,9 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
   ]
 
   return (
-    <Box overflow='hidden'>
-      <Box display='flex' justifyContent='space-between' mb={3}>
-        <Typography>{title}</Typography>
+    <Box overflow='hidden' mt={3}>
+      <Box display='flex' justifyContent='space-between' mb={1}>
+        <Typography variant='h6'>{title}</Typography>
 
         {isAdmin && (
           <AddWoodsShipment
@@ -90,7 +94,7 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
 
       <TableFullscreen
         renderTable={({ fullscreen, onFullscreen }) => (
-          <DataGridContainer height={fullscreen ? '100%' : '400px'}>
+          <DataGridContainer height={fullscreen ? '100%' : '60vh'}>
             {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
 
             {isLoadingWoodShipment && (
@@ -113,6 +117,7 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
           </DataGridContainer>
         )}
       />
+      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {woodShipment?.totalVolume}</Typography>
     </Box>
   )
 }

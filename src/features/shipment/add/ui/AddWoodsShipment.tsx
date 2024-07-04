@@ -5,10 +5,11 @@ import { skipToken } from '@reduxjs/toolkit/query'
 
 import { Button, CircularProgress, MenuItem, Modal, TextField, Typography } from '@mui/material'
 
+import { useFetchAllBuyersQuery } from '@/entities/buyer'
 import { getDimensionString, useFetchDimensionsByWoodClassQuery } from '@/entities/dimension'
-import { ArrivalFormType } from '@/entities/wood-arrival'
+import { useFetchAllPersonsInChargeQuery } from '@/entities/personInCharge'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
-import { useAddWoodShipmentMutation } from '@/entities/wood-shipment'
+import { ShipmentFormType, useAddWoodShipmentMutation } from '@/entities/wood-shipment'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
@@ -32,7 +33,7 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
 
-  const methods = useForm<ArrivalFormType>()
+  const methods = useForm<ShipmentFormType>()
   const {
     register,
     handleSubmit,
@@ -54,10 +55,21 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
     watchWoodClassId ?? skipToken
   )
   const { data: woodTypes, isLoading: isWoodTypesLoading } = useFetchAllWoodTypesQuery()
+  const { data: buyers, isLoading: isBuyersLoading } = useFetchAllBuyersQuery()
+  const { data: personsInCharge, isLoading: isPersonsInChargeLoading } =
+    useFetchAllPersonsInChargeQuery()
 
-  const onSubmit: SubmitHandler<ArrivalFormType> = values => {
+  const onSubmit: SubmitHandler<ShipmentFormType> = ({
+    buyerId,
+    personInChargeId,
+    car,
+    ...values
+  }) => {
     addWoodShipmentMutation({
       ...values,
+      ...(buyerId ? { buyerId } : {}),
+      ...(personInChargeId ? { personInChargeId } : {}),
+      ...(car ? { car } : {}),
       woodConditionId,
       date: selectedDate,
     })
@@ -93,6 +105,41 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
           <Typography variant='h6' component='h2' sx={{ mb: 3 }}>
             {title}
           </Typography>
+
+          {isBuyersLoading ? (
+            <CircularProgress size={20} />
+          ) : (
+            <TextField select label='Покупатель' inputProps={{ ...register('buyerId') }}>
+              {buyers?.map(buyer => (
+                <MenuItem key={buyer.id} value={buyer.id}>
+                  {buyer.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+
+          {isPersonsInChargeLoading ? (
+            <CircularProgress size={20} />
+          ) : (
+            <TextField
+              select
+              label='Ответственный'
+              inputProps={{ ...register('personInChargeId') }}
+            >
+              {personsInCharge?.map(personInCharge => (
+                <MenuItem key={personInCharge.id} value={personInCharge.id}>
+                  {personInCharge.initials} {personInCharge.secondName}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+
+          <TextField
+            label='Машина'
+            variant='outlined'
+            type='string'
+            inputProps={{ ...register('car') }}
+          />
 
           {isWoodClassesLoading ? (
             <CircularProgress size={20} />

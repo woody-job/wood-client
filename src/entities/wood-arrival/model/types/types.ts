@@ -36,7 +36,7 @@ export type ArrivalTableData = {
   woodClass: string
   amount: number
   car: string
-  supplier: Supplier
+  supplier: string
   volume: number
 }
 
