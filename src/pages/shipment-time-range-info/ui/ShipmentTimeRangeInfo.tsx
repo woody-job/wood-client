@@ -12,10 +12,7 @@ export const ShipmentTimeRangeInfo: FC = () => {
     <CustomTabPanel tabPanelValue={'time-range'} value={'time-range'}>
       <TimeRangeInputs range={timeRange} setRange={handleSetTimeRange} />
 
-      <WoodsRangeAmountShipment
-        endDate={timeRange.endDate.toISOString()}
-        startDate={timeRange.startDate.toISOString()}
-      />
+      <WoodsRangeAmountShipment timeRange={timeRange} />
     </CustomTabPanel>
   )
 }

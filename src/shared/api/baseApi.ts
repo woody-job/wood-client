@@ -23,6 +23,7 @@ export const tagTypes = [
   'Arrival',
   'ArrivalTimeRange',
   'Shipment',
+  'ShipmentTimeRange',
   'WorkshopCurrentStats',
   'WorkshopProducedStats',
   'Warehouse',

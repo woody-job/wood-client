@@ -7,7 +7,9 @@ import { CustomTabPanel, DatePicker } from '@/shared/ui'
 import { Dayjs } from 'dayjs'
 
 export const ShipmentDayInfo: FC = () => {
-  const { date, handleSetDate } = useDateInSearchParams()
+  const { date, handleSetDate } = useDateInSearchParams({
+    defaultToday: true,
+  })
 
   const handleAccept = (value: Dayjs | null) => {
     if (value) {
