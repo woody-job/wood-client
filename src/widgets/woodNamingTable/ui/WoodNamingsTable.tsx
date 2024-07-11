@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
@@ -45,6 +45,10 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
 
   const columns: GridColDef[] = [
     { field: 'name', headerName: 'Название', width: 200 },
+    { field: 'minDiameter', headerName: 'Мин. диаметр, см', width: 200 },
+    { field: 'maxDiameter', headerName: 'Макс. диаметр, см', width: 200 },
+    { field: 'length', headerName: 'Длина, м', width: 200 },
+    { field: 'woodType', headerName: 'Порода', width: 200 },
     {
       field: 'actions',
       headerName: '',
@@ -67,6 +71,24 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
     },
   ]
 
+  const rows = useMemo(() => {
+    if (!woodNamings) {
+      return []
+    }
+
+    return woodNamings.map(woodNaming => {
+      return {
+        id: woodNaming.id,
+        name: woodNaming.name,
+        minDiameter: woodNaming.minDiameter,
+        maxDiameter: woodNaming.maxDiameter,
+        length: woodNaming.length,
+        woodType: woodNaming.woodType.name,
+        woodTypeId: woodNaming.woodType.id,
+      }
+    })
+  }, [woodNamings])
+
   return (
     <DataGridContainer height={fullscreen ? '100%' : '70vh'}>
       {isLoadingWoodNamings && (
@@ -78,7 +100,7 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
 
       {woodNamings && (
         <DataGrid
-          rows={woodNamings}
+          rows={rows}
           columns={columns}
           disableRowSelectionOnClick
           disableMultipleRowSelection
