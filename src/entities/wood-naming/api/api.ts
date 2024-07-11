@@ -1,4 +1,4 @@
-import { WoodNaming, WoodNamingWithoutId } from '@/entities/wood-naming'
+import { CreateWoodNamingParams, UpdateWoodNamingParams, WoodNaming } from '@/entities/wood-naming'
 import { baseApi } from '@/shared/api'
 
 export const woodNamingApi = baseApi.injectEndpoints({
@@ -10,7 +10,7 @@ export const woodNamingApi = baseApi.injectEndpoints({
       providesTags: ['WoodNamings'],
     }),
 
-    createWoodNaming: build.mutation<WoodNaming, WoodNamingWithoutId>({
+    createWoodNaming: build.mutation<WoodNaming, CreateWoodNamingParams>({
       query: woodNaming => ({
         url: 'wood-naming',
         method: 'POST',
@@ -27,7 +27,7 @@ export const woodNamingApi = baseApi.injectEndpoints({
       invalidatesTags: ['WoodNamings'],
     }),
 
-    updateWoodNaming: build.mutation<WoodNaming, WoodNaming>({
+    updateWoodNaming: build.mutation<WoodNaming, UpdateWoodNamingParams>({
       query: ({ id, ...newWoodNaming }) => ({
         url: `wood-naming/${id}`,
         method: 'PUT',
