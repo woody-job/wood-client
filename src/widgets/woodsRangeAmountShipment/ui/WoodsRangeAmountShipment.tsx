@@ -62,6 +62,7 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
         woodType,
         woodCondition,
         dimension,
+        dimensionForSale,
       } = woodShipmentDataItem
 
       return {
@@ -76,6 +77,7 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
         woodClass: woodClass.name,
         woodType: woodType.name,
         dimension: getDimensionString(dimension),
+        dimensionForSale: dimensionForSale ? getDimensionString(dimensionForSale) : null,
         volume: Number((dimension.volume * amount).toFixed(2)),
         woodCondition: woodCondition.name,
       }

@@ -10,6 +10,7 @@ export type ShipmentFormType = {
   woodClassId: number
   woodTypeId: number
   dimensionId: number
+  dimensionForSaleId?: number
   buyerId?: number
   personInChargeId?: number
   car?: string
@@ -24,6 +25,7 @@ export type WoodShipment = {
   woodType: WoodType
   woodCondition: WoodCondition
   dimension: Dimension
+  dimensionForSale: Dimension | null
   buyer: Buyer
   personInCharge: PersonInCharge
 }
