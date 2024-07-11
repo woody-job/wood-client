@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { skipToken } from '@reduxjs/toolkit/query'
@@ -6,12 +6,16 @@ import { skipToken } from '@reduxjs/toolkit/query'
 import { Button, CircularProgress, MenuItem, Modal, TextField, Typography } from '@mui/material'
 
 import { useFetchAllBuyersQuery } from '@/entities/buyer'
-import { getDimensionString, useFetchDimensionsByWoodClassQuery } from '@/entities/dimension'
+import {
+  getDimensionString,
+  useFetchAllDimensionsQuery,
+  useFetchDimensionsByWoodClassQuery,
+} from '@/entities/dimension'
 import { useFetchAllPersonsInChargeQuery } from '@/entities/personInCharge'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { ShipmentFormType, useAddWoodShipmentMutation } from '@/entities/wood-shipment'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
-import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { defaultErrorHandler, getUniqueDimensionsFromAllDimensions } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
@@ -54,14 +58,24 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
   const { data: dimensions, isLoading: isDimensionsLoading } = useFetchDimensionsByWoodClassQuery(
     watchWoodClassId ?? skipToken
   )
+  const { data: allDimensions } = useFetchAllDimensionsQuery()
   const { data: woodTypes, isLoading: isWoodTypesLoading } = useFetchAllWoodTypesQuery()
   const { data: buyers, isLoading: isBuyersLoading } = useFetchAllBuyersQuery()
   const { data: personsInCharge, isLoading: isPersonsInChargeLoading } =
     useFetchAllPersonsInChargeQuery()
 
+  const dimensionForSaleOptions = useMemo(() => {
+    if (!allDimensions) {
+      return []
+    }
+
+    return getUniqueDimensionsFromAllDimensions(allDimensions)
+  }, [allDimensions])
+
   const onSubmit: SubmitHandler<ShipmentFormType> = ({
     buyerId,
     personInChargeId,
+    dimensionForSaleId,
     car,
     ...values
   }) => {
@@ -69,6 +83,7 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
       ...values,
       ...(buyerId ? { buyerId } : {}),
       ...(personInChargeId ? { personInChargeId } : {}),
+      ...(dimensionForSaleId ? { dimensionForSaleId } : {}),
       ...(car ? { car } : {}),
       woodConditionId,
       date: selectedDate,
@@ -185,6 +200,22 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
             <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
               Сечение обязательно
             </Typography>
+          )}
+
+          {isDimensionsLoading ? (
+            <CircularProgress size={20} />
+          ) : (
+            <TextField
+              select
+              label='Сечение для продажи'
+              inputProps={{ ...register('dimensionForSaleId') }}
+            >
+              {dimensionForSaleOptions?.map(dimension => (
+                <MenuItem key={dimension.id} value={dimension.id}>
+                  {dimension.name}
+                </MenuItem>
+              ))}
+            </TextField>
           )}
 
           {isWoodTypesLoading ? (
