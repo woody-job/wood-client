@@ -44,11 +44,11 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
   }
 
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Название', width: 200 },
-    { field: 'minDiameter', headerName: 'Мин. диаметр, см', width: 200 },
-    { field: 'maxDiameter', headerName: 'Макс. диаметр, см', width: 200 },
-    { field: 'length', headerName: 'Длина, м', width: 200 },
-    { field: 'woodType', headerName: 'Порода', width: 200 },
+    { field: 'name', headerName: 'Название', flex: 1 },
+    { field: 'minDiameter', headerName: 'Мин. диаметр, см', flex: 1 },
+    { field: 'maxDiameter', headerName: 'Макс. диаметр, см', flex: 1 },
+    { field: 'length', headerName: 'Длина, м', flex: 1 },
+    { field: 'woodType', headerName: 'Порода', flex: 1 },
     {
       field: 'actions',
       headerName: '',
@@ -92,7 +92,7 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
   return (
     <DataGridContainer height={fullscreen ? '100%' : '70vh'}>
       {isLoadingWoodNamings && (
-        <Box sx={{ width: '100%', height: '80%', display: 'grid', placeContent: 'center' }}>
+        <Box sx={{ height: '80%', display: 'grid', placeContent: 'center' }}>
           <CircularProgress size={100} />
         </Box>
       )}

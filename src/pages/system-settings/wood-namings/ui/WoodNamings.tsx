@@ -10,7 +10,7 @@ export const WoodNamings = () => {
 
   return (
     <Box>
-      <Box display={'flex'} flexDirection='column'>
+      <Box>
         <CreateWoodNamingButton sx={{ my: 4, alignSelf: 'end' }}>Добавить</CreateWoodNamingButton>
 
         <TableFullscreen

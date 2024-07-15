@@ -13,6 +13,7 @@ import ArrivalDayInfo from '@/pages/arrival-day-info'
 import ArrivalTimeRangeInfo from '@/pages/arrival-time-range-info'
 import BeamShipment from '@/pages/beam-shipment'
 import BeamShipmentDayInfo from '@/pages/beam-shipment-day-info'
+import BeamShipmentTimeRangeInfo from '@/pages/beam-shipment-time-range-info'
 import Dashboard from '@/pages/dashboard'
 import Dryer from '@/pages/dryer'
 import { RouteError } from '@/pages/error'
@@ -79,7 +80,7 @@ export const AppRouter = () => {
 
           <Route path={urls.beamShipment} element={<BeamShipment />}>
             <Route path={urls.day} element={<BeamShipmentDayInfo />} />
-            {/* <Route path={urls.timeRange} element={<BeamShipmentTimeRangeInfo />} /> */}
+            <Route path={urls.timeRange} element={<BeamShipmentTimeRangeInfo />} />
           </Route>
 
           <Route path={urls.woodWarehouse} element={<Warehouse />} />
