@@ -25,6 +25,12 @@ export const beamInApi = baseApi.injectEndpoints({
       }),
     }),
 
+    fetchBeamSizesByLength: build.query<BeamSize[], { length: number }>({
+      query: ({ length }) => ({
+        url: `beam-size/list/${length}`,
+      }),
+    }),
+
     createBeamInForWorkshop: build.mutation<void, CreateBeamInForWorkshopParams>({
       query: createBeamInForWorkshopParams => ({
         url: `beam-in`,
@@ -56,6 +62,7 @@ export const beamInApi = baseApi.injectEndpoints({
 export const {
   useFetchAllBeamInForWorkshopQuery,
   useFetchAllBeamSizesQuery,
+  useFetchBeamSizesByLengthQuery,
   useCreateBeamInForWorkshopMutation,
   useUpdateBeamInForWorkshopMutation,
   useDeleteBeamInForWorkshopMutation,

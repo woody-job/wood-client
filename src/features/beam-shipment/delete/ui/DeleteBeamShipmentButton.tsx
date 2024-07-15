@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useDeleteWoodShipmentMutation } from '@/entities/wood-shipment'
+import { useDeleteBeamShipmentMutation } from '@/entities/beam-shipment'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { ButtonWithConfirm } from '@/shared/ui'
 
@@ -11,14 +11,14 @@ export type DeleteShipmentButtonProps = {
   onClose: () => void
 }
 
-export const DeleteShipmentButton: FC<DeleteShipmentButtonProps> = ({ id, onClose }) => {
-  const [deleteWoodShipmentMutation, { isLoading: isLoadingDeleteWoodShipmentMutation }] =
-    useDeleteWoodShipmentMutation()
+export const DeleteBeamShipmentButton: FC<DeleteShipmentButtonProps> = ({ id, onClose }) => {
+  const [deleteBeamShipmentMutation, { isLoading: isLoadingDeleteBeamShipmentMutation }] =
+    useDeleteBeamShipmentMutation()
 
   const { enqueueSnackbar } = useSnackbar()
 
   const handleDeleteShipment = (id: number) => {
-    deleteWoodShipmentMutation(id)
+    deleteBeamShipmentMutation(id)
       .unwrap()
       .then(() => {
         enqueueSnackbar('Отгрузка успешно удалена', { variant: 'info' })
@@ -31,10 +31,10 @@ export const DeleteShipmentButton: FC<DeleteShipmentButtonProps> = ({ id, onClos
 
   return (
     <ButtonWithConfirm
-      header={'Удаление отгрузки доски'}
+      header={'Удаление отгрузки сырья'}
       description={'Вы точно хотите удалить?'}
       onConfirm={() => handleDeleteShipment(id as number)}
-      isLoading={isLoadingDeleteWoodShipmentMutation}
+      isLoading={isLoadingDeleteBeamShipmentMutation}
     />
   )
 }

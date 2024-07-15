@@ -110,7 +110,7 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
               slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
               slotProps={{
                 toolbar: {
-                  excelFileName: 'отгрузки',
+                  excelFileName: 'отгрузки-доски',
                 },
               }}
               loading={isLoadingWoodShipmentData}

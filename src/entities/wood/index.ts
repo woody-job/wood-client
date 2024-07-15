@@ -1,1 +1,1 @@
-export { WoodAmountSunburst, UpdateInputWoodModal, UpdateOutputWoodModal } from './ui'
+export { UpdateInputWoodModal, UpdateOutputWoodModal } from './ui'
