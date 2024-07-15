@@ -4,7 +4,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 
-export const Arrival = () => {
+export const BeamShipment = () => {
   const tabs = [
     { id: 'day', name: 'За день' },
     { id: 'time-range', name: 'За несколько дней' },
@@ -31,7 +31,7 @@ export const Arrival = () => {
     <>
       <Box px={1.5} mb={1}>
         <Typography variant='h5' sx={{ mb: 1.5 }}>
-          Поступления доски
+          Отгрузки сырья
         </Typography>
         <Tabs value={currentTab} onChange={handleChangeTab}>
           {tabs.map(tab => (

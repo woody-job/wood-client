@@ -11,6 +11,8 @@ import AdminUsers from '@/pages/admin-users'
 import Arrival from '@/pages/arrival'
 import ArrivalDayInfo from '@/pages/arrival-day-info'
 import ArrivalTimeRangeInfo from '@/pages/arrival-time-range-info'
+import BeamShipment from '@/pages/beam-shipment'
+import BeamShipmentDayInfo from '@/pages/beam-shipment-day-info'
 import Dashboard from '@/pages/dashboard'
 import Dryer from '@/pages/dryer'
 import { RouteError } from '@/pages/error'
@@ -65,17 +67,22 @@ export const AppRouter = () => {
       <Route path={`/${urls.login}`} errorElement={<RouteError />} element={<Login />} />
       <Route element={<PrivatePage />}>
         <Route path='/' errorElement={<RouteError />} element={<RootLayout />}>
-          <Route path={urls.arrival} element={<Arrival />}>
+          <Route path={urls.woodArrival} element={<Arrival />}>
             <Route path={urls.day} element={<ArrivalDayInfo />} />
             <Route path={urls.timeRange} element={<ArrivalTimeRangeInfo />} />
           </Route>
 
-          <Route path={urls.shipment} element={<Shipment />}>
+          <Route path={urls.woodShipment} element={<Shipment />}>
             <Route path={urls.day} element={<ShipmentDayInfo />} />
             <Route path={urls.timeRange} element={<ShipmentTimeRangeInfo />} />
           </Route>
 
-          <Route path={urls.warehouse} element={<Warehouse />} />
+          <Route path={urls.beamShipment} element={<BeamShipment />}>
+            <Route path={urls.day} element={<BeamShipmentDayInfo />} />
+            {/* <Route path={urls.timeRange} element={<BeamShipmentTimeRangeInfo />} /> */}
+          </Route>
+
+          <Route path={urls.woodWarehouse} element={<Warehouse />} />
           <Route path={urls.dashboard} element={<Dashboard />} />
 
           {systemSettingsRoutes}

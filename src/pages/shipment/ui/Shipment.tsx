@@ -31,7 +31,7 @@ export const Shipment = () => {
     <>
       <Box px={1.5} mb={1}>
         <Typography variant='h5' sx={{ mb: 1.5 }}>
-          Отгрузки
+          Отгрузки доски
         </Typography>
         <Tabs value={currentTab} onChange={handleChangeTab}>
           {tabs.map(tab => (

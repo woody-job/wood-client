@@ -15,12 +15,30 @@ export const getSidebarPaths = (workshops: Workshop[] | undefined): SidebarPath[
 
   return [
     {
-      path: `${urls.arrival}/${urls.day}`,
       name: 'Поступления',
+      children: [
+        {
+          name: 'Сырье',
+          path: `${urls.beamArrival}/${urls.day}`,
+        },
+        {
+          name: 'Доска',
+          path: `${urls.woodArrival}/${urls.day}`,
+        },
+      ],
     },
     {
-      path: `${urls.shipment}/${urls.day}`,
       name: 'Отгрузки',
+      children: [
+        {
+          name: 'Сырье',
+          path: `${urls.beamShipment}/${urls.day}`,
+        },
+        {
+          name: 'Доска',
+          path: `${urls.woodShipment}/${urls.day}`,
+        },
+      ],
     },
     {
       name: 'Цеха',
@@ -31,8 +49,17 @@ export const getSidebarPaths = (workshops: Workshop[] | undefined): SidebarPath[
       name: 'Сушилки',
     },
     {
-      path: '/' + urls.warehouse,
       name: 'Склад',
+      children: [
+        {
+          name: 'Сырье',
+          path: '/' + urls.beamWarehouse,
+        },
+        {
+          name: 'Доска',
+          path: '/' + urls.woodWarehouse,
+        },
+      ],
     },
     {
       path: '/' + urls.referenceBook,

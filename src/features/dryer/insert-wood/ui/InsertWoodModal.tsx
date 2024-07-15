@@ -124,7 +124,7 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
           <ButtonWithLoader
             isLoading={isLoading}
             type='submit'
-            sx={{ mt: 4 }}
+            sx={{ mt: 2 }}
             loaderSx={{ top: -14 }}
             variant='contained'
             color='primary'

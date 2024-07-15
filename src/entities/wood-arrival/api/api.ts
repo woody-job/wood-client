@@ -38,7 +38,7 @@ export const woodArrivalApi = baseApi.injectEndpoints({
         method: 'POST',
         body: arrival,
       }),
-      invalidatesTags: ['Arrival'],
+      invalidatesTags: ['Arrival', 'ArrivalTimeRange'],
     }),
 
     updateWoodArrival: build.mutation<ArrivalParams, UpdateArrivalParams>({
@@ -47,7 +47,7 @@ export const woodArrivalApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: params,
       }),
-      invalidatesTags: ['Arrival'],
+      invalidatesTags: ['Arrival', 'ArrivalTimeRange'],
     }),
 
     deleteWoodArrival: build.mutation<ArrivalParams, number>({
@@ -55,7 +55,7 @@ export const woodArrivalApi = baseApi.injectEndpoints({
         url: `wood-arrival/${arrivalId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Arrival'],
+      invalidatesTags: ['Arrival', 'ArrivalTimeRange'],
     }),
   }),
 })

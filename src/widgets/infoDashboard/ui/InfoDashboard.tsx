@@ -13,11 +13,11 @@ export const InfoDashboard = () => {
 
   const handleNavigateToWarehouse = (woodConditionId: number) => {
     if (woodConditionId === WOOD_CONDITION.DRY) {
-      navigate(`/${urls.warehouse}?tab=${woodConditionId}`)
+      navigate(`/${urls.woodWarehouse}?tab=${woodConditionId}`)
     }
 
     if (woodConditionId === WOOD_CONDITION.WET) {
-      navigate(`/${urls.warehouse}?tab=${woodConditionId}`)
+      navigate(`/${urls.woodWarehouse}?tab=${woodConditionId}`)
     }
   }
 
@@ -63,7 +63,7 @@ export const InfoDashboard = () => {
               >
                 <Box mb={1} key={warehouseStat.woodConditionId}>
                   <Typography fontWeight='bold' variant='subtitle1'>
-                    {warehouseStat.woodConditionName}
+                    {warehouseStat.woodConditionName} доска
                   </Typography>
                   {sorts.length ? (
                     sorts.map(sort => (

@@ -2,6 +2,7 @@ export type BeamSize = {
   id: number
   diameter: number
   volume: number
+  length: number
 }
 
 export type BeamIn = {
