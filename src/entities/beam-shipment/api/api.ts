@@ -35,7 +35,7 @@ export const beamShipmentApi = baseApi.injectEndpoints({
       providesTags: ['BeamShipmentTimeRange'],
     }),
 
-    addBeamShipment: build.mutation<void, CreateBeamShipmentParams[]>({
+    addBeamShipment: build.mutation<string[], CreateBeamShipmentParams[]>({
       query: params => ({
         url: 'beam-shipment',
         method: 'POST',

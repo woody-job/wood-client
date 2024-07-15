@@ -12,34 +12,40 @@ import {
   Typography,
 } from '@mui/material'
 
+import {
+  BEAM_DELIVERY_METHOD,
+  BeamArrivalFormType,
+  useAddBeamArrivalMutation,
+} from '@/entities/beam-arrival'
 import { useFetchBeamSizesByLengthQuery } from '@/entities/beam-in'
-import { BeamShipmentFormType, useAddBeamShipmentMutation } from '@/entities/beam-shipment'
-import { useFetchAllBuyersQuery } from '@/entities/buyer'
+import { getDeliveryMethodText } from '@/entities/beam-in/libs/helpers'
+import { useFetchAllSuppliersQuery } from '@/entities/supplier'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
 
-import { AddBeamShipmentFormItem } from './AddBeamShipmentFormItem'
+import { AddBeamArrivalFormItem } from './AddBeamArrivalFormItem'
 import { useSnackbar } from 'notistack'
 
-export interface AddWoodsArrivalShipmentProps {
+export interface AddWoodsArrivalArrivalProps {
   title: string
   selectedDate: string
 }
 
-export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selectedDate }) => {
+export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selectedDate }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
 
-  const methods = useForm<BeamShipmentFormType>({
+  const methods = useForm<BeamArrivalFormType>({
     defaultValues: {
-      buyerId: undefined,
+      supplierId: undefined,
+      deliveryMethod: undefined,
       woodTypeId: undefined,
       length: null,
-      beamShipmentItems: [
+      beamArrivalItems: [
         {
           volume: null,
           beamSizeId: null,
@@ -62,19 +68,19 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
 
   const watchLength = watch('length')
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'beamShipmentItems' })
+  const { fields, append, remove } = useFieldArray({ control, name: 'beamArrivalItems' })
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const [addBeamShipmentMutation, { isLoading: isLoadingBeamShipmentMutation }] =
-    useAddBeamShipmentMutation()
+  const [addBeamArrivalMutation, { isLoading: isLoadingBeamArrivalMutation }] =
+    useAddBeamArrivalMutation()
 
   const { data: woodTypes, isLoading: isWoodTypesLoading } = useFetchAllWoodTypesQuery()
   const { data: beamSizes, isLoading: isBeamSizesLoading } = useFetchBeamSizesByLengthQuery(
     { length: watchLength as number },
     { skip: !watchLength }
   )
-  const { data: buyers, isLoading: isBuyersLoading } = useFetchAllBuyersQuery()
+  const { data: suppliers, isLoading: isSuppliersLoading } = useFetchAllSuppliersQuery()
 
   const lengthOptions = [
     {
@@ -87,36 +93,47 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
     },
   ]
 
+  const deliveryMethodOptions = [
+    {
+      id: BEAM_DELIVERY_METHOD.OWNER_TRANSPORT,
+      name: getDeliveryMethodText(BEAM_DELIVERY_METHOD.OWNER_TRANSPORT),
+    },
+    {
+      id: BEAM_DELIVERY_METHOD.SUPPLIER_TRANSPORT,
+      name: getDeliveryMethodText(BEAM_DELIVERY_METHOD.SUPPLIER_TRANSPORT),
+    },
+  ]
+
   // При изменении длины необходимо сбрасывать диаметр (beamSize), чтобы
   // случайно не отправилась не та длина
   useEffect(() => {
     setValue(
-      'beamShipmentItems',
-      getValues().beamShipmentItems.map(beamShipmentItem => {
-        return { ...beamShipmentItem, beamSizeId: null }
+      'beamArrivalItems',
+      getValues().beamArrivalItems.map(beamArrivalItem => {
+        return { ...beamArrivalItem, beamSizeId: null }
       })
     )
   }, [watchLength])
 
-  const onSubmit: SubmitHandler<BeamShipmentFormType> = ({
-    buyerId,
+  const onSubmit: SubmitHandler<BeamArrivalFormType> = ({
+    supplierId,
     woodTypeId,
     length,
-    beamShipmentItems,
+    beamArrivalItems,
   }) => {
-    const beamShipmentDtos = beamShipmentItems.map(({ volume, amount, beamSizeId }) => {
+    const beamArrivalDtos = beamArrivalItems.map(({ volume, amount, beamSizeId }) => {
       return {
         date: selectedDate,
         woodTypeId,
         length: Number(length),
-        ...(buyerId ? { buyerId } : {}),
+        ...(supplierId ? { supplierId } : {}),
         ...(volume ? { volume: Number(volume) } : {}),
         ...(amount ? { amount: Number(amount) } : {}),
         ...(beamSizeId ? { beamSizeId } : {}),
       }
     })
 
-    addBeamShipmentMutation(beamShipmentDtos)
+    addBeamArrivalMutation(beamArrivalDtos)
       .unwrap()
       .then(errors => {
         reset()
@@ -130,11 +147,9 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
           return
         }
 
-        enqueueSnackbar('Отгрузки сырья успешно созданы', { variant: 'success' })
+        enqueueSnackbar('Поступления сырья успешно созданы', { variant: 'success' })
       })
       .catch((error: CommonErrorType) => {
-        console.log('THIS IS ERROR: ', error)
-
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
@@ -184,17 +199,29 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
 
             <Typography variant='body1'>Общая информация о партии:</Typography>
 
-            {isBuyersLoading ? (
+            {isSuppliersLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <TextField select label='Покупатель' inputProps={{ ...register('buyerId') }}>
-                {buyers?.map(buyer => (
-                  <MenuItem key={buyer.id} value={buyer.id}>
-                    {buyer.name}
+              <TextField select label='Поставщик' inputProps={{ ...register('supplierId') }}>
+                {suppliers?.map(supplier => (
+                  <MenuItem key={supplier.id} value={supplier.id}>
+                    {supplier.name}
                   </MenuItem>
                 ))}
               </TextField>
             )}
+
+            <TextField
+              select
+              label='Способ доставки'
+              inputProps={{ ...register('deliveryMethod') }}
+            >
+              {deliveryMethodOptions?.map(deliveryMethodOption => (
+                <MenuItem key={deliveryMethodOption.id} value={deliveryMethodOption.id}>
+                  {deliveryMethodOption.name}
+                </MenuItem>
+              ))}
+            </TextField>
 
             {isWoodTypesLoading ? (
               <CircularProgress size={20} />
@@ -246,7 +273,7 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
 
             {fields.map((field, fieldIndex) => {
               return (
-                <AddBeamShipmentFormItem
+                <AddBeamArrivalFormItem
                   field={field}
                   fieldIndex={fieldIndex}
                   watch={watch}
@@ -275,14 +302,14 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
             </Button>
 
             <ButtonWithLoader
-              isLoading={isLoadingBeamShipmentMutation}
+              isLoading={isLoadingBeamArrivalMutation}
               type='submit'
               sx={{ mt: 2, width: '100%' }}
               loaderSx={{
                 top: -14,
               }}
             >
-              Отгрузить
+              Внести
             </ButtonWithLoader>
           </Box>
         </ModalContent>

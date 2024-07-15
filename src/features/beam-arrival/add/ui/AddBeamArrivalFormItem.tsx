@@ -19,22 +19,22 @@ import {
   Typography,
 } from '@mui/material'
 
+import { BeamArrivalFormType } from '@/entities/beam-arrival'
 import { BeamSize } from '@/entities/beam-in/model'
-import { BeamShipmentFormType } from '@/entities/beam-shipment'
 
-type AddBeamShipmentFormItemProps = {
+type AddBeamArrivalFormItemProps = {
   field: Record<'id', string>
   fieldIndex: number
-  watch: UseFormWatch<BeamShipmentFormType>
-  register: UseFormRegister<BeamShipmentFormType>
-  control: Control<BeamShipmentFormType>
-  errors: FieldErrors<BeamShipmentFormType>
+  watch: UseFormWatch<BeamArrivalFormType>
+  register: UseFormRegister<BeamArrivalFormType>
+  control: Control<BeamArrivalFormType>
+  errors: FieldErrors<BeamArrivalFormType>
   remove: UseFieldArrayRemove
   isBeamSizesLoading: boolean
   beamSizes: BeamSize[] | undefined
 }
 
-export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
+export const AddBeamArrivalFormItem: FC<AddBeamArrivalFormItemProps> = ({
   field,
   fieldIndex,
   watch,
@@ -50,21 +50,21 @@ export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
 
   const isFormItemDisabled = !watchLength || !watchWoodTypeId
 
-  const watchVolume = watch(`beamShipmentItems.${fieldIndex}.volume` as const)
-  const watchAmount = watch(`beamShipmentItems.${fieldIndex}.amount` as const)
-  const watchBeamSizeId = watch(`beamShipmentItems.${fieldIndex}.beamSizeId` as const)
+  const watchVolume = watch(`beamArrivalItems.${fieldIndex}.volume` as const)
+  const watchAmount = watch(`beamArrivalItems.${fieldIndex}.amount` as const)
+  const watchBeamSizeId = watch(`beamArrivalItems.${fieldIndex}.beamSizeId` as const)
 
   // Ошибка при отсутствии заполненных полей
   const isValidateError =
-    errors?.beamShipmentItems?.[fieldIndex]?.volume?.type === 'validate' ||
-    errors?.beamShipmentItems?.[fieldIndex]?.amount?.type === 'validate' ||
-    errors?.beamShipmentItems?.[fieldIndex]?.beamSizeId?.type === 'validate'
+    errors?.beamArrivalItems?.[fieldIndex]?.volume?.type === 'validate' ||
+    errors?.beamArrivalItems?.[fieldIndex]?.amount?.type === 'validate' ||
+    errors?.beamArrivalItems?.[fieldIndex]?.beamSizeId?.type === 'validate'
 
   // Ошибка при заполнении для пиловочника
   const isSawingError =
-    !errors?.beamShipmentItems?.[fieldIndex]?.volume &&
-    (errors?.beamShipmentItems?.[fieldIndex]?.amount?.type === 'validate' ||
-      errors?.beamShipmentItems?.[fieldIndex]?.beamSizeId?.type === 'validate')
+    !errors?.beamArrivalItems?.[fieldIndex]?.volume &&
+    (errors?.beamArrivalItems?.[fieldIndex]?.amount?.type === 'validate' ||
+      errors?.beamArrivalItems?.[fieldIndex]?.beamSizeId?.type === 'validate')
 
   const formElements = (
     <Box>
@@ -73,7 +73,7 @@ export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
         variant='outlined'
         type='number'
         inputProps={{
-          ...register(`beamShipmentItems.${fieldIndex}.volume` as const, {
+          ...register(`beamArrivalItems.${fieldIndex}.volume` as const, {
             validate: value => {
               if (watchAmount && watchBeamSizeId) {
                 return true
@@ -96,7 +96,7 @@ export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
         type='number'
         disabled={Boolean(isFormItemDisabled || watchVolume)}
         inputProps={{
-          ...register(`beamShipmentItems.${fieldIndex}.amount` as const, {
+          ...register(`beamArrivalItems.${fieldIndex}.amount` as const, {
             validate: value => {
               if (watchVolume) {
                 return true
@@ -116,7 +116,7 @@ export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
         <CircularProgress size={20} />
       ) : (
         <Controller
-          name={`beamShipmentItems.${fieldIndex}.beamSizeId`}
+          name={`beamArrivalItems.${fieldIndex}.beamSizeId`}
           control={control}
           rules={{
             validate: value => {
@@ -152,12 +152,12 @@ export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
       )}
       {isValidateError && (
         <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          {errors?.beamShipmentItems?.[fieldIndex]?.volume?.message}
+          {errors?.beamArrivalItems?.[fieldIndex]?.volume?.message}
         </Typography>
       )}
       {isSawingError && (
         <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          {errors?.beamShipmentItems?.[fieldIndex]?.amount?.message}
+          {errors?.beamArrivalItems?.[fieldIndex]?.amount?.message}
         </Typography>
       )}
     </Box>
