@@ -11,6 +11,9 @@ import AdminUsers from '@/pages/admin-users'
 import Arrival from '@/pages/arrival'
 import ArrivalDayInfo from '@/pages/arrival-day-info'
 import ArrivalTimeRangeInfo from '@/pages/arrival-time-range-info'
+import BeamArrival from '@/pages/beam-arrival'
+import BeamArrivalDayInfo from '@/pages/beam-arrival-day-info'
+import BeamArrivalTimeRangeInfo from '@/pages/beam-arrival-time-range-info'
 import BeamShipment from '@/pages/beam-shipment'
 import BeamShipmentDayInfo from '@/pages/beam-shipment-day-info'
 import BeamShipmentTimeRangeInfo from '@/pages/beam-shipment-time-range-info'
@@ -71,6 +74,11 @@ export const AppRouter = () => {
           <Route path={urls.woodArrival} element={<Arrival />}>
             <Route path={urls.day} element={<ArrivalDayInfo />} />
             <Route path={urls.timeRange} element={<ArrivalTimeRangeInfo />} />
+          </Route>
+
+          <Route path={urls.beamArrival} element={<BeamArrival />}>
+            <Route path={urls.day} element={<BeamArrivalDayInfo />} />
+            <Route path={urls.timeRange} element={<BeamArrivalTimeRangeInfo />} />
           </Route>
 
           <Route path={urls.woodShipment} element={<Shipment />}>
