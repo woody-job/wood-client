@@ -33,6 +33,7 @@ export const tagTypes = [
   'PersonInCharge',
   'BeamShipment',
   'BeamShipmentTimeRange',
+  'BeamWarehouse',
 ]
 export const baseApi = createApi({
   baseQuery: baseQueryWithAuth,

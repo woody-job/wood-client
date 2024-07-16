@@ -69,10 +69,11 @@ export const AddBeamArrivalFormItem: FC<AddBeamArrivalFormItemProps> = ({
   const formElements = (
     <Box>
       <TextField
-        label='Объем'
+        label='Объем, м3'
         variant='outlined'
         type='number'
         inputProps={{
+          step: 'any',
           ...register(`beamArrivalItems.${fieldIndex}.volume` as const, {
             validate: value => {
               if (watchAmount && watchBeamSizeId) {
