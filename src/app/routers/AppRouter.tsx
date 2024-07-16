@@ -17,6 +17,7 @@ import BeamArrivalTimeRangeInfo from '@/pages/beam-arrival-time-range-info'
 import BeamShipment from '@/pages/beam-shipment'
 import BeamShipmentDayInfo from '@/pages/beam-shipment-day-info'
 import BeamShipmentTimeRangeInfo from '@/pages/beam-shipment-time-range-info'
+import BeamWarehouse from '@/pages/beam-warehouse'
 import Dashboard from '@/pages/dashboard'
 import Dryer from '@/pages/dryer'
 import { RouteError } from '@/pages/error'
@@ -92,6 +93,7 @@ export const AppRouter = () => {
           </Route>
 
           <Route path={urls.woodWarehouse} element={<Warehouse />} />
+          <Route path={urls.beamWarehouse} element={<BeamWarehouse />} />
           <Route path={urls.dashboard} element={<Dashboard />} />
 
           {systemSettingsRoutes}

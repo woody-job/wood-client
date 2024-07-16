@@ -26,7 +26,7 @@ export const Warehouse = () => {
 
   return (
     <Box>
-      <Typography variant='h5'>Склад</Typography>
+      <Typography variant='h5'>Склад доски</Typography>
       <Tabs value={currentTab?.id.toString()} onChange={handleChangeTab} sx={{ mt: 5 }}>
         {isLoadingWoodConditions && (
           <Box display='flex' gap={1}>

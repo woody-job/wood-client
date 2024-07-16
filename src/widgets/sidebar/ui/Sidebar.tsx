@@ -69,7 +69,7 @@ export const Sidebar = () => {
 
   const menuItemsSkeleton = (
     <Box>
-      {Array.from(Array(10).keys()).map(() => (
+      {Array.from(Array(14).keys()).map(() => (
         <Skeleton variant='rectangular' sx={{ my: 3 }} height={'25px'} />
       ))}
     </Box>
