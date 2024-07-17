@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
 import { useFetchBeamArrivalByTimeRangeQuery } from '@/entities/beam-arrival'
-import { getDeliveryMethodText } from '@/entities/beam-in/libs/helpers'
+import { getDeliveryMethodText } from '@/entities/beam-arrival/libs/helpers'
 import { defaultErrorHandler } from '@/shared/libs/helpers/defaultErrorHandler.ts'
 import { CommonErrorType } from '@/shared/types/error.ts'
 import { TimeRange } from '@/shared/types/types.ts'

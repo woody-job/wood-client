@@ -1,16 +1,17 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useParams } from 'react-router-dom'
 
-import { Button, ButtonProps } from '@mui/material'
+import { Box, Button, ButtonProps } from '@mui/material'
 
 import {
   useCreateBeamInForWorkshopMutation,
-  useFetchAllBeamSizesQuery,
+  useFetchBeamSizesByLengthQuery,
 } from '@/entities/beam-in/api'
 import { BeamInFormType, CreateBeamInForWorkshopParams } from '@/entities/beam-in/model'
 import { UpdateInputWoodModal } from '@/entities/wood'
+import { useFetchAllWoodNamingsQuery } from '@/entities/wood-naming'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
@@ -18,9 +19,14 @@ import { useSnackbar } from 'notistack'
 
 type AddInputWoodButtonProps = {
   now: string
+  selectedWoodNamingId: number | null
 } & ButtonProps
 
-export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({ now, ...props }) => {
+export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({
+  now,
+  selectedWoodNamingId,
+  ...props
+}) => {
   const { workshopId } = useParams()
 
   const [isOpen, setIsOpen] = useState(false)
@@ -31,16 +37,12 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({ now, ...props 
   const [createBeamInMutation, { isLoading: isLoadingCreateBeamInMutation }] =
     useCreateBeamInForWorkshopMutation()
 
-  const { data: beamSizes, isLoading: isLoadingBeamSizes } = useFetchAllBeamSizesQuery()
+  const { data: beamSizes, isLoading: isLoadingBeamSizes } = useFetchBeamSizesByLengthQuery({
+    length: 6,
+  })
+  const { data: woodNamings, isLoading: isLoadingWoodNamings } = useFetchAllWoodNamingsQuery()
 
   const { enqueueSnackbar } = useSnackbar()
-
-  const beamSizesOptions = useMemo(() => {
-    return beamSizes?.map(beamSize => ({
-      id: beamSize.id,
-      name: beamSize.diameter,
-    }))
-  }, [beamSizes])
 
   const handleOpen = () => {
     setIsOpen(true)
@@ -64,9 +66,14 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({ now, ...props 
       return
     }
 
+    if (!selectedWoodNamingId) {
+      return
+    }
+
     const body: CreateBeamInForWorkshopParams = {
       workshopId: Number(workshopId),
       beamSizeId,
+      woodNamingId: selectedWoodNamingId,
       amount: Number(amount),
       date: now,
     }
@@ -83,20 +90,25 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({ now, ...props 
   }
 
   return (
-    <>
-      <Button size='small' onClick={handleOpen} {...props} />
+    <Box display='flex' justifyContent='flex-end' width='100%'>
+      <Box>
+        <Button size='small' onClick={handleOpen} {...props} />
+      </Box>
 
       <UpdateInputWoodModal
         title={'Добавить доски на вход'}
         action={'Добавить'}
         methods={methods}
-        beamSizesOptions={beamSizesOptions}
+        beamSizes={beamSizes}
+        woodNamings={woodNamings}
         onUpdate={handleSave}
         open={isOpen}
         onClose={handleClose}
         isLoadingBeamSizes={isLoadingBeamSizes}
+        isLoadingWoodNamings={isLoadingWoodNamings}
         isLoading={isLoadingCreateBeamInMutation}
+        selectedWoodNamingId={selectedWoodNamingId}
       />
-    </>
+    </Box>
   )
 }

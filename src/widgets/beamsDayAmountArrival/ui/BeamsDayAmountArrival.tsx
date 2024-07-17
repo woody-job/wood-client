@@ -8,7 +8,7 @@ import { DeleteBeamArrivalButton } from '@/features/beam-arrival/delete'
 import { UpdateBeamArrivalButton } from '@/features/beam-arrival/update'
 import { useAuth } from '@/entities/auth'
 import { useFetchBeamArrivalByDayQuery } from '@/entities/beam-arrival'
-import { getDeliveryMethodText } from '@/entities/beam-in/libs/helpers'
+import { getDeliveryMethodText } from '@/entities/beam-arrival/libs/helpers'
 import { USER_ROLE } from '@/entities/user'
 import { TableFullscreen } from '@/shared/ui'
 import {

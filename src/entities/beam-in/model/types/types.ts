@@ -1,3 +1,5 @@
+import { WoodNaming } from '@/entities/wood-naming'
+
 export type BeamSize = {
   id: number
   diameter: number
@@ -10,6 +12,7 @@ export type BeamIn = {
   amount: number
   date: string
   beamSize: BeamSize
+  woodNaming: WoodNaming
 }
 
 export type GetBeamInForWorkshopParams = {
@@ -26,6 +29,7 @@ export type GetBeamInResponse = {
 export type CreateBeamInForWorkshopParams = {
   workshopId: number
   beamSizeId: number
+  woodNamingId: number
   amount: number
   date: string
 }
@@ -43,6 +47,7 @@ export type DeleteBeamInForWorkshopParams = {
 }
 
 export type BeamInFormType = {
-  diameter: number
+  diameter?: number
+  woodNamingId?: number
   amount: number
 }

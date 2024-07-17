@@ -20,9 +20,11 @@ const getWorkshopDefaultBeamInRows = ({
       id: beamSize.id, // TODO Возможно здесь нужен uuid
       diameter: beamSize.diameter,
       volume: beamSize.volume,
+      beamSizeId: beamSize.id,
       beamInId: undefined,
       amount: undefined,
       isEmptyDefault: true,
+      woodNaming: undefined,
     }
   })
 }

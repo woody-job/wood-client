@@ -10,7 +10,8 @@ import {
   UpdateWorkshopDailyWoodNamingParams,
   useUpdateWorkshopDailyWoodNamingMutation,
 } from '@/entities/workshop'
-import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { EVENT_NAME } from '@/shared/constants'
+import { defaultErrorHandler, publish } from '@/shared/libs/helpers'
 import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
 import { SelectPlaceholderWrapper } from '@/shared/ui'
@@ -89,6 +90,9 @@ export const EditWoodNamingOfTheDay: FC<EditWoodNamingOfTheDayProps> = ({
       .unwrap()
       .then(() => {
         enqueueSnackbar('Условное обозначение дня успешно изменено', { variant: 'success' })
+        publish(EVENT_NAME.WOOD_NAMING_OF_THE_DAY_CHANGE, {
+          woodNamingId,
+        })
       })
       .catch((error: CommonErrorType) => {
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
