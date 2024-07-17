@@ -28,7 +28,7 @@ export const SelectPlaceholderWrapper: FC<SelectPlaceholderWrapperProps> = ({
                 wordBreak: 'break-all',
                 width: 'calc(100% - 40px)',
                 top: 7,
-                left: 0,
+                left: 2,
                 ml: '10px',
                 color: theme =>
                   theme.palette.mode === 'light'

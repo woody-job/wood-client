@@ -17,8 +17,8 @@ import {
   BeamArrivalFormType,
   useAddBeamArrivalMutation,
 } from '@/entities/beam-arrival'
+import { getDeliveryMethodText } from '@/entities/beam-arrival/libs/helpers'
 import { useFetchBeamSizesByLengthQuery } from '@/entities/beam-in'
-import { getDeliveryMethodText } from '@/entities/beam-in/libs/helpers'
 import { useFetchAllSuppliersQuery } from '@/entities/supplier'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
@@ -118,6 +118,7 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
   const onSubmit: SubmitHandler<BeamArrivalFormType> = ({
     supplierId,
     woodTypeId,
+    deliveryMethod,
     length,
     beamArrivalItems,
   }) => {
@@ -130,6 +131,7 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
         ...(volume ? { volume: Number(volume) } : {}),
         ...(amount ? { amount: Number(amount) } : {}),
         ...(beamSizeId ? { beamSizeId } : {}),
+        ...(deliveryMethod ? { deliveryMethod } : {}),
       }
     })
 

@@ -133,8 +133,6 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
         enqueueSnackbar('Отгрузки сырья успешно созданы', { variant: 'success' })
       })
       .catch((error: CommonErrorType) => {
-        console.log('THIS IS ERROR: ', error)
-
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
       })
   }
