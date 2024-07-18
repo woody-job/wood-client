@@ -66,7 +66,7 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = ({
         <TextField
           inputProps={{ ...register('minDiameter') }}
           id='name'
-          label='Мин. диаметр'
+          label='Мин. диаметр, см'
           variant='outlined'
           size='small'
           type='number'
@@ -75,7 +75,7 @@ export const UpdateWoodNamingModal: FC<UpdateWoodNamingModalProps> = ({
         <TextField
           inputProps={{ ...register('maxDiameter') }}
           id='name'
-          label='Макс. диаметр'
+          label='Макс. диаметр, см'
           variant='outlined'
           size='small'
           type='number'
