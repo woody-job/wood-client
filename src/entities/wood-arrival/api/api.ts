@@ -32,11 +32,11 @@ export const woodArrivalApi = baseApi.injectEndpoints({
       providesTags: ['ArrivalTimeRange'],
     }),
 
-    addWoodArrival: build.mutation<ArrivalParams, ArrivalParams>({
-      query: arrival => ({
+    addWoodArrival: build.mutation<string[], ArrivalParams[]>({
+      query: arrivals => ({
         url: 'wood-arrival',
         method: 'POST',
-        body: arrival,
+        body: arrivals,
       }),
       invalidatesTags: ['Arrival', 'ArrivalTimeRange'],
     }),

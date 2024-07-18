@@ -1,25 +1,29 @@
-import { FC, useEffect, useMemo, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { FC, useEffect, useState } from 'react'
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
-import { skipToken } from '@reduxjs/toolkit/query'
-
-import { Button, CircularProgress, MenuItem, Modal, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  MenuItem,
+  Modal,
+  TextField,
+  Typography,
+} from '@mui/material'
 
 import { useFetchAllBuyersQuery } from '@/entities/buyer'
-import {
-  getDimensionString,
-  useFetchAllDimensionsQuery,
-  useFetchDimensionsByWoodClassQuery,
-} from '@/entities/dimension'
+import { useFetchAllDimensionsQuery } from '@/entities/dimension'
 import { useFetchAllPersonsInChargeQuery } from '@/entities/personInCharge'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { ShipmentFormType, useAddWoodShipmentMutation } from '@/entities/wood-shipment'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
-import { defaultErrorHandler, getUniqueDimensionsFromAllDimensions } from '@/shared/libs/helpers'
+import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
 
+import { AddWoodShipmentFormItem } from './AddWoodShipmentFormItem'
 import { useSnackbar } from 'notistack'
 
 export interface AddWoodsArrivalShipmentProps {
@@ -37,16 +41,31 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
 
-  const methods = useForm<ShipmentFormType>()
+  const methods = useForm<ShipmentFormType>({
+    defaultValues: {
+      buyerId: undefined,
+      personInChargeId: undefined,
+      car: undefined,
+      woodShipmentItems: [
+        {
+          amount: undefined,
+          woodClassId: undefined,
+          woodTypeId: undefined,
+          dimensionId: undefined,
+        },
+      ],
+    },
+  })
   const {
     register,
     handleSubmit,
     watch,
     reset,
+    control,
     formState: { errors },
   } = methods
 
-  const watchWoodClassId = watch('woodClassId')
+  const { fields, append, remove } = useFieldArray({ control, name: 'woodShipmentItems' })
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -55,44 +74,51 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
 
   const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery()
 
-  const { data: dimensions, isLoading: isDimensionsLoading } = useFetchDimensionsByWoodClassQuery(
-    watchWoodClassId ?? skipToken
-  )
   const { data: allDimensions } = useFetchAllDimensionsQuery()
   const { data: woodTypes, isLoading: isWoodTypesLoading } = useFetchAllWoodTypesQuery()
   const { data: buyers, isLoading: isBuyersLoading } = useFetchAllBuyersQuery()
   const { data: personsInCharge, isLoading: isPersonsInChargeLoading } =
     useFetchAllPersonsInChargeQuery()
 
-  const dimensionForSaleOptions = useMemo(() => {
-    if (!allDimensions) {
-      return []
-    }
-
-    return getUniqueDimensionsFromAllDimensions(allDimensions)
-  }, [allDimensions])
-
   const onSubmit: SubmitHandler<ShipmentFormType> = ({
     buyerId,
     personInChargeId,
-    dimensionForSaleId,
     car,
-    ...values
+    woodShipmentItems,
   }) => {
-    addWoodShipmentMutation({
-      ...values,
-      ...(buyerId ? { buyerId } : {}),
-      ...(personInChargeId ? { personInChargeId } : {}),
-      ...(dimensionForSaleId ? { dimensionForSaleId } : {}),
-      ...(car ? { car } : {}),
-      woodConditionId,
-      date: selectedDate,
-    })
+    const woodShipmentDtos = woodShipmentItems.map(
+      ({ dimensionId, dimensionForSaleId, woodClassId, woodTypeId, amount }) => {
+        return {
+          date: selectedDate,
+          woodConditionId,
+          dimensionId,
+          woodClassId,
+          woodTypeId,
+          amount,
+
+          ...(buyerId ? { buyerId } : {}),
+          ...(personInChargeId ? { personInChargeId } : {}),
+          ...(dimensionForSaleId ? { dimensionForSaleId } : {}),
+          ...(car ? { car } : {}),
+        }
+      }
+    )
+
+    addWoodShipmentMutation(woodShipmentDtos)
       .unwrap()
-      .then(() => {
-        enqueueSnackbar('Доски на отгрузку успешно добавлены', { variant: 'success' })
+      .then(errors => {
         reset()
         handleClose()
+
+        if (errors.length) {
+          errors.forEach(error => {
+            enqueueSnackbar(error, { variant: 'info' })
+          })
+
+          return
+        }
+
+        enqueueSnackbar('Доски на отгрузку успешно добавлены', { variant: 'success' })
       })
       .catch((error: CommonErrorType) => {
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))
@@ -115,141 +141,115 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
           onSubmit={handleSubmit(onSubmit)}
           display='flex'
           flexDirection='column'
-          gap={1}
+          sx={{
+            display: 'flex',
+            width: 510,
+            maxHeight: '90vh',
+            flexDirection: 'column',
+            '.MuiFormControl-root, .MuiCircularProgress-root': {
+              mt: 2,
+            },
+            alignItems: 'center',
+          }}
         >
-          <Typography variant='h6' component='h2' sx={{ mb: 3 }}>
-            {title}
-          </Typography>
-
-          {isBuyersLoading ? (
-            <CircularProgress size={20} />
-          ) : (
-            <TextField select label='Покупатель' inputProps={{ ...register('buyerId') }}>
-              {buyers?.map(buyer => (
-                <MenuItem key={buyer.id} value={buyer.id}>
-                  {buyer.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-
-          {isPersonsInChargeLoading ? (
-            <CircularProgress size={20} />
-          ) : (
-            <TextField
-              select
-              label='Ответственный'
-              inputProps={{ ...register('personInChargeId') }}
-            >
-              {personsInCharge?.map(personInCharge => (
-                <MenuItem key={personInCharge.id} value={personInCharge.id}>
-                  {personInCharge.initials} {personInCharge.secondName}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-
-          <TextField
-            label='Машина'
-            variant='outlined'
-            type='string'
-            inputProps={{ ...register('car') }}
-          />
-
-          {isWoodClassesLoading ? (
-            <CircularProgress size={20} />
-          ) : (
-            <TextField
-              select
-              label='Сорт'
-              inputProps={{ ...register('woodClassId', { required: true }) }}
-            >
-              {woodClasses?.map(woodClass => (
-                <MenuItem key={woodClass.id} value={woodClass.id}>
-                  {woodClass.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-          {errors.woodClassId?.type === 'required' && (
-            <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-              Порода обязательна
-            </Typography>
-          )}
-
-          {isDimensionsLoading ? (
-            <CircularProgress size={20} />
-          ) : (
-            <TextField
-              select
-              label='Сечение'
-              inputProps={{ ...register('dimensionId', { required: true }) }}
-            >
-              {watchWoodClassId ? (
-                dimensions?.map(dimension => (
-                  <MenuItem key={dimension.id} value={dimension.id}>
-                    {getDimensionString(dimension)}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem disabled>Выберите сорт</MenuItem>
-              )}
-            </TextField>
-          )}
-          {errors.dimensionId?.type === 'required' && (
-            <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-              Сечение обязательно
-            </Typography>
-          )}
-
-          {isDimensionsLoading ? (
-            <CircularProgress size={20} />
-          ) : (
-            <TextField
-              select
-              label='Сечение для продажи'
-              inputProps={{ ...register('dimensionForSaleId') }}
-            >
-              {dimensionForSaleOptions?.map(dimension => (
-                <MenuItem key={dimension.id} value={dimension.id}>
-                  {dimension.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-
-          {isWoodTypesLoading ? (
-            <CircularProgress size={20} />
-          ) : (
-            <TextField
-              select
-              label='Порода'
-              inputProps={{ ...register('woodTypeId', { required: true }) }}
-            >
-              {woodTypes?.map(woodType => (
-                <MenuItem key={woodType.id} value={woodType.id}>
-                  {woodType.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-          {errors.woodTypeId?.type === 'required' && (
-            <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-              Порода обязательна
-            </Typography>
-          )}
-
-          <TextField
-            label='Количество'
-            inputProps={{ ...register('amount', { required: true, valueAsNumber: true }) }}
-          />
-          <ButtonWithLoader
-            isLoading={isLoadingAddWoodShipmentMutation}
-            type='submit'
-            sx={{ mt: 2 }}
+          <Box
+            sx={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              width: 505,
+              overflowY: 'scroll',
+              pr: 0.5,
+              px: 3,
+              pb: 1,
+            }}
           >
-            Добавить
-          </ButtonWithLoader>
+            <Typography variant='h6' component='h2' sx={{ mb: 3 }}>
+              {title}
+            </Typography>
+
+            <Typography variant='body1'>Общая информация о партии:</Typography>
+
+            {isBuyersLoading ? (
+              <CircularProgress size={20} />
+            ) : (
+              <TextField select label='Покупатель' inputProps={{ ...register('buyerId') }}>
+                {buyers?.map(buyer => (
+                  <MenuItem key={buyer.id} value={buyer.id}>
+                    {buyer.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+
+            {isPersonsInChargeLoading ? (
+              <CircularProgress size={20} />
+            ) : (
+              <TextField
+                select
+                label='Ответственный'
+                inputProps={{ ...register('personInChargeId') }}
+              >
+                {personsInCharge?.map(personInCharge => (
+                  <MenuItem key={personInCharge.id} value={personInCharge.id}>
+                    {personInCharge.initials} {personInCharge.secondName}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+
+            <TextField
+              label='Машина'
+              variant='outlined'
+              type='string'
+              inputProps={{ ...register('car') }}
+            />
+
+            <Divider sx={{ height: '10px', width: '100%', mt: 3, mb: 2 }} />
+
+            {fields.length !== 0 && <Typography variant='body1'>Доски.</Typography>}
+
+            {fields.map((field, fieldIndex) => {
+              return (
+                <AddWoodShipmentFormItem
+                  field={field}
+                  fieldIndex={fieldIndex}
+                  watch={watch}
+                  register={register}
+                  errors={errors}
+                  remove={remove}
+                  woodClasses={woodClasses}
+                  isWoodClassesLoading={isWoodClassesLoading}
+                  woodTypes={woodTypes}
+                  isWoodTypesLoading={isWoodTypesLoading}
+                  allDimensions={allDimensions}
+                />
+              )
+            })}
+
+            <Button
+              onClick={() =>
+                append({
+                  amount: undefined,
+                  woodClassId: undefined,
+                  woodTypeId: undefined,
+                  dimensionId: undefined,
+                })
+              }
+              sx={{ width: '100%' }}
+              variant='outlined'
+            >
+              Добавить
+            </Button>
+
+            <ButtonWithLoader
+              isLoading={isLoadingAddWoodShipmentMutation}
+              type='submit'
+              sx={{ mt: 2 }}
+            >
+              Отгрузить
+            </ButtonWithLoader>
+          </Box>
         </ModalContent>
       </Modal>
     </>

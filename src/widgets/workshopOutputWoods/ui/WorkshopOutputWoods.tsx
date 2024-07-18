@@ -85,6 +85,7 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
                   <ButtonWithConfirm
                     isLoading={isLoadingDeleteWorkshopOutMutation}
                     header='Удалить лес на выход'
+                    disabled={!params.row.amount}
                     description='Вы точно хотите удалить выход леса?'
                     onConfirm={() => {
                       handleDeleteWorkshopOut(params.row.workshopOutId)

@@ -32,7 +32,7 @@ export const DeleteDataFinalModal: FC<DeleteDataFinalModalProps> = props => {
         <Typography variant='h6'>Удаление</Typography>
         <Divider sx={{ my: 1 }} />
 
-        <Typography sx={{ mb: 2 }}>
+        <Typography sx={{ mb: 2, userSelect: 'none' }}>
           Для удаления введите следующий текст: <strong>удалитьнельзяпомиловать</strong>
         </Typography>
 

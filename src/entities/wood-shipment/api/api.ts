@@ -32,11 +32,11 @@ export const woodShipmentApi = baseApi.injectEndpoints({
       providesTags: ['ShipmentTimeRange'],
     }),
 
-    addWoodShipment: build.mutation<ShipmentParams, ShipmentParams>({
-      query: arrival => ({
+    addWoodShipment: build.mutation<string[], ShipmentParams[]>({
+      query: shipments => ({
         url: 'wood-shipment',
         method: 'POST',
-        body: arrival,
+        body: shipments,
       }),
       invalidatesTags: ['Shipment', 'ShipmentTimeRange'],
     }),
