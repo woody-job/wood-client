@@ -63,10 +63,6 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
   })
 
   const handleDeleteBeamIn = (beamInId: number) => {
-    if (!selectedWoodNamingId) {
-      return
-    }
-
     deleteBeamInMutation({ beamInId })
       .unwrap()
       .then(() => {
@@ -130,6 +126,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
         diameter: beamIn.beamSize.diameter,
         beamSizeId: beamIn.beamSize.id,
         beamInId: beamIn.id,
+        beamSize: beamIn.beamSize,
         woodNaming: beamIn.woodNaming.name,
         isEmptyDefault: false,
       }
@@ -147,6 +144,9 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
         inDefaults.beamInId = actualDataBeamIn.beamInId
         inDefaults.woodNaming = actualDataBeamIn.woodNaming
         inDefaults.isEmptyDefault = false
+        inDefaults.volume = Number(
+          (actualDataBeamIn.beamSize.volume * actualDataBeamIn.amount).toFixed(2)
+        )
 
         return
       }

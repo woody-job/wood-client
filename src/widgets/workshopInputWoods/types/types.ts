@@ -2,7 +2,7 @@ export type WorkshopBeamInTableRow = {
   id: number
   diameter: number
   amount: number | undefined
-  volume: number
+  volume: number | undefined
   isEmptyDefault: boolean
   beamInId: number | undefined
   woodNaming: string | undefined

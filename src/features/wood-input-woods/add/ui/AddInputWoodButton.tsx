@@ -54,7 +54,7 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({
   }
 
   const handleSave: SubmitHandler<BeamInFormType> = data => {
-    const { diameter, amount } = data
+    const { diameter, amount, woodNamingId } = data
 
     if (!workshopId) {
       return
@@ -66,14 +66,14 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({
       return
     }
 
-    if (!selectedWoodNamingId) {
+    if (!woodNamingId) {
       return
     }
 
     const body: CreateBeamInForWorkshopParams = {
       workshopId: Number(workshopId),
       beamSizeId,
-      woodNamingId: selectedWoodNamingId,
+      woodNamingId,
       amount: Number(amount),
       date: now,
     }
