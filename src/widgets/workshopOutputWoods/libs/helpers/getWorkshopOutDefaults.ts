@@ -105,6 +105,7 @@ const getWorkshopOutDefaultRows = ({
       woodType: dimension.woodType.name,
       woodTypeId: dimension.woodType.id,
       amount: undefined,
+      volume: undefined,
       workshopOutId: undefined,
       isEmptyDefault: true,
     }

@@ -3,10 +3,11 @@ import { GridColDef } from '@mui/x-data-grid'
 import { WorkshopDefaultDimension } from '../types'
 
 export const WORKSHOP_OUT_TABLE_COLUMNS: GridColDef[] = [
-  { field: 'dimension', headerName: 'Сечение', width: 125 },
-  { field: 'woodClass', headerName: 'Сорт', width: 110 },
-  { field: 'woodType', headerName: 'Порода', width: 80 },
-  { field: 'amount', headerName: 'Кол-во', width: 70 },
+  { field: 'dimension', headerName: 'Сечение', flex: 0.5 },
+  { field: 'woodClass', headerName: 'Сорт', flex: 0.5 },
+  { field: 'woodType', headerName: 'Порода', flex: 0.5 },
+  { field: 'volume', headerName: 'Объем, м3', flex: 0.5 },
+  { field: 'amount', headerName: 'Кол-во', flex: 0.5 },
 ]
 
 // На 25.06.24

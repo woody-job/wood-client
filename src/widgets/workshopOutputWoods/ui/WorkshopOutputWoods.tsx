@@ -120,6 +120,7 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
         woodType: woodType.name,
         woodTypeId: woodType.id,
         amount: amount,
+        volume: Number((dimension.volume * amount).toFixed(2)),
         workshopOutId: id,
         isEmptyDefault: false,
       }
@@ -139,6 +140,7 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
         inDefaults.amount = actualDataWorkshopOut.amount
         inDefaults.workshopOutId = actualDataWorkshopOut.id
         inDefaults.isEmptyDefault = false
+        inDefaults.volume = actualDataWorkshopOut.volume
 
         return
       }

@@ -9,6 +9,7 @@ export type WorkshopOutTableRow = {
   dimensionId: number
   woodType: string
   woodTypeId: number
+  volume: number | undefined
   amount: number | undefined
   isEmptyDefault: boolean
   workshopOutId: number | undefined
