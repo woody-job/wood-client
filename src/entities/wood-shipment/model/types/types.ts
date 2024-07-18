@@ -5,15 +5,19 @@ import { WoodClass } from '@/entities/wood-class'
 import { WoodCondition } from '@/entities/wood-condition'
 import { WoodType } from '@/entities/wood-type'
 
-export type ShipmentFormType = {
-  amount: number
-  woodClassId: number
-  woodTypeId: number
-  dimensionId: number
+export type WoodShipmentItem = {
+  amount?: number
+  woodClassId?: number
+  woodTypeId?: number
+  dimensionId?: number
   dimensionForSaleId?: number
+}
+
+export type ShipmentFormType = {
   buyerId?: number
   personInChargeId?: number
   car?: string
+  woodShipmentItems: WoodShipmentItem[]
 }
 
 export type WoodShipment = {
@@ -30,9 +34,14 @@ export type WoodShipment = {
   personInCharge: PersonInCharge
 }
 
-export type ShipmentParams = ShipmentFormType & {
-  woodConditionId: number
+export type ShipmentParams = {
   date: string
+  amount?: number
+  car?: string
+  woodClassId?: number
+  woodTypeId?: number
+  dimensionId?: number
+  dimensionForSaleId?: number
 }
 
 export type ShipmentTableData = {

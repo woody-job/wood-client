@@ -265,13 +265,17 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
 
             <Divider sx={{ height: '10px', width: '100%', mt: 3, mb: 2 }} />
 
-            <Typography variant='body1'>Бревна.</Typography>
-            <Typography variant='body2'>
-              <i>Объем</i> - для баланса.
-            </Typography>
-            <Typography variant='body2'>
-              <i>Количество и диаметр</i> - для пиловочника.
-            </Typography>
+            {fields.length !== 0 && (
+              <>
+                <Typography variant='body1'>Бревна.</Typography>
+                <Typography variant='body2'>
+                  <i>Объем</i> - для баланса.
+                </Typography>
+                <Typography variant='body2'>
+                  <i>Количество и диаметр</i> - для пиловочника.
+                </Typography>
+              </>
+            )}
 
             {fields.map((field, fieldIndex) => {
               return (

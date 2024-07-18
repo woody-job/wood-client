@@ -4,13 +4,17 @@ import { WoodClass } from '@/entities/wood-class'
 import { WoodCondition } from '@/entities/wood-condition'
 import { WoodType } from '@/entities/wood-type'
 
+export type WoodArrivalItem = {
+  amount?: number
+  woodClassId?: number
+  woodTypeId?: number
+  dimensionId?: number
+}
+
 export type ArrivalFormType = {
-  amount: number
-  woodClassId: number
-  woodTypeId: number
-  dimensionId: number
   supplierId?: number
   car?: string
+  woodArrivalItems: WoodArrivalItem[]
 }
 
 export type WoodArrival = {
@@ -25,7 +29,13 @@ export type WoodArrival = {
   supplier: Supplier
 }
 
-export type ArrivalParams = ArrivalFormType & {
+export type ArrivalParams = {
+  supplierId?: number
+  car?: string
+  amount?: number
+  woodClassId?: number
+  woodTypeId?: number
+  dimensionId?: number
   woodConditionId: number
   date: string
 }
