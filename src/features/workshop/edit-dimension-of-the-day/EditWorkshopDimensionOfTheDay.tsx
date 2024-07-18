@@ -4,13 +4,13 @@ import { Controller, useForm } from 'react-hook-form'
 import { Box, Grid, MenuItem, Select } from '@mui/material'
 
 import { useAuth } from '@/entities/auth'
-import { getDimensionString, useFetchAllDimensionsQuery } from '@/entities/dimension'
+import { useFetchAllDimensionsQuery } from '@/entities/dimension'
 import { USER_ROLE } from '@/entities/user'
 import {
   UpdateWorkshopDailyDimensionParams,
   useUpdateWorkshopDailyDimensionMutation,
 } from '@/entities/workshop'
-import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { defaultErrorHandler, getUniqueDimensionsFromAllDimensions } from '@/shared/libs/helpers'
 import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
 import { SelectPlaceholderWrapper } from '@/shared/ui'
@@ -64,29 +64,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
       return []
     }
 
-    const uniqueDimensionNamesOptions: {
-      id: number
-      name: string
-    }[] = []
-
-    const allDimensionsWithDuplicates = allDimensions.map(dimension => {
-      return {
-        id: dimension.id,
-        name: getDimensionString(dimension),
-      }
-    })
-
-    allDimensionsWithDuplicates.forEach(dimensionOption => {
-      const existentDimensionOption = uniqueDimensionNamesOptions.find(
-        option => option.name === dimensionOption.name
-      )
-
-      if (!existentDimensionOption) {
-        uniqueDimensionNamesOptions.push(dimensionOption)
-      }
-    })
-
-    return uniqueDimensionNamesOptions
+    return getUniqueDimensionsFromAllDimensions(allDimensions)
   }, [allDimensions])
 
   const handleNewDimensionOfTheDay = (dimensionString: typeof dimensionOfTheDay) => {

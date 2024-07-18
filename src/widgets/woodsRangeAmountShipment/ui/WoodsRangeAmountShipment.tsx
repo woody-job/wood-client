@@ -3,7 +3,6 @@ import { FC, useEffect, useMemo } from 'react'
 import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
-import { WOOD_ARRIVAL_TIME_RANGE_TABLE_COLUMNS } from '@/widgets/woodsRangeAmountArrival/constants/constants.ts'
 import { getDimensionString } from '@/entities/dimension/index.ts'
 import { useFetchWoodShipmentByTimeRangeQuery } from '@/entities/wood-shipment/index.ts'
 import { defaultErrorHandler } from '@/shared/libs/helpers/defaultErrorHandler.ts'
@@ -17,6 +16,7 @@ import {
 import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar.tsx'
 import { CustomGridPanel, dataGridStyles, TableFullscreen } from '@/shared/ui/index.ts'
 
+import { WOOD_SHIPMENT_TIME_RANGE_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
 import { enqueueSnackbar } from 'notistack'
 
@@ -62,6 +62,7 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
         woodType,
         woodCondition,
         dimension,
+        dimensionForSale,
       } = woodShipmentDataItem
 
       return {
@@ -76,6 +77,7 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
         woodClass: woodClass.name,
         woodType: woodType.name,
         dimension: getDimensionString(dimension),
+        dimensionForSale: dimensionForSale ? getDimensionString(dimensionForSale) : null,
         volume: Number((dimension.volume * amount).toFixed(2)),
         woodCondition: woodCondition.name,
       }
@@ -96,7 +98,7 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
           >
             {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
             <DataGrid
-              columns={WOOD_ARRIVAL_TIME_RANGE_TABLE_COLUMNS}
+              columns={WOOD_SHIPMENT_TIME_RANGE_TABLE_COLUMNS}
               rows={rows}
               disableRowSelectionOnClick
               disableMultipleRowSelection
@@ -108,7 +110,7 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
               slots={{ panel: CustomGridPanel, toolbar: CustomToolbar }}
               slotProps={{
                 toolbar: {
-                  excelFileName: 'отгрузки',
+                  excelFileName: 'отгрузки-доски',
                 },
               }}
               loading={isLoadingWoodShipmentData}

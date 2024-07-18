@@ -11,6 +11,13 @@ import AdminUsers from '@/pages/admin-users'
 import Arrival from '@/pages/arrival'
 import ArrivalDayInfo from '@/pages/arrival-day-info'
 import ArrivalTimeRangeInfo from '@/pages/arrival-time-range-info'
+import BeamArrival from '@/pages/beam-arrival'
+import BeamArrivalDayInfo from '@/pages/beam-arrival-day-info'
+import BeamArrivalTimeRangeInfo from '@/pages/beam-arrival-time-range-info'
+import BeamShipment from '@/pages/beam-shipment'
+import BeamShipmentDayInfo from '@/pages/beam-shipment-day-info'
+import BeamShipmentTimeRangeInfo from '@/pages/beam-shipment-time-range-info'
+import BeamWarehouse from '@/pages/beam-warehouse'
 import Dashboard from '@/pages/dashboard'
 import Dryer from '@/pages/dryer'
 import { RouteError } from '@/pages/error'
@@ -65,17 +72,28 @@ export const AppRouter = () => {
       <Route path={`/${urls.login}`} errorElement={<RouteError />} element={<Login />} />
       <Route element={<PrivatePage />}>
         <Route path='/' errorElement={<RouteError />} element={<RootLayout />}>
-          <Route path={urls.arrival} element={<Arrival />}>
+          <Route path={urls.woodArrival} element={<Arrival />}>
             <Route path={urls.day} element={<ArrivalDayInfo />} />
             <Route path={urls.timeRange} element={<ArrivalTimeRangeInfo />} />
           </Route>
 
-          <Route path={urls.shipment} element={<Shipment />}>
+          <Route path={urls.beamArrival} element={<BeamArrival />}>
+            <Route path={urls.day} element={<BeamArrivalDayInfo />} />
+            <Route path={urls.timeRange} element={<BeamArrivalTimeRangeInfo />} />
+          </Route>
+
+          <Route path={urls.woodShipment} element={<Shipment />}>
             <Route path={urls.day} element={<ShipmentDayInfo />} />
             <Route path={urls.timeRange} element={<ShipmentTimeRangeInfo />} />
           </Route>
 
-          <Route path={urls.warehouse} element={<Warehouse />} />
+          <Route path={urls.beamShipment} element={<BeamShipment />}>
+            <Route path={urls.day} element={<BeamShipmentDayInfo />} />
+            <Route path={urls.timeRange} element={<BeamShipmentTimeRangeInfo />} />
+          </Route>
+
+          <Route path={urls.woodWarehouse} element={<Warehouse />} />
+          <Route path={urls.beamWarehouse} element={<BeamWarehouse />} />
           <Route path={urls.dashboard} element={<Dashboard />} />
 
           {systemSettingsRoutes}

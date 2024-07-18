@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 
@@ -12,10 +12,12 @@ import { useAuth } from '@/entities/auth'
 import {
   useDeleteBeamInForWorkshopMutation,
   useFetchAllBeamInForWorkshopQuery,
-  useFetchAllBeamSizesQuery,
+  useFetchBeamSizesByLengthQuery,
 } from '@/entities/beam-in/api'
 import { USER_ROLE } from '@/entities/user'
+import { EVENT_NAME } from '@/shared/constants'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
+import { useSubscribeEvent } from '@/shared/libs/hooks/subscribe-event'
 import { CommonErrorType } from '@/shared/types'
 import { ButtonWithConfirm, CustomGridPanel, dataGridStyles, TableFullscreen } from '@/shared/ui'
 import {
@@ -49,12 +51,22 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
     { skip: !workshopId }
   )
 
-  const { data: beamSizes } = useFetchAllBeamSizesQuery()
+  const { data: beamSizes } = useFetchBeamSizesByLengthQuery({ length: 6 })
 
   const beamInData = beamIn ? beamIn.data : []
   const totalVolume = beamIn?.totalVolume ? beamIn.totalVolume : 0
 
+  const [selectedWoodNamingId, setSelectedWoodNamingId] = useState<number | null>(null)
+
+  useSubscribeEvent(EVENT_NAME.WOOD_NAMING_OF_THE_DAY_CHANGE, ({ detail: { woodNamingId } }) => {
+    setSelectedWoodNamingId(woodNamingId ?? null)
+  })
+
   const handleDeleteBeamIn = (beamInId: number) => {
+    if (!selectedWoodNamingId) {
+      return
+    }
+
     deleteBeamInMutation({ beamInId })
       .unwrap()
       .then(() => {
@@ -78,11 +90,17 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
             renderCell: (params: GridCellParams) => {
               return (
                 <Box sx={{ ml: 'auto' }}>
-                  <UpdateInputWoodButton beamIn={params.row} now={now} sx={{ mr: 1 }} />
+                  <UpdateInputWoodButton
+                    selectedWoodNamingId={selectedWoodNamingId}
+                    beamIn={params.row}
+                    now={now}
+                    sx={{ mr: 1 }}
+                  />
                   <ButtonWithConfirm
                     isLoading={isLoadingDeleteBeamInMutation}
                     header='Удалить лес на вход'
                     description='Вы точно хотите удалить вход леса?'
+                    disabled={!params.row.amount}
                     onConfirm={() => {
                       handleDeleteBeamIn(params.row.beamInId)
                     }}
@@ -110,7 +128,9 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
         amount: beamIn.amount,
         volume: Number((beamIn.beamSize.volume * beamIn.amount).toFixed(2)),
         diameter: beamIn.beamSize.diameter,
+        beamSizeId: beamIn.beamSize.id,
         beamInId: beamIn.id,
+        woodNaming: beamIn.woodNaming.name,
         isEmptyDefault: false,
       }
     })
@@ -125,6 +145,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
       if (inDefaults) {
         inDefaults.amount = actualDataBeamIn.amount
         inDefaults.beamInId = actualDataBeamIn.beamInId
+        inDefaults.woodNaming = actualDataBeamIn.woodNaming
         inDefaults.isEmptyDefault = false
 
         return
@@ -141,7 +162,11 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
       <Box display='flex' mb={1}>
         <Typography variant='h6'>Вход</Typography>
         {isAdmin && (
-          <AddInputWoodButton now={now} sx={{ ml: 'auto' }}>
+          <AddInputWoodButton
+            selectedWoodNamingId={selectedWoodNamingId}
+            now={now}
+            sx={{ ml: 'auto' }}
+          >
             Добавить
           </AddInputWoodButton>
         )}

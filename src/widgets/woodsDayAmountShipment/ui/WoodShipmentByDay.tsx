@@ -48,6 +48,7 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
     { field: 'personInCharge', headerName: 'Ответственный', flex: 0.5 },
     { field: 'car', headerName: 'Машина', flex: 0.5 },
     { field: 'dimension', headerName: 'Сечение', flex: 0.5 },
+    { field: 'dimensionForSale', headerName: 'Сечение для продажи', flex: 0.5 },
     { field: 'woodClass', headerName: 'Сорт', flex: 0.5 },
     { field: 'amount', headerName: 'Кол-во', flex: 0.5 },
     { field: 'volume', headerName: 'Объем. м3', flex: 0.5 },

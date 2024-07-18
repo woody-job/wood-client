@@ -8,6 +8,7 @@ import {
   useCreateWoodNamingMutation,
   WoodNamingFormType,
 } from '@/entities/wood-naming'
+import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 
@@ -18,6 +19,9 @@ export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>
 
   const [createWoodNamingMutation, { isLoading: isLoadingCreateWoodNamingMutation }] =
     useCreateWoodNamingMutation()
+
+  const { data: woodTypes, isLoading: isWoodTypesLoading } = useFetchAllWoodTypesQuery()
+
   const { enqueueSnackbar } = useSnackbar()
 
   const methods = useForm<WoodNamingFormType>()
@@ -27,9 +31,15 @@ export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>
   const handleCloseModal = () => setIsOpenModal(false)
 
   const handleCreateWoodNaming: SubmitHandler<WoodNamingFormType> = values => {
-    const { name } = values
+    const { name, minDiameter, maxDiameter, length, woodTypeId } = values
 
-    createWoodNamingMutation({ name })
+    createWoodNamingMutation({
+      name,
+      ...(minDiameter ? { minDiameter: Number(minDiameter) } : {}),
+      ...(maxDiameter ? { maxDiameter: Number(maxDiameter) } : {}),
+      length: Number(length),
+      woodTypeId,
+    })
       .unwrap()
       .then(() => {
         enqueueSnackbar('Обозначение успешно создано', { variant: 'success' })
@@ -53,6 +63,8 @@ export const CreateWoodNamingButton = forwardRef<HTMLButtonElement, ButtonProps>
         open={isOpenModal}
         onClose={handleCloseModal}
         isLoading={isLoadingCreateWoodNamingMutation}
+        woodTypes={woodTypes}
+        isWoodTypesLoading={isWoodTypesLoading}
       />
     </>
   )

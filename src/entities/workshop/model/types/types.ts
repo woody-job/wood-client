@@ -26,7 +26,9 @@ export type WorkshopDailyStats = {
   profit: number
   profitPerUnit: number
   dimensionOfTheDay: string | null
+  dimensionId: number | null
   woodNamingOfTheDay: string | null
+  woodNamingId: number
 }
 
 export type UpdateWorkshopDailyDimensionParams = {

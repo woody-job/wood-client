@@ -31,7 +31,7 @@ export const DeleteShipmentButton: FC<DeleteShipmentButtonProps> = ({ id, onClos
 
   return (
     <ButtonWithConfirm
-      header={'Удаление досок'}
+      header={'Удаление отгрузки доски'}
       description={'Вы точно хотите удалить?'}
       onConfirm={() => handleDeleteShipment(id as number)}
       isLoading={isLoadingDeleteWoodShipmentMutation}

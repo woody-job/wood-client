@@ -1,7 +1,8 @@
 import { GridColDef } from '@mui/x-data-grid'
 
 export const WORKSHOP_BEAM_IN_TABLE_COLUMNS: GridColDef[] = [
-  { field: 'diameter', headerName: 'Диаметр (м)', width: 100 },
-  { field: 'volume', headerName: 'Объем (м3)', width: 130 },
-  { field: 'amount', headerName: 'Кол-во', width: 110 },
+  { field: 'woodNaming', headerName: 'Условное обозначение', flex: 1 },
+  { field: 'diameter', headerName: 'Диаметр (м)', flex: 0.5 },
+  { field: 'volume', headerName: 'Объем (м3)', flex: 0.5 },
+  { field: 'amount', headerName: 'Кол-во', flex: 0.5 },
 ]

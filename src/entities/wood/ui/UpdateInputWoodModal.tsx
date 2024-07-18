@@ -1,9 +1,10 @@
-import { FC } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
-import { BeamInFormType } from '@/entities/beam-in/model'
+import { BeamInFormType, BeamSize } from '@/entities/beam-in/model'
+import { WoodNaming } from '@/entities/wood-naming'
 import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
 
@@ -12,14 +13,12 @@ export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> 
   action: string
   onUpdate: SubmitHandler<BeamInFormType>
   methods: UseFormReturn<BeamInFormType>
-  beamSizesOptions:
-    | {
-        id: number
-        name: number
-      }[]
-    | undefined
+  beamSizes: BeamSize[] | undefined
   isLoadingBeamSizes: boolean
   isLoading: boolean
+  selectedWoodNamingId: number | null
+  woodNamings: WoodNaming[] | undefined
+  isLoadingWoodNamings: boolean
 }
 
 export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
@@ -27,28 +26,105 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
   action,
   onUpdate,
   methods,
-  beamSizesOptions,
   isLoadingBeamSizes,
   isLoading,
+  selectedWoodNamingId,
+  woodNamings,
+  beamSizes,
+  isLoadingWoodNamings,
   ...modalProps
 }) => {
   const {
     handleSubmit,
     register,
     watch,
+    setValue,
     formState: { errors },
   } = methods
 
   const watchDiameter = watch('diameter')
+  const watchWoodNamingId = watch('woodNamingId')
+
+  // TODO: переделать!
+  const isCreate = action !== 'Изменить'
+
+  const beamSizesOptions = useMemo(() => {
+    if (!woodNamings || !watchWoodNamingId) {
+      return []
+    }
+
+    const currentWoodNaming = woodNamings.find(woodNaming => woodNaming.id === watchWoodNamingId)
+
+    if (!currentWoodNaming || !currentWoodNaming.maxDiameter || !currentWoodNaming.minDiameter) {
+      return []
+    }
+
+    return beamSizes
+      ?.filter(beamSize => {
+        const isBeamSizeInWoodNamingBoundaries =
+          currentWoodNaming.maxDiameter! >= beamSize.diameter &&
+          currentWoodNaming.minDiameter! <= beamSize.diameter
+
+        return isBeamSizeInWoodNamingBoundaries
+      })
+      .map(beamSize => ({
+        id: beamSize.id,
+        name: beamSize.diameter,
+      }))
+  }, [beamSizes, watchWoodNamingId])
+
+  useEffect(() => {
+    if (selectedWoodNamingId) {
+      setValue('woodNamingId', selectedWoodNamingId)
+    }
+  }, [selectedWoodNamingId])
+
+  const woodNamingSelect = (
+    <>
+      {isLoadingWoodNamings ? (
+        <CircularProgress size={15} />
+      ) : (
+        <SelectPlaceholderWrapper
+          shouldShowPlaceholder={!watchWoodNamingId && !selectedWoodNamingId}
+          placeholderText='Условное обозначение'
+        >
+          <TextField
+            inputProps={{ ...register('woodNamingId', { required: isCreate }) }}
+            select
+            defaultValue={selectedWoodNamingId}
+            sx={{ width: '100%' }}
+            size='small'
+            error={Boolean(errors.woodNamingId)}
+          >
+            {woodNamings?.map(woodNaming => {
+              return <MenuItem value={woodNaming.id}>{woodNaming.name}</MenuItem>
+            })}
+          </TextField>
+        </SelectPlaceholderWrapper>
+      )}
+      {errors.woodNamingId?.type === 'required' && (
+        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
+          Условное обозначение обязательно
+        </Typography>
+      )}
+    </>
+  )
 
   const diameterSelect = (
     <>
       {isLoadingBeamSizes ? (
         <CircularProgress size={15} />
       ) : (
-        <SelectPlaceholderWrapper shouldShowPlaceholder={!watchDiameter} placeholderText='Диаметр'>
+        <SelectPlaceholderWrapper
+          shouldShowPlaceholder={!watchDiameter}
+          placeholderText='Диаметр, см'
+        >
           <TextField
-            inputProps={{ ...register('diameter', { required: true }) }}
+            inputProps={{
+              ...register('diameter', {
+                required: isCreate,
+              }),
+            }}
             select
             defaultValue={watchDiameter}
             sx={{ width: '100%' }}
@@ -80,7 +156,8 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
           {title}
         </Typography>
 
-        {action !== 'Изменить' && diameterSelect}
+        {isCreate && woodNamingSelect}
+        {isCreate && diameterSelect}
 
         <TextField
           label='Количество'

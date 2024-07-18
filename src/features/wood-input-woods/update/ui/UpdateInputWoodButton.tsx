@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useParams } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { ButtonProps, IconButton } from '@mui/material'
 import { WorkshopBeamInTableRow } from '@/widgets/workshopInputWoods/types/types'
 import {
   useCreateBeamInForWorkshopMutation,
-  useFetchAllBeamSizesQuery,
+  useFetchBeamSizesByLengthQuery,
   useUpdateBeamInForWorkshopMutation,
 } from '@/entities/beam-in/api'
 import {
@@ -26,11 +26,13 @@ import { useSnackbar } from 'notistack'
 
 type UpdateInputWoodButtonProps = {
   beamIn: WorkshopBeamInTableRow
+  selectedWoodNamingId: number | null
   now: string
 } & ButtonProps
 
 export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
   beamIn,
+  selectedWoodNamingId,
   now,
   ...props
 }) => {
@@ -45,16 +47,11 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
   const [updateBeamInMutation, { isLoading: isLoadingUpdateBeamInMutation }] =
     useUpdateBeamInForWorkshopMutation()
 
-  const { data: beamSizes, isLoading: isLoadingBeamSizes } = useFetchAllBeamSizesQuery()
+  const { data: beamSizes, isLoading: isLoadingBeamSizes } = useFetchBeamSizesByLengthQuery({
+    length: 6,
+  })
 
   const { enqueueSnackbar } = useSnackbar()
-
-  const beamSizesOptions = useMemo(() => {
-    return beamSizes?.map(beamSize => ({
-      id: beamSize.id,
-      name: beamSize.diameter,
-    }))
-  }, [beamSizes])
 
   const handleOpen = () => {
     setIsOpen(true)
@@ -77,6 +74,10 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
       return
     }
 
+    if (!selectedWoodNamingId) {
+      return
+    }
+
     // Логика добавлена в связи с появлением дефолтных строк в таблице с пустым amount
     const isCreate = beamIn.isEmptyDefault
 
@@ -85,6 +86,7 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
         workshopId: Number(workshopId),
         beamSizeId,
         amount: Number(amount),
+        woodNamingId: selectedWoodNamingId,
         date: now,
       }
 
@@ -122,7 +124,7 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
 
   return (
     <>
-      <IconButton onClick={handleOpen} {...props}>
+      <IconButton disabled={!selectedWoodNamingId} onClick={handleOpen} {...props}>
         <EditIcon />
       </IconButton>
 
@@ -130,11 +132,14 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
         title={'Изменить доску на вход'}
         action={'Изменить'}
         methods={methods}
-        beamSizesOptions={beamSizesOptions}
+        beamSizes={beamSizes}
         onUpdate={handleSave}
         open={isOpen}
         onClose={handleClose}
         isLoadingBeamSizes={isLoadingBeamSizes}
+        woodNamings={undefined}
+        selectedWoodNamingId={null}
+        isLoadingWoodNamings={false}
         isLoading={isLoadingUpdateBeamInMutation || isLoadingCreateBeamInMutation}
       />
     </>
