@@ -79,12 +79,12 @@ export const WoodNamingsTable: FC<WoodNamingsTableProps> = props => {
     return woodNamings.map(woodNaming => {
       return {
         id: woodNaming.id,
-        name: woodNaming.name,
-        minDiameter: woodNaming.minDiameter,
-        maxDiameter: woodNaming.maxDiameter,
-        length: woodNaming.length,
-        woodType: woodNaming.woodType.name,
-        woodTypeId: woodNaming.woodType.id,
+        name: woodNaming.name ? woodNaming.name : null,
+        minDiameter: woodNaming.minDiameter ? woodNaming.minDiameter : null,
+        maxDiameter: woodNaming.maxDiameter ? woodNaming.maxDiameter : null,
+        length: woodNaming.length ? woodNaming.length : null,
+        woodType: woodNaming.woodType ? woodNaming.woodType.name : null,
+        woodTypeId: woodNaming.woodType ? woodNaming.woodType.id : null,
       }
     })
   }, [woodNamings])
