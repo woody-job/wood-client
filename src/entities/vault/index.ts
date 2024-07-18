@@ -1,1 +1,0 @@
-export { VaultItem } from './ui'
