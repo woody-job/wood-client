@@ -25,6 +25,7 @@ const getWorkshopDefaultBeamInRows = ({
       amount: undefined,
       isEmptyDefault: true,
       woodNaming: undefined,
+      woodNamingId: undefined,
     }
   })
 }

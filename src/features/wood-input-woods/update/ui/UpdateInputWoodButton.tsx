@@ -124,7 +124,13 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
 
   return (
     <>
-      <span title='Для быстрого редактирования выберете условное обозначение дня'>
+      <span
+        title={
+          !selectedWoodNamingId
+            ? 'Для быстрого редактирования выберете условное обозначение дня'
+            : ''
+        }
+      >
         <IconButton disabled={!selectedWoodNamingId} onClick={handleOpen} {...props}>
           <EditIcon />
         </IconButton>

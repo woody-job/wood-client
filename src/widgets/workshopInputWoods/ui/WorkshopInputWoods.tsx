@@ -87,7 +87,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
               return (
                 <Box sx={{ ml: 'auto' }}>
                   <UpdateInputWoodButton
-                    selectedWoodNamingId={selectedWoodNamingId}
+                    selectedWoodNamingId={selectedWoodNamingId ?? params.row.woodNamingId}
                     beamIn={params.row}
                     now={now}
                     sx={{ mr: 1 }}
@@ -128,6 +128,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
         beamInId: beamIn.id,
         beamSize: beamIn.beamSize,
         woodNaming: beamIn.woodNaming.name,
+        woodNamingId: beamIn.woodNaming.id,
         isEmptyDefault: false,
       }
     })
@@ -143,6 +144,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
         inDefaults.amount = actualDataBeamIn.amount
         inDefaults.beamInId = actualDataBeamIn.beamInId
         inDefaults.woodNaming = actualDataBeamIn.woodNaming
+        inDefaults.woodNamingId = actualDataBeamIn.woodNamingId
         inDefaults.isEmptyDefault = false
         inDefaults.volume = Number(
           (actualDataBeamIn.beamSize.volume * actualDataBeamIn.amount).toFixed(2)

@@ -6,4 +6,5 @@ export type WorkshopBeamInTableRow = {
   isEmptyDefault: boolean
   beamInId: number | undefined
   woodNaming: string | undefined
+  woodNamingId: number | undefined
 }
