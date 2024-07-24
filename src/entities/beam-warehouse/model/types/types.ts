@@ -1,4 +1,3 @@
-import { BeamSize } from '@/entities/beam-in/model'
 import { WoodNaming } from '@/entities/wood-naming'
 
 export type BeamWarehouse = {
@@ -9,8 +8,6 @@ export type BeamWarehouse = {
 export type BeamWarehouseOutput = {
   id: number
   woodNaming: WoodNaming
-  beamSize: BeamSize
-  amount: number | null | undefined
   volume: number | null | undefined
 }
 
