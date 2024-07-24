@@ -143,7 +143,7 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
 
         if (errors.length) {
           errors.forEach(error => {
-            enqueueSnackbar(error, { variant: 'info' })
+            enqueueSnackbar(error, { variant: 'error' })
           })
 
           return

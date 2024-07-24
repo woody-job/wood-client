@@ -73,9 +73,18 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
       woods: woodsForRequest,
     })
       .unwrap()
-      .then(() => {
-        enqueueSnackbar('Доски успешно внесены', { variant: 'success' })
+      .then(errors => {
         handleCloseInsert()
+
+        if (errors.length) {
+          errors.forEach(error => {
+            enqueueSnackbar(error, { variant: 'error' })
+          })
+
+          return
+        }
+
+        enqueueSnackbar('Доски успешно внесены', { variant: 'success' })
       })
       .catch((error: CommonErrorType) => {
         defaultErrorHandler(error, message => enqueueSnackbar(message, { variant: 'error' }))

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { Box, darken, Skeleton, Typography } from '@mui/material'
+import { Box, darken, Grid, Skeleton, Typography } from '@mui/material'
 
 import { useFetchBeamWarehouseStatsQuery } from '@/entities/beam-warehouse'
 import { useFetchWarehouseStatsQuery } from '@/entities/warehouse'
@@ -29,105 +29,147 @@ export const InfoDashboard = () => {
   }
 
   return (
-    <Box>
-      <DashboardTitle>Общие данные по складу</DashboardTitle>
-      <Box display='flex' gap={3} flexWrap='wrap'>
-        {isLoadingWarehouseStats &&
-          Array.from(Array(2)).map(() => {
-            return <Skeleton variant='rounded' sx={{ width: 200, height: 182 }} />
-          })}
-
-        {warehouseStats &&
-          warehouseStats.map(warehouseStat => {
-            const sorts = Object.keys(warehouseStat.sorts).map(woodClass => {
-              return {
-                title: woodClass,
-                value: warehouseStat.sorts[woodClass],
-              }
-            })
-
-            return (
-              <DashItem
-                sx={{
-                  cursor: 'pointer',
-                  transition: 'background 0.3s ease',
-                  '&:nth-child(2n)': {
-                    backgroundColor: theme => theme.primary.purpleOpacity,
-                    '&:hover': {
-                      backgroundColor: theme => darken(theme.primary.purpleOpacity, 0.04),
-                    },
-                  },
-                  '&:nth-child(2n+1)': {
-                    backgroundColor: theme => theme.primary.blue,
-                    '&:hover': {
-                      backgroundColor: theme => darken(theme.primary.blue, 0.04),
-                    },
-                  },
-                }}
-                onClick={() => {
-                  handleNavigateToWarehouse(warehouseStat.woodConditionId)
-                }}
-              >
-                <Box mb={1} key={warehouseStat.woodConditionId}>
-                  <Typography fontWeight='bold' variant='subtitle1'>
-                    {warehouseStat.woodConditionName} доска
-                  </Typography>
-                  {sorts.length ? (
-                    sorts.map(sort => (
-                      <Typography key={sort.title}>
-                        {sort.title}: {sort.value} м3
-                      </Typography>
-                    ))
-                  ) : (
-                    <Typography>Пусто</Typography>
-                  )}
-                </Box>
-              </DashItem>
-            )
-          })}
-
+    <Box mr={2}>
+      <Box>
         {isLoadingBeamWarehouseStats && (
-          <Skeleton variant='rounded' sx={{ width: 160, height: 182 }} />
+          <Grid container spacing={2}>
+            {Array.from(Array(3)).map(() => {
+              return (
+                <Grid item xs={6}>
+                  <Skeleton variant='rounded' sx={{ width: '100%', height: 182 }} />
+                </Grid>
+              )
+            })}
+          </Grid>
         )}
 
         {beamWarehouseStats && (
-          <DashItem
-            sx={{
-              cursor: 'pointer',
-              transition: 'background 0.3s ease',
-              '&:nth-child(2n)': {
-                backgroundColor: theme => theme.primary.purpleOpacity,
-                '&:hover': {
-                  backgroundColor: theme => darken(theme.primary.purpleOpacity, 0.04),
-                },
-              },
-              '&:nth-child(2n+1)': {
-                backgroundColor: theme => theme.primary.blue,
-                '&:hover': {
-                  backgroundColor: theme => darken(theme.primary.blue, 0.04),
-                },
-              },
-              mr: 2,
-            }}
-            onClick={() => {
-              handleNavigateToBeamWarehouse()
-            }}
-          >
-            <Box mb={1}>
-              <Typography fontWeight='bold' variant='subtitle1'>
-                Сырье
-              </Typography>
+          <Box mb={2}>
+            <DashboardTitle>Сырье</DashboardTitle>
+            <Grid container flexWrap='wrap' spacing={2}>
               {beamWarehouseStats.length ? (
                 beamWarehouseStats.map(woodTypeStat => (
-                  <Typography key={woodTypeStat.woodTypeId}>
-                    {woodTypeStat.woodTypeName}: {woodTypeStat.totalVolume} м3
-                  </Typography>
+                  <Grid
+                    sx={{
+                      cursor: 'pointer',
+                      transition: 'background 0.3s ease',
+                      '&:nth-child(2n) > div': {
+                        backgroundColor: theme => theme.primary.purpleOpacity,
+                        '&:hover': {
+                          backgroundColor: theme => darken(theme.primary.purpleOpacity, 0.04),
+                        },
+                      },
+                      '&:nth-child(2n+1) > div': {
+                        backgroundColor: theme => theme.primary.blue,
+                        '&:hover': {
+                          backgroundColor: theme => darken(theme.primary.blue, 0.04),
+                        },
+                      },
+                    }}
+                    item
+                    key={woodTypeStat.woodTypeId}
+                    xs={6}
+                  >
+                    <DashItem
+                      onClick={() => {
+                        handleNavigateToBeamWarehouse()
+                      }}
+                    >
+                      <Typography fontWeight='bold'>{woodTypeStat.woodTypeName}:</Typography>
+                      <Typography>Баланс: {woodTypeStat.balanceVolume} м3</Typography>
+                      <Typography>Пиловочник: {woodTypeStat.sawingVolume} м3</Typography>
+                      <Typography mt={1}>
+                        Всего:{' '}
+                        {Number(
+                          (woodTypeStat.balanceVolume + woodTypeStat.sawingVolume).toFixed(4)
+                        )}{' '}
+                        м3
+                      </Typography>
+                    </DashItem>
+                  </Grid>
                 ))
               ) : (
                 <Typography>Пусто</Typography>
               )}
-            </Box>
-          </DashItem>
+            </Grid>
+          </Box>
+        )}
+
+        {isLoadingWarehouseStats && (
+          <Grid container spacing={2} mt={1}>
+            {Array.from(Array(2)).map(() => {
+              return (
+                <Grid item xs={6}>
+                  <Skeleton variant='rounded' sx={{ width: '100%', height: 182 }} />
+                </Grid>
+              )
+            })}
+          </Grid>
+        )}
+
+        {warehouseStats && (
+          <Box>
+            <DashboardTitle>Доска</DashboardTitle>
+
+            <Grid container flexWrap='wrap' spacing={2}>
+              {warehouseStats.map(warehouseStat => {
+                const sorts = Object.keys(warehouseStat.sorts).map(woodClass => {
+                  return {
+                    title: woodClass,
+                    value: warehouseStat.sorts[woodClass],
+                  }
+                })
+
+                return (
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      cursor: 'pointer',
+                      transition: 'background 0.3s ease',
+                      '&:nth-child(2n) > div': {
+                        backgroundColor: theme => theme.primary.purpleOpacity,
+                        '&:hover': {
+                          backgroundColor: theme => darken(theme.primary.purpleOpacity, 0.04),
+                        },
+                      },
+                      '&:nth-child(2n+1) > div': {
+                        backgroundColor: theme => theme.primary.blue,
+                        '&:hover': {
+                          backgroundColor: theme => darken(theme.primary.blue, 0.04),
+                        },
+                      },
+                    }}
+                  >
+                    <DashItem
+                      onClick={() => {
+                        handleNavigateToWarehouse(warehouseStat.woodConditionId)
+                      }}
+                    >
+                      <Box mb={1} key={warehouseStat.woodConditionId}>
+                        <Typography fontWeight='bold' variant='subtitle1'>
+                          {warehouseStat.woodConditionName} доска
+                        </Typography>
+                        {sorts.length ? (
+                          sorts.map(sort => (
+                            <Typography key={sort.title}>
+                              {sort.title}: {sort.value} м3
+                            </Typography>
+                          ))
+                        ) : (
+                          <Typography>Пусто</Typography>
+                        )}
+
+                        <Typography mt={1}>
+                          Всего: {Number(warehouseStat.totalVolume.toFixed(4))} м3
+                        </Typography>
+                      </Box>
+                    </DashItem>
+                  </Grid>
+                )
+              })}
+            </Grid>
+          </Box>
         )}
       </Box>
     </Box>
