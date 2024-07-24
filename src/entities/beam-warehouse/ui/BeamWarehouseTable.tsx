@@ -36,9 +36,9 @@ export const BeamWarehouseTable: FC<BeamWarehouseTableProps> = ({
       return {
         id: beamWarehouseRecordData.id,
         woodNaming: beamWarehouseRecordData.woodNaming.name,
-        diameter: beamWarehouseRecordData?.beamSize?.diameter,
-        amount: beamWarehouseRecordData.amount,
-        volume: beamWarehouseRecordData.volume,
+        volume: beamWarehouseRecordData.volume
+          ? Number(Number(beamWarehouseRecordData.volume)?.toFixed(4))
+          : null,
       }
     })
   }, [beamWarehouseData])

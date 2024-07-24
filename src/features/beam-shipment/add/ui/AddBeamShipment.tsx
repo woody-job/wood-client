@@ -124,7 +124,7 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
 
         if (errors.length) {
           errors.forEach(error => {
-            enqueueSnackbar(error, { variant: 'info' })
+            enqueueSnackbar(error, { variant: 'error' })
           })
 
           return
