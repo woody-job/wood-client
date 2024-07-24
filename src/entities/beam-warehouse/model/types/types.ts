@@ -14,7 +14,8 @@ export type BeamWarehouseOutput = {
 export type BeamWarehouseStatsData = {
   woodTypeId: number
   woodTypeName: string
-  totalVolume: number
+  balanceVolume: number
+  sawingVolume: number
 }
 
 export type BeamWarehouseStats = BeamWarehouseStatsData[]
