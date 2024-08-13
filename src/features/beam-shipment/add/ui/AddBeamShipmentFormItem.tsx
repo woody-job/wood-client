@@ -97,6 +97,9 @@ export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
         type='number'
         disabled={Boolean(isFormItemDisabled || watchVolume)}
         inputProps={{
+          // Для предотвращения изменения значения поля при скролле
+          onWheel: e => e.currentTarget.blur(),
+
           ...register(`beamShipmentItems.${fieldIndex}.amount` as const, {
             validate: value => {
               if (watchVolume) {

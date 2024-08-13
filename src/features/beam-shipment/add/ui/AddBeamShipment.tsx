@@ -23,6 +23,7 @@ import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { AddBeamShipmentFormItem } from './AddBeamShipmentFormItem'
 import { useSnackbar } from 'notistack'
+import { ConfirmCloseModal } from '@/shared/ui/modal'
 
 export interface AddWoodsArrivalShipmentProps {
   title: string
@@ -31,8 +32,7 @@ export interface AddWoodsArrivalShipmentProps {
 
 export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selectedDate }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const handleClose = () => setIsOpen(false)
-  const handleOpen = () => setIsOpen(true)
+  const [isConfirmCloseModalOpen, setConfirmCloseModalOpen] = useState(false)
 
   const methods = useForm<BeamShipmentFormType>({
     defaultValues: {
@@ -57,8 +57,39 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
     reset,
     setValue,
     getValues,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = methods
+
+  const handleOpenConfirmModal = () => {
+    setConfirmCloseModalOpen(true)
+  }
+
+  const handleCloseConfirmModal = () => {
+    setConfirmCloseModalOpen(false)
+  }
+
+  const handleSubmitConfirmModal = () => {
+    setConfirmCloseModalOpen(false)
+    setIsOpen(false)
+  }
+
+  const handleClose = ({ avoidConfirm = false }: { avoidConfirm?: boolean }) => {
+    if (avoidConfirm) {
+      setIsOpen(false)
+
+      return
+    }
+
+    if (isDirty) {
+      handleOpenConfirmModal()
+
+      return
+    }
+
+    setIsOpen(false)
+  }
+
+  const handleOpen = () => setIsOpen(true)
 
   const watchLength = watch('length')
 
@@ -120,7 +151,7 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
       .unwrap()
       .then(errors => {
         reset()
-        handleClose()
+        handleClose({ avoidConfirm: true })
 
         if (errors.length) {
           errors.forEach(error => {
@@ -146,6 +177,14 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
       <Button size='small' onClick={handleOpen}>
         Добавить
       </Button>
+
+      <ConfirmCloseModal
+        isConfirmCloseModalOpen={isConfirmCloseModalOpen}
+        handleSubmitConfirmModal={handleSubmitConfirmModal}
+        handleCloseConfirmModal={handleCloseConfirmModal}
+        title='Закрытие формы'
+        description='В форме есть несохраненные данные. Вы точно хотите закрыть?'
+      />
 
       <Modal open={isOpen} onClose={handleClose}>
         <ModalContent

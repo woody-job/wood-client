@@ -130,6 +130,9 @@ export const AddWoodArrivalFormItem: FC<AddWoodArrivalFormItemProps> = ({
         variant='outlined'
         type='number'
         inputProps={{
+          // Для предотвращения изменения значения поля при скролле
+          onWheel: e => e.currentTarget.blur(),
+
           ...register(`woodArrivalItems.${fieldIndex}.amount`, {
             required: true,
             valueAsNumber: true,

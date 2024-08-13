@@ -159,6 +159,9 @@ export const AddWoodShipmentFormItem: FC<AddWoodShipmentFormItemProps> = ({
       <TextField
         label='Количество'
         inputProps={{
+          // Для предотвращения изменения значения поля при скролле
+          onWheel: e => e.currentTarget.blur(),
+
           ...register(`woodShipmentItems.${fieldIndex}.amount`, {
             required: true,
             valueAsNumber: true,
