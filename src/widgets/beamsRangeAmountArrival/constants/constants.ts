@@ -2,6 +2,7 @@ import { GridColDef } from '@mui/x-data-grid'
 
 export const BEAM_SHIPMENT_TIME_RANGE_TABLE_COLUMNS: GridColDef[] = [
   { headerName: 'Дата', field: 'date' },
+  { field: 'party', headerName: 'Партия', width: 200 },
   { field: 'supplier', headerName: 'Поставщик', width: 200 },
   { field: 'deliveryMethod', headerName: 'Способ доставки', width: 200 },
   { field: 'woodNaming', headerName: 'Условное обозначение', width: 200 },
