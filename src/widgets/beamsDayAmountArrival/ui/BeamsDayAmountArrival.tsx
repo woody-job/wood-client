@@ -39,6 +39,7 @@ export const BeamsDayAmountArrival: FC<BeamsDayAmountArrivalProps> = ({ selected
   const handleCloseModal = () => setOpenEditId(undefined)
 
   const columns: GridColDef[] = [
+    { field: 'party', headerName: 'Партия', flex: 0.5 },
     { field: 'supplier', headerName: 'Поставщик', flex: 0.5 },
     { field: 'deliveryMethod', headerName: 'Способ доставки', flex: 0.5 },
     { field: 'woodNaming', headerName: 'Условное обозначение', flex: 0.5 },
@@ -80,6 +81,7 @@ export const BeamsDayAmountArrival: FC<BeamsDayAmountArrivalProps> = ({ selected
     return beamArrivalData.data.map(beamArrival => {
       return {
         id: beamArrival.id,
+        party: beamArrival.partyNumber ? `Партия-${beamArrival.partyNumber}` : null,
         supplier: beamArrival.supplier?.name,
         deliveryMethod: beamArrival.deliveryMethod
           ? getDeliveryMethodText(beamArrival.deliveryMethod)

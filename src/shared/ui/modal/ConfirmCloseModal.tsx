@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import {
   Button,
   DialogActions,
@@ -6,8 +8,8 @@ import {
   DialogTitle,
   Modal,
 } from '@mui/material'
+
 import { ModalContent } from './ModalContent'
-import { FC } from 'react'
 
 export type ConfirmCloseModalProps = {
   isConfirmCloseModalOpen: boolean

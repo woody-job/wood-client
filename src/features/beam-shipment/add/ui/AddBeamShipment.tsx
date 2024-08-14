@@ -20,10 +20,10 @@ import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { ConfirmCloseModal } from '@/shared/ui/modal'
 
 import { AddBeamShipmentFormItem } from './AddBeamShipmentFormItem'
 import { useSnackbar } from 'notistack'
-import { ConfirmCloseModal } from '@/shared/ui/modal'
 
 export interface AddWoodsArrivalShipmentProps {
   title: string
