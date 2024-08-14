@@ -53,6 +53,7 @@ export const BeamsRangeAmountArrival: FC<BeamsRangeAmountProps> = ({ timeRange }
     return beamArrivalData.data.map(beamArrival => {
       return {
         id: beamArrival.id,
+        party: beamArrival.partyNumber ? `Партия-${beamArrival.partyNumber}` : null,
         date: dayjs(beamArrival.date).format('DD.MM.YYYY'),
         supplier: beamArrival.supplier?.name,
         deliveryMethod: beamArrival.deliveryMethod

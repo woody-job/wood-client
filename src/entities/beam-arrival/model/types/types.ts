@@ -27,6 +27,7 @@ export enum BEAM_DELIVERY_METHOD {
 export type BeamArrival = {
   id: number
   date: string
+  partyNumber: number | null
   amount: number | null
   volume: number | null
   supplier: Supplier | null

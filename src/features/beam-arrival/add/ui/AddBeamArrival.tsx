@@ -25,6 +25,7 @@ import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { ConfirmCloseModal } from '@/shared/ui/modal'
 
 import { AddBeamArrivalFormItem } from './AddBeamArrivalFormItem'
 import { useSnackbar } from 'notistack'
@@ -36,8 +37,7 @@ export interface AddWoodsArrivalArrivalProps {
 
 export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selectedDate }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const handleClose = () => setIsOpen(false)
-  const handleOpen = () => setIsOpen(true)
+  const [isConfirmCloseModalOpen, setConfirmCloseModalOpen] = useState(false)
 
   const methods = useForm<BeamArrivalFormType>({
     defaultValues: {
@@ -63,8 +63,39 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
     reset,
     setValue,
     getValues,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = methods
+
+  const handleOpenConfirmModal = () => {
+    setConfirmCloseModalOpen(true)
+  }
+
+  const handleCloseConfirmModal = () => {
+    setConfirmCloseModalOpen(false)
+  }
+
+  const handleSubmitConfirmModal = () => {
+    setConfirmCloseModalOpen(false)
+    setIsOpen(false)
+  }
+
+  const handleClose = ({ avoidConfirm = false }: { avoidConfirm?: boolean }) => {
+    if (avoidConfirm) {
+      setIsOpen(false)
+
+      return
+    }
+
+    if (isDirty) {
+      handleOpenConfirmModal()
+
+      return
+    }
+
+    setIsOpen(false)
+  }
+
+  const handleOpen = () => setIsOpen(true)
 
   const watchLength = watch('length')
 
@@ -139,7 +170,7 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
       .unwrap()
       .then(errors => {
         reset()
-        handleClose()
+        handleClose({ avoidConfirm: true })
 
         if (errors.length) {
           errors.forEach(error => {
@@ -165,6 +196,14 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
       <Button size='small' onClick={handleOpen}>
         Добавить
       </Button>
+
+      <ConfirmCloseModal
+        isConfirmCloseModalOpen={isConfirmCloseModalOpen}
+        handleSubmitConfirmModal={handleSubmitConfirmModal}
+        handleCloseConfirmModal={handleCloseConfirmModal}
+        title='Закрытие формы'
+        description='В форме есть несохраненные данные. Вы точно хотите закрыть?'
+      />
 
       <Modal open={isOpen} onClose={handleClose}>
         <ModalContent

@@ -68,28 +68,31 @@ export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
 
   const formElements = (
     <Box>
-      <TextField
-        label='Объем, м3'
-        variant='outlined'
-        type='number'
-        inputProps={{
-          step: 'any',
-          ...register(`beamShipmentItems.${fieldIndex}.volume` as const, {
-            validate: value => {
-              if (watchAmount && watchBeamSizeId) {
+      {/* Поле "объем" есть смысл отображать только у первого элемента fields array */}
+      {fieldIndex === 0 && (
+        <TextField
+          label='Объем, м3'
+          variant='outlined'
+          type='number'
+          inputProps={{
+            step: 'any',
+            ...register(`beamShipmentItems.${fieldIndex}.volume` as const, {
+              validate: value => {
+                if (watchAmount && watchBeamSizeId) {
+                  return true
+                }
+
+                if (!value && !watchAmount && !watchBeamSizeId) {
+                  return 'Введите либо объем (для баланса), либо диаметр с количеством (для пиловочника)'
+                }
+
                 return true
-              }
-
-              if (!value && !watchAmount && !watchBeamSizeId) {
-                return 'Введите либо объем (для баланса), либо диаметр с количеством (для пиловочника)'
-              }
-
-              return true
-            },
-          }),
-        }}
-        disabled={Boolean(isFormItemDisabled || watchAmount || watchBeamSizeId)}
-      />
+              },
+            }),
+          }}
+          disabled={Boolean(isFormItemDisabled || watchAmount || watchBeamSizeId)}
+        />
+      )}
 
       <TextField
         label='Количество'
@@ -97,6 +100,9 @@ export const AddBeamShipmentFormItem: FC<AddBeamShipmentFormItemProps> = ({
         type='number'
         disabled={Boolean(isFormItemDisabled || watchVolume)}
         inputProps={{
+          // Для предотвращения изменения значения поля при скролле
+          onWheel: e => e.currentTarget.blur(),
+
           ...register(`beamShipmentItems.${fieldIndex}.amount` as const, {
             validate: value => {
               if (watchVolume) {
