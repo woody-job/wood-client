@@ -55,12 +55,28 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
 
     const currentWoodNaming = woodNamings.find(woodNaming => woodNaming.id === watchWoodNamingId)
 
-    if (!currentWoodNaming || !currentWoodNaming.maxDiameter || !currentWoodNaming.minDiameter) {
+    if (!currentWoodNaming) {
       return []
     }
 
     return beamSizes
       ?.filter(beamSize => {
+        // Если крупный лес
+        if (currentWoodNaming.maxDiameter === null) {
+          const isBeamSizeInWoodNamingBoundaries =
+            currentWoodNaming.minDiameter! <= beamSize.diameter
+
+          return isBeamSizeInWoodNamingBoundaries
+        }
+
+        // Если пиловочник (такого в принципе быть не должно)
+        if (currentWoodNaming.minDiameter === null) {
+          const isBeamSizeInWoodNamingBoundaries =
+            currentWoodNaming.maxDiameter! >= beamSize.diameter
+
+          return isBeamSizeInWoodNamingBoundaries
+        }
+
         const isBeamSizeInWoodNamingBoundaries =
           currentWoodNaming.maxDiameter! >= beamSize.diameter &&
           currentWoodNaming.minDiameter! <= beamSize.diameter
