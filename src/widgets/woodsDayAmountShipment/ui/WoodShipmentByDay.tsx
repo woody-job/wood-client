@@ -19,13 +19,11 @@ import {
 } from '@/shared/ui/data-grid'
 
 export interface WoodShipmentByDayProps {
-  title?: string
   selectedDate: string
   woodConditionId: number
 }
 
 export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
-  title,
   selectedDate,
   woodConditionId,
 }) => {
@@ -80,10 +78,8 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
   ]
 
   return (
-    <Box overflow='hidden' mt={3}>
-      <Box display='flex' justifyContent='space-between' mb={1}>
-        <Typography variant='h6'>{title}</Typography>
-
+    <Box overflow='hidden'>
+      <Box display='flex' justifyContent='flex-end' mb={1}>
         {isAdmin && (
           <AddWoodsShipment
             title='Добавить доски на отгрузку'

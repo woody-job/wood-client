@@ -19,16 +19,11 @@ import {
 } from '@/shared/ui/data-grid'
 
 export interface WoodArrivalByDayProps {
-  title?: string
   selectedDate: string
   woodConditionId: number
 }
 
-export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
-  title,
-  selectedDate,
-  woodConditionId,
-}) => {
+export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({ selectedDate, woodConditionId }) => {
   const [openEditId, setOpenEditId] = useState<number>()
 
   const user = useAuth()
@@ -78,10 +73,8 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
   ]
 
   return (
-    <Box overflow='hidden' mt={3}>
-      <Box display='flex' justifyContent='space-between' mb={1}>
-        <Typography variant='h6'>{title}</Typography>
-
+    <Box overflow='hidden'>
+      <Box display='flex' justifyContent='flex-end' mb={1}>
         {isAdmin && (
           <AddWoodsArrival
             woodConditionId={woodConditionId}
