@@ -35,6 +35,7 @@ export const DryerConditionTable: FC<DryerConditionTableProps> = ({
     return dryerData?.data.map(dryerChamberData => {
       return {
         id: dryerChamberData.id,
+        chamberIterationCountWhenBringingIn: dryerChamberData.chamberIterationCountWhenBringingIn,
         dimension: getDimensionString(dryerChamberData.dimension),
         woodClass: dryerChamberData.woodClass.name,
         woodType: dryerChamberData.woodType.name,

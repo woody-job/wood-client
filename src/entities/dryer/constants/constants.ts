@@ -1,6 +1,7 @@
 import { GridColDef } from '@mui/x-data-grid'
 
 export const DRYER_CONDITION_TABLE_COLUMNS: GridColDef[] = [
+  { headerName: 'Цикл', field: 'chamberIterationCountWhenBringingIn', flex: 0.3 },
   { headerName: 'Сечение', field: 'dimension' },
   { headerName: 'Сорт', field: 'woodClass', flex: 0.5 },
   { headerName: 'Порода', field: 'woodType', flex: 0.3 },

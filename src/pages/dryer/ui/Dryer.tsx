@@ -17,7 +17,7 @@ export const Dryer = () => {
   const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
 
   const tabs = dryers
-    ? [...dryers, { id: 0, name: 'Вход в сушилки', chamberIterationCount: 0 }]
+    ? [...dryers, { id: 0, name: 'Выход из сушилок', chamberIterationCount: 0 }]
     : undefined
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
@@ -38,17 +38,18 @@ export const Dryer = () => {
         {tabs?.map(tab => <Tab key={tab.id} label={tab.name} value={tab.id} />)}
       </Tabs>
 
-      {currentTab && currentTab.name !== 'Вход в сушилки' && (
+      {currentTab && currentTab.name !== 'Выход из сушилок' && (
         <Box mt={4}>
           <DryerConditionItem
             key={currentTab.id}
             dryerId={currentTab.id}
             dryerName={currentTab.name}
-            dryerIterationCount={currentTab.chamberIterationCount}
             actions={({ dryerData }: DryerActionsProps) => {
               return isAdmin ? (
                 <>
-                  <InsertWoodButton dryerId={currentTab.id}>Внести</InsertWoodButton>
+                  <InsertWoodButton dryerData={dryerData} dryerId={currentTab.id}>
+                    Внести
+                  </InsertWoodButton>
                   <RemoveWoodButton dryerData={dryerData} dryerId={currentTab.id} />
                 </>
               ) : (
@@ -59,7 +60,7 @@ export const Dryer = () => {
         </Box>
       )}
 
-      {currentTab && currentTab.name === 'Вход в сушилки' && (
+      {currentTab && currentTab.name === 'Выход из сушилок' && (
         <Box mt={4}>
           <DryersInfo />
         </Box>
