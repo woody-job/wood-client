@@ -6,6 +6,7 @@ import {
   DryerInfoData,
   DryerStats,
   GetDryerInfoParams,
+  RemoveWoodFromChamberParams,
   UpdateDryerParams,
 } from '@/entities/dryer'
 import { Warehouse } from '@/entities/warehouse'
@@ -72,10 +73,11 @@ export const dryerApi = baseApi.injectEndpoints({
       invalidatesTags: ['DryersDataById', 'Dryers'],
     }),
 
-    takeOut: build.mutation<void, number>({
-      query: dryerChamberId => ({
+    takeOut: build.mutation<string[], RemoveWoodFromChamberParams>({
+      query: ({ dryerChamberId, changedWoods }) => ({
         url: `dryer-chamber-data/take-out/${dryerChamberId}`,
         method: 'POST',
+        body: changedWoods,
       }),
       invalidatesTags: ['DryersDataById', 'Dryers'],
     }),

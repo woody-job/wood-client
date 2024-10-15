@@ -1,16 +1,16 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 
 import { skipToken } from '@reduxjs/toolkit/query'
 
 import { Box, Grid, Typography } from '@mui/material'
 
-import { useFetchDryerDataByIdQuery } from '@/entities/dryer'
+import { DryerActionsProps, useFetchDryerDataByIdQuery } from '@/entities/dryer'
 import { DashItem, TableFullscreen } from '@/shared/ui'
 
 import { DryerConditionTable } from './DryerConditionTable'
 
 export interface DryerConditionItemProps {
-  actions?: ReactNode
+  actions?: (props: DryerActionsProps) => JSX.Element
   dryerName: string
   dryerIterationCount: number
   dryerId: number
@@ -52,7 +52,7 @@ export const DryerConditionItem: FC<DryerConditionItemProps> = ({
           </Typography>
 
           <Box width='100' display='flex' gap={2} my={1}>
-            {actions}
+            {actions?.({ dryerData: dryerData?.data })}
           </Box>
         </Grid>
 
