@@ -85,7 +85,7 @@ export const InsertWoodFormItem: FC<InsertWoodFormItemProps> = ({
       )}
       {errors?.woods?.[fieldIndex]?.woodClassId?.type === 'required' && (
         <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Порода обязательна
+          Сорт обязателен
         </Typography>
       )}
 
@@ -156,7 +156,7 @@ export const InsertWoodFormItem: FC<InsertWoodFormItemProps> = ({
       />
       {errors?.woods?.[fieldIndex]?.amount?.type === 'required' && (
         <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Количество не может быть пустым
+          Количество обязательно
         </Typography>
       )}
     </Box>

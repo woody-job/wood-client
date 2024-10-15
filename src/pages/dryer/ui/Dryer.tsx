@@ -3,7 +3,7 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { InsertWoodButton } from '@/features/dryer/insert-wood'
 import { RemoveWoodButton } from '@/features/dryer/remove-wood'
 import { useAuth } from '@/entities/auth'
-import { DryerConditionItem, useFetchAllDryersQuery } from '@/entities/dryer'
+import { DryerActionsProps, DryerConditionItem, useFetchAllDryersQuery } from '@/entities/dryer'
 import { DryersInfo } from '@/entities/dryer/ui/DryersInfo'
 import { USER_ROLE } from '@/entities/user'
 import { appSearchParams } from '@/shared/constants'
@@ -45,16 +45,16 @@ export const Dryer = () => {
             dryerId={currentTab.id}
             dryerName={currentTab.name}
             dryerIterationCount={currentTab.chamberIterationCount}
-            actions={
-              isAdmin ? (
+            actions={({ dryerData }: DryerActionsProps) => {
+              return isAdmin ? (
                 <>
                   <InsertWoodButton dryerId={currentTab.id}>Внести</InsertWoodButton>
-                  <RemoveWoodButton dryerId={currentTab.id} />
+                  <RemoveWoodButton dryerData={dryerData} dryerId={currentTab.id} />
                 </>
               ) : (
                 <></>
               )
-            }
+            }}
           />
         </Box>
       )}
