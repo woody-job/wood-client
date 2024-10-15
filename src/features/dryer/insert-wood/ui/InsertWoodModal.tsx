@@ -6,7 +6,7 @@ import {
   UseFormReturn,
 } from 'react-hook-form'
 
-import { Box, Button, Modal, ModalProps, Typography } from '@mui/material'
+import { Box, Button, Divider, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { DryerBringInFormType } from '@/entities/dryer'
 import { WoodClass } from '@/entities/wood-class'
@@ -88,6 +88,25 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
           >
             Внести доски
           </Typography>
+
+          <TextField
+            label='Цикл сушки'
+            variant='outlined'
+            type='number'
+            inputProps={{
+              ...register('chamberIterationCount', {
+                required: true,
+                valueAsNumber: true,
+              }),
+            }}
+          />
+          {errors?.chamberIterationCount?.type === 'required' && (
+            <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
+              Цикл сушки обязателен
+            </Typography>
+          )}
+
+          <Divider sx={{ my: 5 }} />
 
           {fields.map((field, fieldIndex) => {
             return (

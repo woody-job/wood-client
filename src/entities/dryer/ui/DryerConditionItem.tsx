@@ -12,14 +12,12 @@ import { DryerConditionTable } from './DryerConditionTable'
 export interface DryerConditionItemProps {
   actions?: (props: DryerActionsProps) => JSX.Element
   dryerName: string
-  dryerIterationCount: number
   dryerId: number
 }
 
 export const DryerConditionItem: FC<DryerConditionItemProps> = ({
   actions,
   dryerName,
-  dryerIterationCount,
   dryerId,
 }) => {
   const { data: dryerData, isLoading: isLoadingDryerData } = useFetchDryerDataByIdQuery(
@@ -45,10 +43,7 @@ export const DryerConditionItem: FC<DryerConditionItemProps> = ({
       >
         <Grid container justifyContent='space-between' alignItems='flex-end'>
           <Typography sx={{ mb: 1 }} variant='subtitle1'>
-            {dryerName} |{' '}
-            <Typography fontWeight='bold' display='inline-block'>
-              цикл {dryerIterationCount}
-            </Typography>
+            {dryerName}
           </Typography>
 
           <Box width='100' display='flex' gap={2} my={1}>
