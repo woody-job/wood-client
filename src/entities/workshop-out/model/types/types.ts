@@ -88,8 +88,8 @@ export type WorkshopReportItem = {
   secondClassPercentage: null | number
   marketClassVolume: number
   marketClassPercentage: null | number
-  brownClassVolume: number
-  brownClassPercentage: null | number
+  thirdClassVolume: number
+  thirdClassPercentage: null | number
 }
 
 export type GetWorkshopReportResponse = WorkshopReportItem[]

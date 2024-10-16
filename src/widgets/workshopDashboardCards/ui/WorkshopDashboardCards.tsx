@@ -29,10 +29,6 @@ export const WorkshopDashboardCards: FC<WorkshopDashboardCardsProps> = ({ now })
     })
   }, [workshopDailyData])
 
-  console.log('new ', {
-    workshopDailyData,
-  })
-
   return (
     <Box display='flex' flexDirection='column' gap={3} width={'100%'}>
       {isLoadingWorkshopDailyData ? (
