@@ -12,9 +12,13 @@ export type WarehouseOutput = {
   woodType: WoodType
   dimension: Dimension
   firstClassVolume: number
+  firstClassAmount: number
   secondClassVolume: number
+  secondClassAmount: number
   marketClassVolume: number
+  marketClassAmount: number
   thirdClassVolume: number
+  thirdClassAmount: number
   totalVolume: number
 }
 
