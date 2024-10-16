@@ -8,7 +8,7 @@ export const WAREHOUSE_TABLE_COLUMNS: GridColDef[] = [
   { headerName: 'Сорт первый, м3', field: 'firstClassVolume', flex: 0.25 },
   { headerName: 'Сорт второй, м3', field: 'secondClassVolume', flex: 0.25 },
   { headerName: 'Сорт рыночный, м3', field: 'marketClassVolume', flex: 0.2 },
-  { headerName: 'Сорт браун, м3', field: 'brownClassVolume', flex: 0.3 },
+  { headerName: 'Сорт третий, м3', field: 'thirdClassVolume', flex: 0.3 },
 
   { headerName: 'Объем, м3', field: 'totalVolume' },
 ]

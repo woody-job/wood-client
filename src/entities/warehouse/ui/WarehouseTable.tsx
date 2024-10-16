@@ -48,7 +48,7 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
         firstClassVolume: warehouseRecordData.firstClassVolume,
         secondClassVolume: warehouseRecordData.secondClassVolume,
         marketClassVolume: warehouseRecordData.marketClassVolume,
-        brownClassVolume: warehouseRecordData.brownClassVolume,
+        thirdClassVolume: warehouseRecordData.thirdClassVolume,
         amount: warehouseRecordData.amount,
         totalVolume: warehouseRecordData.totalVolume,
       }
@@ -56,7 +56,7 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
   }, [warehouseData])
 
   const handleGetCellClassname = (params: GridCellParams<any, any, any, GridTreeNode>) => {
-    const { firstClassVolume, secondClassVolume, marketClassVolume, brownClassVolume } = params.row
+    const { firstClassVolume, secondClassVolume, marketClassVolume, thirdClassVolume } = params.row
 
     if (firstClassVolume < 0 && params.field === 'firstClassVolume') {
       return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
@@ -70,7 +70,7 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
       return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
     }
 
-    if (brownClassVolume < 0 && params.field === 'brownClassVolume') {
+    if (thirdClassVolume < 0 && params.field === 'thirdClassVolume') {
       return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
     }
 
@@ -78,13 +78,13 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
   }
 
   const handleGetRowClassName = (params: GridRowClassNameParams<any>) => {
-    const { firstClassVolume, secondClassVolume, marketClassVolume, brownClassVolume } = params.row
+    const { firstClassVolume, secondClassVolume, marketClassVolume, thirdClassVolume } = params.row
 
     if (
       firstClassVolume < 0 ||
       secondClassVolume < 0 ||
       marketClassVolume < 0 ||
-      brownClassVolume < 0
+      thirdClassVolume < 0
     ) {
       return NEGATIVE_WAREHOUSE_VALUE_CLASSNAME
     }

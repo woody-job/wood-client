@@ -20,8 +20,8 @@ export const WORKSHOP_TOTAL_TABLE_COLUMNS: GridColDef[] = [
   { headerName: 'Сорт рыночный, м3', field: 'marketClassVolume', width: 150 },
   { headerName: 'Сорт рыночный, %', field: 'marketClassPercentage', width: 150 },
 
-  { headerName: 'Сорт браун, м3', field: 'brownClassVolume', width: 130 },
-  { headerName: 'Сорт браун, %', field: 'brownClassPercentage', width: 130 },
+  { headerName: 'Сорт третий, м3', field: 'thirdClassVolume', width: 130 },
+  { headerName: 'Сорт третий, %', field: 'thirdClassPercentage', width: 130 },
   // Сорта
 
   // Дэньги

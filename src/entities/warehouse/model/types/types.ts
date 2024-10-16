@@ -14,7 +14,7 @@ export type WarehouseOutput = {
   firstClassVolume: number
   secondClassVolume: number
   marketClassVolume: number
-  brownClassVolume: number
+  thirdClassVolume: number
   totalVolume: number
 }
 
