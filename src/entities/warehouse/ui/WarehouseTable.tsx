@@ -46,9 +46,13 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
         dimension: getDimensionString(warehouseRecordData.dimension),
         woodType: warehouseRecordData.woodType.name,
         firstClassVolume: warehouseRecordData.firstClassVolume,
+        firstClassAmount: warehouseRecordData.firstClassAmount,
         secondClassVolume: warehouseRecordData.secondClassVolume,
+        secondClassAmount: warehouseRecordData.secondClassAmount,
         marketClassVolume: warehouseRecordData.marketClassVolume,
+        marketClassAmount: warehouseRecordData.marketClassAmount,
         thirdClassVolume: warehouseRecordData.thirdClassVolume,
+        thirdClassAmount: warehouseRecordData.thirdClassAmount,
         amount: warehouseRecordData.amount,
         totalVolume: warehouseRecordData.totalVolume,
       }
@@ -58,19 +62,31 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
   const handleGetCellClassname = (params: GridCellParams<any, any, any, GridTreeNode>) => {
     const { firstClassVolume, secondClassVolume, marketClassVolume, thirdClassVolume } = params.row
 
-    if (firstClassVolume < 0 && params.field === 'firstClassVolume') {
+    if (
+      firstClassVolume < 0 &&
+      (params.field === 'firstClassVolume' || params.field === 'firstClassAmount')
+    ) {
       return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
     }
 
-    if (secondClassVolume < 0 && params.field === 'secondClassVolume') {
+    if (
+      secondClassVolume < 0 &&
+      (params.field === 'secondClassVolume' || params.field === 'secondClassAmount')
+    ) {
       return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
     }
 
-    if (marketClassVolume < 0 && params.field === 'marketClassVolume') {
+    if (
+      marketClassVolume < 0 &&
+      (params.field === 'marketClassVolume' || params.field === 'marketClassAmount')
+    ) {
       return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
     }
 
-    if (thirdClassVolume < 0 && params.field === 'thirdClassVolume') {
+    if (
+      thirdClassVolume < 0 &&
+      (params.field === 'thirdClassVolume' || params.field === 'thirdClassAmount')
+    ) {
       return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
     }
 

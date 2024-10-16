@@ -3,10 +3,21 @@ import { FC, useEffect, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { Box, CircularProgress } from '@mui/material'
-import { DataGrid, GridEventListener } from '@mui/x-data-grid'
+import {
+  DataGrid,
+  GridCellParams,
+  GridEventListener,
+  GridRowClassNameParams,
+  GridTreeNode,
+} from '@mui/x-data-grid'
 
 import { useFetchWorkshopReportQuery } from '@/entities/workshop-out'
-import { urls } from '@/shared/constants'
+import {
+  NEGATIVE_WAREHOUSE_VALUE_CLASSNAME,
+  NEGATIVE_WAREHOUSE_VALUE_STYLE,
+  NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME,
+  urls,
+} from '@/shared/constants'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType, TimeRange } from '@/shared/types'
 import {
@@ -81,12 +92,33 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
     navigate(`/${urls.workshop}/${actualWorkshopId}/${urls.day}?date=${event.row.date}`)
   }
 
+  const handleGetCellClassname = (params: GridCellParams<any, any, any, GridTreeNode>) => {
+    const { profit } = params.row
+
+    if (profit < 0 && (params.field === 'profit' || params.field === 'profitPerUnit')) {
+      return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
+    }
+
+    return ''
+  }
+
+  const handleGetRowClassName = (params: GridRowClassNameParams<any>) => {
+    const { profit } = params.row
+
+    if (profit < 0) {
+      return NEGATIVE_WAREHOUSE_VALUE_CLASSNAME
+    }
+
+    return ''
+  }
+
   return (
     <DataGridContainer
       sx={{
         display: 'flex',
         backgroundColor: theme =>
           theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
+        ...NEGATIVE_WAREHOUSE_VALUE_STYLE,
       }}
       height={fullscreen ? '100%' : initialHeight}
     >
@@ -109,6 +141,8 @@ export const WorkshopTotalTable: FC<WorkshopTotalTableProps> = ({
           // @ts-expect-error 'error occured'
           slots={{ panel: CustomGridPanel, toolbar: displayToolbar && CustomToolbar }}
           onRowDoubleClick={handleRowDoubleClick}
+          getCellClassName={handleGetCellClassname}
+          getRowClassName={handleGetRowClassName}
         />
       )}
     </DataGridContainer>
