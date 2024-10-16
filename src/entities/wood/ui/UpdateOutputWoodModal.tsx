@@ -1,7 +1,7 @@
-import { FC } from 'react'
-import { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { FC, useMemo } from 'react'
+import { Control, SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
+import { CircularProgress, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { Dimension, getDimensionString } from '@/entities/dimension'
 import { WoodClass } from '@/entities/wood-class'
@@ -9,6 +9,7 @@ import { WoodType } from '@/entities/wood-type'
 import { WorkshopOutFormType } from '@/entities/workshop-out/model'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 
 export interface UpdateOutputWoodModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -22,6 +23,7 @@ export interface UpdateOutputWoodModalProps extends Omit<ModalProps, 'children'>
   woodClasses: WoodClass[] | undefined
   woodTypes: WoodType[] | undefined
   isLoading: boolean
+  control: Control<WorkshopOutFormType, any>
 }
 
 export const UpdateOutputWoodModal: FC<UpdateOutputWoodModalProps> = ({
@@ -36,89 +38,86 @@ export const UpdateOutputWoodModal: FC<UpdateOutputWoodModalProps> = ({
   woodClasses,
   woodTypes,
   isLoading,
+  control,
   ...modalProps
 }) => {
   const {
     handleSubmit,
-    watch,
     register,
     formState: { errors },
   } = methods
 
-  const watchWoodClassId = watch('woodClassId')
-  const watchDimensionId = watch('dimensionId')
-  const watchWoodTypeId = watch('woodTypeId')
+  const woodClassesOptions = useMemo(() => {
+    if (!woodClasses) {
+      return []
+    }
+
+    return woodClasses.map(woodClass => ({ id: woodClass.id, label: woodClass.name }))
+  }, [woodClasses])
+
+  const dimensionsOptions = useMemo(() => {
+    if (!dimensions) {
+      return []
+    }
+
+    return dimensions.map(dimension => ({
+      id: dimension.id,
+      label: getDimensionString(dimension),
+      width: `${dimension.width}`,
+    }))
+  }, [dimensions])
+
+  const woodTypesOptions = useMemo(() => {
+    if (!woodTypes) {
+      return []
+    }
+
+    return woodTypes.map(woodType => ({ id: woodType.id, label: woodType.name }))
+  }, [woodTypes])
 
   const createFields = (
     <>
       {isWoodClassesLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <TextField
-          select
-          label='Сорт'
-          inputProps={{ ...register('woodClassId', { required: true }) }}
-          defaultValue={watchWoodClassId}
-        >
-          {woodClasses?.map(woodClass => (
-            <MenuItem key={woodClass.id} value={woodClass.id}>
-              {woodClass.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      )}
-      {errors.woodClassId?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Порода обязательна
-        </Typography>
+        <FormAutocomplete
+          name={'woodClassId'}
+          control={control}
+          options={woodClassesOptions}
+          placeholder={'Сорт'}
+          rules={{
+            required: 'Сорт обязателен',
+          }}
+        />
       )}
 
       {isDimensionsLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <TextField
-          select
-          label='Сечение'
-          defaultValue={watchDimensionId}
-          inputProps={{ ...register('dimensionId', { required: true }) }}
-        >
-          {watchWoodClassId ? (
-            dimensions?.map(dimension => (
-              <MenuItem key={dimension.id} value={dimension.id}>
-                {getDimensionString(dimension)}
-              </MenuItem>
-            ))
-          ) : (
-            <MenuItem disabled>Выберите сорт</MenuItem>
-          )}
-        </TextField>
-      )}
-      {errors.dimensionId?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Сечение обязательно
-        </Typography>
+        <FormAutocomplete
+          groupBy={option => option.width}
+          name={`dimensionId`}
+          control={control}
+          options={dimensionsOptions}
+          placeholder={'Сечение'}
+          rules={{
+            required: 'Сечение обязательно',
+          }}
+        />
       )}
 
       {isWoodTypesLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <TextField
-          select
-          label='Порода'
-          defaultValue={watchWoodTypeId}
-          inputProps={{ ...register('woodTypeId', { required: true }) }}
-        >
-          {woodTypes?.map(woodType => (
-            <MenuItem key={woodType.id} value={woodType.id}>
-              {woodType.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      )}
-      {errors.woodTypeId?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Порода обязательна
-        </Typography>
+        <FormAutocomplete
+          name={'woodTypeId'}
+          control={control}
+          options={woodTypesOptions}
+          placeholder={'Порода'}
+          rules={{
+            required: 'Порода обязательна',
+          }}
+        />
       )}
     </>
   )

@@ -1,16 +1,7 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  MenuItem,
-  Modal,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, CircularProgress, Divider, Modal, Typography } from '@mui/material'
 
 import {
   BEAM_DELIVERY_METHOD,
@@ -25,6 +16,7 @@ import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 import { ConfirmCloseModal } from '@/shared/ui/modal'
 
 import { AddBeamArrivalFormItem } from './AddBeamArrivalFormItem'
@@ -113,25 +105,41 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
   )
   const { data: suppliers, isLoading: isSuppliersLoading } = useFetchAllSuppliersQuery()
 
+  const suppliersOptions = useMemo(() => {
+    if (!suppliers) {
+      return []
+    }
+
+    return suppliers.map(supplier => ({ id: supplier.id, label: supplier.name }))
+  }, [suppliers])
+
   const lengthOptions = [
     {
       id: 4,
-      name: '4м',
+      label: '4м',
     },
     {
       id: 6,
-      name: '6м',
+      label: '6м',
     },
   ]
+
+  const woodTypesOptions = useMemo(() => {
+    if (!woodTypes) {
+      return []
+    }
+
+    return woodTypes.map(woodType => ({ id: woodType.id, label: woodType.name }))
+  }, [woodTypes])
 
   const deliveryMethodOptions = [
     {
       id: BEAM_DELIVERY_METHOD.OWNER_TRANSPORT,
-      name: getDeliveryMethodText(BEAM_DELIVERY_METHOD.OWNER_TRANSPORT),
+      label: getDeliveryMethodText(BEAM_DELIVERY_METHOD.OWNER_TRANSPORT),
     },
     {
       id: BEAM_DELIVERY_METHOD.SUPPLIER_TRANSPORT,
-      name: getDeliveryMethodText(BEAM_DELIVERY_METHOD.SUPPLIER_TRANSPORT),
+      label: getDeliveryMethodText(BEAM_DELIVERY_METHOD.SUPPLIER_TRANSPORT),
     },
   ]
 
@@ -243,64 +251,44 @@ export const AddBeamArrival: FC<AddWoodsArrivalArrivalProps> = ({ title, selecte
             {isSuppliersLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <TextField select label='Поставщик' inputProps={{ ...register('supplierId') }}>
-                {suppliers?.map(supplier => (
-                  <MenuItem key={supplier.id} value={supplier.id}>
-                    {supplier.name}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormAutocomplete
+                name='supplierId'
+                control={control}
+                options={suppliersOptions}
+                placeholder={'Поставщик'}
+              />
             )}
 
-            <TextField
-              select
-              label='Способ доставки'
-              inputProps={{ ...register('deliveryMethod') }}
-            >
-              {deliveryMethodOptions?.map(deliveryMethodOption => (
-                <MenuItem key={deliveryMethodOption.id} value={deliveryMethodOption.id}>
-                  {deliveryMethodOption.name}
-                </MenuItem>
-              ))}
-            </TextField>
+            <FormAutocomplete
+              name='deliveryMethod'
+              control={control}
+              options={deliveryMethodOptions}
+              placeholder={'Способ доставки'}
+            />
 
             {isWoodTypesLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <TextField
-                select
-                label='Порода'
-                inputProps={{ ...register('woodTypeId', { required: true }) }}
-              >
-                {woodTypes?.map(woodType => (
-                  <MenuItem key={woodType.id} value={woodType.id}>
-                    {woodType.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-            {errors.woodTypeId?.type === 'required' && (
-              <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-                Порода обязательна
-              </Typography>
+              <FormAutocomplete
+                name='woodTypeId'
+                control={control}
+                options={woodTypesOptions}
+                placeholder={'Порода'}
+                rules={{
+                  required: 'Порода обязательна',
+                }}
+              />
             )}
 
-            <TextField
-              select
-              label='Длина'
-              inputProps={{ ...register('length', { required: true }) }}
-            >
-              {lengthOptions?.map(lengthOption => (
-                <MenuItem key={lengthOption.id} value={lengthOption.id}>
-                  {lengthOption.name}
-                </MenuItem>
-              ))}
-            </TextField>
-            {errors.length?.type === 'required' && (
-              <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-                Длина обязательна
-              </Typography>
-            )}
+            <FormAutocomplete
+              name='length'
+              control={control}
+              options={lengthOptions}
+              placeholder={'Длина'}
+              rules={{
+                required: 'Длина обязательна',
+              }}
+            />
 
             <Divider sx={{ height: '10px', width: '100%', mt: 3, mb: 2 }} />
 

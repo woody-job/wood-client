@@ -1,26 +1,17 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import {
   Control,
-  Controller,
   FieldErrors,
   UseFieldArrayRemove,
   UseFormRegister,
   UseFormWatch,
 } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, CircularProgress, Divider, Grid, TextField, Typography } from '@mui/material'
 
 import { BeamArrivalFormType } from '@/entities/beam-arrival'
 import { BeamSize } from '@/entities/beam-in/model'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 
 type AddBeamArrivalFormItemProps = {
   field: Record<'id', string>
@@ -47,6 +38,14 @@ export const AddBeamArrivalFormItem: FC<AddBeamArrivalFormItemProps> = ({
 }) => {
   const watchLength = watch('length')
   const watchWoodTypeId = watch('woodTypeId')
+
+  const beamSizeOptions = useMemo(() => {
+    if (!beamSizes) {
+      return []
+    }
+
+    return beamSizes.map(beamSize => ({ id: beamSize.id, label: `${beamSize.diameter} см` }))
+  }, [beamSizes])
 
   const isFormItemDisabled = !watchLength || !watchWoodTypeId
 
@@ -122,9 +121,13 @@ export const AddBeamArrivalFormItem: FC<AddBeamArrivalFormItemProps> = ({
       {isBeamSizesLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <Controller
+        <FormAutocomplete
           name={`beamArrivalItems.${fieldIndex}.beamSizeId`}
           control={control}
+          options={beamSizeOptions}
+          placeholder={!watchLength ? 'Выберите длину' : 'Диаметр'}
+          disabled={Boolean(isFormItemDisabled || watchVolume)}
+          skipError={isValidateError || isSawingError}
           rules={{
             validate: value => {
               if (watchVolume) {
@@ -137,23 +140,6 @@ export const AddBeamArrivalFormItem: FC<AddBeamArrivalFormItemProps> = ({
 
               return true
             },
-          }}
-          render={({ field: { value, onChange } }) => {
-            return (
-              <TextField
-                select
-                label={!watchLength ? 'Выберите длину' : 'Диаметр'}
-                disabled={Boolean(isFormItemDisabled || watchVolume)}
-                value={value}
-                onChange={onChange}
-              >
-                {beamSizes?.map(beamSize => (
-                  <MenuItem key={beamSize.id} value={beamSize.id}>
-                    {beamSize.diameter} см
-                  </MenuItem>
-                ))}
-              </TextField>
-            )
           }}
         />
       )}

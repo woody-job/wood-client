@@ -29,6 +29,10 @@ export const WorkshopDashboardCards: FC<WorkshopDashboardCardsProps> = ({ now })
     })
   }, [workshopDailyData])
 
+  console.log('new ', {
+    workshopDailyData,
+  })
+
   return (
     <Box display='flex' flexDirection='column' gap={3} width={'100%'}>
       {isLoadingWorkshopDailyData ? (
@@ -37,7 +41,7 @@ export const WorkshopDashboardCards: FC<WorkshopDashboardCardsProps> = ({ now })
         <DashItem sx={{ backgroundColor: theme => theme.primary.purpleOpacity }}>
           <Typography variant='h6'>Сечение дня</Typography>
           <EditWorkshopDimensionOfTheDay
-            dimensionOfTheDay={workshopDailyData?.dimensionOfTheDay}
+            dimensionId={workshopDailyData?.dimensionId}
             date={now}
             workshopId={Number(workshopId)}
           />

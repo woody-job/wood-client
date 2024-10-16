@@ -1,16 +1,7 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  MenuItem,
-  Modal,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, CircularProgress, Divider, Modal, TextField, Typography } from '@mui/material'
 
 import { useFetchAllBuyersQuery } from '@/entities/buyer'
 import { useFetchAllDimensionsQuery } from '@/entities/dimension'
@@ -22,6 +13,7 @@ import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 import { ConfirmCloseModal } from '@/shared/ui/modal'
 
 import { AddWoodShipmentFormItem } from './AddWoodShipmentFormItem'
@@ -110,6 +102,25 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
   const { data: buyers, isLoading: isBuyersLoading } = useFetchAllBuyersQuery()
   const { data: personsInCharge, isLoading: isPersonsInChargeLoading } =
     useFetchAllPersonsInChargeQuery()
+
+  const buyersOptions = useMemo(() => {
+    if (!buyers) {
+      return []
+    }
+
+    return buyers.map(buyer => ({ id: buyer.id, label: buyer.name }))
+  }, [buyers])
+
+  const personsInChargeOptions = useMemo(() => {
+    if (!personsInCharge) {
+      return []
+    }
+
+    return personsInCharge.map(personInCharge => ({
+      id: personInCharge.id,
+      label: `${personInCharge.initials} ${personInCharge.secondName}`,
+    }))
+  }, [personsInCharge])
 
   const onSubmit: SubmitHandler<ShipmentFormType> = ({
     buyerId,
@@ -212,29 +223,23 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
             {isBuyersLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <TextField select label='Покупатель' inputProps={{ ...register('buyerId') }}>
-                {buyers?.map(buyer => (
-                  <MenuItem key={buyer.id} value={buyer.id}>
-                    {buyer.name}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormAutocomplete
+                name='buyerId'
+                control={control}
+                options={buyersOptions}
+                placeholder={'Покупатель'}
+              />
             )}
 
             {isPersonsInChargeLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <TextField
-                select
-                label='Ответственный'
-                inputProps={{ ...register('personInChargeId') }}
-              >
-                {personsInCharge?.map(personInCharge => (
-                  <MenuItem key={personInCharge.id} value={personInCharge.id}>
-                    {personInCharge.initials} {personInCharge.secondName}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormAutocomplete
+                name='personInChargeId'
+                control={control}
+                options={personsInChargeOptions}
+                placeholder={'Ответственный'}
+              />
             )}
 
             <TextField
@@ -254,6 +259,7 @@ export const AddWoodsShipment: FC<AddWoodsArrivalShipmentProps> = ({
                   field={field}
                   fieldIndex={fieldIndex}
                   watch={watch}
+                  control={control}
                   register={register}
                   errors={errors}
                   remove={remove}

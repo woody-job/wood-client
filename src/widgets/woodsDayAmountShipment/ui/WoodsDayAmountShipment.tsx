@@ -3,9 +3,9 @@ import { FC, useEffect, useState } from 'react'
 import { Box, Skeleton, Tab, Tabs } from '@mui/material'
 
 import { useFetchAllWoodConditionsQuery } from '@/entities/wood-condition'
+import { CustomTabPanel } from '@/shared/ui/index.ts'
 
 import { WoodShipmentByDay } from './WoodShipmentByDay.tsx'
-import { CustomTabPanel } from '@/shared/ui/index.ts'
 
 export type WoodsDayAmountShipmentProps = {
   selectedDate: string

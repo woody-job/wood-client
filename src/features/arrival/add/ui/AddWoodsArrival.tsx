@@ -1,16 +1,7 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  MenuItem,
-  Modal,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, CircularProgress, Divider, Modal, TextField, Typography } from '@mui/material'
 
 import { useFetchAllSuppliersQuery } from '@/entities/supplier'
 import { ArrivalFormType, useAddWoodArrivalMutation } from '@/entities/wood-arrival'
@@ -20,6 +11,7 @@ import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 import { ConfirmCloseModal } from '@/shared/ui/modal'
 
 import { AddWoodArrivalFormItem } from './AddWoodArrivalFormItem'
@@ -104,6 +96,14 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
 
   const { data: woodTypes, isLoading: isWoodTypesLoading } = useFetchAllWoodTypesQuery()
   const { data: suppliers, isLoading: isSuppliersLoading } = useFetchAllSuppliersQuery()
+
+  const suppliersOptions = useMemo(() => {
+    if (!suppliers) {
+      return []
+    }
+
+    return suppliers.map(supplier => ({ id: supplier.id, label: supplier.name }))
+  }, [suppliers])
 
   const onSubmit: SubmitHandler<ArrivalFormType> = ({ supplierId, car, woodArrivalItems }) => {
     const woodArrivalDtos = woodArrivalItems.map(
@@ -199,13 +199,12 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
             {isSuppliersLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <TextField select label='Поставщик' inputProps={{ ...register('supplierId') }}>
-                {suppliers?.map(supplier => (
-                  <MenuItem key={supplier.id} value={supplier.id}>
-                    {supplier.name}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormAutocomplete
+                name='supplierId'
+                control={control}
+                options={suppliersOptions}
+                placeholder={'Поставщик'}
+              />
             )}
 
             <TextField
@@ -223,6 +222,7 @@ export const AddWoodsArrival: FC<AddWoodsArrivalShipmentProps> = ({
               return (
                 <AddWoodArrivalFormItem
                   field={field}
+                  control={control}
                   fieldIndex={fieldIndex}
                   watch={watch}
                   register={register}

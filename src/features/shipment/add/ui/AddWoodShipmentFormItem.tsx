@@ -1,18 +1,15 @@
 import { FC, useMemo } from 'react'
-import { FieldErrors, UseFieldArrayRemove, UseFormRegister, UseFormWatch } from 'react-hook-form'
+import {
+  Control,
+  FieldErrors,
+  UseFieldArrayRemove,
+  UseFormRegister,
+  UseFormWatch,
+} from 'react-hook-form'
 
 import { skipToken } from '@reduxjs/toolkit/query'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, CircularProgress, Divider, Grid, TextField, Typography } from '@mui/material'
 
 import {
   Dimension,
@@ -23,10 +20,12 @@ import { WoodClass } from '@/entities/wood-class'
 import { ShipmentFormType } from '@/entities/wood-shipment'
 import { WoodType } from '@/entities/wood-type'
 import { getUniqueDimensionsFromAllDimensions } from '@/shared/libs/helpers'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 
 type AddWoodShipmentFormItemProps = {
   field: Record<'id', string>
   fieldIndex: number
+  control: Control<ShipmentFormType, any>
   watch: UseFormWatch<ShipmentFormType>
   register: UseFormRegister<ShipmentFormType>
   errors: FieldErrors<ShipmentFormType>
@@ -41,6 +40,7 @@ type AddWoodShipmentFormItemProps = {
 export const AddWoodShipmentFormItem: FC<AddWoodShipmentFormItemProps> = ({
   field,
   fieldIndex,
+  control,
   watch,
   register,
   remove,
@@ -65,95 +65,89 @@ export const AddWoodShipmentFormItem: FC<AddWoodShipmentFormItemProps> = ({
     return getUniqueDimensionsFromAllDimensions(allDimensions)
   }, [allDimensions])
 
+  const woodClassesOptions = useMemo(() => {
+    if (!woodClasses) {
+      return []
+    }
+
+    return woodClasses.map(woodClass => ({ id: woodClass.id, label: woodClass.name }))
+  }, [woodClasses])
+
+  const dimensionsOptions = useMemo(() => {
+    if (!dimensions) {
+      return []
+    }
+
+    return dimensions.map(dimension => ({
+      id: dimension.id,
+      label: getDimensionString(dimension),
+      width: `${dimension.width}`,
+    }))
+  }, [dimensions])
+
+  const woodTypesOptions = useMemo(() => {
+    if (!woodTypes) {
+      return []
+    }
+
+    return woodTypes.map(woodType => ({ id: woodType.id, label: woodType.name }))
+  }, [woodTypes])
+
   const formElements = (
     <Box>
       {isWoodClassesLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <TextField
-          select
-          label='Сорт'
-          inputProps={{
-            ...register(`woodShipmentItems.${fieldIndex}.woodClassId`, { required: true }),
+        <FormAutocomplete
+          name={`woodShipmentItems.${fieldIndex}.woodClassId`}
+          control={control}
+          options={woodClassesOptions}
+          placeholder={'Сорт'}
+          rules={{
+            required: 'Сорт обязателен',
           }}
-        >
-          {woodClasses?.map(woodClass => (
-            <MenuItem key={woodClass.id} value={woodClass.id}>
-              {woodClass.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      )}
-      {errors?.woodShipmentItems?.[fieldIndex]?.woodClassId?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Порода обязательна
-        </Typography>
+        />
       )}
 
       {isDimensionsLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <TextField
-          select
-          label='Сечение'
-          inputProps={{
-            ...register(`woodShipmentItems.${fieldIndex}.dimensionId`, { required: true }),
+        <FormAutocomplete
+          groupBy={option => option.width}
+          name={`woodShipmentItems.${fieldIndex}.dimensionId`}
+          control={control}
+          options={dimensionsOptions}
+          placeholder={'Сечение'}
+          rules={{
+            required: 'Сечение обязательно',
           }}
-        >
-          {watchWoodClassId ? (
-            dimensions?.map(dimension => (
-              <MenuItem key={dimension.id} value={dimension.id}>
-                {getDimensionString(dimension)}
-              </MenuItem>
-            ))
-          ) : (
-            <MenuItem disabled>Выберите сорт</MenuItem>
-          )}
-        </TextField>
-      )}
-      {errors?.woodShipmentItems?.[fieldIndex]?.dimensionId?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Сечение обязательно
-        </Typography>
+        />
       )}
 
       {isDimensionsLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <TextField
-          select
-          label='Сечение для продажи'
-          inputProps={{ ...register(`woodShipmentItems.${fieldIndex}.dimensionForSaleId`) }}
-        >
-          {dimensionForSaleOptions?.map(dimension => (
-            <MenuItem key={dimension.id} value={dimension.id}>
-              {dimension.name}
-            </MenuItem>
-          ))}
-        </TextField>
+        <FormAutocomplete
+          groupBy={option => option.width}
+          name={`woodShipmentItems.${fieldIndex}.dimensionForSaleId`}
+          control={control}
+          options={dimensionForSaleOptions}
+          placeholder={'Сечение для продажи'}
+        />
       )}
 
       {isWoodTypesLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <TextField
-          select
-          label='Порода'
-          inputProps={{
-            ...register(`woodShipmentItems.${fieldIndex}.woodTypeId`, { required: true }),
+        <FormAutocomplete
+          name={`woodShipmentItems.${fieldIndex}.woodTypeId`}
+          control={control}
+          options={woodTypesOptions}
+          placeholder={'Порода'}
+          rules={{
+            required: 'Порода обязательна',
           }}
-        >
-          {woodTypes?.map(woodType => (
-            <MenuItem key={woodType.id} value={woodType.id}>
-              {woodType.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      )}
-      {errors?.woodShipmentItems?.[fieldIndex]?.woodTypeId?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Порода обязательна
-        </Typography>
+        />
       )}
 
       <TextField

@@ -32,7 +32,7 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({
   const [isOpen, setIsOpen] = useState(false)
 
   const methods = useForm<BeamInFormType>()
-  const { reset } = methods
+  const { reset, control } = methods
 
   const [createBeamInMutation, { isLoading: isLoadingCreateBeamInMutation }] =
     useCreateBeamInForWorkshopMutation()
@@ -54,13 +54,11 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({
   }
 
   const handleSave: SubmitHandler<BeamInFormType> = data => {
-    const { diameter, amount, woodNamingId } = data
+    const { beamSizeId, amount, woodNamingId } = data
 
     if (!workshopId) {
       return
     }
-
-    const beamSizeId = beamSizes?.find(beamSizeObj => beamSizeObj.diameter === diameter)?.id
 
     if (!beamSizeId) {
       return
@@ -108,6 +106,7 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({
         isLoadingWoodNamings={isLoadingWoodNamings}
         isLoading={isLoadingCreateBeamInMutation}
         selectedWoodNamingId={selectedWoodNamingId}
+        control={control}
       />
     </Box>
   )
