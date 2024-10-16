@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from 'react'
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
 import { Button } from '@mui/material'
 
 import { DryerDataItem, DryerRemoveFormType, useTakeOutMutation } from '@/entities/dryer'
+import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
 
-import { useSnackbar } from 'notistack'
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
-import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { RemoveWoodModal } from './RemoveWoodModal'
+import { useSnackbar } from 'notistack'
 
 export type RemoveWoodButtonProps = {
   dryerId: number

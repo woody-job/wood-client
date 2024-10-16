@@ -1,18 +1,11 @@
-import { FC } from 'react'
-import { Control, Controller, FieldErrors, UseFormRegister } from 'react-hook-form'
+import { FC, useMemo } from 'react'
+import { Control, FieldErrors, UseFormRegister } from 'react-hook-form'
 
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, CircularProgress, Divider, Grid, TextField, Typography } from '@mui/material'
 
 import { DryerRemoveFormType } from '@/entities/dryer'
 import { WoodClass } from '@/entities/wood-class'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 
 type RemoveWoodFormItemProps = {
   field: Record<'id', string>
@@ -33,31 +26,28 @@ export const RemoveWoodFormItem: FC<RemoveWoodFormItemProps> = ({
   isWoodClassesLoading,
   woodClasses,
 }) => {
+  const woodClassesOptions = useMemo(() => {
+    if (!woodClasses) {
+      return []
+    }
+
+    return woodClasses.map(woodClass => ({ id: woodClass.id, label: woodClass.name }))
+  }, [woodClasses])
+
   const formElements = (
     <Box>
       {isWoodClassesLoading ? (
         <CircularProgress size={20} />
       ) : (
-        <Controller
+        <FormAutocomplete
           name={`woods.${fieldIndex}.woodClassId`}
           control={control}
-          render={({ field: { value, onChange } }) => {
-            return (
-              <TextField select label='Сорт' value={value} onChange={onChange}>
-                {woodClasses?.map(woodClass => (
-                  <MenuItem key={woodClass.id} value={woodClass.id}>
-                    {woodClass.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )
+          options={woodClassesOptions}
+          placeholder={'Сорт'}
+          rules={{
+            required: 'Сорт обязателен',
           }}
         />
-      )}
-      {errors?.woods?.[fieldIndex]?.woodClassId?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Сорт обязателен
-        </Typography>
       )}
 
       <TextField

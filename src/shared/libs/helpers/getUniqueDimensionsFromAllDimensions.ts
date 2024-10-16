@@ -3,19 +3,21 @@ import { Dimension, getDimensionString } from '@/entities/dimension'
 export const getUniqueDimensionsFromAllDimensions = (allDimensions: Dimension[]) => {
   const uniqueDimensionNamesOptions: {
     id: number
-    name: string
+    label: string
+    width: string
   }[] = []
 
   const allDimensionsWithDuplicates = allDimensions.map(dimension => {
     return {
       id: dimension.id,
-      name: getDimensionString(dimension),
+      label: getDimensionString(dimension),
+      width: `${dimension.width}`,
     }
   })
 
   allDimensionsWithDuplicates.forEach(dimensionOption => {
     const existentDimensionOption = uniqueDimensionNamesOptions.find(
-      option => option.name === dimensionOption.name
+      option => option.label === dimensionOption.label
     )
 
     if (!existentDimensionOption) {

@@ -1,16 +1,7 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  MenuItem,
-  Modal,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, CircularProgress, Divider, Modal, Typography } from '@mui/material'
 
 import { useFetchBeamSizesByLengthQuery } from '@/entities/beam-in'
 import { BeamShipmentFormType, useAddBeamShipmentMutation } from '@/entities/beam-shipment'
@@ -20,6 +11,7 @@ import { defaultErrorHandler } from '@/shared/libs/helpers'
 import { CommonErrorType } from '@/shared/types'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 import { ConfirmCloseModal } from '@/shared/ui/modal'
 
 import { AddBeamShipmentFormItem } from './AddBeamShipmentFormItem'
@@ -107,16 +99,32 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
   )
   const { data: buyers, isLoading: isBuyersLoading } = useFetchAllBuyersQuery()
 
+  const buyersOptions = useMemo(() => {
+    if (!buyers) {
+      return []
+    }
+
+    return buyers.map(buyer => ({ id: buyer.id, label: buyer.name }))
+  }, [buyers])
+
   const lengthOptions = [
     {
       id: 4,
-      name: '4м',
+      label: '4м',
     },
     {
       id: 6,
-      name: '6м',
+      label: '6м',
     },
   ]
+
+  const woodTypesOptions = useMemo(() => {
+    if (!woodTypes) {
+      return []
+    }
+
+    return woodTypes.map(woodType => ({ id: woodType.id, label: woodType.name }))
+  }, [woodTypes])
 
   // При изменении длины необходимо сбрасывать диаметр (beamSize), чтобы
   // случайно не отправилась не та длина
@@ -224,52 +232,37 @@ export const AddBeamShipment: FC<AddWoodsArrivalShipmentProps> = ({ title, selec
             {isBuyersLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <TextField select label='Покупатель' inputProps={{ ...register('buyerId') }}>
-                {buyers?.map(buyer => (
-                  <MenuItem key={buyer.id} value={buyer.id}>
-                    {buyer.name}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormAutocomplete
+                name='buyerId'
+                control={control}
+                options={buyersOptions}
+                placeholder={'Покупатель'}
+              />
             )}
 
             {isWoodTypesLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <TextField
-                select
-                label='Порода'
-                inputProps={{ ...register('woodTypeId', { required: true }) }}
-              >
-                {woodTypes?.map(woodType => (
-                  <MenuItem key={woodType.id} value={woodType.id}>
-                    {woodType.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-            {errors.woodTypeId?.type === 'required' && (
-              <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-                Порода обязательна
-              </Typography>
+              <FormAutocomplete
+                name='woodTypeId'
+                control={control}
+                options={woodTypesOptions}
+                placeholder={'Порода'}
+                rules={{
+                  required: 'Порода обязательна',
+                }}
+              />
             )}
 
-            <TextField
-              select
-              label='Длина'
-              inputProps={{ ...register('length', { required: true }) }}
-            >
-              {lengthOptions?.map(lengthOption => (
-                <MenuItem key={lengthOption.id} value={lengthOption.id}>
-                  {lengthOption.name}
-                </MenuItem>
-              ))}
-            </TextField>
-            {errors.length?.type === 'required' && (
-              <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-                Длина обязательна
-              </Typography>
-            )}
+            <FormAutocomplete
+              name='length'
+              control={control}
+              options={lengthOptions}
+              placeholder={'Длина'}
+              rules={{
+                required: 'Длина обязательна',
+              }}
+            />
 
             <Divider sx={{ height: '10px', width: '100%', mt: 3, mb: 2 }} />
 

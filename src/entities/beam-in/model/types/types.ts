@@ -47,7 +47,7 @@ export type DeleteBeamInForWorkshopParams = {
 }
 
 export type BeamInFormType = {
-  diameter?: number
+  beamSizeId?: number
   woodNamingId?: number
   amount: number
 }
