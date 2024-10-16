@@ -58,6 +58,7 @@ export type ShipmentTableData = {
 export type ShipmentByDayResponse = {
   tableData: ShipmentTableData[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type ShipmentFetchParams = {
@@ -74,6 +75,7 @@ export type ShipmentFetchByDayParams = {
 export type ShipmentByTimeRangeResponse = {
   data: WoodShipment[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type ShipmentFetchTimeRangeParams = {

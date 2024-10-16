@@ -53,6 +53,7 @@ export type ArrivalTableData = {
 export type ArrivalByDayResponse = {
   tableData?: ArrivalTableData[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type ArrivalFetchDayParams = {
@@ -63,6 +64,7 @@ export type ArrivalFetchDayParams = {
 export type ArrivalByTimeRangeResponse = {
   data: WoodArrival[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type ArrivalFetchTimeRangeParams = {

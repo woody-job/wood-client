@@ -30,11 +30,13 @@ import { WORKSHOP_OUT_TABLE_COLUMNS } from '../constants'
 import { getWorkshopOutDefaults } from '../libs/helpers'
 import { WorkshopOutTableRow } from '../types'
 import { enqueueSnackbar } from 'notistack'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export type WorkshopOutWoodsProps = {
   workshopOutData: WorkshopOut[] | undefined
   isWorkshopOutLoading: boolean
   totalWorkshopOutVolume: number
+  totalWorkshopOutAmount: number
   now: string
 }
 
@@ -42,6 +44,7 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
   workshopOutData,
   isWorkshopOutLoading,
   totalWorkshopOutVolume,
+  totalWorkshopOutAmount,
   now,
 }) => {
   const { workshopId } = useParams()
@@ -190,7 +193,7 @@ export const WorkshopOutputWoods: FC<WorkshopOutWoodsProps> = ({
           </DataGridContainer>
         )}
       />
-      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {totalWorkshopOutVolume}</Typography>
+      <TableTotalInfo totalVolume={totalWorkshopOutVolume} totalAmount={totalWorkshopOutAmount} />
     </Box>
   )
 }

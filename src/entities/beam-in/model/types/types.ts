@@ -24,6 +24,7 @@ export type GetBeamInForWorkshopParams = {
 export type GetBeamInResponse = {
   data: BeamIn[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type CreateBeamInForWorkshopParams = {

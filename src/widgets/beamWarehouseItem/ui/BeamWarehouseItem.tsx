@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 
 import { BeamWarehouseTable, useFetchBeamWarehouseQuery } from '@/entities/beam-warehouse'
 import { TableFullscreen } from '@/shared/ui'
@@ -19,7 +19,19 @@ export const BeamWarehouseItem: FC = () => {
           />
         )}
       />
-      <Typography sx={{ mt: 1, mb: 2 }}>Всего м3: {beamWarehouse?.totalVolume}</Typography>
+
+      <Grid container justifyContent={'flex-end'} sx={{ mt: 0.5, mb: 2 }}>
+        <Box>
+          <Grid container>
+            <Typography>
+              Итого м3:{' '}
+              <Typography component={'span'} sx={{ fontWeight: 'bold' }}>
+                {beamWarehouse?.totalVolume ?? 0}
+              </Typography>
+            </Typography>
+          </Grid>
+        </Box>
+      </Grid>
     </Box>
   )
 }

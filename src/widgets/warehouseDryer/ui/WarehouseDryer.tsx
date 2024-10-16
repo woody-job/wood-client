@@ -1,8 +1,9 @@
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 
 import { useFetchDryerDataListQuery } from '@/entities/dryer'
 import { WarehouseTable } from '@/entities/warehouse'
 import { TableFullscreen } from '@/shared/ui'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export const WarehouseDryer = () => {
   const { data: dryerData, isLoading: isLoadingDryersData } = useFetchDryerDataListQuery()
@@ -19,7 +20,7 @@ export const WarehouseDryer = () => {
           />
         )}
       />
-      <Typography sx={{ mt: 1, mb: 2 }}>Всего м3: {dryerData?.totalVolume}</Typography>
+      <TableTotalInfo totalAmount={dryerData?.totalAmount} totalVolume={dryerData?.totalVolume} />
     </Box>
   )
 }

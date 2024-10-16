@@ -18,6 +18,7 @@ import {
   dataGridStyles,
 } from '@/shared/ui/data-grid'
 import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export type BeamsDayAmountShipmentProps = {
   selectedDate: string
@@ -127,7 +128,10 @@ export const BeamsDayAmountShipment: FC<BeamsDayAmountShipmentProps> = ({ select
           </DataGridContainer>
         )}
       />
-      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {beamShipmentData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={beamShipmentData?.totalVolume}
+        totalAmount={beamShipmentData?.totalAmount}
+      />
     </Box>
   )
 }

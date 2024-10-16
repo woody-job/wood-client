@@ -19,6 +19,7 @@ import { CustomGridPanel, dataGridStyles, TableFullscreen } from '@/shared/ui/in
 import { WOOD_SHIPMENT_TIME_RANGE_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
 import { enqueueSnackbar } from 'notistack'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export type WoodsRangeAmountProps = {
   timeRange: TimeRange
@@ -118,7 +119,10 @@ export const WoodsRangeAmountShipment: FC<WoodsRangeAmountProps> = ({ timeRange 
           </DataGridContainer>
         )}
       />
-      <Typography mt={2}>Всего м3: {woodShipmentData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={woodShipmentData?.totalVolume}
+        totalAmount={woodShipmentData?.totalAmount}
+      />
     </Box>
   )
 }

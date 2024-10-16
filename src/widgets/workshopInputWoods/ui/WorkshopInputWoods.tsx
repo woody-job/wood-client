@@ -31,6 +31,7 @@ import { WORKSHOP_BEAM_IN_TABLE_COLUMNS } from '../constants'
 import { getWorkshopBeamInDefaults } from '../libs/helpers'
 import { WorkshopBeamInTableRow } from '../types/types'
 import { enqueueSnackbar } from 'notistack'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 type WorkshopInputWoodsProps = {
   now: string
@@ -54,7 +55,6 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
   const { data: beamSizes } = useFetchBeamSizesByLengthQuery({ length: 6 })
 
   const beamInData = beamIn ? beamIn.data : []
-  const totalVolume = beamIn?.totalVolume ? beamIn.totalVolume : 0
 
   const [selectedWoodNamingId, setSelectedWoodNamingId] = useState<number | null>(null)
 
@@ -202,7 +202,7 @@ export const WorkshopInputWoods: FC<WorkshopInputWoodsProps> = ({ now }) => {
           </DataGridContainer>
         )}
       />
-      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {totalVolume}</Typography>
+      <TableTotalInfo totalVolume={beamIn?.totalVolume} totalAmount={beamIn?.totalAmount} />
     </Box>
   )
 }

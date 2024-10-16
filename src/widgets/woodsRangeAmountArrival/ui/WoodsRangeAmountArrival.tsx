@@ -21,6 +21,7 @@ import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
 import { WOOD_ARRIVAL_TIME_RANGE_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
 import { enqueueSnackbar } from 'notistack'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export type WoodsRangeAmountProps = {
   timeRange: TimeRange
@@ -105,7 +106,10 @@ export const WoodsRangeAmountArrival: FC<WoodsRangeAmountProps> = ({ timeRange }
           </DataGridContainer>
         )}
       />
-      <Typography mt={2}>Всего м3: {woodArrivalData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={woodArrivalData?.totalVolume}
+        totalAmount={woodArrivalData?.totalAmount}
+      />
     </Box>
   )
 }

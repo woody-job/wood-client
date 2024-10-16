@@ -18,6 +18,7 @@ import { CustomGridPanel, dataGridStyles, TableFullscreen } from '@/shared/ui/in
 import { BEAM_SHIPMENT_TIME_RANGE_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
 import { enqueueSnackbar } from 'notistack'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export type BeamsRangeAmountProps = {
   timeRange: TimeRange
@@ -99,7 +100,10 @@ export const BeamsRangeAmountShipment: FC<BeamsRangeAmountProps> = ({ timeRange 
           </DataGridContainer>
         )}
       />
-      <Typography mt={2}>Всего м3: {beamShipmentData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={beamShipmentData?.totalVolume}
+        totalAmount={beamShipmentData?.totalAmount}
+      />
     </Box>
   )
 }

@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
 import { getDimensionString } from '@/entities/dimension'
@@ -21,6 +21,7 @@ import { useFetchAllWoodsGoneThroughDryerQuery } from '../api'
 import { DRYERS_INFO_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
 import { enqueueSnackbar } from 'notistack'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export const DryersInfo: FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>({
@@ -108,7 +109,10 @@ export const DryersInfo: FC = () => {
           </DataGridContainer>
         )}
       />
-      <Typography mt={2}>Всего м3: {dryerInfoData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={dryerInfoData?.totalVolume}
+        totalAmount={dryerInfoData?.totalAmount}
+      />
     </Box>
   )
 }

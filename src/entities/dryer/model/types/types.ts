@@ -22,6 +22,7 @@ export type DryerDataItem = {
 export type DryerDataResponse = {
   data: DryerDataItem[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type DryerFormType = {
@@ -99,6 +100,7 @@ export type DryerInfo = {
 export type DryerInfoData = {
   data: DryerInfo[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type RemoveWoodFromChamberType = {
