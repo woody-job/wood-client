@@ -27,6 +27,9 @@ export const WorkshopDayInfo: FC = () => {
   const totalWorkshopOutVolume = workshopOut?.totalWorkshopOutVolume
     ? workshopOut.totalWorkshopOutVolume
     : 0
+  const totalWorkshopOutAmount = workshopOut?.totalWorkshopOutAmount
+    ? workshopOut.totalWorkshopOutAmount
+    : 0
 
   const handleAccept = (value: Dayjs | null) => {
     if (value) {
@@ -52,6 +55,7 @@ export const WorkshopDayInfo: FC = () => {
               workshopOutData={workshopOutData}
               isWorkshopOutLoading={isWorkshopOutLoading}
               totalWorkshopOutVolume={totalWorkshopOutVolume}
+              totalWorkshopOutAmount={totalWorkshopOutAmount}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={4.5} xl={4.5} flexShrink={1}>

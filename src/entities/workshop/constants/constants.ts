@@ -8,6 +8,7 @@ export const WORKSHOP_TOTAL_TABLE_COLUMNS: GridColDef[] = [
 
   // Общий вход/выход
   { headerName: 'Вход, м3', field: 'totalBeamInVolume' },
+  { headerName: 'Вход, шт', field: 'totalBeamInAmount' },
   { headerName: 'Выход, шт', field: 'totalWorkshopOutAmount' },
   { headerName: 'Выход, %', field: 'totalWorkshopOutPercentage' },
 

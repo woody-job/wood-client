@@ -55,6 +55,7 @@ export type CreateBeamArrivalParams = {
 export type BeamArrivalByDayResponse = {
   data: BeamArrival[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type BeamArrivalFetchParams = {
@@ -70,6 +71,7 @@ export type BeamArrivalFetchByDayParams = {
 export type BeamArrivalByTimeRangeResponse = {
   data: BeamArrival[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type BeamArrivalFetchTimeRangeParams = {

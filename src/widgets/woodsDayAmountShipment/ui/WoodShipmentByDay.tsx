@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddWoodsShipment } from '@/features/shipment/add'
@@ -17,6 +17,7 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export interface WoodShipmentByDayProps {
   selectedDate: string
@@ -114,7 +115,10 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
           </DataGridContainer>
         )}
       />
-      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {woodShipment?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={woodShipment?.totalVolume}
+        totalAmount={woodShipment?.totalAmount}
+      />
     </Box>
   )
 }

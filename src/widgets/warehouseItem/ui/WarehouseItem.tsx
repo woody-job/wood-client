@@ -1,9 +1,10 @@
 import { FC } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 
 import { useFetchWarehouseQuery, WarehouseTable } from '@/entities/warehouse'
 import { TableFullscreen } from '@/shared/ui'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export type WarehouseItemProps = {
   woodConditionId: number
@@ -25,7 +26,7 @@ export const WarehouseItem: FC<WarehouseItemProps> = ({ woodConditionId, woodCon
           />
         )}
       />
-      <Typography sx={{ mt: 1, mb: 2 }}>Всего м3: {warehouse?.totalVolume}</Typography>
+      <TableTotalInfo totalAmount={warehouse?.totalAmount} totalVolume={warehouse?.totalVolume} />
     </Box>
   )
 }

@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
 import { useFetchBeamShipmentByTimeRangeQuery } from '@/entities/beam-shipment'
@@ -14,6 +14,7 @@ import {
 } from '@/shared/ui/data-grid/index.ts'
 import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar.tsx'
 import { CustomGridPanel, dataGridStyles, TableFullscreen } from '@/shared/ui/index.ts'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 import { BEAM_SHIPMENT_TIME_RANGE_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
@@ -99,7 +100,10 @@ export const BeamsRangeAmountShipment: FC<BeamsRangeAmountProps> = ({ timeRange 
           </DataGridContainer>
         )}
       />
-      <Typography mt={2}>Всего м3: {beamShipmentData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={beamShipmentData?.totalVolume}
+        totalAmount={beamShipmentData?.totalAmount}
+      />
     </Box>
   )
 }

@@ -46,6 +46,7 @@ export type CreateBeamShipmentParams = {
 export type BeamShipmentByDayResponse = {
   data: BeamShipment[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type BeamShipmentFetchParams = {
@@ -61,6 +62,7 @@ export type BeamShipmentFetchByDayParams = {
 export type BeamShipmentByTimeRangeResponse = {
   data: BeamShipment[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type BeamShipmentFetchTimeRangeParams = {

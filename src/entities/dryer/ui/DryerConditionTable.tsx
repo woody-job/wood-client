@@ -10,6 +10,7 @@ import {
   dataGridStyles,
 } from '@/shared/ui/data-grid'
 import { DataGridContainer } from '@/shared/ui/data-grid'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 import { DRYER_CONDITION_TABLE_COLUMNS } from '../constants'
 import { DryerDataResponse } from '../model'
@@ -46,26 +47,29 @@ export const DryerConditionTable: FC<DryerConditionTableProps> = ({
   }, [dryerData])
 
   return (
-    <DataGridContainer
-      sx={{
-        display: 'flex',
-        backgroundColor: theme =>
-          theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
-      }}
-      height={fullscreen ? '100%' : '70vh'}
-    >
-      {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
-      <DataGrid
-        columns={DRYER_CONDITION_TABLE_COLUMNS}
-        rows={rows}
-        disableRowSelectionOnClick
-        disableMultipleRowSelection
-        localeText={dataGridLocaleText}
-        sx={{ ...dataGridStyles, width: 400 }}
-        hideFooter
-        slots={{ panel: CustomGridPanel }}
-        loading={isLoadingDryerData}
-      />
-    </DataGridContainer>
+    <>
+      <DataGridContainer
+        sx={{
+          display: 'flex',
+          backgroundColor: theme =>
+            theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
+        }}
+        height={fullscreen ? '100%' : '70vh'}
+      >
+        {onFullscreen && <DataGridFullscreenButton onClick={onFullscreen} />}
+        <DataGrid
+          columns={DRYER_CONDITION_TABLE_COLUMNS}
+          rows={rows}
+          disableRowSelectionOnClick
+          disableMultipleRowSelection
+          localeText={dataGridLocaleText}
+          sx={{ ...dataGridStyles, width: 400 }}
+          hideFooter
+          slots={{ panel: CustomGridPanel }}
+          loading={isLoadingDryerData}
+        />
+      </DataGridContainer>
+      <TableTotalInfo totalVolume={dryerData?.totalVolume} totalAmount={dryerData?.totalAmount} />
+    </>
   )
 }

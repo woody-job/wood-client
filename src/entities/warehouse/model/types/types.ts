@@ -3,6 +3,7 @@ import { WoodType } from '@/entities/wood-type'
 
 export type Warehouse = {
   totalVolume: number
+  totalAmount: number
   data: WarehouseOutput[]
 }
 
