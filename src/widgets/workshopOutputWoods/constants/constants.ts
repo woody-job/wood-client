@@ -15,8 +15,8 @@ export const WORKSHOP_OUT_TABLE_COLUMNS: GridColDef[] = [
 // 100х22х3 сорт 1 хвоя и сорт 2 хвоя
 // 150х22х6 сорт 1 ель, сорт 2 хвоя и рыночный хвоя
 // 100х22х6 сорт рыночный хвоя и сорт 2 хвоя
-// 150х47х6 сорт 1 ель, сорт 1 сосна, рыночный хвоя и браун хвоя
-// 200х47х6 сорт 1 ель, сорт 1 сосна, рыночный хвоя и браун хвоя
+// 150х47х6 сорт 1 ель, сорт 1 сосна, рыночный хвоя и третий хвоя
+// 200х47х6 сорт 1 ель, сорт 1 сосна, рыночный хвоя и третий хвоя
 export const FIRST_WORKSHOP_DEFAULT_DIMENSIONS: WorkshopDefaultDimension[] = [
   {
     width: 100,
@@ -62,7 +62,7 @@ export const FIRST_WORKSHOP_DEFAULT_DIMENSIONS: WorkshopDefaultDimension[] = [
     woodParams: {
       Первый: ['Ель', 'Сосна'],
       Рыночный: ['Хвоя'],
-      Браун: ['Хвоя'],
+      Третий: ['Хвоя'],
     },
   },
   {
@@ -72,7 +72,7 @@ export const FIRST_WORKSHOP_DEFAULT_DIMENSIONS: WorkshopDefaultDimension[] = [
     woodParams: {
       Первый: ['Ель', 'Сосна'],
       Рыночный: ['Хвоя'],
-      Браун: ['Хвоя'],
+      Третий: ['Хвоя'],
     },
   },
 ]

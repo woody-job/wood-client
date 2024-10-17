@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddWoodsShipment } from '@/features/shipment/add'
@@ -17,15 +17,14 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export interface WoodShipmentByDayProps {
-  title?: string
   selectedDate: string
   woodConditionId: number
 }
 
 export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
-  title,
   selectedDate,
   woodConditionId,
 }) => {
@@ -80,10 +79,8 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
   ]
 
   return (
-    <Box overflow='hidden' mt={3}>
-      <Box display='flex' justifyContent='space-between' mb={1}>
-        <Typography variant='h6'>{title}</Typography>
-
+    <Box overflow='hidden'>
+      <Box display='flex' justifyContent='flex-end' mb={1}>
         {isAdmin && (
           <AddWoodsShipment
             title='Добавить доски на отгрузку'
@@ -118,7 +115,10 @@ export const WoodShipmentByDay: FC<WoodShipmentByDayProps> = ({
           </DataGridContainer>
         )}
       />
-      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {woodShipment?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={woodShipment?.totalVolume}
+        totalAmount={woodShipment?.totalAmount}
+      />
     </Box>
   )
 }

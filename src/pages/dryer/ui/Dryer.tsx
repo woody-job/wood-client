@@ -3,7 +3,7 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { InsertWoodButton } from '@/features/dryer/insert-wood'
 import { RemoveWoodButton } from '@/features/dryer/remove-wood'
 import { useAuth } from '@/entities/auth'
-import { DryerConditionItem, useFetchAllDryersQuery } from '@/entities/dryer'
+import { DryerActionsProps, DryerConditionItem, useFetchAllDryersQuery } from '@/entities/dryer'
 import { DryersInfo } from '@/entities/dryer/ui/DryersInfo'
 import { USER_ROLE } from '@/entities/user'
 import { appSearchParams } from '@/shared/constants'
@@ -17,7 +17,7 @@ export const Dryer = () => {
   const isAdmin = user?.role.name === USER_ROLE.SUPERADMIN || user?.role.name === USER_ROLE.ADMIN
 
   const tabs = dryers
-    ? [...dryers, { id: 0, name: 'Вход в сушилки', chamberIterationCount: 0 }]
+    ? [...dryers, { id: 0, name: 'Выход из сушилок', chamberIterationCount: 0 }]
     : undefined
 
   const { currentTab, handleChangeTab } = useSearchParamsTabs(
@@ -38,28 +38,29 @@ export const Dryer = () => {
         {tabs?.map(tab => <Tab key={tab.id} label={tab.name} value={tab.id} />)}
       </Tabs>
 
-      {currentTab && currentTab.name !== 'Вход в сушилки' && (
+      {currentTab && currentTab.name !== 'Выход из сушилок' && (
         <Box mt={4}>
           <DryerConditionItem
             key={currentTab.id}
             dryerId={currentTab.id}
             dryerName={currentTab.name}
-            dryerIterationCount={currentTab.chamberIterationCount}
-            actions={
-              isAdmin ? (
+            actions={({ dryerData }: DryerActionsProps) => {
+              return isAdmin ? (
                 <>
-                  <InsertWoodButton dryerId={currentTab.id}>Внести</InsertWoodButton>
-                  <RemoveWoodButton dryerId={currentTab.id} />
+                  <InsertWoodButton dryerData={dryerData} dryerId={currentTab.id}>
+                    Внести
+                  </InsertWoodButton>
+                  <RemoveWoodButton dryerData={dryerData} dryerId={currentTab.id} />
                 </>
               ) : (
                 <></>
               )
-            }
+            }}
           />
         </Box>
       )}
 
-      {currentTab && currentTab.name === 'Вход в сушилки' && (
+      {currentTab && currentTab.name === 'Выход из сушилок' && (
         <Box mt={4}>
           <DryersInfo />
         </Box>

@@ -1,56 +1,60 @@
-import { FC } from 'react'
-import {
-  SubmitHandler,
-  UseFieldArrayAppend,
-  UseFieldArrayRemove,
-  UseFormReturn,
-} from 'react-hook-form'
+import { FC, useEffect } from 'react'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Box, Button, Divider, Modal, ModalProps, TextField, Typography } from '@mui/material'
+import { Box, Modal, ModalProps, Typography } from '@mui/material'
 
-import { DryerBringInFormType } from '@/entities/dryer'
+import { DryerDataItem, DryerRemoveFormType } from '@/entities/dryer'
 import { WoodClass } from '@/entities/wood-class'
-import { WoodType } from '@/entities/wood-type'
 import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
 
-import { InsertWoodFormItem } from './InsertWoodFormItem'
+import { RemoveWoodFormItem } from './RemoveWoodFormItem'
 
-export type InsertWoodModalProps = Omit<ModalProps, 'children'> & {
-  onSubmitForm: SubmitHandler<DryerBringInFormType>
+export type RemoveWoodModalProps = Omit<ModalProps, 'children'> & {
+  onSubmitForm: SubmitHandler<DryerRemoveFormType>
   isWoodClassesLoading: boolean
-  isWoodTypesLoading: boolean
-  methods: UseFormReturn<DryerBringInFormType>
+  methods: UseFormReturn<DryerRemoveFormType>
   woodClasses: WoodClass[] | undefined
-  woodTypes: WoodType[] | undefined
   isLoading: boolean
   fields: Record<'id', string>[]
-  append: UseFieldArrayAppend<DryerBringInFormType, 'woods'>
-  remove: UseFieldArrayRemove
+  dryerData: DryerDataItem[]
 }
 
-export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
+export const RemoveWoodModal: FC<RemoveWoodModalProps> = props => {
   const {
     onSubmitForm,
     methods,
     woodClasses,
     isWoodClassesLoading,
-    woodTypes,
-    isWoodTypesLoading,
     isLoading,
     fields,
-    append,
-    remove,
+    dryerData,
     ...modalProps
   } = props
 
   const {
     handleSubmit,
-    watch,
     register,
     formState: { errors },
     control,
+    reset,
   } = methods
+
+  useEffect(() => {
+    if (!dryerData) {
+      return
+    }
+
+    reset({
+      woods: dryerData.map(item => {
+        return {
+          dryerChamberDataRecordId: item.id,
+          woodClassId: item.woodClass.id,
+          amount: item.amount,
+        }
+      }),
+    })
+  }, [dryerData])
 
   return (
     <Modal {...modalProps} aria-labelledby='create-user-modal-title'>
@@ -86,59 +90,22 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
             component='h2'
             sx={{ textAlign: 'center', mb: 2 }}
           >
-            Внести доски
+            Убрать доски
           </Typography>
-
-          <TextField
-            label='Цикл сушки'
-            variant='outlined'
-            type='number'
-            inputProps={{
-              ...register('chamberIterationCount', {
-                required: true,
-                valueAsNumber: true,
-              }),
-            }}
-          />
-          {errors?.chamberIterationCount?.type === 'required' && (
-            <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-              Цикл сушки обязателен
-            </Typography>
-          )}
-
-          <Divider sx={{ my: 5 }} />
 
           {fields.map((field, fieldIndex) => {
             return (
-              <InsertWoodFormItem
+              <RemoveWoodFormItem
                 field={field}
                 fieldIndex={fieldIndex}
-                watch={watch}
                 register={register}
                 errors={errors}
                 isWoodClassesLoading={isWoodClassesLoading}
-                isWoodTypesLoading={isWoodTypesLoading}
                 woodClasses={woodClasses}
-                woodTypes={woodTypes}
                 control={control}
-                remove={remove}
               />
             )
           })}
-
-          <Button
-            onClick={() =>
-              append({
-                woodClassId: undefined,
-                dimensionId: undefined,
-                woodTypeId: undefined,
-                amount: NaN,
-              })
-            }
-            variant='outlined'
-          >
-            Добавить
-          </Button>
 
           <ButtonWithLoader
             isLoading={isLoading}
@@ -148,7 +115,7 @@ export const InsertWoodModal: FC<InsertWoodModalProps> = props => {
             variant='contained'
             color='primary'
           >
-            Внести
+            Убрать
           </ButtonWithLoader>
         </Box>
       </ModalContent>

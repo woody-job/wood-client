@@ -1,26 +1,84 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
 import { Button } from '@mui/material'
 
-import { useTakeOutMutation } from '@/entities/dryer'
+import { DryerDataItem, DryerRemoveFormType, useTakeOutMutation } from '@/entities/dryer'
+import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
-import { ButtonWithConfirm } from '@/shared/ui'
 
+import { RemoveWoodModal } from './RemoveWoodModal'
 import { useSnackbar } from 'notistack'
 
 export type RemoveWoodButtonProps = {
   dryerId: number
+  dryerData: DryerDataItem[] | undefined
 }
 
-export const RemoveWoodButton: FC<RemoveWoodButtonProps> = ({ dryerId, ...buttonProps }) => {
+export const RemoveWoodButton: FC<RemoveWoodButtonProps> = ({ dryerId, dryerData }) => {
+  const [isOpenRemove, setOpenRemove] = useState(false)
+
   const [takeOut, { isLoading: isLoadingTakeOut }] = useTakeOutMutation()
+
+  const { data: woodClasses, isLoading: isWoodClassesLoading } = useFetchAllWoodClassesQuery(
+    undefined,
+    { skip: !isOpenRemove }
+  )
+
+  const methods = useForm<DryerRemoveFormType>({
+    defaultValues: {
+      woods: [
+        {
+          woodClassId: undefined,
+          amount: NaN,
+          dryerChamberDataRecordId: undefined,
+        },
+      ],
+    },
+  })
+
+  const { reset, control } = methods
+
+  const { fields } = useFieldArray({ control, name: 'woods' })
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const handleTakeOut = () => {
-    takeOut(dryerId)
+  useEffect(() => {
+    if (!isOpenRemove) {
+      reset()
+    }
+  }, [isOpenRemove, reset])
+
+  const handleOpenRemove = () => {
+    setOpenRemove(true)
+  }
+
+  const handleCloseRemove = () => {
+    setOpenRemove(false)
+  }
+
+  const handleTakeOut: SubmitHandler<DryerRemoveFormType> = ({ woods }) => {
+    const woodsForRequest = woods.map(wood => {
+      return {
+        woodClassId: wood.woodClassId ?? 0,
+        amount: wood.amount ?? 0,
+        dryerChamberDataRecordId: wood.dryerChamberDataRecordId ?? 0,
+      }
+    })
+
+    takeOut({ dryerChamberId: dryerId, changedWoods: woodsForRequest })
       .unwrap()
-      .then(() => {
+      .then(errors => {
+        handleCloseRemove()
+
+        if (errors.length) {
+          errors.forEach(error => {
+            enqueueSnackbar(error, { variant: 'error' })
+          })
+
+          return
+        }
+
         enqueueSnackbar('Доски успешно убраны', { variant: 'info' })
       })
       .catch(error => {
@@ -29,19 +87,27 @@ export const RemoveWoodButton: FC<RemoveWoodButtonProps> = ({ dryerId, ...button
   }
 
   return (
-    <ButtonWithConfirm
-      isLoading={isLoadingTakeOut}
-      size='medium'
-      variant='gray'
-      header={'Убрать доски'}
-      description={'Вы точно хотите убрать доски?'}
-      onConfirm={handleTakeOut}
-      submitText='Убрать'
-      renderButton={({ onClick }) => (
-        <Button variant='gray' onClick={onClick} size='small' {...buttonProps}>
-          Убрать
-        </Button>
-      )}
-    />
+    <>
+      <Button
+        variant='gray'
+        size='small'
+        onClick={handleOpenRemove}
+        disabled={dryerData ? dryerData.length === 0 : true}
+      >
+        Убрать
+      </Button>
+
+      <RemoveWoodModal
+        open={isOpenRemove}
+        onClose={handleCloseRemove}
+        onSubmitForm={handleTakeOut}
+        methods={methods}
+        woodClasses={woodClasses}
+        isWoodClassesLoading={isWoodClassesLoading}
+        isLoading={isLoadingTakeOut}
+        fields={fields}
+        dryerData={dryerData ?? []}
+      />
+    </>
   )
 }

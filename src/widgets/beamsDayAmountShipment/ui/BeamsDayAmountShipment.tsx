@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddBeamShipment } from '@/features/beam-shipment/add'
@@ -18,6 +18,7 @@ import {
   dataGridStyles,
 } from '@/shared/ui/data-grid'
 import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export type BeamsDayAmountShipmentProps = {
   selectedDate: string
@@ -127,7 +128,10 @@ export const BeamsDayAmountShipment: FC<BeamsDayAmountShipmentProps> = ({ select
           </DataGridContainer>
         )}
       />
-      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {beamShipmentData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={beamShipmentData?.totalVolume}
+        totalAmount={beamShipmentData?.totalAmount}
+      />
     </Box>
   )
 }

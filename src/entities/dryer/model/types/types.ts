@@ -5,8 +5,9 @@ import { WoodType } from '@/entities/wood-type'
 export type Dryer = {
   id: number
   name: string
-  chamberIterationCount: number
 }
+
+export type DryerActionsProps = { dryerData: DryerDataItem[] | undefined }
 
 export type DryerDataItem = {
   amount: number
@@ -15,11 +16,13 @@ export type DryerDataItem = {
   id: number
   woodClass: WoodClass
   woodType: WoodType
+  chamberIterationCountWhenBringingIn: number
 }
 
 export type DryerDataResponse = {
   data: DryerDataItem[]
   totalVolume: number
+  totalAmount: number
 }
 
 export type DryerFormType = {
@@ -45,11 +48,20 @@ export type DryerDataParams = {
 }
 
 export type DryerBringInFormType = {
+  chamberIterationCount: number | undefined
   woods: {
     woodClassId: number | undefined
     dimensionId: number | undefined
     woodTypeId: number | undefined
     amount: number
+  }[]
+}
+
+export type DryerRemoveFormType = {
+  woods: {
+    woodClassId: number | undefined
+    amount: number | undefined
+    dryerChamberDataRecordId: number | undefined
   }[]
 }
 
@@ -88,4 +100,16 @@ export type DryerInfo = {
 export type DryerInfoData = {
   data: DryerInfo[]
   totalVolume: number
+  totalAmount: number
+}
+
+export type RemoveWoodFromChamberType = {
+  woodClassId: number
+  amount: number
+  dryerChamberDataRecordId: number
+}
+
+export type RemoveWoodFromChamberParams = {
+  dryerChamberId: number
+  changedWoods: RemoveWoodFromChamberType[]
 }

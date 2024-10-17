@@ -1,12 +1,13 @@
 import { FC, useEffect, useMemo } from 'react'
-import { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { Control, SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { CircularProgress, MenuItem, Modal, ModalProps, TextField, Typography } from '@mui/material'
+import { CircularProgress, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
 import { BeamInFormType, BeamSize } from '@/entities/beam-in/model'
 import { WoodNaming } from '@/entities/wood-naming'
-import { ModalContent, SelectPlaceholderWrapper } from '@/shared/ui'
+import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 
 export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> {
   title: string
@@ -19,6 +20,7 @@ export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> 
   selectedWoodNamingId: number | null
   woodNamings: WoodNaming[] | undefined
   isLoadingWoodNamings: boolean
+  control: Control<BeamInFormType, any>
 }
 
 export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
@@ -32,6 +34,7 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
   woodNamings,
   beamSizes,
   isLoadingWoodNamings,
+  control,
   ...modalProps
 }) => {
   const {
@@ -42,7 +45,6 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
     formState: { errors },
   } = methods
 
-  const watchDiameter = watch('diameter')
   const watchWoodNamingId = watch('woodNamingId')
 
   // TODO: переделать!
@@ -55,12 +57,32 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
 
     const currentWoodNaming = woodNamings.find(woodNaming => woodNaming.id === watchWoodNamingId)
 
-    if (!currentWoodNaming || !currentWoodNaming.maxDiameter || !currentWoodNaming.minDiameter) {
+    if (!currentWoodNaming) {
+      return []
+    }
+
+    if (!beamSizes) {
       return []
     }
 
     return beamSizes
-      ?.filter(beamSize => {
+      .filter(beamSize => {
+        // Если крупный лес
+        if (currentWoodNaming.maxDiameter === null) {
+          const isBeamSizeInWoodNamingBoundaries =
+            currentWoodNaming.minDiameter! <= beamSize.diameter
+
+          return isBeamSizeInWoodNamingBoundaries
+        }
+
+        // Если пиловочник (такого в принципе быть не должно)
+        if (currentWoodNaming.minDiameter === null) {
+          const isBeamSizeInWoodNamingBoundaries =
+            currentWoodNaming.maxDiameter! >= beamSize.diameter
+
+          return isBeamSizeInWoodNamingBoundaries
+        }
+
         const isBeamSizeInWoodNamingBoundaries =
           currentWoodNaming.maxDiameter! >= beamSize.diameter &&
           currentWoodNaming.minDiameter! <= beamSize.diameter
@@ -69,9 +91,17 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
       })
       .map(beamSize => ({
         id: beamSize.id,
-        name: beamSize.diameter,
+        label: `${beamSize.diameter}`,
       }))
   }, [beamSizes, watchWoodNamingId])
+
+  const woodNamingsOptions = useMemo(() => {
+    if (!woodNamings) {
+      return []
+    }
+
+    return woodNamings.map(woodNaming => ({ id: woodNaming.id, label: woodNaming.name }))
+  }, [woodNamings])
 
   useEffect(() => {
     if (selectedWoodNamingId) {
@@ -79,68 +109,38 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
     }
   }, [selectedWoodNamingId])
 
-  const woodNamingSelect = (
+  const woodNamingAutocomplete = (
     <>
       {isLoadingWoodNamings ? (
         <CircularProgress size={15} />
       ) : (
-        <SelectPlaceholderWrapper
-          shouldShowPlaceholder={!watchWoodNamingId && !selectedWoodNamingId}
-          placeholderText='Условное обозначение'
-        >
-          <TextField
-            inputProps={{ ...register('woodNamingId', { required: isCreate }) }}
-            select
-            defaultValue={selectedWoodNamingId}
-            sx={{ width: '100%' }}
-            size='small'
-            error={Boolean(errors.woodNamingId)}
-          >
-            {woodNamings?.map(woodNaming => {
-              return <MenuItem value={woodNaming.id}>{woodNaming.name}</MenuItem>
-            })}
-          </TextField>
-        </SelectPlaceholderWrapper>
-      )}
-      {errors.woodNamingId?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Условное обозначение обязательно
-        </Typography>
+        <FormAutocomplete
+          name={'woodNamingId'}
+          control={control}
+          options={woodNamingsOptions}
+          placeholder={'Условное обозначение'}
+          rules={{
+            required: 'Условное обозначение обязательно',
+          }}
+        />
       )}
     </>
   )
 
-  const diameterSelect = (
+  const diameterAutocomplete = (
     <>
       {isLoadingBeamSizes ? (
         <CircularProgress size={15} />
       ) : (
-        <SelectPlaceholderWrapper
-          shouldShowPlaceholder={!watchDiameter}
-          placeholderText='Диаметр, см'
-        >
-          <TextField
-            inputProps={{
-              ...register('diameter', {
-                required: isCreate,
-              }),
-            }}
-            select
-            defaultValue={watchDiameter}
-            sx={{ width: '100%' }}
-            size='small'
-            error={Boolean(errors.diameter)}
-          >
-            {beamSizesOptions?.map(beamSizeOption => {
-              return <MenuItem value={beamSizeOption.name}>{beamSizeOption.name}</MenuItem>
-            })}
-          </TextField>
-        </SelectPlaceholderWrapper>
-      )}
-      {errors.diameter?.type === 'required' && (
-        <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>
-          Диаметр обязателен
-        </Typography>
+        <FormAutocomplete
+          name={'beamSizeId'}
+          control={control}
+          options={beamSizesOptions}
+          placeholder={'Диаметр, см'}
+          rules={{
+            required: 'Диаметр обязателен',
+          }}
+        />
       )}
     </>
   )
@@ -156,14 +156,13 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
           {title}
         </Typography>
 
-        {isCreate && woodNamingSelect}
-        {isCreate && diameterSelect}
+        {isCreate && woodNamingAutocomplete}
+        {isCreate && diameterAutocomplete}
 
         <TextField
           label='Количество'
           inputProps={{ ...register('amount', { required: true }) }}
           variant='outlined'
-          error={Boolean(errors.amount)}
         />
         {errors.amount?.type === 'required' && (
           <Typography variant='caption' sx={{ color: theme => theme.palette.error.main }}>

@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
 import { getDimensionString } from '@/entities/dimension'
@@ -17,6 +17,7 @@ import {
   dataGridStyles,
 } from '@/shared/ui/data-grid'
 import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 import { WOOD_ARRIVAL_TIME_RANGE_TABLE_COLUMNS } from '../constants'
 import dayjs from 'dayjs'
@@ -105,7 +106,10 @@ export const WoodsRangeAmountArrival: FC<WoodsRangeAmountProps> = ({ timeRange }
           </DataGridContainer>
         )}
       />
-      <Typography mt={2}>Всего м3: {woodArrivalData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={woodArrivalData?.totalVolume}
+        totalAmount={woodArrivalData?.totalAmount}
+      />
     </Box>
   )
 }

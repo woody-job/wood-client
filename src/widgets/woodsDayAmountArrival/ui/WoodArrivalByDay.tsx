@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddWoodsArrival } from '@/features/arrival/add'
@@ -17,18 +17,14 @@ import {
   dataGridLocaleText,
   dataGridStyles,
 } from '@/shared/ui/data-grid'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export interface WoodArrivalByDayProps {
-  title?: string
   selectedDate: string
   woodConditionId: number
 }
 
-export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
-  title,
-  selectedDate,
-  woodConditionId,
-}) => {
+export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({ selectedDate, woodConditionId }) => {
   const [openEditId, setOpenEditId] = useState<number>()
 
   const user = useAuth()
@@ -78,10 +74,8 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
   ]
 
   return (
-    <Box overflow='hidden' mt={3}>
-      <Box display='flex' justifyContent='space-between' mb={1}>
-        <Typography variant='h6'>{title}</Typography>
-
+    <Box overflow='hidden'>
+      <Box display='flex' justifyContent='flex-end' mb={1}>
         {isAdmin && (
           <AddWoodsArrival
             woodConditionId={woodConditionId}
@@ -115,7 +109,10 @@ export const WoodArrivalByDay: FC<WoodArrivalByDayProps> = ({
           </DataGridContainer>
         )}
       />
-      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {woodArrival?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={woodArrival?.totalVolume}
+        totalAmount={woodArrival?.totalAmount}
+      />
     </Box>
   )
 }

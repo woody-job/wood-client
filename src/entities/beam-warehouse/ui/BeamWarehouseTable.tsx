@@ -1,7 +1,12 @@
 import { FC, useMemo } from 'react'
 
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridCellParams, GridRowClassNameParams, GridTreeNode } from '@mui/x-data-grid'
 
+import {
+  NEGATIVE_WAREHOUSE_VALUE_CLASSNAME,
+  NEGATIVE_WAREHOUSE_VALUE_STYLE,
+  NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME,
+} from '@/shared/constants'
 import {
   CustomGridPanel,
   DataGridContainer,
@@ -43,12 +48,33 @@ export const BeamWarehouseTable: FC<BeamWarehouseTableProps> = ({
     })
   }, [beamWarehouseData])
 
+  const handleGetCellClassname = (params: GridCellParams<any, any, any, GridTreeNode>) => {
+    const { volume } = params.row
+
+    if (volume < 0 && params.field === 'volume') {
+      return NEGATIVE_WAREHOUSE_VALUE_TEXT_CLASSNAME
+    }
+
+    return 'result'
+  }
+
+  const handleGetRowClassName = (params: GridRowClassNameParams<any>) => {
+    const { volume } = params.row
+
+    if (volume < 0) {
+      return NEGATIVE_WAREHOUSE_VALUE_CLASSNAME
+    }
+
+    return ''
+  }
+
   return (
     <DataGridContainer
       sx={{
         display: 'flex',
         backgroundColor: theme =>
           theme.palette.mode === 'light' ? theme.background.main : theme.white[100],
+        ...NEGATIVE_WAREHOUSE_VALUE_STYLE,
       }}
       height={fullscreen ? '100%' : '70vh'}
     >
@@ -67,6 +93,8 @@ export const BeamWarehouseTable: FC<BeamWarehouseTableProps> = ({
         slotProps={{
           toolbar: { excelFileName: `склад-сырье` },
         }}
+        getCellClassName={handleGetCellClassname}
+        getRowClassName={handleGetRowClassName}
         loading={isLoadingBeamWarehouseTableData}
       />
     </DataGridContainer>

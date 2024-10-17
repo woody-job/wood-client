@@ -3,6 +3,7 @@ import { WoodType } from '@/entities/wood-type'
 
 export type Warehouse = {
   totalVolume: number
+  totalAmount: number
   data: WarehouseOutput[]
 }
 
@@ -12,9 +13,13 @@ export type WarehouseOutput = {
   woodType: WoodType
   dimension: Dimension
   firstClassVolume: number
+  firstClassAmount: number
   secondClassVolume: number
+  secondClassAmount: number
   marketClassVolume: number
-  brownClassVolume: number
+  marketClassAmount: number
+  thirdClassVolume: number
+  thirdClassAmount: number
   totalVolume: number
 }
 

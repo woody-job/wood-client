@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 
-import { Grid } from '@mui/material'
+import { Box, Skeleton, Tab, Tabs } from '@mui/material'
 
 import { useFetchAllWoodConditionsQuery } from '@/entities/wood-condition'
+import { CustomTabPanel } from '@/shared/ui'
 
 import { WoodArrivalByDay } from './WoodArrivalByDay.tsx'
 
@@ -11,21 +12,63 @@ export type WoodsDayAmountArrivalProps = {
 }
 
 export const WoodsDayAmountArrival: FC<WoodsDayAmountArrivalProps> = ({ selectedDate }) => {
-  const { data: woodConditions } = useFetchAllWoodConditionsQuery()
+  const { data: woodConditions, isLoading: isLoadingWoodConditions } =
+    useFetchAllWoodConditionsQuery()
+
+  const [currentTab, setCurrentTab] = useState<string | undefined>()
+
+  useEffect(() => {
+    if (!woodConditions) {
+      return
+    }
+
+    setCurrentTab(woodConditions[0].id.toString())
+  }, [woodConditions])
 
   return (
-    <Grid container spacing={3}>
-      {woodConditions &&
-        woodConditions.map(woodCondition => (
-          <Grid item xs={12}>
-            <WoodArrivalByDay
+    <Box>
+      <Tabs
+        value={currentTab}
+        onChange={(_, newValue) => {
+          setCurrentTab(newValue.toString())
+        }}
+        sx={{ mt: 5 }}
+      >
+        {isLoadingWoodConditions && (
+          <Box display='flex' gap={1}>
+            <Skeleton width='100px' height='40px' />
+            <Skeleton width='100px' height='40px' />
+            <Skeleton width='100px' height='40px' />
+          </Box>
+        )}
+        {woodConditions &&
+          woodConditions.map(woodCondition => (
+            <Tab
               key={woodCondition.id}
-              woodConditionId={woodCondition.id}
-              selectedDate={selectedDate}
-              title={woodCondition.name}
+              label={woodCondition.name}
+              value={woodCondition.id.toString()}
             />
-          </Grid>
-        ))}
-    </Grid>
+          ))}
+      </Tabs>
+
+      <Box>
+        {currentTab &&
+          woodConditions?.map(woodCondition => {
+            return (
+              <CustomTabPanel
+                key={woodCondition.id}
+                tabPanelValue={currentTab.toString()}
+                value={woodCondition.id.toString()}
+              >
+                <WoodArrivalByDay
+                  key={woodCondition.id}
+                  woodConditionId={woodCondition.id}
+                  selectedDate={selectedDate}
+                />
+              </CustomTabPanel>
+            )
+          })}
+      </Box>
+    </Box>
   )
 }

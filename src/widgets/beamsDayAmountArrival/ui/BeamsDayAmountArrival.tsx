@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid'
 
 import { AddBeamArrival } from '@/features/beam-arrival/add'
@@ -19,6 +19,7 @@ import {
   dataGridStyles,
 } from '@/shared/ui/data-grid'
 import { CustomToolbar } from '@/shared/ui/data-grid/ui/CustomToolbar'
+import { TableTotalInfo } from '@/shared/ui/tableTotalInfo'
 
 export type BeamsDayAmountArrivalProps = {
   selectedDate: string
@@ -136,7 +137,10 @@ export const BeamsDayAmountArrival: FC<BeamsDayAmountArrivalProps> = ({ selected
           </DataGridContainer>
         )}
       />
-      <Typography sx={{ mt: 0.5, mb: 2 }}>Всего м3: {beamArrivalData?.totalVolume}</Typography>
+      <TableTotalInfo
+        totalVolume={beamArrivalData?.totalVolume}
+        totalAmount={beamArrivalData?.totalAmount}
+      />
     </Box>
   )
 }

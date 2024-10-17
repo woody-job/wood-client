@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
-import { Box, Grid, MenuItem, Select } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 
 import { useAuth } from '@/entities/auth'
 import { useFetchAllDimensionsQuery } from '@/entities/dimension'
@@ -13,20 +13,20 @@ import {
 import { defaultErrorHandler, getUniqueDimensionsFromAllDimensions } from '@/shared/libs/helpers'
 import { useOutsideClick } from '@/shared/libs/hooks/click-outside'
 import { CommonErrorType } from '@/shared/types'
-import { SelectPlaceholderWrapper } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
+import { FormAutocomplete } from '@/shared/ui/FormAutocomplete'
 
 import { enqueueSnackbar } from 'notistack'
 
 export interface EditWorkshopDimensionOfTheDayProps {
   workshopId: number
-  dimensionOfTheDay: string | undefined | null
+  dimensionId: number | null | undefined
   date: string
 }
 
 export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProps> = ({
   workshopId,
-  dimensionOfTheDay,
+  dimensionId,
   date,
 }) => {
   const [isEdit, setEdit] = useState(false)
@@ -40,13 +40,10 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
     handleSubmit,
     setValue,
     control,
-    watch,
     reset,
-  } = useForm<{ dimension: string | null | undefined }>({
-    defaultValues: { dimension: dimensionOfTheDay },
+  } = useForm<{ dimensionId: number | null | undefined }>({
+    defaultValues: { dimensionId: dimensionId },
   })
-
-  const watchDimension = watch('dimension')
 
   const { data: allDimensions } = useFetchAllDimensionsQuery()
 
@@ -56,8 +53,8 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
   ] = useUpdateWorkshopDailyDimensionMutation()
 
   useEffect(() => {
-    setValue('dimension', dimensionOfTheDay)
-  }, [dimensionOfTheDay])
+    setValue('dimensionId', dimensionId)
+  }, [dimensionId])
 
   const dimensionsOptions = useMemo(() => {
     if (!allDimensions) {
@@ -67,9 +64,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
     return getUniqueDimensionsFromAllDimensions(allDimensions)
   }, [allDimensions])
 
-  const handleNewDimensionOfTheDay = (dimensionString: typeof dimensionOfTheDay) => {
-    const dimensionId = dimensionsOptions.find(option => option.name === dimensionString)?.id
-
+  const handleNewDimensionOfTheDay = (dimensionId: number | null | undefined) => {
     if (!dimensionId) {
       return
     }
@@ -93,12 +88,12 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
   const editInputWrapperRef = useOutsideClick(() => {
     if (isEdit) {
       setEdit(false)
-      reset({ dimension: dimensionOfTheDay })
+      reset({ dimensionId: dimensionId })
     }
   })
 
   const handleSave = handleSubmit(data => {
-    handleNewDimensionOfTheDay(data.dimension)
+    handleNewDimensionOfTheDay(data.dimensionId)
   })
 
   const handleButtonClick = (isEditing: boolean) => {
@@ -106,7 +101,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
       handleSave()
     }
 
-    if (errors.dimension) {
+    if (errors.dimensionId) {
       return
     }
 
@@ -126,35 +121,12 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
       >
         <Grid item xs={isAdmin ? 7 : 12} flexShrink={1}>
           <Box sx={{ position: 'relative' }}>
-            <Controller
-              name='dimension'
+            <FormAutocomplete
+              groupBy={option => option.width}
+              name={`dimensionId`}
               control={control}
-              render={({ field: { onChange, value } }) => {
-                return (
-                  <SelectPlaceholderWrapper
-                    shouldShowPlaceholder={!watchDimension}
-                    placeholderText='Сечение'
-                  >
-                    <Select
-                      MenuProps={{
-                        disablePortal: true,
-                      }}
-                      sx={{ width: '100%' }}
-                      defaultValue={watchDimension}
-                      disabled={!isEdit}
-                      error={Boolean(errors.dimension)}
-                      value={value}
-                      onChange={onChange}
-                    >
-                      {dimensionsOptions?.map(option => (
-                        <MenuItem key={option.id} value={option.name}>
-                          {option.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </SelectPlaceholderWrapper>
-                )
-              }}
+              options={dimensionsOptions}
+              placeholder={'Сечение'}
             />
           </Box>
         </Grid>

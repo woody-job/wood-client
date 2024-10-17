@@ -4,7 +4,7 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { Button, ButtonProps } from '@mui/material'
 
 import { InsertWoodModal } from '@/features/dryer/insert-wood'
-import { DryerBringInFormType, useBringInMutation } from '@/entities/dryer'
+import { DryerBringInFormType, DryerDataItem, useBringInMutation } from '@/entities/dryer'
 import { useFetchAllWoodClassesQuery } from '@/entities/wood-class'
 import { useFetchAllWoodTypesQuery } from '@/entities/wood-type'
 import { defaultErrorHandler } from '@/shared/libs/helpers'
@@ -15,14 +15,16 @@ import { useSnackbar } from 'notistack'
 
 export type InsertWoodButtonProps = ButtonProps & {
   dryerId: number
+  dryerData: DryerDataItem[] | undefined
 }
 
 export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
-  const { dryerId, ...buttonProps } = props
+  const { dryerId, dryerData, ...buttonProps } = props
   const [isOpenInsert, setIsOpenInsert] = useState(false)
 
   const methods = useForm<DryerBringInFormType>({
     defaultValues: {
+      chamberIterationCount: undefined,
       woods: [
         {
           woodClassId: undefined,
@@ -57,7 +59,10 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
 
   const handleCloseInsert = () => setIsOpenInsert(false)
 
-  const handleSubmitInsert: SubmitHandler<DryerBringInFormType> = ({ woods }) => {
+  const handleSubmitInsert: SubmitHandler<DryerBringInFormType> = ({
+    chamberIterationCount,
+    woods,
+  }) => {
     const woodsForRequest = woods.map(wood => {
       return {
         woodClassId: wood.woodClassId ?? 0,
@@ -65,6 +70,7 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
         woodTypeId: wood.woodTypeId ?? 0,
         amount: wood.amount,
         date: dayjs().toISOString(),
+        chamberIterationCount,
       }
     })
 
@@ -95,7 +101,13 @@ export const InsertWoodButton: FC<InsertWoodButtonProps> = props => {
 
   return (
     <>
-      <Button variant='outlined' onClick={handleOpenInsert} size='small' {...buttonProps} />
+      <Button
+        variant='outlined'
+        disabled={dryerData ? dryerData.length > 0 : true}
+        onClick={handleOpenInsert}
+        size='small'
+        {...buttonProps}
+      />
 
       <InsertWoodModal
         open={isOpenInsert}

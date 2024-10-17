@@ -28,6 +28,7 @@ export type SunburstData = SunburstItem[]
 export type GetWorkshopOutForDateResponse = {
   data: WorkshopOut[]
   totalWorkshopOutVolume: number
+  totalWorkshopOutAmount: number
 }
 
 export type CreateWorkshopOutParams = {
@@ -88,11 +89,17 @@ export type WorkshopReportItem = {
   secondClassPercentage: null | number
   marketClassVolume: number
   marketClassPercentage: null | number
-  brownClassVolume: number
-  brownClassPercentage: null | number
+  thirdClassVolume: number
+  thirdClassPercentage: null | number
 }
 
-export type GetWorkshopReportResponse = WorkshopReportItem[]
+export type GetWorkshopReportResponse = {
+  data: WorkshopReportItem[]
+  totalBeamInVolume: number
+  totalBeamInAmount: number
+  totalWoodsVolume: number
+  totalWoodsAmount: number
+}
 
 export type GetWorkshopReportParams = {
   workshopId: number
