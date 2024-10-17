@@ -42,7 +42,6 @@ export const FormAutocomplete = <
         return (
           <>
             <Autocomplete
-              disabled={disabled}
               groupBy={groupBy}
               value={
                 value
@@ -60,7 +59,12 @@ export const FormAutocomplete = <
               // id="controllable-states-demo"
               options={options}
               renderInput={params => (
-                <TextField {...params} label={props.placeholder} inputRef={ref} />
+                <TextField
+                  {...params}
+                  disabled={disabled}
+                  label={props.placeholder}
+                  inputRef={ref}
+                />
               )}
             />
             {error && !skipError ? (

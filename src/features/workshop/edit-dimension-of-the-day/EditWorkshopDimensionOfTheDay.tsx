@@ -87,7 +87,8 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
 
   const editInputWrapperRef = useOutsideClick(() => {
     if (isEdit) {
-      setEdit(false)
+      // TODO Разобраться с автокомплитом для сечения и условного обозначения дня
+      // setEdit(false)
       reset({ dimensionId: dimensionId })
     }
   })
@@ -110,6 +111,8 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
 
   const buttonText = isEdit ? 'Сохранить' : 'Редактировать'
 
+  console.log({ disabled: !isEdit })
+
   return (
     <Box display='flex' mt={2} flexDirection='column' alignItems='center' ref={editInputWrapperRef}>
       <Grid
@@ -127,6 +130,7 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
               control={control}
               options={dimensionsOptions}
               placeholder={'Сечение'}
+              disabled={!isEdit}
             />
           </Box>
         </Grid>
