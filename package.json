@@ -1,9 +1,9 @@
 {
-  "name": "wood-client",
+  "name": "gp-trade-client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://woody-job.github.io/wood-client",
+  "homepage": "https://gp-trade-client.onrender.com/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

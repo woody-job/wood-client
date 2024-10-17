@@ -28,7 +28,7 @@ export const baseQueryWithAuth: BaseQueryFn<
   if (result.error && result.error.status === 403) {
     api.dispatch(logout())
     TokenService.removeToken()
-    window.location.href = `/wood-client/${urls.login}`
+    window.location.href = urls.login
   }
 
   return result

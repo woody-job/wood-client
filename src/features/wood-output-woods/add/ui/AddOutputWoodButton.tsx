@@ -28,7 +28,7 @@ export const AddOutputWoodButton: FC<AddOutputWoodButtonProps> = ({ now, ...prop
   const [isOpen, setIsOpen] = useState(false)
 
   const methods = useForm<WorkshopOutFormType>()
-  const { watch, reset, control } = methods
+  const { watch, reset } = methods
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -93,7 +93,6 @@ export const AddOutputWoodButton: FC<AddOutputWoodButtonProps> = ({ now, ...prop
         isWoodTypesLoading={isWoodTypesLoading}
         methods={methods}
         isLoading={isLoadingCreateWorkshopOutMutation}
-        control={control}
       />
     </>
   )

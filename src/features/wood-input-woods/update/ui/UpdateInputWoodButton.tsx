@@ -62,13 +62,11 @@ export const UpdateInputWoodButton: FC<UpdateInputWoodButtonProps> = ({
   }
 
   const handleSave: SubmitHandler<BeamInFormType> = data => {
-    const { diameter, amount } = data
+    const { beamSizeId, amount } = data
 
     if (!workshopId) {
       return
     }
-
-    const beamSizeId = beamSizes?.find(beamSizeObj => beamSizeObj.diameter === diameter)?.id
 
     if (!beamSizeId) {
       return

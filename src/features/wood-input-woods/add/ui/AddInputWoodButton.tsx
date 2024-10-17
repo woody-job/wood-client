@@ -32,7 +32,7 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({
   const [isOpen, setIsOpen] = useState(false)
 
   const methods = useForm<BeamInFormType>()
-  const { reset, control } = methods
+  const { reset } = methods
 
   const [createBeamInMutation, { isLoading: isLoadingCreateBeamInMutation }] =
     useCreateBeamInForWorkshopMutation()
@@ -106,7 +106,6 @@ export const AddInputWoodButton: FC<AddInputWoodButtonProps> = ({
         isLoadingWoodNamings={isLoadingWoodNamings}
         isLoading={isLoadingCreateBeamInMutation}
         selectedWoodNamingId={selectedWoodNamingId}
-        control={control}
       />
     </Box>
   )

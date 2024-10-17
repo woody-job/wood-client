@@ -84,13 +84,19 @@ export type WorkshopReportItem = {
   profit: number
   profitPerUnit: number
   firstClassVolume: number
+  firstClassAmount: number
   firstClassPercentage: null | number
   secondClassVolume: number
+  secondClassAmount: number
   secondClassPercentage: null | number
   marketClassVolume: number
+  marketClassAmount: number
   marketClassPercentage: null | number
   thirdClassVolume: number
+  thirdClassAmount: number
   thirdClassPercentage: null | number
+  totalWorkshopOutVolume: number
+  totalWorkshopOutAmount: number
 }
 
 export type GetWorkshopReportResponse = {

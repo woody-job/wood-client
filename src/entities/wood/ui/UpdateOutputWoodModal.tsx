@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react'
-import { Control, SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import { CircularProgress, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
@@ -23,7 +23,6 @@ export interface UpdateOutputWoodModalProps extends Omit<ModalProps, 'children'>
   woodClasses: WoodClass[] | undefined
   woodTypes: WoodType[] | undefined
   isLoading: boolean
-  control: Control<WorkshopOutFormType, any>
 }
 
 export const UpdateOutputWoodModal: FC<UpdateOutputWoodModalProps> = ({
@@ -38,12 +37,12 @@ export const UpdateOutputWoodModal: FC<UpdateOutputWoodModalProps> = ({
   woodClasses,
   woodTypes,
   isLoading,
-  control,
   ...modalProps
 }) => {
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors },
   } = methods
 

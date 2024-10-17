@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo } from 'react'
-import { Control, SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import { CircularProgress, Modal, ModalProps, TextField, Typography } from '@mui/material'
 
@@ -20,7 +20,6 @@ export interface UpdateInputWoodModalProps extends Omit<ModalProps, 'children'> 
   selectedWoodNamingId: number | null
   woodNamings: WoodNaming[] | undefined
   isLoadingWoodNamings: boolean
-  control: Control<BeamInFormType, any>
 }
 
 export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
@@ -34,7 +33,6 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
   woodNamings,
   beamSizes,
   isLoadingWoodNamings,
-  control,
   ...modalProps
 }) => {
   const {
@@ -42,6 +40,7 @@ export const UpdateInputWoodModal: FC<UpdateInputWoodModalProps> = ({
     register,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = methods
 

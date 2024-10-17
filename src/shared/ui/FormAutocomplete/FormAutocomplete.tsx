@@ -54,7 +54,7 @@ export const FormAutocomplete = <
               getOptionLabel={option => {
                 return option.label
               }}
-              onChange={(event: any, newValue) => {
+              onChange={(_: any, newValue) => {
                 onChange(newValue ? newValue.id : null)
               }}
               // id="controllable-states-demo"

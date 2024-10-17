@@ -125,7 +125,7 @@ export const WarehouseTable: FC<WarehouseTableProps> = ({
         disableRowSelectionOnClick
         disableMultipleRowSelection
         localeText={dataGridLocaleText}
-        sx={{ ...dataGridStyles, width: '100%' }}
+        sx={{ ...dataGridStyles, width: 400 }}
         hideFooter
         // @eslint-ignore
         // @ts-expect-error 'error occured'
