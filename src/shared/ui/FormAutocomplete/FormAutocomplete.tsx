@@ -1,7 +1,7 @@
 import { Control, Controller, FieldValues, Path, RegisterOptions } from 'react-hook-form'
 
-import { Typography } from '@mui/material'
-import Autocomplete from '@mui/material/Autocomplete'
+import { Box, Typography } from '@mui/material'
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 
 interface FormAutocompleteProps<
@@ -21,6 +21,7 @@ interface FormAutocompleteProps<
   groupBy?: ((option: O) => string) | undefined
   disabled?: boolean
   skipError?: boolean
+  sanitizeRussianX?: boolean
 }
 
 export const FormAutocomplete = <
@@ -29,7 +30,24 @@ export const FormAutocomplete = <
 >(
   props: FormAutocompleteProps<O, TField>
 ) => {
-  const { control, options, name, rules, groupBy, disabled, skipError } = props
+  const {
+    control,
+    options,
+    name,
+    rules,
+    groupBy,
+    disabled,
+    skipError,
+    sanitizeRussianX = true,
+  } = props
+
+  const filterOptions = createFilterOptions<O>({
+    stringify: (option: O) => {
+      const sanitizedValue = option.label.replace(new RegExp('x', 'g'), 'х')
+
+      return `${sanitizedValue} ${option.label}`
+    },
+  })
 
   return (
     <Controller
@@ -40,7 +58,7 @@ export const FormAutocomplete = <
         const { onChange, value, ref } = field
 
         return (
-          <>
+          <Box>
             <Autocomplete
               groupBy={groupBy}
               value={
@@ -56,7 +74,9 @@ export const FormAutocomplete = <
               onChange={(_: any, newValue) => {
                 onChange(newValue ? newValue.id : null)
               }}
+              disabled={disabled}
               // id="controllable-states-demo"
+              filterOptions={sanitizeRussianX ? filterOptions : undefined}
               options={options}
               renderInput={params => (
                 <TextField
@@ -72,7 +92,7 @@ export const FormAutocomplete = <
                 {error.message}
               </Typography>
             ) : null}
-          </>
+          </Box>
         )
       }}
     />

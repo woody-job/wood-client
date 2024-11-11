@@ -23,7 +23,7 @@ export const dryerApi = baseApi.injectEndpoints({
 
     fetchAllWoodsGoneThroughDryer: build.query<DryerInfoData, GetDryerInfoParams>({
       query: ({ startDate, endDate }) => ({
-        url: `/dryer-chamber-data/all-records`,
+        url: `/dryer-chamber-data/all-dryed-records`,
         params: {
           startDate,
           endDate,

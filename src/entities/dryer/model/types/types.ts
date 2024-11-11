@@ -60,8 +60,20 @@ export type DryerBringInFormType = {
 export type DryerRemoveFormType = {
   woods: {
     woodClassId: number | undefined
+    dimensionId: number | undefined
+    woodTypeId: number | undefined
     amount: number | undefined
     dryerChamberDataRecordId: number | undefined
+
+    modifiedWoods:
+      | {
+          woodClassId: number | undefined
+          dimensionId: number | undefined
+          woodTypeId: number | undefined
+          amount: number | undefined
+          dryerChamberDataRecordId: number | undefined
+        }[]
+      | undefined
   }[]
 }
 
@@ -103,13 +115,19 @@ export type DryerInfoData = {
   totalAmount: number
 }
 
-export type RemoveWoodFromChamberType = {
-  woodClassId: number
+export type RemoveWoodItem = {
+  dryerChamberDataRecordId?: number
+  chamberIterationCount: number
+  dimensionId: number
+  woodTypeId: number
+  date: string
   amount: number
-  dryerChamberDataRecordId: number
+  woodClassId: number
 }
+
+export type RemoveWoodFromChamberType = RemoveWoodItem[]
 
 export type RemoveWoodFromChamberParams = {
   dryerChamberId: number
-  changedWoods: RemoveWoodFromChamberType[]
+  changedWoods: RemoveWoodFromChamberType
 }

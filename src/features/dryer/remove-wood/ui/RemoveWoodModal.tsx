@@ -9,12 +9,15 @@ import { ModalContent } from '@/shared/ui'
 import { ButtonWithLoader } from '@/shared/ui/button'
 
 import { RemoveWoodFormItem } from './RemoveWoodFormItem'
+import { WoodType } from '@/entities/wood-type'
 
 export type RemoveWoodModalProps = Omit<ModalProps, 'children'> & {
   onSubmitForm: SubmitHandler<DryerRemoveFormType>
   isWoodClassesLoading: boolean
   methods: UseFormReturn<DryerRemoveFormType>
   woodClasses: WoodClass[] | undefined
+  woodTypes: WoodType[] | undefined
+  isWoodTypesLoading: boolean
   isLoading: boolean
   fields: Record<'id', string>[]
   dryerData: DryerDataItem[]
@@ -29,6 +32,8 @@ export const RemoveWoodModal: FC<RemoveWoodModalProps> = props => {
     isLoading,
     fields,
     dryerData,
+    woodTypes,
+    isWoodTypesLoading,
     ...modalProps
   } = props
 
@@ -37,6 +42,7 @@ export const RemoveWoodModal: FC<RemoveWoodModalProps> = props => {
     register,
     formState: { errors },
     control,
+    watch,
     reset,
   } = methods
 
@@ -50,6 +56,8 @@ export const RemoveWoodModal: FC<RemoveWoodModalProps> = props => {
         return {
           dryerChamberDataRecordId: item.id,
           woodClassId: item.woodClass.id,
+          woodTypeId: item.woodType.id,
+          dimensionId: item.dimension.id,
           amount: item.amount,
         }
       }),
@@ -90,7 +98,7 @@ export const RemoveWoodModal: FC<RemoveWoodModalProps> = props => {
             component='h2'
             sx={{ textAlign: 'center', mb: 2 }}
           >
-            Убрать доски
+            Выгрузить доски
           </Typography>
 
           {fields.map((field, fieldIndex) => {
@@ -102,7 +110,10 @@ export const RemoveWoodModal: FC<RemoveWoodModalProps> = props => {
                 errors={errors}
                 isWoodClassesLoading={isWoodClassesLoading}
                 woodClasses={woodClasses}
+                woodTypes={woodTypes}
+                isWoodTypesLoading={isWoodTypesLoading}
                 control={control}
+                watch={watch}
               />
             )
           })}
@@ -115,7 +126,7 @@ export const RemoveWoodModal: FC<RemoveWoodModalProps> = props => {
             variant='contained'
             color='primary'
           >
-            Убрать
+            Выгрузить
           </ButtonWithLoader>
         </Box>
       </ModalContent>
