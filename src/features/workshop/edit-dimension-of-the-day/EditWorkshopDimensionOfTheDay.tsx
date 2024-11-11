@@ -111,8 +111,6 @@ export const EditWorkshopDimensionOfTheDay: FC<EditWorkshopDimensionOfTheDayProp
 
   const buttonText = isEdit ? 'Сохранить' : 'Редактировать'
 
-  console.log({ disabled: !isEdit })
-
   return (
     <Box display='flex' mt={2} flexDirection='column' alignItems='center' ref={editInputWrapperRef}>
       <Grid
