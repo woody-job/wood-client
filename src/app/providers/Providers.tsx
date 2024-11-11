@@ -12,6 +12,7 @@ import { CustomThemeProvider } from '@/entities/theme/libs/providers'
 
 import 'dayjs/locale/ru'
 import { SnackbarProvider } from 'notistack'
+import { SnackbarCloseButton } from '@/shared/ui'
 
 export interface ProviderProps {
   children?: ReactNode
@@ -28,8 +29,11 @@ export const Providers: FC<ProviderProps> = ({ children }) => {
         <CustomThemeProvider>
           <SnackbarProvider
             maxSnack={10}
-            autoHideDuration={5000}
+            autoHideDuration={25000}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            action={snackbarKey => {
+              return <SnackbarCloseButton snackbarKey={snackbarKey} />
+            }}
           >
             <AppRouter />
             {children}
