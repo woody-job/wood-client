@@ -5,6 +5,7 @@ export type WorkshopBeamInTableRow = {
   volume: number | undefined
   isEmptyDefault: boolean
   beamInId: number | undefined
+  beamSizeId: number | undefined
   woodNaming: string | undefined
   woodNamingId: number | undefined
 }
